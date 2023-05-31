@@ -27,11 +27,20 @@ type Props = {
 const Cart = ({navigation}: Props) => {
   const {
     setIsCheckedArray,
+    selectedAddressIndex,
     CartProducts,
     handlePayment,
+    handleCheckboxChange,
+    refreshing,
+    onRefresh,
+    addressList,
+    isCheckedArray,
+    isChecked,
   } = useCheckout();
   const {colorScheme} = useCart();
   const cartData = useSelector(state => state.CartProducts.data);
+  const isAddressEmpty = addressList.length === 0;
+  console.log('johnwesly', addressList);
   if (!CartProducts) {
     return (
       <View
@@ -74,7 +83,10 @@ const Cart = ({navigation}: Props) => {
         <ScrollView>
           <View>
             <ScrollView
-              style={style.mainContainer}>
+              style={style.mainContainer}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }>
               {cartData?.cartItems?.map(
                 (
                   item: {
@@ -207,6 +219,93 @@ const Cart = ({navigation}: Props) => {
                 ),
               )}
             </ScrollView>
+            <View style={[style.addresscard]}>
+              <Text
+                style={[
+                  style.addressText,
+                  colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+                ]}>
+                Select Address
+              </Text>
+              <View style={[style.addressButton]}>
+                <Text
+                  style={[style.addresschangeText]}
+                  onPress={() => {
+                    navigation.navigate('Owneraddresspage');
+                  }}>
+                  Add Address
+                </Text>
+              </View>
+            </View>
+            {/* <Text style={{margin: 5, width: '100%'}}>{selectedAddress}</Text> */}
+            {addressList &&
+              addressList.map((item, index) => (
+                <View
+                  key={index}
+                  style={[
+                    style.card,
+                    colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+                  ]}>
+                  <View style={[style.addressContainer]}>
+                    <View>
+                      <Text
+                        style={[
+                          {
+                            width: 60,
+                            marginLeft: 10,
+                            // width: 140,
+                            height: 20,
+                            marginTop: 20,
+                            color: Colors.black,
+                            fontSize: 12,
+                            // fontWeight: '500',
+                            fontFamily: 'Poppins-Regular',
+                          },
+                          colorScheme === 'dark'
+                            ? Styles.whitetext
+                            : Styles.blackText,
+                        ]}>
+                        Address :
+                      </Text>
+                      <Text
+                        style={[
+                          style.city,
+                          colorScheme === 'dark'
+                            ? Styles.whitetext
+                            : Styles.blackText,
+                        ]}>
+                        <Text>{item.addressLine1},</Text>
+                        {/* </Text>
+                      <Text style={style.city}>{'State: ' + item.state}</Text>
+                      <Text style={style.city}> */}
+                        {item.postalCode},{/* </Text> */}
+                        {/* <Text style={style.city}> */}
+                        {item.city},{/* <Text style={style.city}> */}
+                        {item.country},
+                      </Text>
+                    </View>
+                    <View style={style.containerCheckbox}>
+                      <Text
+                        style={[
+                          style.textCheckbox,
+                          colorScheme === 'dark'
+                            ? Styles.whitetext
+                            : Styles.blackText,
+                        ]}>
+                        Delivery Address
+                      </Text>
+                      {console.log(isChecked)}
+                      <CheckBox
+                        checked={selectedAddressIndex === index}
+                        onPress={() => handleCheckboxChange(index)}
+                        checkedColor={Colors.buttonColor}
+                        containerStyle={style.checkboxContainer}
+                        size={24}
+                      />
+                    </View>
+                  </View>
+                </View>
+              ))}
           </View>
         </ScrollView>
         <View style={[style.GrandtotalContainer]}>
