@@ -42,9 +42,9 @@ const RootReducers = combineReducers({
   editItem: editItemSlice,
 });
 
-function* rootSaga() {
-  yield all([fetchEditItemSaga()]);
-}
+// function* rootSaga() {
+//   yield all([fetchEditItemSaga()]);
+// }
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -52,4 +52,4 @@ export const store = createStore(
   RootReducers,
   applyMiddleware(sagaMiddleware, thunk),
 );
-sagaMiddleware.run(rootSaga);
+// sagaMiddleware.run(rootSaga);
