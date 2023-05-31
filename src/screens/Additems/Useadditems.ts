@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {url} from '../../constants/Apis';
+import {useFormik} from 'formik';
+import * as Yup from 'yup';
 import {
   addItemsData,
   addGender,
@@ -14,8 +16,11 @@ import {
 import axios from 'axios';
 import {OwnerCategoryUrl} from '../../constants/Apis';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AddItemsformik from '../../components/templates/addItemsformik';
+// import {useFormik} from 'formik';
 function Useadditems() {
   const dispatch = useDispatch();
+  // const {formik} = AddItemsformik();
   const navigation = useNavigation();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -26,6 +31,7 @@ function Useadditems() {
   const [isLoading, setIsLoading] = useState(true);
   const handleGenderChange = (selectedGender: React.SetStateAction<string>) => {
     setGender(selectedGender);
+    formik.setFieldValue('gender', selectedGender);
     dispatch(addGenderData(selectedGender));
   };
   const [categoriesData, setCategoriesData] = useState([]);
@@ -34,11 +40,22 @@ function Useadditems() {
   const [subOutfitCategoriesData, setSubOutfitCategoriesData] = useState([]);
   const genderData = useSelector(state => state.GenderReducer.genderData);
   console.log(genderData);
+  const AdditemsvalidationSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required'),
+    description: Yup.string().required('Description is required'),
+    gender: Yup.string().required('Gender is required'),
+    eventType: Yup.string().required('Event type is required'),
+  });
   const handleNameChange = (value: string) => {
     setName(value);
+    formik.setFieldValue('name', value);
   };
   const handleDescriptionChange = (value: string) => {
     setDescription(value);
+    formik.setFieldValue('description', value);
+  };
+  const handleBlur = (field: string) => {
+    formik.setFieldTouched(field);
   };
   const handleOutfitChange = (selectedOutfit: React.SetStateAction<string>) => {
     setOutfitType(selectedOutfit);
@@ -160,6 +177,7 @@ function Useadditems() {
     selectedEventType: React.SetStateAction<string>,
   ) => {
     setEventType(selectedEventType);
+    formik.setFieldValue('eventType', selectedEventType);
   };
   const handleItemTypeChange = (
     selectedItemType: React.SetStateAction<string>,
@@ -180,6 +198,18 @@ function Useadditems() {
     navigation.navigate('OwnerImage');
     console.log(Name, Description);
   };
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      description: '',
+      gender: '',
+      eventType: '',
+      outfitType: '',
+      itemType: '',
+    },
+    validationSchema: AdditemsvalidationSchema,
+    onSubmit: handleItems,
+  });
   return {
     name,
     description,
@@ -197,12 +227,14 @@ function Useadditems() {
     setIsLoading,
     handleNameChange,
     handleDescriptionChange,
+    handleBlur,
     isLoading,
     setCategoriesData,
     categoriesData,
     subCategoriesData,
     subEventCategoriesData,
     subOutfitCategoriesData,
+    formik,
   };
 }
 export default Useadditems;
