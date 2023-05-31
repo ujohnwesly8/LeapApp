@@ -18,10 +18,12 @@ import Colors from '../../constants/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Styles from '../../constants/themeColors';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
+  const {colorScheme} = useContext(ColorSchemeContext);
   useEffect(() => {
     axios
       .get(`${url}/category/list`)
@@ -42,11 +44,13 @@ const Category = () => {
     <TouchableOpacity
       style={[
         style.MainView,
+        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
       ]}
       onPress={() => navigation.navigate('Subcategory', {categoryId: item.id})}>
       <View
         style={[
           style.categoryBox,
+          colorScheme === 'dark' ? Styles.cardColor : Styles.main,
         ]}>
         <View style={style.imageContainer}>
           <Image source={{uri: item.imageUrl}} style={style.categoryImage} />
@@ -55,6 +59,7 @@ const Category = () => {
           <Text
             style={[
               style.categoryText,
+              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
             ]}>
             {item.categoryName}
           </Text>
@@ -72,6 +77,7 @@ const Category = () => {
             size={20}
             style={[
               style.productforwardios,
+              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
             ]}
           />
         </View>
@@ -84,10 +90,12 @@ const Category = () => {
     <View
       style={[
         style.maincontainer,
+        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
       ]}>
       <Text
         style={[
           style.CategoryText,
+          colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
         ]}>
         Categories
       </Text>
@@ -106,6 +114,7 @@ const Category = () => {
       <Text
         style={[
           style.textStyle,
+          colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
         ]}>
         Shop by categories
       </Text> */}
