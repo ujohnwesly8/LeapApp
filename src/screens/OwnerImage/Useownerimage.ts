@@ -7,6 +7,7 @@ import {addsize} from '../../redux/actions/actions';
 import {SetStateAction, useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useFormik} from 'formik';
 import {launchImageLibrary} from 'react-native-image-picker';
 const OwnerImage = () => {
   const navigation = useNavigation();
@@ -53,15 +54,22 @@ const OwnerImage = () => {
   });
   const handleSizeTypeChange = (selectedSize: SetStateAction<string>) => {
     setSelectedsize(selectedSize);
+    formik.setFieldValue('size', selectedSize);
   };
   const handlePriceChange = (value: any) => {
     setPrice(value);
+    formik.setFieldValue('price', value);
   };
   const handleSelectedImage = (image: any) => {
     setSelectedImage(image);
+    formik.setFieldValue('image', image.url);
   };
   const handleQuantityChange = (value: any) => {
     setQuantity(value);
+    formik.setFieldValue('quantity', value);
+  };
+  const handleBlur = (field: string) => {
+    formik.setFieldTouched(field);
   };
   const onHandleOwnerItems = () => {
     navigation.goBack();
@@ -106,6 +114,14 @@ const OwnerImage = () => {
     }
   };
 
+  const [selectedImage, setSelectedImage] = useState('');
+
+  const [imageUris, setImageUris] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
+
+  const handleremove = () => {
+    setSelectedImage('');
+  };
   const handleRemoveImage = index => {
     setImageUrls(prevUrls => prevUrls.filter((_url, i) => i !== index));
     setIsLoading(false);
@@ -124,8 +140,75 @@ const OwnerImage = () => {
     };
     getImageUrls();
   }, [imageUris]);
+  const pickImages = () => {
+    launchImageLibrary(
+      {
+        mediaType: 'photo',
+        selectionLimit: 10,
+      },
+      async response => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else {
+          const images = response.assets.map(imagePath => ({
+            uri: imagePath.uri,
+            type: 'image/png',
+            name: 'image.png',
+          }));
+          const formData = new FormData();
+          images.forEach((file, _index) => {
+            formData.append('file', {
+              uri: file.uri,
+              type: 'image/png',
+              name: 'image.png',
+            });
+          });
+          setIsLoading(true);
+          try {
+            const token = await AsyncStorage.getItem('token');
+            console.log(token);
+            const result = await fetch(`${baseUrl}/file/upload`, {
+              method: 'POST',
+              body: formData,
+              headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            if (result.ok) {
+              const res = await result.json();
+              console.log(res);
+              setImageUrls(prevUrls => [...prevUrls, ...res.urls]);
+              setIsLoading(false);
+              console.log(imageUrls);
+            } else {
+              const res = await result.json();
+              console.log('Upload failed');
+              console.log(res);
+              console.log(token);
+              setIsLoading(true);
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      },
+    );
+  };
 
   console.log(name, size);
+  const formik = useFormik({
+    initialValues: {
+      size: '',
+      price: '',
+      image: '',
+      quantity: '',
+    },
+    validationSchema: AdditemsvalidationSchema,
+    onSubmit: postData,
+  });
   return {
     onHandleOwnerItems,
     postData,
@@ -140,8 +223,10 @@ const OwnerImage = () => {
     setQuantity,
     selectedImage,
     handleremove,
+    formik,
     handlePriceChange,
     handleQuantityChange,
+    handleBlur,
     pickImages,
     imageUris,
     closeModal,
