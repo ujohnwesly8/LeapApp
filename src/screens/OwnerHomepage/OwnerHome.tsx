@@ -375,6 +375,97 @@ export default function OwnerHome({navigation}: Props) {
                     ),
                   )}
               </View>
+              <Modal
+                visible={isModalVisible}
+                animationType="slide"
+                transparent={true}>
+                <View style={styles.modalContainer}>
+                  <View style={{alignItems: 'flex-end', marginRight: 20}}>
+                    <TouchableOpacity
+                      onPress={() => setIsModalVisible(false)}
+                      style={styles.closeButton}>
+                      <Text style={styles.closeButtonText}>Close</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={styles.modalText}>
+                    Availabe Quantities: {productQuantity}
+                  </Text>
+                  <View style={styles.quantityContainer}>
+                    <TouchableOpacity
+                      onPress={() => decrementQuantity(selectedProductId)}
+                      // onPress={handleDecrement}
+                      // disabled={quantity === 1 || isMinusDisabled}>
+                      style={styles.quantityButton}>
+                      <Text style={styles.quantityButtonText}>-</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.quantityText}>{productQuantity}</Text>
+                    <TouchableOpacity
+                      onPress={() => incrementQuantity(selectedProductId)}
+                      style={styles.quantityButton}>
+                      <Text style={styles.quantityButtonText}>+</Text>
+                    </TouchableOpacity>
+                  </View>
+                  {console.log('products', products)}
+                  {/* {products &&
+                    products.map((item, index) => ( */}
+                  <View
+                    style={{
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      flexDirection: 'row',
+                      width: '80%',
+                      marginLeft: 40,
+                      marginTop: 20,
+                    }}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        handleDisablebutton(selectedProductId, productQuantity)
+                      }
+                      style={styles.okButton}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontFamily: 'Poppins-SemiBold',
+                          fontSize: 16,
+                        }}>
+                        Disable
+                      </Text>
+                      {/* Render disable button content */}
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() =>
+                        handleEnablebutton(selectedProductId, productQuantity)
+                      }
+                      style={styles.okButton}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontFamily: 'Poppins-SemiBold',
+                          fontSize: 16,
+                        }}>
+                        Enable
+                      </Text>
+                      {/* Render disable button content */}
+                    </TouchableOpacity>
+                  </View>
+                  {/* ))} */}
+
+                  {/* {products &&
+                    products.map((item, index) => (
+                      <View
+                        key={index}
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => handleDisablebutton(item)}
+                          style={styles.okButton}
+                          disabled={isLoading}></TouchableOpacity>
+                      </View>
+                    ))} */}
+                </View>
+              </Modal>
             </View>
           )}
         </>
