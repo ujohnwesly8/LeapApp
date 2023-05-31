@@ -5,6 +5,7 @@ import {Text, TouchableOpacity, View, FlatList} from 'react-native';
 import {OwnerAddressCustomHook} from './Useowneraddress';
 import style from './Owneraddressstyle';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import Lottie from 'lottie-react-native';
 import Colors from '../../constants/Colors';
 import useCart from '../Cart/useCart';
@@ -14,7 +15,9 @@ const Owneraddresspage = () => {
   const {
     handleOwnerAddAddress,
     handleDeleteAddress,
-    goBackButton
+    goBackButton,
+    closeModal,
+    showModal,
     addressList,
     handleEditItems,
     isLoading,
@@ -153,6 +156,11 @@ const Owneraddresspage = () => {
               />
             </View>
           )}
+          <CustomModal
+            showModal={showModal}
+            onClose={closeModal}
+            message="Address Deleted!"
+          />
         </>
       )}
     </View>
