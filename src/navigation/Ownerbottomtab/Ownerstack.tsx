@@ -18,7 +18,7 @@ import {
   useIsFocused,
 } from '@react-navigation/native';
 import OwnerImage from '../../screens/OwnerImage/OwnerImage';
-import Imagepicker from '../../components/atoms/Imagepicker';
+// import Imagepicker from '../../components/atoms/Imagepicker';
 import OproductDetails from '../../screens/OwnerProductdetailsPage/OproductDetails';
 import Owneredititems from '../../screens/Owneredititems/Owneredititems';
 import Colors from '../../constants/Colors';
