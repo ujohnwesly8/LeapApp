@@ -4,10 +4,21 @@ import {fetchWishlistProducts} from '../../redux/slice/wishlistSlice';
 import {removeFromWishlist} from '../../redux/actions/actions';
 import {url} from '../../constants/Apis';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Alert, useColorScheme} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 function useWishlist() {
   const navigation = useNavigation();
+  const {colorScheme} = useContext(ColorSchemeContext);
+  const [refreshing, setRefreshing] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+  };
   const removefromWishlist = async (productId: any) => {
     const token = await AsyncStorage.getItem('token');
     console.log('chiranjeevi', productId);
@@ -20,6 +31,7 @@ function useWishlist() {
       .then(response => response.json())
       .then(data => {
         dispatch(removeFromWishlist(productId));
+        openModal();
       })
       .catch(error => {
         console.error(error);
@@ -32,12 +44,34 @@ function useWishlist() {
   console.log(JSON.stringify(WishlistProducts));
   // const length = WishlistProducts.length();
   console.log('wishlist succes');
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await dispatch(fetchWishlistProducts());
+    setRefreshing(false);
+  };
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      return dispatch(fetchWishlistProducts());
+    });
+    return unsubscribe;
+  }, [dispatch, navigation]);
   useEffect(() => {
     dispatch(fetchWishlistProducts());
   }, [dispatch]);
+  useEffect(() => {
+    if (!showModal) {
+      dispatch(fetchWishlistProducts());
+    }
+  }, [dispatch, showModal]);
   return {
     WishlistProducts,
     removefromWishlist,
+    refreshing,
+    onRefresh,
+    closeModal,
+    showModal,
+    openModal,
+    colorScheme,
     isLoading,
   };
 }
