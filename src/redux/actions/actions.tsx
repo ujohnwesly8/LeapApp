@@ -377,3 +377,75 @@ export const decrementCartItemQuantity = (item: any) => {
       .catch(error => console.log(error));
   };
 };
+
+export const postProductToCartAPI = (item: any, action: string) => {
+  const modifiedItem = {
+    productId: item.id,
+    quantity: item.quantity,
+    rentalEndDate: item.rentalEndDate,
+    rentalStartDate: item.rentalStartDate,
+  };
+  console.log('hello john', item);
+  return async (dispatch: any) => {
+    if (action === '+') {
+      dispatch(incrementCartItemQuantity(modifiedItem));
+    } else if (action === '-') {
+      dispatch(decrementCartItemQuantity(modifiedItem));
+    } else {
+      const token = await AsyncStorage.getItem('token');
+
+      fetch(`${url}/cart/add`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(modifiedItem),
+      })
+        .then(response => response.json())
+        .then(data => {
+          // update the Redux store with the response data
+          dispatch({
+            type: ADD_TO_CART,
+            payload: {...modifiedItem, quantity: data.quantity},
+          });
+          Alert.alert('item Added Successfully');
+        })
+        .catch(error => console.log(error));
+    }
+  };
+};
+export const ADDORDER = (razorpayId: string) => {
+  return async (dispatch: (arg0: {type: string; payload: any}) => void) => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const data = razorpayId;
+      console.log('john razarpay', data); // create an object with razorpayId property
+      const response = await fetch(
+        `${url}/order/add/?razorpayId=${razorpayId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      dispatch(Orderreducer(razorpayId));
+      console.log('success');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+// action type
+export const ADD_PRODUCT_TO_CART_STORE = 'ADD_PRODUCT_TO_CART_STORE';
+
+// action creator
+export const addProductToCartStore = product => {
+  return {
+    type: ADD_PRODUCT_TO_CART_STORE,
+    payload: product,
+  };
+};
