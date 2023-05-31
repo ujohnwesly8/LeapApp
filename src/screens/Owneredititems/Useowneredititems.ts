@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-shadow */
 import {SetStateAction, useEffect, useState} from 'react';
 import axios from 'axios';
 import {
@@ -40,7 +41,12 @@ const Useowneredititems = () => {
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   console.log('snj xkcvn', editProductId);
-
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+  };
   const [Mapdata, setMapdata] = useState('');
   const handleName = () => {
     setName(data.name);
@@ -82,6 +88,24 @@ const Useowneredititems = () => {
     fetchData();
   }, []);
   console.log(name);
+  const FetchData = async editProductId => {
+    try {
+      setViisble(true);
+      const ProductData = await ApiService.get(
+        `${ProductsById}/${editProductId}`,
+      );
+      console.log('ProductData', ProductData);
+      setMapdata(ProductData);
+      setName(ProductData.name);
+      setPrice(ProductData.price);
+      setQuantity(ProductData.totalQuantity);
+      setDescription(ProductData.description);
+      return ProductData;
+    } catch (error) {
+      console.log('error is :', error);
+      console.log('editProductId', editProductId);
+    }
+  };
   const [categoriesData, setCategoriesData] = useState([]);
   const [subCategoriesData, setSubCategoriesData] = useState([]);
   const [subEventCategoriesData, setSubEventCategoriesData] = useState([]);
