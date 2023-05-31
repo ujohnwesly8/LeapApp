@@ -1,0 +1,120 @@
+import {StyleSheet} from 'react-native';
+import Colors from '../../constants/Colors';
+const style = StyleSheet.create({
+  container: {
+    width: '42%',
+    height: 207,
+    borderRadius: 10,
+    backgroundColor: Colors.white,
+    marginLeft: '3.5%',
+    marginRight: '5%',
+    marginTop: 10,
+    marginBottom: 10,
+    // overflow: 'hidden',
+    shadowColor: '#3E54AC1A',
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 2,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  cardTextContainer: {
+    width: '100%',
+  },
+  CategoriesText: {
+    fontSize: 24,
+    // fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
+    color: Colors.black,
+    marginTop: 15,
+    marginLeft: 15,
+  },
+  Seetext: {
+    fontSize: 16,
+    // fontWeight: '400',
+    fontFamily: 'Poppins-Medium',
+    color: Colors.buttonColor,
+    marginTop: 25,
+    // marginLeft: 15,
+    marginRight: 5,
+  },
+  categoriesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '95%',
+    // backgroundColor: Colors.white,
+    // height: '10%',
+  },
+  mainContainer: {
+    height: '100%',
+    width: '100%',
+  },
+  blacktheme: {
+    backgroundColor: Colors.black,
+  },
+  whiteTheme: {
+    backgroundColor: Colors.main,
+  },
+  blackText: {
+    color: Colors.black,
+  },
+  whitetext: {
+    color: Colors.main,
+  },
+  cardColor: {
+    backgroundColor: Colors.Textinput,
+  },
+  Productstext: {
+    color: Colors.black,
+    // fontWeight: '700',
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 24,
+    marginLeft: 20,
+    // marginTop: 10,
+    marginBottom: 5,
+  },
+  imageContainer: {
+    backgroundColor: '#3E54AC1A',
+    width: '100%',
+    height: 150,
+    // marginTop: 5,
+    // borderRadius: 8,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    // borderBottomRightRadius: 8,
+    // borderBottomLeftRadius: 8,
+  },
+  name: {
+    fontSize: 12,
+    // fontWeight: '400',
+    fontFamily: 'Poppins-Medium',
+    color: Colors.black,
+    marginLeft: 10,
+    marginTop: 5,
+    width: 100,
+    height: 20,
+  },
+  addButton: {
+    borderColor: '#3E54AC',
+    borderWidth: 1,
+    borderRadius: 4,
+    alignItems: 'center',
+    height: 18,
+    width: 18,
+    // backgroundColor: '#fff',
+  },
+  price: {
+    fontSize: 12,
+    fontWeight: '900',
+    color: Colors.buttonColor,
+    marginLeft: 10,
+    marginTop: 5,
+  },
+});
+export default style;
