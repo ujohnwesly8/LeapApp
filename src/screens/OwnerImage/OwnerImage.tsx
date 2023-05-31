@@ -16,6 +16,7 @@ import Sizeselection from '../../components/atoms/Sizeselect';
 // import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import Useownerimage from './Useownerimage';
 import Styles from '../LoginScreen/LoginStyle';
+import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import Colors from '../../constants/Colors';
 import Ownerstyles from '../Additems/Additemsstyle';
 import BackButton from '../../components/atoms/BackButton/BackButton';
@@ -38,6 +39,8 @@ export default function Owneraddimages() {
     selectedImage,
     imageUrls,
     pickImages,
+    closeModal,
+    showModal,
     formik,
     isLoading,
   } = Useownerimage();
@@ -199,6 +202,11 @@ export default function Owneraddimages() {
           </View>
         </View>
       </View>
+      <CustomModal
+        showModal={showModal}
+        onClose={closeModal}
+        message="Product added successfully!"
+      />
     </ScrollView>
   );
 }
