@@ -23,6 +23,7 @@ import styles from '../../constants/themeColors';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import BackButton from '../../components/atoms/BackButton/BackButton';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 const Additems = () => {
   const {
     name,
@@ -39,8 +40,10 @@ const Additems = () => {
     isLoading,
     handleDescriptionChange,
     handleBlur,
+    formik,
   } = Useadditems();
-
+  const {colorScheme} = useContext(ColorSchemeContext);
+  // const {formik} = AddItemsformik();
   return (
     <ScrollView
       style={{
@@ -70,12 +73,14 @@ const Additems = () => {
 
           <View
             style={[
-              Ownerstyles.Scrollcontainer
+              Ownerstyles.Scrollcontainer,
+              colorScheme === 'dark' ? styles.blacktheme : styles.whiteTheme,
             ]}>
             <View style={Ownerstyles.scroll}>
               <Text
                 style={[
-                  Ownerstyles.EditText
+                  Ownerstyles.EditText,
+                  colorScheme === 'dark' ? styles.whitetext : styles.blackText,
                 ]}>
                 Add products
               </Text>
@@ -84,27 +89,48 @@ const Additems = () => {
                 placeholder="Name"
                 style={[
                   Ownerstyles.Namefield,
-                  {paddingLeft: 22}
+                  {paddingLeft: 22},
+                  colorScheme === 'dark' ? styles.cardColor : styles.main,
+                  colorScheme === 'dark'
+                    ? styles.placeholder
+                    : styles.blackText,
                 ]}
                 value={name}
                 onChangeText={handleNameChange}
                 onBlur={() => handleBlur('name')}
               />
+              {formik.touched.name && formik.errors.name && (
+                <Text style={Styles.errorText}>{formik.errors.name}</Text>
+              )}
               <TextInput
                 placeholderTextColor={Colors.gray}
                 placeholder="Description"
                 style={[
-                  Ownerstyles.Descriptionfield
+                  Ownerstyles.Descriptionfield,
+                  {paddingLeft: 22},
+                  colorScheme === 'dark' ? styles.cardColor : styles.main,
+                  colorScheme === 'dark'
+                    ? styles.placeholder
+                    : styles.blackText,
                 ]}
                 multiline
                 onChangeText={handleDescriptionChange}
                 onBlur={() => handleBlur('description')}
                 value={description}
               />
+              {formik.touched.description && formik.errors.description && (
+                <Text style={Styles.errorText}>
+                  {formik.errors.description}
+                </Text>
+              )}
               <GenderDropdown
                 onSelectGender={setGender}
                 onChange={handleGenderChange}
               />
+              {formik.touched.gender && formik.errors.gender && (
+                <Text style={Styles.errorText}>{formik.errors.gender}</Text>
+              )}
+
               <View style={{flexDirection: 'column', marginTop: -20}}>
                 <TypeDropdown
                   onSelectType={setItemType}
@@ -116,6 +142,11 @@ const Additems = () => {
                   onSelectEvent={setEventType}
                   onChange={handleEventTypeChange}
                 />
+                {formik.touched.eventType && formik.errors.eventType && (
+                  <Text style={Styles.errorText}>
+                    {formik.errors.eventType}
+                  </Text>
+                )}
               </View>
               <View style={{flexDirection: 'column', marginTop: -17}}>
                 <OutfitDropdown
@@ -125,6 +156,17 @@ const Additems = () => {
               </View>
 
               <View style={Ownerstyles.mainButton}>
+                <TouchableOpacity
+                  disabled={!formik.isValid}
+                  style={[
+                    Ownerstyles.mainTouchable,
+                    {
+                      backgroundColor: formik.isValid ? '#9747FF' : '#A5C9CA',
+                    },
+                  ]}
+                  onPress={formik.handleSubmit}>
+                  <Text style={Ownerstyles.touchableText}>Continue</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
