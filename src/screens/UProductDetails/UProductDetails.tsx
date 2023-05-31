@@ -22,6 +22,7 @@ import DatePicker from '../../components/atoms/DatePicker Detail';
 import styles from './UProductDetailsStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {OwnerProductsById, ProductsById, url} from '../../constants/Apis';
+import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import Styles from '../../constants/themeColors';
 import Colors from '../../constants/Colors';
 import DateRangePicker from '../../components/atoms/CalanderPicker';
@@ -40,7 +41,8 @@ export default function UDetailScreen({route, navigation}: Props) {
   const [rentalStartDate, setRentalStartDate] = useState(new Date());
   const [rentalEndDate, setRentalEndDate] = useState(new Date());
   const [quantity, setQuantity] = useState(1);
-  // const [, setIsQuantity] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [showwModal, settShowModal] = useState(false);
   const [, setIsQuantity] = useState(true);
   const [isMinusDisabled, setIsMinusDisabled] = useState(true);
   const [isPlusDisabled, setIsPlusDisabled] = useState(false);
@@ -97,17 +99,34 @@ export default function UDetailScreen({route, navigation}: Props) {
       .then(response => {
         console.log('Success:', response);
         if (response.status === 400) {
+          opennModal();
         }
         console.log(response);
         return response.json();
       })
       .then(data => {
         console.log('Data:', data);
+        openModal();
       })
       .catch(error => {
         console.log(error);
         // console.error('Error:', error);
       });
+  };
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const opennModal = () => {
+    settShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+    // navigation.navigate('CartScreen');
+    productsData();
+    // fetchQuantityData();
+  };
+  const closeeModal = () => {
+    settShowModal(false);
   };
   const scrollViewRef = useRef<ScrollView>(null);
   const scrollTimerRef = useRef<number | null>(null);
@@ -322,6 +341,16 @@ export default function UDetailScreen({route, navigation}: Props) {
           </View>
         </View>
       </View>
+      <CustomModal
+        showModal={showModal}
+        onClose={closeModal}
+        message="Item added successfully!"
+      />
+      <CustomModal
+        showModal={showwModal}
+        onClose={closeeModal}
+        message="Quantity is unavailable"
+      />
     </ScrollView>
   );
 }
