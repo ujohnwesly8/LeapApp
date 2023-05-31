@@ -72,5 +72,60 @@ const style = StyleSheet.create({
     color: Colors.buttonColor,
     fontFamily: 'Poppins-SemiBold',
   },
+  rentButton: {
+    borderWidth: 1,
+    borderRadius: 4,
+
+    borderColor: '#3E54AC',
+
+    width: 57,
+    height: 18,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 3,
+  },
+  wishlistButton: {
+    width: 35,
+    height: 35,
+
+    borderRadius: 20,
+    // elevation: 5,
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textContainer: {},
+  rentText: {color: '#3E54AC', fontWeight: 'bold', fontSize: 10},
+
+  searchInputContainer: {
+    height: 50,
+    width: 350,
+    backgroundColor: 'white',
+    marginTop: 15,
+    marginLeft: 20,
+    borderColor: '#3E54AC',
+    borderWidth: 2,
+    borderRadius: 12,
+
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  cardTextContainer: {
+    // height: 40,
+    width: '100%',
+    // backgroundColor: Colors.white,
+    marginTop: 60,
+    borderRadius: 5,
+    padding: 6,
+    marginLeft: 5,
+  },
+  Cartcontents: {
+    marginTop: 25,
+    // flexDirection: 'row',
+    // backgroundColor: Colors.white,
+  },
 });
 export default style;
