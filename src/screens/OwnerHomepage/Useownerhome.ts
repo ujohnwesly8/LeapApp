@@ -141,6 +141,38 @@ function Useownerhome() {
     fetchRecentlyAdded();
   }, [isFocused]);
 
+  const handleDisablebutton = async (id, disableQuantity) => {
+    console.log('item id ', id);
+    console.log('product Quantity is ', disableQuantity);
+    // setIsLoading(true);
+    try {
+      const response = await ApiService.get(
+        `https://33fe-106-51-70-135.ngrok-free.app/api/v1/product/disableProduct?productId=${id}&quantity=${disableQuantity}`,
+      );
+      console.log('product disable', response);
+      setOutofstock(true);
+    } catch (error) {
+      console.log('product enable Error', error);
+      // setIsLoading(true);
+    }
+    setIsModalVisible(false);
+  };
+  const handleEnablebutton = async (id, enableQuantity) => {
+    console.log('item id ', id);
+    // setIsLoading(true);
+    try {
+      const response = await ApiService.get(
+        `https://33fe-106-51-70-135.ngrok-free.app/api/v1/product/enableProduct?productId=${id}&quantity=${enableQuantity}`,
+      );
+      console.log('product Enable', response);
+      setOutofstock(true);
+    } catch (error) {
+      console.log('product disable Error', error);
+      // setIsLoading(true);
+    }
+    setIsModalVisible(false);
+  };
+
   return {
     products,
     handleAdditems,
@@ -148,6 +180,7 @@ function Useownerhome() {
     handleMyrentals,
     handleDisableProduct,
     setIsModalVisible,
+    handleDisablebutton,
     setIsMinusDisabled,
     setIsPlusDisabled,
     setIsQuantity,
@@ -167,6 +200,7 @@ function Useownerhome() {
     selectedProductId,
     outofStock,
     setOutofstock,
+    handleEnablebutton,
   };
 }
 export default Useownerhome;
