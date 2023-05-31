@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {removeFromWishlist} from '../../redux/actions/actions';
 import {Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import ApiService from '../../network/network';
 function useHome() {
   const [refreshing, setRefreshing] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
@@ -17,6 +18,7 @@ function useHome() {
   const navigation = useNavigation();
   const searchProducts = async (query: any) => {
     try {
+      const data = await ApiService.get(`${url}/product/search?query=${query}`);
       // const data = await response.json();
       navigation.navigate('SearchResultsScreen', {searchResults: data});
       setData(data);
