@@ -25,6 +25,7 @@ import Colors from '../../constants/Colors';
 import Lottie from 'lottie-react-native';
 import BackButton from '../../components/atoms/BackButton/BackButton';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
+import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
 
@@ -41,6 +42,9 @@ const App = () => {
     imageUrls,
     selectedImage,
     RemoveProducts,
+    closeModal,
+    showModal,
+    setShowModal,
     handleRemoveImage,
     handleremove,
     name,
@@ -354,6 +358,11 @@ const App = () => {
                   </TouchableOpacity>
                 </View>
               </View>
+              <CustomModal
+                showModal={showModal}
+                onClose={closeModal}
+                message="Product has been deleted!"
+              />
             </View>
           ))
         )}
