@@ -11,6 +11,8 @@ import {Logout} from '../../redux/actions/actions';
 import useCart from '../Cart/useCart';
 import Styles from '../../constants/themeColors';
 import Colors from '../../constants/Colors';
+import ToggleButton from 'react-native-paper/lib/typescript/src/components/ToggleButton/ToggleButton';
+import Togglebutton from '../../components/atoms/Colorscheme/Togglebutton';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {TextInput} from 'react-native-gesture-handler';
 type Props = {
@@ -33,6 +35,7 @@ const Profile = ({navigation}: Props) => {
         <View style={style.buttonContainer}>
           <View>
             <SwitchAccountButton />
+            <Togglebutton />
           </View>
 
           {/* <View style={{flexDirection: 'row', marginLeft: '80%'}}> */}
@@ -49,6 +52,15 @@ const Profile = ({navigation}: Props) => {
         <View style={style.imageContainer}>
           <AddImages />
         </View>
+        {isLoading ? (
+          <SkeletonPlaceholder
+            highlightColor="#e0e0e0"
+            backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
+            <View>
+              <TextInput style={style.card} placeholderTextColor="#999" />
+            </View>
+          </SkeletonPlaceholder>
+        ) : (
           <View
             style={[
               style.card,
@@ -76,6 +88,8 @@ const Profile = ({navigation}: Props) => {
               {phonenumber}
             </Text>
           </View>
+        )}
+
         {/* </View> */}
         <View style={style.profileFields}>
           <TouchableOpacity
