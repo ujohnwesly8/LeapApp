@@ -13,32 +13,67 @@ import {
   View,
   ImageBackground,
   TouchableOpacity,
+  useColorScheme,
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import DatePicker from '../../components/atoms/DatePicker Detail';
+// import {ScrollView} from 'react-native-gesture-handler';
 import styles from './UProductDetailsStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {OwnerProductsById, ProductsById, url} from '../../constants/Apis';
 import Styles from '../../constants/themeColors';
 import Colors from '../../constants/Colors';
+import DateRangePicker from '../../components/atoms/CalanderPicker';
+import CalendarPicker from 'react-native-calendar-picker';
 import {useNavigation} from '@react-navigation/native';
+import ApiService from '../../network/network';
 import useCart from '../Cart/useCart';
 import {Pagination} from 'react-native-snap-carousel';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 type Props = {
   route: {params: {product: any}};
   navigation: any;
 };
 export default function UDetailScreen({route, navigation}: Props) {
   const {product} = route.params;
+  const [rentalStartDate, setRentalStartDate] = useState(new Date());
+  const [rentalEndDate, setRentalEndDate] = useState(new Date());
+  const [quantity, setQuantity] = useState(1);
+  // const [, setIsQuantity] = useState(true);
+  const [, setIsQuantity] = useState(true);
+  const [isMinusDisabled, setIsMinusDisabled] = useState(true);
+  const [isPlusDisabled, setIsPlusDisabled] = useState(false);
   const [productData, setProductData] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
   const Quantity = product.quantity;
+  const {colorScheme} = useContext(ColorSchemeContext);
   // const {fetchQuantityData} = useCart();
   // const navigation = useNavigation();
+  useEffect(() => {
+    console.log(colorScheme);
+  });
   console.log('Product Quantity is :', Quantity);
+  const handleDecrement = () => {
+    setQuantity(quantity - 1);
+    setIsQuantity(true);
+    if (quantity === 1) {
+      setIsMinusDisabled(true);
+    }
+    setIsPlusDisabled(false);
+  };
+  const handleIncrement = () => {
+    setQuantity(quantity + 1);
+    setIsQuantity(true);
+    if (quantity === product.quantity - 1) {
+      setIsPlusDisabled(true);
+    }
+    setIsMinusDisabled(false);
+  };
   console.log(product.id);
   const ProductId = product.id;
   const productsData = async () => {
+    const result = await ApiService.get(`${ProductsById}/${ProductId}`);
     console.log('result is :', result);
     setProductData(result);
   };
@@ -46,6 +81,9 @@ export default function UDetailScreen({route, navigation}: Props) {
   const handleSubmit = async () => {
     const item = {
       productId: product.id,
+      quantity: quantity,
+      rentalEndDate: rentalEndDate.toISOString(),
+      rentalStartDate: rentalStartDate.toISOString(),
     };
     const token = await AsyncStorage.getItem('token');
     fetch(`${url}/cart/add`, {
@@ -106,10 +144,12 @@ export default function UDetailScreen({route, navigation}: Props) {
     <ScrollView
       style={{
         width: '100%',
+        backgroundColor: colorScheme === 'dark' ? Colors.black : Colors.white,
       }}>
       <View
         style={[
           styles.container,
+          colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
         ]}>
         <StatusBar translucent backgroundColor={'rgba(0,0,0,0)'} />
         <View style={styles.dheader}>
@@ -161,16 +201,19 @@ export default function UDetailScreen({route, navigation}: Props) {
         <View
           style={[
             styles.detailsContainer,
+            colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
           ]}>
           <Text
             style={[
               styles.detailsPrice,
+              colorScheme === 'dark' ? Styles.priceTect : Styles.priceTect,
             ]}>
             ₹{product.price}
           </Text>
           <Text
             style={[
               styles.detailsdescription,
+              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
             ]}>
             {product.description}
           </Text>
@@ -185,17 +228,26 @@ export default function UDetailScreen({route, navigation}: Props) {
               style={[
                 styles.headingtext,
                 {marginTop: 10},
+                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
               ]}>
               Rent
             </Text>
+            <DateRangePicker
+              startDate={rentalStartDate}
+              endDate={rentalEndDate}
+              onStartDateChange={setRentalStartDate}
+              onEndDateChange={setRentalEndDate}
+            />
           </View>
           <View
             style={[
               styles.size,
+              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
             ]}>
             <Text
               style={[
                 styles.sizelabel,
+                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
               ]}>
               Size
             </Text>
@@ -212,6 +264,7 @@ export default function UDetailScreen({route, navigation}: Props) {
               <Text
                 style={[
                   styles.detailsSize,
+                  colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
                 ]}>
                 {product.size}
               </Text>
@@ -220,15 +273,42 @@ export default function UDetailScreen({route, navigation}: Props) {
           <View
             style={[
               styles.quantityContainer,
+              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
             ]}>
             <View>
               <Text
                 style={[
                   styles.Quatitytext,
+                  colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
                 ]}>
                 Quantity
               </Text>
             </View>
+            <TouchableOpacity
+              style={[
+                styles.quantityButton,
+                isMinusDisabled && styles.disabledButton,
+              ]}
+              onPress={handleDecrement}
+              disabled={quantity === 1 || isMinusDisabled}>
+              <Text style={styles.quantityButtonText}>-</Text>
+            </TouchableOpacity>
+            <Text
+              style={[
+                styles.quantityText,
+                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+              ]}>
+              {quantity}
+            </Text>
+            <TouchableOpacity
+              style={[
+                styles.plusquantityButton,
+                isPlusDisabled && styles.disabledButton,
+              ]}
+              onPress={handleIncrement}
+              disabled={quantity === Quantity || isPlusDisabled}>
+              <Text style={styles.quantityButtonText}>+</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.touchablebtnContainer}>
             <TouchableOpacity
