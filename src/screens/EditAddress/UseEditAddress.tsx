@@ -16,6 +16,13 @@ export const useEditaddress = () => {
   const [country, setCountry] = useState(address.country);
   const [selectedOption, setSelectedOption] = useState('home');
   const [isLoading, setIsLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+  };
   const handleOptionChange = value => {
     setSelectedOption(value);
   };
@@ -29,6 +36,7 @@ export const useEditaddress = () => {
   };
   const handleUpdateAddress = async () => {
     try {
+      openModal();
       const token = await AsyncStorage.getItem('token');
       const updateaddress = {
         addressLine1: addressLine1,
@@ -68,6 +76,10 @@ export const useEditaddress = () => {
     city,
     addressLine1,
     setStateName,
+    closeModal,
+    openModal,
+    setShowModal,
+    showModal,
     postalCode,
     setPostalCode,
     addressLine2,

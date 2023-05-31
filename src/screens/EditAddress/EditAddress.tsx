@@ -17,6 +17,7 @@ import {RadioButton} from 'react-native-paper';
 import {OwnerAddressCustomHook} from '../Owneraddaddress/Useowneraddress';
 import {useEditaddress} from './UseEditAddress';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import BackButton from '../../components/atoms/BackButton/BackButton';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
@@ -35,6 +36,8 @@ const EditAddress = () => {
     setAddressLine2,
     setPostalCode,
     handleCheckboxChange,
+    closeModal,
+    showModal,
     setStateName,
     // isLoading,
     city,
@@ -249,6 +252,11 @@ const EditAddress = () => {
               onPress={handleUpdateAddress}>
               <Text style={[styles.btntextAddress]}>Update Address </Text>
             </TouchableOpacity>
+            <CustomModal
+              showModal={showModal}
+              onClose={closeModal}
+              message="Address Updated!"
+            />
           </View>
         </>
       )}
