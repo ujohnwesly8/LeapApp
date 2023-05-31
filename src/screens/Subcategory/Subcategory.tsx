@@ -14,11 +14,14 @@ import Colors from '../../constants/Colors';
 import useCart from '../Cart/useCart';
 import Styles from '../../constants/themeColors';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 const SubcategoryList = ({route}) => {
   const {categoryId} = route.params;
   const [subcategories, setSubcategories] = useState([]);
+  // const {colorScheme} = useCart();
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
+  const {colorScheme} = useContext(ColorSchemeContext);
   useEffect(() => {
     const fetchSubcategories = async () => {
       const token = await AsyncStorage.getItem('token'); // replace with your actual token
@@ -49,6 +52,7 @@ const SubcategoryList = ({route}) => {
             height: '100%',
             backgroundColor: Colors.main,
           },
+          colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
         ]}>
         <Lottie
           source={require('../../../assets/loading2.json')}
@@ -64,6 +68,7 @@ const SubcategoryList = ({route}) => {
         <Text
           style={[
             {color: Colors.white, fontSize: 15, fontWeight: '600'},
+            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
           ]}>
           The Items are Loading...
         </Text>
@@ -72,6 +77,7 @@ const SubcategoryList = ({route}) => {
   }
   return (
     <ScrollView
+      style={colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme}>
       <HeadingText message="Subcategories" />
       {/* <TouchableOpacity
         style={styles.backBtn}
@@ -88,6 +94,7 @@ const SubcategoryList = ({route}) => {
       <Text
         style={[
           styles.textStyle,
+          colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
         ]}>
         Shop by Subcategories
       </Text> */}
@@ -109,6 +116,7 @@ const SubcategoryList = ({route}) => {
                 <View
                   style={[
                     styles.categoryBox,
+                    colorScheme === 'dark' ? Styles.cardColor : Styles.main,
                   ]}>
                   <View style={styles.imageContainer}>
                     <Image
@@ -120,6 +128,9 @@ const SubcategoryList = ({route}) => {
                     <Text
                       style={[
                         styles.categoryText,
+                        colorScheme === 'dark'
+                          ? Styles.whitetext
+                          : Styles.blackText,
                       ]}>
                       {item.subcategoryName}
                     </Text>
