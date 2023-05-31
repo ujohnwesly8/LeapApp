@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Modal,
   ActivityIndicator,
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
@@ -28,8 +29,10 @@ const MyOrder = ({navigation}: Props) => {
   const dispatch = useDispatch();
   const orderData = useSelector(state => state.OrderProducts.data);
   const OrderProducts = useSelector(state => state.OrderProducts.data);
+  const [showModal, setShowModal] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // New state variable
   const {colorScheme} = useContext(ColorSchemeContext);
   const [isLoading, setIsLoading] = useState(true);
   const onRefresh = async () => {
@@ -40,7 +43,10 @@ const MyOrder = ({navigation}: Props) => {
   useEffect(() => {
     dispatch(fetchOrderProducts());
   }, [dispatch]);
- 
+  const openModal = order => {
+    setSelectedOrder(order);
+    setIsModalOpen(true);
+  };
   useEffect(() => {
     const fetchOrderData = async () => {
       setIsLoading(true);
@@ -50,6 +56,14 @@ const MyOrder = ({navigation}: Props) => {
 
     fetchOrderData();
   }, [dispatch]);
+
+  const closeModal = () => {
+    setSelectedOrder(null);
+    setIsModalOpen(false);
+  };
+  {
+    console.log('isLoading is :', isLoading);
+  }
 
   if (isLoading) {
     return (
@@ -148,12 +162,14 @@ const MyOrder = ({navigation}: Props) => {
                   style.cardContainer,
                   colorScheme === 'dark' ? Styles.cardColor : Styles.main,
                 ]}
-               >
+                onPress={() => openModal(order)}
+                disabled={isModalOpen}>
                 {order.orderItems.map((item: any) => (
                   <TouchableOpacity
                     key={`${order.id}-${item.id}`} // Update the key to include both order.id and item.id
                     style={style.cardTextContainer}
-                  >
+                    onPress={() => openModal(order)}
+                    disabled={isModalOpen}>
                     <View style={style.orderInfoContainer}>
                       <Text
                         style={[
@@ -205,8 +221,122 @@ const MyOrder = ({navigation}: Props) => {
           )}
         </ScrollView>
       </ScrollView>
+      <OrderDetailsModal
+        order={selectedOrder}
+        onClose={closeModal}
+        visible={isModalOpen}
+      />
     </>
   );
 };
+const OrderDetailsModal = ({order, onClose, visible}) => {
+  const {colorScheme} = useContext(ColorSchemeContext);
+  if (!visible) {
+    return null;
+  }
 
+  return (
+    <Modal
+      visible={true}
+      animationType="slide"
+      transparent={false}
+      onRequestClose={onClose}>
+      <View
+        style={[
+          {backgroundColor: Colors.main},
+          colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
+        ]}>
+        <TouchableOpacity style={style.closeButton} onPress={onClose}>
+          <Text style={style.closeButtonText}>Close</Text>
+        </TouchableOpacity>
+      </View>
+      <View
+        style={[
+          {backgroundColor: Colors.main, width: '100%', height: '120%'},
+          colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
+        ]}>
+        <View style={style.modalContainer}>
+          <ScrollView style={{flex: 1}}>
+            <View style={{marginTop: 10}}>
+              <Text
+                style={[
+                  style.totalOrderText,
+                  colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+                ]}>
+                Order ID: {order.id}
+              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text
+                  style={[
+                    style.totalOrderText,
+                    colorScheme === 'dark'
+                      ? Styles.whitetext
+                      : Styles.blackText,
+                  ]}>
+                  Total Price: {'₹' + order.totalPrice}
+                </Text>
+              </View>
+              {order.orderItems.map(item => (
+                <View
+                  style={[
+                    {
+                      flexDirection: 'row',
+                      width: '90%',
+                      height: 150,
+                      borderRadius: 10,
+                      marginBottom: 10,
+                    },
+                    colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+                  ]}
+                  key={item.id}>
+                  <Image source={{uri: item.imageUrl}} style={style.image} />
+                  <View style={{marginTop: 10, marginLeft: 10}}>
+                    <Text
+                      style={[
+                        style.productname,
+                        colorScheme === 'dark'
+                          ? Styles.priceTect
+                          : Styles.blackText,
+                      ]}>
+                      {item.name}
+                    </Text>
+                    <Text
+                      style={[
+                        style.QuantityText,
+                        colorScheme === 'dark'
+                          ? Styles.whitetext
+                          : Styles.blackText,
+                      ]}>
+                      Quantity: {item.quantity}
+                    </Text>
+                    <Text
+                      style={[
+                        style.QuantityText,
+                        colorScheme === 'dark'
+                          ? Styles.whitetext
+                          : Styles.blackText,
+                      ]}>
+                      {item.rentalStartDate}
+                    </Text>
+                    <Text
+                      style={[
+                        style.QuantityText,
+                        colorScheme === 'dark'
+                          ? Styles.whitetext
+                          : Styles.blackText,
+                      ]}>
+                      {item.rentalEndDate}
+                    </Text>
+                    <Text style={[style.orderText]}>{item.status}</Text>
+                    {/* <Text style={style.productname}>Size: {item.size}</Text> */}
+                  </View>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+      </View>
+    </Modal>
+  );
+};
 export default MyOrder;
