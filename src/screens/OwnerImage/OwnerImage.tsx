@@ -16,7 +16,6 @@ import Sizeselection from '../../components/atoms/Sizeselect';
 // import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import Useownerimage from './Useownerimage';
 import Styles from '../LoginScreen/LoginStyle';
-import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import Colors from '../../constants/Colors';
 import Ownerstyles from '../Additems/Additemsstyle';
 import BackButton from '../../components/atoms/BackButton/BackButton';
@@ -39,8 +38,6 @@ export default function Owneraddimages() {
     selectedImage,
     imageUrls,
     pickImages,
-    closeModal,
-    showModal,
     formik,
     isLoading,
   } = Useownerimage();
@@ -58,13 +55,16 @@ export default function Owneraddimages() {
           OwnerImagestyles.Scroll,
           colorScheme === 'dark' ? styles.blacktheme : styles.whiteTheme,
         ]}>
+        <HeadingText message="Add products" />
         <View style={[OwnerImagestyles.form]}>
           {/* <Spinner
             visible={isLoading}
             textContent={'Loading...'}
             textStyle={{color: Colors.white}}
           /> */}
-
+          <View style={[OwnerImagestyles.ImageBox]}>
+            {imageUrls && areImagesUploaded ? (
+              <>
                 <ScrollView
                   horizontal
                   style={[
@@ -73,6 +73,8 @@ export default function Owneraddimages() {
                       ? styles.blacktheme
                       : styles.whiteTheme,
                   ]}>
+                  {imageUrls.map((image, index) => (
+                    <View key={index} style={[OwnerImagestyles.ImageContainer]}>
                       <Image
                         style={[
                           OwnerImagestyles.image,
@@ -82,10 +84,28 @@ export default function Owneraddimages() {
                         ]}
                         source={{uri: image}}
                       />
+                      <TouchableOpacity
+                        onPress={() => handleRemoveImage(index)}
+                        style={OwnerImagestyles.removeIconContainer}>
+                        <MaterialIcons
+                          name="cancel"
+                          size={25}
+                          color={Colors.red}
+                        />
+                      </TouchableOpacity>
                     </View>
                   ))}
                 </ScrollView>
- 
+                {areImagesUploaded && (
+                  <View style={OwnerImagestyles.removeContainer}>
+                    <TouchableOpacity
+                      onPress={pickImages}
+                      style={OwnerImagestyles.touchableContainer}>
+                      <Text style={OwnerImagestyles.removeText}>Add More</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </>
             ) : (
               <>
                 {isLoading ? (
@@ -99,6 +119,11 @@ export default function Owneraddimages() {
                       colorScheme === 'dark' ? styles.cardColor : styles.main,
                     ]}
                     onPress={pickImages}>
+                    <Lottie
+                      source={require('../../../assets/addimageol.json')}
+                      style={OwnerImagestyles.imagesText}
+                      autoPlay
+                    />
                     {!isLoading && (
                       <Text
                         style={[
@@ -142,7 +167,19 @@ export default function Owneraddimages() {
             {formik.touched.price && formik.errors.price && (
               <Text style={Styles.errorText}>{formik.errors.price}</Text>
             )}
-
+            <TextInput
+              keyboardType="numeric"
+              placeholder="Select quantity"
+              placeholderTextColor="gray"
+              style={[
+                OwnerImagestyles.quantity,
+                {paddingLeft: 25},
+                colorScheme === 'dark' ? styles.cardColor : styles.whiteTheme,
+                colorScheme === 'dark' ? styles.placeholder : styles.blackText,
+              ]}
+              onChangeText={handleQuantityChange}
+              onBlur={() => handleBlur('quantity')}
+            />
             {formik.touched.quantity && formik.errors.quantity && (
               <Text style={Styles.errorText}>{formik.errors.quantity}</Text>
             )}
@@ -162,7 +199,6 @@ export default function Owneraddimages() {
           </View>
         </View>
       </View>
-
     </ScrollView>
   );
 }
