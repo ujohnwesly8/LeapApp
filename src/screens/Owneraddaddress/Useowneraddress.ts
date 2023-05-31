@@ -19,8 +19,16 @@ export const OwnerAddressCustomHook = () => {
   const [isFocused] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const navigation = useNavigation();
   // const {FetchAddress} = OwnerAddressCustomHook();
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+    fetchData();
+  };
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -63,6 +71,13 @@ export const OwnerAddressCustomHook = () => {
   };
   // Pincode Api call
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchData();
+    });
+    return unsubscribe;
+  }, [fetchData, navigation]);
+
   const dispatch = useDispatch();
   const handleEditItems = item => {
     navigation.navigate('EditAddress', {address: item});
@@ -94,12 +109,15 @@ export const OwnerAddressCustomHook = () => {
     addressLine1,
     addressLine2,
     setCity,
+    showModal,
     setCountry,
     setaddressLine1,
     setaddressLine2,
     isLoading,
     setStateName,
     setpostalCode,
+    openModal,
+    closeModal,
     handleEditItems,
     // FetchAddress,
   };
