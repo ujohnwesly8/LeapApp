@@ -4,12 +4,9 @@ import {fetchWishlistProducts} from '../../redux/slice/wishlistSlice';
 import {removeFromWishlist} from '../../redux/actions/actions';
 import {url} from '../../constants/Apis';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Alert, useColorScheme} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {ColorSchemeContext} from '../../../ColorSchemeContext';
 function useWishlist() {
   const navigation = useNavigation();
-  const {colorScheme} = useContext(ColorSchemeContext);
   const [isLoading, setIsLoading] = useState(true);
   const removefromWishlist = async (productId: any) => {
     const token = await AsyncStorage.getItem('token');
@@ -23,7 +20,6 @@ function useWishlist() {
       .then(response => response.json())
       .then(data => {
         dispatch(removeFromWishlist(productId));
-        openModal();
       })
       .catch(error => {
         console.error(error);
@@ -36,17 +32,12 @@ function useWishlist() {
   console.log(JSON.stringify(WishlistProducts));
   // const length = WishlistProducts.length();
   console.log('wishlist succes');
-  const onRefresh = async () => {
-    await dispatch(fetchWishlistProducts());
-  };
   useEffect(() => {
     dispatch(fetchWishlistProducts());
   }, [dispatch]);
   return {
     WishlistProducts,
     removefromWishlist,
-    onRefresh,
-    colorScheme,
     isLoading,
   };
 }
