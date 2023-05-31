@@ -25,7 +25,7 @@ import Colors from '../../constants/Colors';
 import Lottie from 'lottie-react-native';
 import BackButton from '../../components/atoms/BackButton/BackButton';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
-import CustomModal from '../../components/atoms/CustomModel/CustomModel';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
 
 const App = () => {
@@ -72,6 +72,7 @@ const App = () => {
   };
 
   const navigation = useNavigation();
+  const {colorScheme} = useContext(ColorSchemeContext);
 
   return (
     <SafeAreaView>
@@ -79,7 +80,8 @@ const App = () => {
         <SafeAreaView>
           <ScrollView
             style={[
-              {width: '100%', height: '100%'}
+              {width: '100%', height: '100%'},
+              colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
             ]}>
             {/* <HeadingText message="Edit product" /> */}
             <TouchableOpacity onPressIn={() => setViisble(!visible)}>
@@ -88,10 +90,14 @@ const App = () => {
             <View
               style={[
                 styles.form,
+                colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
               ]}>
               <View
                 style={[
                   Ownerstyles.Scrollcontainer,
+                  colorScheme === 'dark'
+                    ? Styles.blacktheme
+                    : Styles.whiteTheme,
                 ]}>
                 <View style={Ownerstyles.scrolledit}>
                   <TextInput
@@ -100,6 +106,10 @@ const App = () => {
                     style={[
                       Ownerstyles.Namefield,
                       {paddingLeft: 22},
+                      colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+                      colorScheme === 'dark'
+                        ? Styles.whitetext
+                        : Styles.blackText,
                     ]}
                     onChangeText={setName}
                     value={name}
@@ -111,6 +121,10 @@ const App = () => {
                     style={[
                       Ownerstyles.Descriptionfield,
                       {paddingLeft: 22},
+                      colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+                      colorScheme === 'dark'
+                        ? Styles.whitetext
+                        : Styles.blackText,
                     ]}
                     onChangeText={setDescription}
                     multiline
@@ -175,11 +189,21 @@ const App = () => {
                         <View
                           style={[
                             OwnerEditItemstyles.Addimage,
+                            colorScheme === 'dark'
+                              ? Styles.cardColor
+                              : Styles.main,
+                            colorScheme === 'dark'
+                              ? Styles.cardColor
+                              : Styles.main,
                           ]}>
                           <Text
                             onPress={pickImg}
                             style={[
                               OwnerEditItemstyles.imagesText,
+
+                              colorScheme === 'dark'
+                                ? Styles.whitetext
+                                : Styles.blackText,
                             ]}>
                             Add Image
                           </Text>
@@ -192,6 +216,10 @@ const App = () => {
                       style={[
                         OwnerEditItemstyles.Price,
                         {paddingLeft: 15},
+                        colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+                        colorScheme === 'dark'
+                          ? Styles.whitetext
+                          : Styles.blackText,
                       ]}
                       placeholder="Set price"
                       placeholderTextColor={Colors.black}
@@ -206,6 +234,10 @@ const App = () => {
                       style={[
                         OwnerEditItemstyles.Price,
                         {paddingLeft: 15},
+                        colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+                        colorScheme === 'dark'
+                          ? Styles.whitetext
+                          : Styles.blackText,
                       ]}
                       value={quantity.toString()}
                       onChangeText={setQuantity}
@@ -227,6 +259,7 @@ const App = () => {
       <ScrollView
         style={[
           {width: '100%', height: '100%'},
+          colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
         ]}>
         <View>
           <HeadingText message="Edit Product" />
@@ -258,6 +291,7 @@ const App = () => {
           <Text
             style={[
               styles.titleText,
+              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
             ]}>
             My Products
           </Text>
@@ -275,6 +309,7 @@ const App = () => {
             <View
               style={[
                 styles.mainContainer,
+                colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
               ]}
               key={item.id}>
               <View style={[styles.item_course]}>
@@ -288,10 +323,14 @@ const App = () => {
                   <View
                     style={[
                       OwnerEditItemstyles.priceContainer,
+                      colorScheme === 'dark' ? Styles.cardColor : Styles.main,
                     ]}>
                     <Text
                       style={[
                         styles.txt_name,
+                        colorScheme === 'dark'
+                          ? Styles.whitetext
+                          : Styles.blackText,
                       ]}>
                       {item.name}
                     </Text>
