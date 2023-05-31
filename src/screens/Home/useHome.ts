@@ -14,6 +14,7 @@ function useHome() {
   const [searchQuery, setSearchQuery] = useState('');
   const [Data, setData] = useState([]);
   const [oldData, setOldDate] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   // const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const searchProducts = async (query: any) => {
@@ -27,6 +28,13 @@ function useHome() {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
   };
   useEffect(() => {
     dispatch(fetchUserProducts());
@@ -51,6 +59,7 @@ function useHome() {
         // console.log('Item removed from cart:', data);
         dispatch(removeFromWishlist(productId));
         // Alert.alert('Item Removed from Wishlist');
+        openModal();
       })
       .catch(error => {
         console.log(error);
@@ -72,6 +81,9 @@ function useHome() {
     searchProducts,
     setSearchQuery,
     loading,
+    openModal,
+    closeModal,
+    showModal,
   };
 }
 export default useHome;
