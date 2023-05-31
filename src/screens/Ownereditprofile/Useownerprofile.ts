@@ -7,10 +7,46 @@ function OwnerEditProfileCustomHook() {
   // Initialize isLoading to true
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
-
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+  };
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      setIsLoading(true);
+      const token = await AsyncStorage.getItem('token');
+      try {
+        const response = await fetch(`${url}/user/getUser`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        if (response.ok) {
+          const profileData = await response.json();
+          setFirstName(profileData.firstName);
+          setLastName(profileData.lastName);
+          setEmail(profileData.email);
+          setPhoneNumber(profileData.phoneNumber);
+        } else {
+          setIsLoading(true);
+          throw new Error('Failed to fetch profile data');
+        }
+      } catch (error) {
+        setIsLoading(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProfileData();
+  }, []);
   const handleReset = () => {
     setFirstName('');
     setLastName('');
@@ -38,6 +74,7 @@ function OwnerEditProfileCustomHook() {
       console.log();
       if (response.ok) {
         // Alert.alert('Profile updated!');
+        openModal();
         // navigation.navigate('OwnerProfile');
       } else {
         throw new Error('Failed to update profile');
@@ -59,6 +96,9 @@ function OwnerEditProfileCustomHook() {
     handleReset,
     handleUpdate,
     isLoading,
+    openModal,
+    closeModal,
+    showModal,
   };
 }
 export default OwnerEditProfileCustomHook;
