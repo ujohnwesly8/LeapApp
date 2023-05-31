@@ -29,6 +29,8 @@ import Colors from '../../constants/Colors';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import ProfileData from '../Profile/ProfileData';
 import Styles from '../../constants/themeColors';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
+import Togglebutton from '../../components/atoms/Colorscheme/Togglebutton';
 type Props = {
   route: {name: string};
   navigation: any;
@@ -50,6 +52,11 @@ const Homescreen = ({navigation}: Props) => {
   const allProducts = useSelector(state => state.UserProducts.data);
   // const [showModal, setShowModal] = useState(false);
   const [wishlistList, setWishlistList] = useState([]);
+  // const colorScheme = useColorScheme();
+  const {colorScheme} = useContext(ColorSchemeContext);
+  useEffect(() => {
+    console.log(colorScheme);
+  });
 
   // console.log(allProducts);
   // const handleHeartClick = item => {
@@ -93,11 +100,13 @@ const Homescreen = ({navigation}: Props) => {
       style={{
         height: '100%',
         width: '100%',
+        backgroundColor: colorScheme === 'dark' ? Colors.black : Colors.main,
         overflow: 'scroll',
       }}>
       {loading ? (
         <SkeletonPlaceholder
           highlightColor="#e0e0e0"
+          backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
           {/* <View
               style={[
                 style.mainContainer,
@@ -111,14 +120,17 @@ const Homescreen = ({navigation}: Props) => {
               // fontWeight: '900',
               fontFamily: 'Poppins-SemiBold',
               fontSize: 15,
+              color: colorScheme === 'dark' ? Colors.white : Colors.black,
             }}></Text>
           <View
             style={[
               style.searchInputContainer,
+              colorScheme === 'dark' ? style.cardColor : Styles.main,
             ]}>
             <TextInput
               placeholder="Search"
               placeholderTextColor={
+                colorScheme === 'dark' ? Colors.white : Colors.black
               }
               style={{
                 // height: 10,
@@ -143,11 +155,13 @@ const Homescreen = ({navigation}: Props) => {
               // fontWeight: '900',
               fontFamily: 'Poppins-SemiBold',
               fontSize: 15,
+              color: colorScheme === 'dark' ? Colors.white : Colors.black,
             }}></Text>
           <View style={style.categoriesContainer}>
             <Text
               style={[
                 style.CategoriesText,
+                colorScheme === 'dark' ? style.whitetext : style.blackText,
               ]}></Text>
             <TouchableOpacity>
               <Text style={style.Seetext}></Text>
@@ -193,6 +207,7 @@ const Homescreen = ({navigation}: Props) => {
         <View
           style={[
             style.mainContainer,
+            colorScheme === 'dark' ? style.blacktheme : style.whiteTheme,
           ]}>
           {/* <Header title={'Leap'} /> */}
           <View style={{flexDirection: 'row'}}>
@@ -203,6 +218,7 @@ const Homescreen = ({navigation}: Props) => {
                 // fontWeight: '900',
                 fontFamily: 'Poppins-SemiBold',
                 fontSize: 15,
+                color: colorScheme === 'dark' ? Colors.white : Colors.black,
               }}>
               Welcome {name}
             </Text>
@@ -221,17 +237,20 @@ const Homescreen = ({navigation}: Props) => {
           <View
             style={[
               style.searchInputContainer,
+              colorScheme === 'dark' ? style.cardColor : Styles.main,
             ]}>
             <Icon
               name="search1"
               size={20}
               style={{
                 marginLeft: 20,
+                color: colorScheme === 'dark' ? Colors.white : Colors.black,
               }}
             />
             <TextInput
               placeholder="Search"
               placeholderTextColor={
+                colorScheme === 'dark' ? Colors.white : Colors.black
               }
               style={[
                 {
@@ -244,6 +263,7 @@ const Homescreen = ({navigation}: Props) => {
                   paddingLeft: 10,
                   color: 'black',
                 },
+                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
               ]}
               onChangeText={text => {
                 setSearchQuery(text);
@@ -256,6 +276,7 @@ const Homescreen = ({navigation}: Props) => {
             <Text
               style={[
                 style.CategoriesText,
+                colorScheme === 'dark' ? style.whitetext : style.blackText,
               ]}>
               {' '}
               Categories for you
@@ -269,6 +290,7 @@ const Homescreen = ({navigation}: Props) => {
           <Text
             style={[
               style.Productstext,
+              colorScheme === 'dark' ? style.whitetext : style.blackText,
             ]}>
             Products for you
           </Text>
@@ -301,6 +323,7 @@ const Homescreen = ({navigation}: Props) => {
                     <View
                       style={[
                         style.container,
+                        colorScheme === 'dark' ? style.cardColor : Styles.main,
                       ]}>
                       <TouchableOpacity
                         key={item.id}
@@ -360,6 +383,9 @@ const Homescreen = ({navigation}: Props) => {
                         <Text
                           style={[
                             style.name,
+                            colorScheme === 'dark'
+                              ? style.whitetext
+                              : style.blackText,
                           ]}>
                           {item.name}
                         </Text>
