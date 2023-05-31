@@ -1,11 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  RefreshControl,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import useCart from './useCart';
 import style from './CartItemStyles';
 import Colors from '../../constants/Colors';
+import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import Lottie from 'lottie-react-native';
 import {ReactNode, useState} from 'react';
 import Styles from '../../constants/themeColors';
@@ -27,6 +35,10 @@ const Cart = ({navigation}: Props) => {
     handlecartstate,
     colorScheme,
     handleRemove,
+    refreshing,
+    onRefresh,
+    closeModal,
+    showModal,
     iscartVisible,
     setRentalStartDate,
     setRentalEndDate,
@@ -341,6 +353,11 @@ const Cart = ({navigation}: Props) => {
             </TouchableOpacity>
           )}
         </View>
+        <CustomModal
+          showModal={showModal}
+          onClose={closeModal}
+          message="Item Remove From cart!"
+        />
       </View>
     </>
   );
