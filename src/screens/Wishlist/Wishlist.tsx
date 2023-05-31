@@ -27,14 +27,67 @@ const Wishlist = ({navigation}: Props) => {
     // isLoading,
   } = useWishlist();
 
+  const {refreshing, onRefresh} = useWishlist();
+  const allWishlistProducts = useSelector(state => state.WishlistProducts.data);
   console.log('hey', allWishlistProducts);
+  const isLoading = useSelector(state => state.WishlistProducts.isLoader);
+  console.log(isLoading);
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+        }}>
+        <Lottie
+          source={require('../../../assets/loading2.json')}
+          autoPlay
+          style={{
+            height: 200,
+            width: 200,
+            alignSelf: 'center',
+            marginTop: '50%',
+            justifyContent: 'center',
+          }}
+        />
+        <Text style={{color: Colors.white, marginLeft: '30%'}}>
+          The Items are Loading...
+        </Text>
+      </View>
+    );
+  }
+  if (!WishlistProducts) {
+    return (
+      <View
+        style={{
+          flex: 1,
+        }}>
+        <Lottie
+          source={require('../../../assets/loading2.json')}
+          autoPlay
+          style={{
+            height: 200,
+            width: 200,
+            alignSelf: 'center',
+            marginTop: '50%',
+            justifyContent: 'center',
+          }}
+        />
+        <Text style={{color: Colors.white, marginLeft: '30%'}}>
+          The Items are Loading...
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View
       style={[
         style.maincontainer,
       ]}>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <Text
           style={[
             style.textStylewishlist,
@@ -45,7 +98,46 @@ const Wishlist = ({navigation}: Props) => {
           style={[
             style.textConatiner,
           ]}>
+          <Text
+            style={[
+              style.textStyle,
+            ]}>
+            My favorites ({allWishlistProducts.length})
+          </Text>
         </View>
+        {allWishlistProducts.length === 0 ? (
+          <>
+            <View
+              style={[
+                {
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '100%',
+                  backgroundColor: Colors.main,
+                },
+              ]}>
+              <Lottie
+                source={require('../../../assets/wishlistanime.json')}
+                autoPlay
+                style={{
+                  height: 200,
+                  width: 200,
+                  marginTop: 50,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              />
+              <Text
+                style={{
+                  marginBottom: 20,
+                  color: Colors.iconscolor,
+                  fontSize: 15,
+                  fontWeight: '600',
+                }}>
+                Your wishlist is empty
+              </Text>
+            </View>
+          </>
         ) : (
           <View
             style={[
@@ -137,7 +229,8 @@ const Wishlist = ({navigation}: Props) => {
                               </View>
                             </View>
                             <TouchableOpacity
-                              style={style.wishlistButton}>
+                              style={style.wishlistButton}
+                              onPress={() => removefromWishlist(item.id)}>
                               <Image
                                 source={require('../../../assets/fillheart.png')}
                                 style={{width: 24, height: 24}}
