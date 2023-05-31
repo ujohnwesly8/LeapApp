@@ -20,7 +20,7 @@ import cartSlice from './slice/cartSlice';
 import orderSlice from './slice/orderSlice';
 import editItemSlice from './slice/editItemSlice';
 // import EditItemSlice from '../redux/slice/editItemSlice';
-import {fetchEditItemSaga} from './thunks/editItemThunk';
+// import {fetchEditItemSaga} from './thunks/editItemThunk';
 import {all} from 'redux-saga/effects';
 import thunk from 'redux-thunk';
 
