@@ -53,7 +53,25 @@ const EditAddress = () => {
         colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
       ]}>
       {isLoading ? (
-        <></>
+        <>
+          <SkeletonPlaceholder
+            highlightColor="#e0e0e0"
+            backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
+            <View style={style.subContainer}>
+              <View>
+                <TextInput style={style.inputAddress} />
+                <TextInput style={style.inputAddress} />
+                <TextInput style={style.inputAddress} />
+                <TextInput style={style.inputAddress} />
+                <TextInput style={style.inputAddress} />
+                <TextInput style={style.inputAddress} />
+              </View>
+              <View style={style.btnfieldupdateAddress}>
+                <Text style={styles.btntextAddress}></Text>
+              </View>
+            </View>
+          </SkeletonPlaceholder>
+        </>
       ) : (
         <>
           {/* <BackButton /> */}
