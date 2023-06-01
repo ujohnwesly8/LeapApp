@@ -20,4 +20,5 @@ export const pieChartUrl = `${url}/order/dashboardSubCategoriesAnalytics`;
 export const categoriesData = `${url}/subcategory/list`;
 export const exportPdf = `${url}/order/exportPdf`;
 export const categoriyPiechart = `${url}/order/dashboardCategoriesAnalytics`;
+export const Dashboardyearlydata = `${url}/order/onClickDashboardYearlyWiseData`;
 export const profileUpload = `${url}/user/updateProfilePicture?profileImageUrl`;
