@@ -1,4 +1,12 @@
-import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import React from 'react';
 import style from '../Ownerprofile/OwnerProfilestyle';
 import SwitchAccountButton from '../../components/atoms/SwtichAccountButton';
@@ -15,11 +23,31 @@ import ToggleButton from 'react-native-paper/lib/typescript/src/components/Toggl
 import Togglebutton from '../../components/atoms/Colorscheme/Togglebutton';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {TextInput} from 'react-native-gesture-handler';
+import {Avatar} from 'react-native-paper';
+import CustomModal from '../../components/atoms/CustomModel/CustomModel';
+
 type Props = {
   navigation: any;
 };
 const Profile = ({navigation}: Props) => {
-  const {name, email, phonenumber, isLoading} = ProfileData();
+  const {
+    name,
+    email,
+    phonenumber,
+    isLoading,
+    pickImage,
+    uploadImage,
+    profilePic,
+    selectedImage,
+    setSelectedImage,
+    showModall,
+    closeModal,
+    showModal1,
+    closeModal1,
+    isloading,
+    handleRemoveProfilePic,
+    setProfileImage,
+  } = ProfileData();
   const {colorScheme} = useCart();
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -33,11 +61,31 @@ const Profile = ({navigation}: Props) => {
       ]}>
       <ScrollView style={{width: '100%', height: '100%'}}>
         <View style={style.buttonContainer}>
-          <View>
+          <View style={{zIndex: 1}}>
             <SwitchAccountButton />
             <Togglebutton />
           </View>
-
+          <View style={style.imageContainer}>
+            {/* <AddImages /> */}
+            <View
+              style={{
+                width: 130,
+                height: 150,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              {isloading ? ( // Display loading indicator while uploading
+                <ActivityIndicator size="large" color="gray" />
+              ) : profilePic ? (
+                <Avatar.Image size={100} source={{uri: profilePic}} />
+              ) : (
+                <Avatar.Image
+                  size={100}
+                  source={require('../../../assets/profile.jpg')}
+                />
+              )}
+            </View>
+          </View>
           {/* <View style={{flexDirection: 'row', marginLeft: '80%'}}> */}
           {/* <Text
               style={[
@@ -49,8 +97,18 @@ const Profile = ({navigation}: Props) => {
           {/* </View> */}
         </View>
         {/* <Togglebutton /> */}
-        <View style={style.imageContainer}>
-          <AddImages />
+        <View style={style.uploadButtoncontainer}>
+          <TouchableOpacity style={style.uploadButton} onPress={pickImage}>
+            <Text style={style.uploadText}>Upload</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={style.removeButton}
+            onPress={() => {
+              handleRemoveProfilePic();
+              setProfileImage(null);
+            }}>
+            <Text style={style.uploadText}>Remove</Text>
+          </TouchableOpacity>
         </View>
         {isLoading ? (
           <SkeletonPlaceholder
@@ -191,6 +249,16 @@ const Profile = ({navigation}: Props) => {
       </ScrollView>
 
       <View style={{marginTop: 10}} />
+      <CustomModal
+        showModal={showModall}
+        onClose={closeModal}
+        message="Profile image uploaded successfully!"
+      />
+      <CustomModal
+        showModal={showModal1}
+        onClose={closeModal1}
+        message="Profile image removed !"
+      />
     </View>
   );
 };

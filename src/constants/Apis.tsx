@@ -1,4 +1,4 @@
-export const url = 'https://c42a-116-72-73-194.ngrok-free.app/api/v1';
+export const url = 'https://773b-106-51-70-135.ngrok-free.app/api/v1';
 export const OwnerProductsUrl = `${url}/product/listOwnerProducts`;
 export const UserProductsUrl = `${url}/product/list`;
 export const AddAddressUrl = `${url}/address/add`;
@@ -20,3 +20,4 @@ export const pieChartUrl = `${url}/order/dashboardSubCategoriesAnalytics`;
 export const categoriesData = `${url}/subcategory/list`;
 export const exportPdf = `${url}/order/exportPdf`;
 export const categoriyPiechart = `${url}/order/dashboardCategoriesAnalytics`;
+export const profileUpload = `${url}/user/updateProfilePicture?profileImageUrl`;
