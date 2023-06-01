@@ -22,6 +22,31 @@ const style = StyleSheet.create({
     // backgroundColor: '#FFFFFF',
     // color: 'red',
   },
+  uploadButton: {
+    // backgroundColor: Colors.white,
+    width: 100,
+    // height: 80,
+    alignItems: 'center',
+    // marginTop: 200,
+  },
+  removeButton: {
+    width: 100,
+    // height: 80,
+    alignItems: 'center',
+  },
+  uploadText: {
+    color: Colors.buttonColor,
+    fontFamily: 'Poppins-Medium',
+  },
+  uploadButtoncontainer: {
+    flexDirection: 'row',
+    height: 40,
+    // backgroundColor: 'white',
+    marginLeft: 65,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '65%',
+  },
   profileImg: {
     height: 50,
     borderRadius: 50,
@@ -35,7 +60,7 @@ const style = StyleSheet.create({
     shadowRadius: 3,
     marginTop: 80,
   },
-  imageContainer: {},
+  imageContainer: {alignItems: 'center'},
   profileStyle: {
     width: '100%',
     height: '100%',
