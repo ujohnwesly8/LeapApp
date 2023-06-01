@@ -49,7 +49,8 @@ export default function OwnerHome({navigation}: Props) {
     outofStock,
     handleEnablebutton,
   } = Useownerhome();
-  const {handleOrders, HandlePiechart, CategoriePieData} = useAnalytics();
+  const {handleOrders, HandlePiechart, CategoriePieData, Dashboardyeardata} =
+    useAnalytics();
   const {colorScheme} = useContext(ColorSchemeContext);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
   const [rentedItemsPercentage, setRentedItemsPercentage] =
@@ -118,6 +119,7 @@ export default function OwnerHome({navigation}: Props) {
             handleAnalatyics();
             handleOrders();
             CategoriePieData();
+            Dashboardyeardata();
           }}
           style={styles.Viewmore}>
           <Text
@@ -272,7 +274,6 @@ export default function OwnerHome({navigation}: Props) {
             </View>
           )}
           <View>
-            {console.log(selectedProductId)}
             <Text
               style={[
                 styles.headertxt,

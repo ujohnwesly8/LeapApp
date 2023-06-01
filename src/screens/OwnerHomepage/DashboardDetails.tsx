@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useContext, useEffect, useState} from 'react';
 import {
   Image,
@@ -16,7 +17,7 @@ import {
   VictoryAxis,
 } from 'victory-native';
 import {PieChart, LineChart} from 'react-native-chart-kit';
-
+import {Picker} from '@react-native-picker/picker';
 import Colors from '../../constants/Colors';
 import useAnalytics from '../AnalyticsPage/useAnalytics';
 import style from '../OwnerHomepage/OwnerHomestyle';
@@ -54,11 +55,24 @@ const DashboardDetails = () => {
     HandlePiechart,
     handleExportpdf,
     CategoriePieData,
+    DashboardYearly,
   } = useAnalytics();
   const {colorScheme} = useContext(ColorSchemeContext);
   const [showModel, setShowModel] = useState(false);
   const [selectedBarIndex, setSelectedBarIndex] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
+  const [selectedYear, setSelectedYear] = useState(null);
+  // const [yearlyData, setYearlyData] = useState({});
+  // const handleYearSelect = year => {
+  //   setSelectedYear(year);
+  //   const yearlyData = DashboardYearly[year] || {};
+  //   setYearlyData(yearlyData);
+  // };
+  // const availableYears = Object.keys(DashboardYearly);
+
+  // Get the available years
+  // const availableYears = Object.keys(DashboardYearly);
+
   const [monthtitle, setmonthtitle] = useState(
     monthNames[new Date().getMonth()],
   );
@@ -151,6 +165,11 @@ const DashboardDetails = () => {
     });
     handleOrders(filteredOrderData);
   };
+  const currentYear = new Date().getFullYear();
+  const availableYears = Array.from(
+    {length: 10},
+    (_, index) => currentYear + index,
+  );
 
   // const getBarColor = ({datum, index}) => {
   //   return selectedBarIndex === index ? Colors.buttonColor : 'grey';
@@ -263,6 +282,19 @@ const DashboardDetails = () => {
               </Text>
               <View style={{flexDirection: 'row'}}>
                 <AnalyticsDropdown onSelect={handleDataSelect} />
+                <Picker
+                  selectedValue={selectedYear}
+                  onValueChange={itemValue => setSelectedYear(itemValue)}
+                  style={{height: 20, width: 100}}>
+                  {/* <Picker.Item label="Select Year" value={null} /> */}
+                  {availableYears.map(year => (
+                    <Picker.Item
+                      key={year}
+                      label={year.toString()}
+                      value={year}
+                    />
+                  ))}
+                </Picker>
               </View>
             </View>
             <View style={{marginLeft: 10}}>
