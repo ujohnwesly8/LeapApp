@@ -260,7 +260,7 @@ const ProfileData = () => {
             if (result.ok) {
               const res = await result.json();
               setIsloading(false);
-              console.log(res);
+              console.log('res is ', res);
               setSelectedImage(res.url);
               console.log('selectedImage is ', res.url);
               console.log('selectedImage is ', res.url);

@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -10,6 +11,7 @@ import {
   TextInput,
   Modal,
   Image,
+  RefreshControl,
 } from 'react-native';
 import Useowneredititems from './Useowneredititems';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -20,7 +22,7 @@ import EventsDropdown from '../../components/atoms/EventsDropdown';
 import OutfitDropdown from '../../components/atoms/OutfitDropdown';
 import Sizeselection from '../../components/atoms/Sizeselect';
 import OwnerEditItemstyles from './Owneredititemsstyles';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import Colors from '../../constants/Colors';
 import Lottie from 'lottie-react-native';
 import BackButton from '../../components/atoms/BackButton/BackButton';
@@ -28,6 +30,8 @@ import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
+import Useownerhome from '../OwnerHomepage/Useownerhome';
+import styles from '../OwnerHomepage/OwnerHomestyle';
 
 const App = () => {
   const {
@@ -66,6 +70,25 @@ const App = () => {
     price,
     quantity,
     isLoading,
+    fetchData,
+    productQuantity,
+    isModalVisible,
+    // recentyAdded,
+    selectedProductId,
+    setSelectedProductId,
+    handleEnablebutton,
+    setIsMinusDisabled,
+    setIsModalVisible,
+    handleDisablebutton,
+    handleDisableProduct,
+    incrementQuantity,
+    decrementQuantity,
+    disabledQuantity,
+    totalQuantity,
+    updatedQuantity,
+    refreshData,
+    setRefreshData,
+    handleRefresh,
   } = Useowneredititems();
 
   const [hideId, setHideId] = useState(null);
@@ -74,13 +97,29 @@ const App = () => {
     setViisble(!visible);
     setHideId(null);
   };
+  useEffect(() => {
+    if (!isModalVisible) {
+      setRefreshData(false);
+    }
+  }, [isModalVisible]);
 
+  console.log('Refreshhhhhh:', refreshData);
+
+  // const handleManageModal = () => {
+  //   console.log('refreshData is ', refreshData);
+  //   setIsModalVisible(!isModalVisible);
+  //   setRefreshData(true);
+  // };
   const navigation = useNavigation();
   const {colorScheme} = useContext(ColorSchemeContext);
 
   return (
     <SafeAreaView>
-      <Modal animationType="slide" visible={visible}>
+      <Modal
+        animationType="slide"
+        visible={visible}
+        onRequestClose={handleVisibleModal}>
+        {console.log('Refreshinf is happpening :', refreshData)}
         <SafeAreaView>
           <ScrollView
             style={[
@@ -264,43 +303,17 @@ const App = () => {
         style={[
           {width: '100%', height: '100%'},
           colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-        ]}>
+        ]}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshData}
+            onRefresh={handleRefresh}
+            colors={['#0000ff']} // Customize the color of the refresh indicator
+          />
+        }>
         <View>
-          <HeadingText message="Edit Product" />
+          <HeadingText message="My Products" />
         </View>
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            width: '50%',
-            justifyContent: 'space-between',
-            marginTop: 20,
-          }}>
-          <View
-            style={{
-              backgroundColor: '#FFFFFF',
-              borderRadius: 20,
-              width: 40,
-              height: 40,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Icon
-              // style={{marginLeft: 5}}
-              name="arrow-back-ios"
-              size={16}
-              color="black"
-              // onPress={() => navigation.goBack()}
-            /> */}
-        {/* </View>
-          <Text
-            style={[
-              styles.titleText,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
-            My Products
-          </Text>
-        </View> */}
-
         {isLoading ? (
           <View style={{height: 200, width: 400}}>
             <Lottie
@@ -310,60 +323,191 @@ const App = () => {
           </View>
         ) : (
           data.map(item => (
-            <View
-              style={[
-                styles.mainContainer,
-                colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-              ]}
-              key={item.id}>
-              <View style={[styles.item_course]}>
-                <View style={[OwnerEditItemstyles.imagePriceContainer]}>
-                  <View style={[OwnerEditItemstyles.cardImageContainer]}>
-                    <Image
-                      style={OwnerEditItemstyles.cardImage}
-                      source={{uri: item.image}}
-                    />
-                  </View>
-                  <View
-                    style={[
-                      OwnerEditItemstyles.priceContainer,
-                      colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                    ]}>
-                    <Text
+            <>
+              <View
+                style={[
+                  Style.mainContainer,
+                  colorScheme === 'dark'
+                    ? Styles.blacktheme
+                    : Styles.whiteTheme,
+                ]}
+                key={item.id}>
+                <View style={[Style.item_course]}>
+                  <View style={[OwnerEditItemstyles.imagePriceContainer]}>
+                    <View style={[OwnerEditItemstyles.cardImageContainer]}>
+                      <Image
+                        style={OwnerEditItemstyles.cardImage}
+                        source={{uri: item.image}}
+                      />
+                    </View>
+                    <View
                       style={[
-                        styles.txt_name,
-                        colorScheme === 'dark'
-                          ? Styles.whitetext
-                          : Styles.blackText,
+                        OwnerEditItemstyles.priceContainer,
+                        colorScheme === 'dark' ? Styles.cardColor : Styles.main,
                       ]}>
-                      {item.name}
-                    </Text>
-                    <Text style={styles.txt_item}>₹ {item.price}</Text>
+                      <View>
+                        <View>
+                          <Text
+                            style={[
+                              Style.txt_name,
+                              colorScheme === 'dark'
+                                ? Styles.whitetext
+                                : Styles.blackText,
+                            ]}>
+                            {item.name}
+                          </Text>
+                        </View>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          // width: '50%',
+                          // backgroundColor: 'white',
+                          justifyContent: 'space-between',
+                        }}>
+                        <Text style={Style.txt_item}>₹ {item.price}</Text>
+                        <Text
+                          style={{
+                            color: 'white',
+                            fontFamily: 'Poppins-Regular',
+                            fontSize: 12,
+                          }}>
+                          {' '}
+                          Available: {item.availableQuantities}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={OwnerEditItemstyles.buttonContainer}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        FetchData(item.id);
+                        setEditProductId(item.id);
+                        setViisble(true);
+                      }}>
+                      <View style={OwnerEditItemstyles.button}>
+                        <Text style={Style.txt_edit}>Edit</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        // FetchData(item.id);
+                        // setEditProductId(item.id);
+                        setSelectedProductId(item.id);
+                        handleDisableProduct(item);
+                      }}>
+                      <View style={OwnerEditItemstyles.button}>
+                        <Text style={Style.txt_edit}>Manage</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => RemoveProducts(item.id)}>
+                      <View style={OwnerEditItemstyles.button}>
+                        <Text style={Style.txt_del}>Delete</Text>
+                      </View>
+                    </TouchableOpacity>
                   </View>
                 </View>
-                <View style={OwnerEditItemstyles.buttonContainer}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      FetchData(item.id);
-                      setEditProductId(item.id);
-                    }}>
-                    <View style={OwnerEditItemstyles.button}>
-                      <Text style={styles.txt_edit}>Edit</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => RemoveProducts(item.id)}>
-                    <View style={OwnerEditItemstyles.button}>
-                      <Text style={styles.txt_del}>Delete</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
+                <CustomModal
+                  showModal={showModal}
+                  onClose={closeModal}
+                  message="Product has been deleted!"
+                />
               </View>
-              <CustomModal
-                showModal={showModal}
-                onClose={closeModal}
-                message="Product has been deleted!"
-              />
-            </View>
+              <View>
+                <Modal
+                  animationType="slide"
+                  visible={isModalVisible}
+                  onRequestClose={() => setIsModalVisible(false)}
+                  transparent={true}>
+                  <View style={styles.modalContainer}>
+                    <View style={{alignItems: 'flex-end', marginRight: 20}}>
+                      <TouchableOpacity
+                        onPress={() => setIsModalVisible(false)}
+                        style={styles.closeButton}>
+                        <Text style={styles.closeButtonText}>Close</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        width: '30%',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text style={styles.modalText}>
+                        Total {totalQuantity}
+                      </Text>
+                      <Text style={styles.modalText}>
+                        Available {productQuantity}
+                      </Text>
+                      <Text style={styles.modalText}>
+                        disabled {disabledQuantity}
+                      </Text>
+                    </View>
+                    <View style={styles.quantityContainer}>
+                      <TouchableOpacity
+                        onPress={() => decrementQuantity(selectedProductId)}
+                        style={styles.quantityButton}>
+                        <Text style={styles.quantityButtonText}>-</Text>
+                      </TouchableOpacity>
+                      <Text style={styles.quantityText}>{updatedQuantity}</Text>
+                      <TouchableOpacity
+                        onPress={() => incrementQuantity(selectedProductId)}
+                        style={styles.quantityButton}>
+                        <Text style={styles.quantityButtonText}>+</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        width: '80%',
+                        marginLeft: 40,
+                        marginTop: 20,
+                      }}>
+                      <TouchableOpacity
+                        onPress={() =>
+                          handleDisablebutton(
+                            selectedProductId,
+                            updatedQuantity,
+                          )
+                        }
+                        style={styles.okButton}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            fontFamily: 'Poppins-SemiBold',
+                            fontSize: 16,
+                            includeFontPadding: false,
+                          }}>
+                          Disable
+                        </Text>
+                        {/* Render disable button content */}
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() =>
+                          handleEnablebutton(
+                            selectedProductId,
+                            updatedQuantity,
+                            disabledQuantity,
+                          )
+                        }
+                        style={styles.okButton}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            fontFamily: 'Poppins-SemiBold',
+                            fontSize: 16,
+                            includeFontPadding: false,
+                          }}>
+                          Enable
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </Modal>
+              </View>
+            </>
           ))
         )}
       </ScrollView>
@@ -373,7 +517,7 @@ const App = () => {
 
 export default App;
 
-const styles = StyleSheet.create({
+const Style = StyleSheet.create({
   form: {
     backgroundColor: Colors.main,
     // marginLeft: -10,
@@ -411,14 +555,17 @@ const styles = StyleSheet.create({
   },
   item_course: {
     marginLeft: 30,
-    marginTop: 15,
+    // marginTop: 15,
     flexDirection: 'row',
   },
   txt_name: {
     fontSize: 12,
+    width: 120,
+    height: 22,
     // fontWeight: '700',
     fontFamily: 'Poppins-SemiBold',
     color: Colors.black,
+    // backgroundColor: 'white',
   },
   txt_item: {
     fontSize: 13,

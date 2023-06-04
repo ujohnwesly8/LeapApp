@@ -102,7 +102,7 @@ const Styles = StyleSheet.create({
     borderRadius: 10,
   },
   modalText: {
-    fontSize: 20,
+    fontSize: 15,
     // fontWeight: '700',
     fontFamily: 'Poppins-Medium',
     marginBottom: 10,
@@ -125,6 +125,7 @@ const Styles = StyleSheet.create({
     fontFamily: 'Poppins-SemiBold',
     // marginLeft: 5,
     fontSize: 14,
+    includeFontPadding: false,
   },
   noteText: {
     color: Colors.black,
@@ -171,6 +172,7 @@ const Styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'Poppins-SemiBold',
     justifyContent: 'center',
+    includeFontPadding: false,
     alignSelf: 'center',
   },
   quantityText: {

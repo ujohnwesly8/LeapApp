@@ -96,6 +96,8 @@ const OwnerEditItemstyles = StyleSheet.create({
     width: '45%',
   },
   priceContainer: {
+    width: '89%',
+    height: 60,
     // backgroundColor: 'rgba(5, 5, 5, 0.3)',
     backgroundColor: '#FFFFFF',
     padding: 8,
@@ -105,9 +107,20 @@ const OwnerEditItemstyles = StyleSheet.create({
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
   },
+  nameContainer: {
+    // backgroundColor: 'rgba(5, 5, 5, 0.3)',
+    backgroundColor: '#FFFFFF',
+    width: 100,
+    padding: 8,
+    borderRadius: 5,
+    marginLeft: 20,
+    paddingLeft: 12,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+  },
   buttonContainer: {
     marginLeft: 60,
-    marginTop: -15,
+    // marginTop: -15,
     width: '60%',
   },
   button: {
@@ -117,8 +130,8 @@ const OwnerEditItemstyles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 48,
-    marginLeft: '-0%',
+    marginTop: 25,
+    // marginLeft: '-0%',
   },
   backContainer: {
     flexDirection: 'row',
