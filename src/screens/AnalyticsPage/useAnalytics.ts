@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {
   AnalyticsUrl,
+  Dashboardyearlydata,
   categoriyPiechart,
   exportPdf,
   getdashboard,
@@ -17,6 +18,7 @@ const useAnalytics = () => {
   const [piechart, setPiechart] = useState([]);
   const [CategoriesPiechart, setCategoriesData] = useState([]);
   const [loading, setisLoading] = useState(false);
+  const [DashboardYearly, setDashboardYearlydata] = useState([]);
   const handleAnalytics = async () => {
     setisLoading(true);
     try {
@@ -103,6 +105,16 @@ const useAnalytics = () => {
     }
   };
 
+  const Dashboardyeardata = async () => {
+    try {
+      const yearlyData = await ApiService.get(Dashboardyearlydata);
+      console.log('jsxncsncsadc', yearlyData);
+      setDashboardYearlydata(yearlyData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     handleAnalytics,
     Data,
@@ -114,6 +126,8 @@ const useAnalytics = () => {
     handleExportpdf,
     CategoriePieData,
     CategoriesPiechart,
+    Dashboardyeardata,
+    DashboardYearly,
   };
 };
 
