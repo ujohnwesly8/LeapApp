@@ -18,7 +18,7 @@ const useAnalytics = () => {
   const [piechart, setPiechart] = useState([]);
   const [CategoriesPiechart, setCategoriesData] = useState([]);
   const [loading, setisLoading] = useState(false);
-  const [DashboardYearly, setDashboardYearlydata] = useState([]);
+  const [DashboardYearly, setDashboardYearlydata] = useState({});
   const handleAnalytics = async () => {
     setisLoading(true);
     try {
@@ -108,7 +108,7 @@ const useAnalytics = () => {
   const Dashboardyeardata = async () => {
     try {
       const yearlyData = await ApiService.get(Dashboardyearlydata);
-      console.log('jsxncsncsadc', yearlyData);
+      console.log('indranil Dashboardyearly', yearlyData);
       setDashboardYearlydata(yearlyData);
     } catch (error) {
       console.log(error);
