@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Text,
@@ -8,13 +8,14 @@ import {
   TouchableOpacity,
   Modal,
   Dimensions,
+  StatusBar,
 } from 'react-native';
+// import {format} from 'date-fns';
 import {
   VictoryChart,
   VictoryBar,
-  VictoryPie,
-  VictoryLabel,
   VictoryAxis,
+  VictoryLabel,
 } from 'victory-native';
 import {PieChart, LineChart} from 'react-native-chart-kit';
 import {Picker} from '@react-native-picker/picker';
@@ -24,11 +25,20 @@ import style from '../OwnerHomepage/OwnerHomestyle';
 import BackButton from '../../components/atoms/BackButton/BackButton';
 import Lottie from 'lottie-react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import Icons from 'react-native-vector-icons/MaterialIcons';
+import AnalyticsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import PieIcon from 'react-native-vector-icons/FontAwesome';
+import ForwardIcon from 'react-native-vector-icons/Ionicons';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
+<<<<<<< HEAD
+// import AnalyticsDropdown from '../../components/atoms/AnalyticsDropdown/AnalyticsDropdown';
+=======
 import AnalyticsDropdown from '../../components/atoms/AnalyticsDropdown/AnalyticsDropdown';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
+
+import {useNavigation} from '@react-navigation/native';
+import FilteredAnalytics from '../FilteredAnalytics/FilteredAnalytics';
+>>>>>>> 8ea1e3e5a43ad9e6e284a5b176d11be19e3c2c90
 const monthNames = [
   'Jan',
   'Feb',
@@ -45,6 +55,7 @@ const monthNames = [
 ];
 
 const DashboardDetails = () => {
+  const navigation = useNavigation();
   const {
     handleAnalytics,
     Data,
@@ -54,37 +65,26 @@ const DashboardDetails = () => {
     piechart,
     HandlePiechart,
     handleExportpdf,
-    CategoriePieData,
     DashboardYearly,
+    Dashboardyeardata,
   } = useAnalytics();
-  const {colorScheme} = useContext(ColorSchemeContext);
   const [showModel, setShowModel] = useState(false);
   const [selectedBarIndex, setSelectedBarIndex] = useState(null);
-  const [selectedMonth, setSelectedMonth] = useState(null);
-  const [selectedYear, setSelectedYear] = useState(null);
-  // const [yearlyData, setYearlyData] = useState({});
-  // const handleYearSelect = year => {
-  //   setSelectedYear(year);
-  //   const yearlyData = DashboardYearly[year] || {};
-  //   setYearlyData(yearlyData);
-  // };
-  // const availableYears = Object.keys(DashboardYearly);
-
-  // Get the available years
-  // const availableYears = Object.keys(DashboardYearly);
+  const [selectedMonth, setSelectedMonth] = useState(
+    `${new Date().getFullYear()}-${(new Date().getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}`,
+  );
+  const [totalEarnings, setTotalEarnings] = useState(0);
+  const [totalNumberOfItems, settotalNumberOfItems] = useState(0);
 
   const [monthtitle, setmonthtitle] = useState(
     monthNames[new Date().getMonth()],
   );
+  const [selectedYear, setSelectedYear] = useState('');
+  const years = Object.keys(DashboardYearly);
+
   const [selectedData, setSelectedData] = useState('quantity'); // Selected data for the bar graph
-  const [lineChartData, setLineChartData] = useState({
-    labels: [],
-    datasets: [
-      {
-        data: [],
-      },
-    ],
-  });
 
   const handleDataSelect = data => {
     setSelectedData(data);
@@ -92,15 +92,28 @@ const DashboardDetails = () => {
   console.log('orderData:', orderData);
   const handleVisibleModal = () => {
     setShowModel(!showModel);
+    filterOrderData();
   };
 
   const handleTotalOrdersClick = () => {
-    setShowModel(true);
+    setTimeout(() => {
+      setShowModel(true); // Update the state variable to show the modal
+    }, 800);
+  };
+  const filterOrderData = () => {
+    const filteredOrderData = {};
+    Object.keys(orderData).forEach(month => {
+      if (month === selectedMonth) {
+        filteredOrderData[month] = orderData[month];
+      }
+    });
+    handleOrders(filteredOrderData);
   };
 
   useEffect(() => {
     handleAnalytics();
     HandlePiechart();
+    Dashboardyeardata();
     const currentDate = new Date();
     const currentMonth = currentDate.getMonth();
     const currentMonthFormatted = `${currentDate.getFullYear()}-${(
@@ -109,75 +122,78 @@ const DashboardDetails = () => {
       .toString()
       .padStart(2, '0')}`;
     setSelectedMonth(currentMonthFormatted);
-
-    const filteredOrderData = {};
-    Object.keys(orderData).forEach(month => {
-      if (month === currentMonthFormatted) {
-        filteredOrderData[month] = orderData[month];
-      }
-    });
-    handleOrders(filteredOrderData);
-
     const selectedBarIndex = rentalData.findIndex(
       data => data.month === monthNames[currentMonth],
     );
     setSelectedBarIndex(selectedBarIndex);
+    filterOrderData();
   }, []);
 
-  const rentalData = monthNames.map(month => ({
-    month: month,
-    totalEarnings: 0,
-    totalNumberOfItems: 0,
-  }));
+  const rentalData = monthNames.map(month => {
+    const monthIndex = monthNames.indexOf(month);
+    const formattedMonth = `${selectedYear}-${String(monthIndex + 1).padStart(
+      2,
+      '0',
+    )}`;
 
-  Object.keys(Data).forEach(key => {
-    const monthData = Data[key];
-    const month = new Date(key).getMonth();
-    rentalData[month] = {
-      month: monthNames[month],
+    const monthData = DashboardYearly[selectedYear]?.[formattedMonth] || {
+      totalEarnings: 0,
+      totalNumberOfItems: 0,
+    };
+
+    return {
+      month: month,
       totalEarnings: monthData.totalEarnings,
       totalNumberOfItems: monthData.totalNumberOfItems,
-      orders: monthData.orders,
+      monthIndex: monthIndex,
     };
   });
 
+  if (selectedYear && DashboardYearly[selectedYear]) {
+    Object.entries(DashboardYearly[selectedYear]).forEach(([month, data]) => {
+      const monthIndex = parseInt(month.split('-')[1]) - 1;
+      rentalData[monthIndex] = {
+        month: month.split('-')[0], // Extract the month name from the format "YYYY-MM"
+        totalEarnings: data.totalEarnings,
+        totalNumberOfItems: data.totalNumberOfItems,
+        monthIndex: monthIndex,
+      };
+    });
+  }
+
   const handleBarClick = (event, barData) => {
     const selectedMonth = barData.datum.month;
-    const selectedMonthIndex = monthNames.indexOf(selectedMonth) + 1;
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const formattedMonth = selectedMonthIndex.toString().padStart(2, '0');
-    const formattedDate = `${currentYear}-${formattedMonth}`;
-    const selectedMonthFormatted = formattedDate;
-    setmonthtitle(selectedMonth);
-    const selectedData = rentalData.find(data => data.month === selectedMonth);
-    const selectedBarIndex = rentalData.findIndex(
-      data => data.month === selectedMonth,
-    );
-    setSelectedMonth(selectedMonthFormatted);
-    setSelectedBarIndex(selectedBarIndex);
-    const {size, rentalPrice} = barData;
-    const filteredOrderData = {};
-    Object.keys(orderData).forEach(month => {
-      if (month === selectedMonthFormatted) {
-        filteredOrderData[month] = orderData[month];
-      }
-    });
-    handleOrders(filteredOrderData);
-  };
-  const currentYear = new Date().getFullYear();
-  const availableYears = Array.from(
-    {length: 10},
-    (_, index) => currentYear + index,
-  );
+    const selectedMonthIndex =
+      monthNames.indexOf(monthNames[selectedMonth]) + 1;
+    const selectedYearFormatted = selectedYear.toString();
+    const formattedMonth = `${selectedYearFormatted}-${String(
+      selectedMonthIndex,
+    ).padStart(2, '0')}`;
 
-  // const getBarColor = ({datum, index}) => {
-  //   return selectedBarIndex === index ? Colors.buttonColor : 'grey';
-  // };
-  const getBarColor = ({datum, index}) => {
-    const selectedValue =
-      selectedData === 'quantity' ? 'totalNumberOfItems' : 'totalEarnings';
-    return selectedBarIndex === index ? Colors.buttonColor : 'grey';
+    setSelectedMonth(formattedMonth);
+    setSelectedBarIndex(barData.index);
+
+    const selectedData = rentalData.find(
+      data => data.month === monthNames[selectedMonth],
+    );
+    const selectedMonthData =
+      DashboardYearly[selectedYearFormatted]?.[formattedMonth];
+
+    if (selectedMonthData) {
+      const {totalEarnings, totalNumberOfItems} = selectedMonthData;
+      setTotalEarnings(totalEarnings);
+      settotalNumberOfItems(totalNumberOfItems);
+    }
+    setmonthtitle(monthNames[selectedMonth]);
+
+    filterOrderData();
+  };
+
+  const getBarColor = (datum, index) => {
+    if (datum.index === selectedBarIndex) {
+      return Colors.buttonColor; // Color for the selected bar
+    }
+    return '#eadaff'; // Color for other bars
   };
 
   // const pieChartData =
@@ -185,14 +201,6 @@ const DashboardDetails = () => {
   const pieChartData =
     piechart && piechart[selectedMonth] ? piechart[selectedMonth] : {};
 
-  // const getRandomColor = () => {
-  //   const letters = '0123456789ABCDEF';
-  //   let color = '#';
-  //   for (let i = 0; i < 6; i++) {
-  //     color += letters[Math.floor(Math.random() * 16)];
-  //   }
-  //   return color;
-  // };
   const chartColors = [
     '#594AB5',
     '#E28B5E',
@@ -215,125 +223,159 @@ const DashboardDetails = () => {
       // Generate a random color for each data point
     }),
   );
-
-  console.log(transformedData);
-
-  // const transformedData = Object.entries(pieChartData).map(
-  //   ([subcategory, {totalOrders}]) => ({
-  //     x: subcategory,
-  //     y: totalOrders,
-  //   }),
-  // );
-  console.log('pieChartData is ', pieChartData);
-
   return (
-    <View style={[{flex: 1, backgroundColor: Colors.white}]}>
+    <View style={{flex: 1, backgroundColor: Colors.white}}>
       {loading ? (
         <View>
           <Lottie
             source={require('../../../assets/analyticstwo.json')}
             autoPlay
-            style={[
-              {
-                height: 300,
-                width: 300,
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginRight: 20,
-                marginTop: 100,
-              },
-            ]}
+            style={{
+              height: 300,
+              width: 300,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: 20,
+              marginTop: 100,
+            }}
           />
         </View>
       ) : (
-        <ScrollView style={{backgroundColor: '#ECF2FF', flex: 1}}>
+        <ScrollView style={{backgroundColor: '#C4B0FF', flex: 1}}>
           <>
-            {/* <HeadingText message={'Analytics'} /> */}
-            <View style={{flexDirection: 'row'}}>
+            <StatusBar translucent backgroundColor={'rgba(0,0,0,0)'} />
+            <View style={{flexDirection: 'row', marginTop: 50, marginLeft: 10}}>
               <BackButton />
               <Text
                 style={{
                   color: 'black',
                   fontFamily: 'Poppins-SemiBold',
                   fontSize: 25,
-                  marginTop: 20,
-                  marginLeft: 70,
+                  marginTop: 15,
+                  marginLeft: 75,
                   alignSelf: 'center',
                 }}>
                 Analytics
               </Text>
             </View>
+            {selectedBarIndex !== null ? (
+              <View style={{flexDirection: 'row', marginLeft: 8}}>
+                <View
+                  style={{
+<<<<<<< HEAD
+                    width: 131,
+                    height: 96,
+                    marginLeft: 38,
+                    marginTop: 25,
+                    borderRadius: 20,
+                    backgroundColor: Colors.buttonColor,
+                    elevation: 4,
+                  }}>
+                  <Text
+                    style={{
+                      color: Colors.white,
+                      fontFamily: 'Poppins-SemiBold',
+                      fontSize: 20,
+                      justifyContent: 'center',
+                      alignSelf: 'center',
+                      marginTop: 20,
+                    }}>
+                    ₹ {totalEarnings}
+                  </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text
+                      style={{
+                        color: Colors.white,
+                        fontFamily: 'Poppins-SemiBold',
+                        fontSize: 10,
+                        alignSelf: 'center',
+                        marginTop: 15,
+                        marginLeft: 30,
+                      }}>
+                      Total Earnings
+                    </Text>
+                    <ForwardIcon
+                      name="chevron-forward-outline"
+                      size={12}
+                      color={Colors.white}
+                      style={{marginTop: 16}}
+                    />
+                  </View>
+                </View>
+                <TouchableOpacity
+                  onPress={handleTotalOrdersClick}
+                  style={{
+                    width: 131,
+                    height: 96,
+                    marginLeft: 38,
+                    marginTop: 25,
+                    borderRadius: 20,
+                    backgroundColor: Colors.white,
+                    elevation: 4,
+                  }}>
+                  <Text
+                    style={{
+                      color: Colors.buttonColor,
+                      fontFamily: 'Poppins-SemiBold',
+                      fontSize: 20,
+                      justifyContent: 'center',
+                      alignSelf: 'center',
+                      marginTop: 20,
+                    }}>
+                    {totalNumberOfItems}
+                  </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text
+                      style={{
+                        color: Colors.buttonColor,
+                        fontFamily: 'Poppins-SemiBold',
+                        fontSize: 10,
+                        alignSelf: 'center',
+                        marginTop: 15,
+                        marginLeft: 35,
+                      }}>
+                      Your Orders
+                    </Text>
+                    <ForwardIcon
+                      name="chevron-forward-outline"
+                      size={12}
+                      color={Colors.buttonColor}
+                      style={{marginTop: 16}}
+                    />
+                  </View>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <Text>admflkadsk</Text>
+            )}
             <View
               style={{
-                width: '90%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                marginTop: 20,
+                borderTopRightRadius: 30,
+                borderTopLeftRadius: 30,
+                backgroundColor: Colors.white,
               }}>
-              <Text
+              <View
                 style={{
-                  color: 'black',
-                  fontFamily: 'Poppins-SemiBold',
-                  fontSize: 17,
-                  marginTop: 23,
-                  marginLeft: 50,
-                  // alignSelf: 'center',
+                  width: '90%',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                 }}>
-                {monthtitle}
-              </Text>
-              <View style={{flexDirection: 'row'}}>
-                <AnalyticsDropdown onSelect={handleDataSelect} />
-                <Picker
-                  selectedValue={selectedYear}
-                  onValueChange={itemValue => setSelectedYear(itemValue)}
-                  style={{height: 20, width: 100}}>
-                  {/* <Picker.Item label="Select Year" value={null} /> */}
-                  {availableYears.map(year => (
-                    <Picker.Item
-                      key={year}
-                      label={year.toString()}
-                      value={year}
-                    />
-                  ))}
-                </Picker>
-              </View>
-            </View>
-            <View style={{marginLeft: 10}}>
-              <VictoryChart width={Dimensions.get('window').width} height={300}>
-                <VictoryAxis
-                  tickFormat={monthNames}
+                <Text
                   style={{
-                    axis: {stroke: 'black'},
-                    axisLabel: {fontSize: 14, padding: 30},
-                    tickLabels: {fontSize: 12, padding: 5},
-                  }}
-                  label="Month"
-                />
-                <VictoryAxis
-                  dependentAxis
-                  tickFormat={value =>
-                    selectedData === 'quantity'
-                      ? `${value}`
-                      : `${value / 1000}k`
-                  }
-                  style={{
-                    axis: {stroke: 'black'},
-                    axisLabel: {fontSize: 14, padding: 30},
-                    tickLabels: {fontSize: 12, padding: 5},
-                  }}
-                  label={
-                    selectedData === 'quantity' ? 'Quantity' : 'Rental Amount'
-                  }
-                />
-                <VictoryBar
-                  data={rentalData}
-                  x="month"
-                  y={
-                    selectedData === 'quantity'
-                      ? 'totalNumberOfItems'
-                      : 'totalEarnings'
-                  }
-                  barWidth={23}
-                  style={{
+                    color: Colors.buttonColor,
+                    fontFamily: 'Poppins-SemiBold',
+                    fontSize: 17,
+                    marginTop: 23,
+                    marginLeft: 50,
+                    // alignSelf: 'center',
+                  }}>
+                  {monthtitle}
+                </Text>
+                <View style={{flexDirection: 'row'}}>
+                  {/* <AnalyticsDropdown onSelect={handleDataSelect} /> */}
+                  <Picker
+=======
                     data: {
                       fill: getBarColor,
                     },
@@ -357,229 +399,362 @@ const DashboardDetails = () => {
             {selectedBarIndex !== null && (
               <>
                 <View style={{flexDirection: 'row'}}>
-                  <View
-                    style={{
-                      width: 131,
-                      height: 96,
-                      marginLeft: 38,
-                      marginTop: 30,
-                      borderRadius: 20,
-                      backgroundColor: 'white',
-                      elevation: 4,
-                    }}>
-                    <Text
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('FilteredAnalytics')}>
+                    <View
                       style={{
-                        color: 'black',
-                        fontFamily: 'Poppins-SemiBold',
-                        fontSize: 12,
-                        justifyContent: 'center',
-                        alignSelf: 'center',
-                        marginTop: 20,
+                        width: 131,
+                        height: 96,
+                        marginLeft: 38,
+                        marginTop: 30,
+                        borderRadius: 20,
+                        backgroundColor: 'white',
+                        elevation: 4,
                       }}>
-                      ₹ {rentalData[selectedBarIndex].totalEarnings}
-                    </Text>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontFamily: 'Poppins-SemiBold',
-                        fontSize: 12,
-                        alignSelf: 'center',
-                        marginTop: 20,
-                      }}>
-                      Total Earnings
-                    </Text>
-                  </View>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontFamily: 'Poppins-SemiBold',
+                          fontSize: 12,
+                          justifyContent: 'center',
+                          alignSelf: 'center',
+                          marginTop: 20,
+                        }}>
+                        ₹ {rentalData[selectedBarIndex].totalEarnings}
+                      </Text>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontFamily: 'Poppins-SemiBold',
+                          fontSize: 12,
+                          alignSelf: 'center',
+                          marginTop: 20,
+                        }}>
+                        Total Earnings
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+
                   <TouchableOpacity
                     onPress={handleTotalOrdersClick}
+>>>>>>> 8ea1e3e5a43ad9e6e284a5b176d11be19e3c2c90
                     style={{
-                      width: 131,
-                      height: 96,
-                      marginLeft: 38,
-                      marginTop: 30,
-                      borderRadius: 20,
-                      backgroundColor: 'white',
-                      elevation: 4,
-                    }}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontFamily: 'Poppins-SemiBold',
-                        fontSize: 12,
-                        justifyContent: 'center',
-                        alignSelf: 'center',
-                        marginTop: 20,
-                      }}>
-                      {rentalData[selectedBarIndex].totalNumberOfItems}
-                    </Text>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontFamily: 'Poppins-SemiBold',
-                        fontSize: 12,
-                        alignSelf: 'center',
-                        marginTop: 20,
-                      }}>
-                      Total Orders
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                {/* <View
-                  style={{
-                    // flex: 1,
-                    height: '100%',
-                    width: '100%',
-                    // backgroundColor: Colors.black,
-                    // justifyContent: 'center',
-                    // alignItems: 'center',
-                  }}> */}
-                <View style={{alignItems: 'center'}}>
-                  <Text
-                    style={{
-                      color: Colors.black,
-                      fontFamily: 'Poppins-Medium',
-                      fontSize: 20,
-                      marginBottom: 10,
-                      marginTop: 30,
-                    }}>
-                    Sub-categories
-                  </Text>
-                  <View
-                    style={{
-                      elevation: 4,
-                      shadowColor: 'white',
-                      shadowOffset: {width: 0, height: 2},
-                      shadowOpacity: 0.2,
-                      shadowRadius: 4,
-                    }}>
-                    <PieChart
-                      data={transformedData}
-                      width={Dimensions.get('window').width}
-                      height={210}
-                      chartConfig={{
-                        color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                        // Decrease the font size here
-                      }}
-                      accessor="value"
-                      backgroundColor="transparent"
-                      absolute
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-Medium',
-                      color: 'black',
-                      fontSize: 20,
-                      marginTop: 20,
-                    }}>
-                    {' '}
-                    Rental Earnings{' '}
-                  </Text>
-                  <LineChart
-                    data={{
-                      labels: rentalData.map(data => data.month),
-                      datasets: [
-                        {
-                          data: rentalData.map(data => data.totalEarnings),
-                        },
-                      ],
+                      marginTop: 10,
+                      width: 130,
+                      // backgroundColor: '#ebebeb',
+                      borderRadius: 30,
+                      borderWidth: 1,
+                      borderColor: '#ccc',
+                      paddingHorizontal: 10,
+                      paddingVertical: 5,
                     }}
-                    width={Dimensions.get('window').width}
-                    height={220}
-                    style={{
-                      marginLeft: -10,
-                      marginTop: 20,
-                    }}
-                    withHorizontalLabels={true}
-                    chartConfig={{
-                      backgroundGradientFrom: 'rgba(255, 255, 255, 0)', // Transparent background start color
-                      backgroundGradientTo: 'rgba(255, 255, 255, 0)', // Transparent background end color
-                      decimalPlaces: 0,
-                      color: (opacity = 1) => `rgba(89, 74, 181, ${opacity})`,
-                    }}
-                    fromZero
-                    yAxisInterval={10}
-                  />
+                    selectedValue={selectedYear}
+                    onValueChange={year => setSelectedYear(year)}
+                    itemStyle={{
+                      color: '#000',
+                    }}>
+                    {years.map(year => (
+                      <Picker.Item key={year} label={year} value={year} />
+                    ))}
+                  </Picker>
                 </View>
-                <View>
-                  <TouchableOpacity
-                    style={style.exportContainer}
-                    onPress={handleExportpdf}>
-                    <Text style={style.exportText}>Export</Text>
-                    <Icon
-                      name="export"
-                      size={15}
-                      color={Colors.white}
-                      style={{marginLeft: 10}}
-                    />
-                  </TouchableOpacity>
-                </View>
-                {/* </View> */}
+              </View>
+              <View
+                style={{
+                  height: 330,
+                  width: '95%',
+                  marginLeft: 10,
+                  borderRadius: 30,
+                  // backgroundColor: '#C4B0FF',
+                }}>
                 <View
                   style={{
-                    marginTop: 20,
-                    height: '100%',
-                    width: '100%',
+                    backgroundColor: Colors.buttonColor,
+                    borderRadius: 30,
+                    width: 40,
+                    height: 40,
+                    marginLeft: 30,
+                    marginTop: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}>
-                  {orderData &&
-                  Object.keys(orderData).length > 0 &&
-                  orderData[selectedMonth] ? (
-                    <Modal visible={showModel}>
-                      <TouchableOpacity onPress={handleVisibleModal}>
-                        <Text style={style.txtClose}>Close</Text>
-                      </TouchableOpacity>
-                      <ScrollView
+                  <AnalyticsIcon
+                    name="google-analytics"
+                    color={Colors.white}
+                    size={30}
+                    // style={{marginLeft: 30, marginTop: 10}}
+                  />
+                </View>
+                <VictoryChart
+                  width={Dimensions.get('window').width}
+                  height={300}>
+                  <VictoryAxis
+                    tickValues={rentalData.map(data => data.monthIndex - 1)}
+                    tickFormat={monthIndex => {
+                      const monthNames = [
+                        'Jan',
+                        'Feb',
+                        'Mar',
+                        'Apr',
+                        'May',
+                        'Jun',
+                        'Jul',
+                        'Aug',
+                        'Sep',
+                        'Oct',
+                        'Nov',
+                        'Dec',
+                      ];
+                      return monthNames[monthIndex % 12];
+                    }}
+                    style={{
+                      axis: {stroke: Colors.buttonColor},
+                      tickLabels: {
+                        fontSize: 12,
+                        padding: 5,
+                        fill: Colors.buttonColor,
+                      },
+                    }}
+                  />
+                  <VictoryAxis
+                    dependentAxis
+                    style={{
+                      axis: {stroke: Colors.buttonColor},
+                      axisLabel: {fontSize: 14, padding: 30},
+                      tickLabels: {
+                        fontSize: 12,
+                        padding: 5,
+                        fill: Colors.buttonColor,
+                      },
+                    }}
+                    label="Orders"
+                  />
+
+                  <VictoryBar
+                    // animate={{duration: 3000}}
+                    data={Object.entries(rentalData).map(
+                      ([month, data], index) => ({
+                        month,
+                        rentalPrice: data.totalNumberOfItems,
+                        index, // Add index property
+                      }),
+                    )}
+                    x="month"
+                    y="rentalPrice"
+                    barWidth={23}
+                    cornerRadius={{
+                      // bottomLeft: 4,
+                      // bottomRight: 4,
+                      topLeft: 4,
+                      topRight: 4,
+                    }}
+                    style={{
+                      data: {
+                        fill: getBarColor,
+                      },
+                    }}
+                    labels={({datum}) => `${datum.rentalPrice}`}
+                    labelComponent={
+                      <VictoryLabel
                         style={{
-                          backgroundColor: Colors.white,
-                          width: '100%',
-                          height: '100%',
+                          fill: Colors.buttonColor, // Set the desired color for the labels
+                          fontSize: 12,
+                        }}
+                      />
+                    }
+                    events={[
+                      {
+                        target: 'data',
+                        eventHandlers: {
+                          onPress: handleBarClick,
+                        },
+                      },
+                    ]}
+                  />
+                </VictoryChart>
+              </View>
+              {selectedBarIndex !== null && (
+                <>
+                  <View style={{alignItems: 'center'}}>
+                    <View
+                      style={
+                        {
+                          // width: '100%',
+                          // backgroundColor: Colors.buttonColor,
+                        }
+                      }>
+                      <Text
+                        style={{
+                          color: Colors.black,
+                          fontFamily: 'Poppins-SemiBold',
+                          fontSize: 20,
+                          marginBottom: 10,
+                          marginTop: 30,
                         }}>
-                        {orderData[selectedMonth].map((order, index) => (
-                          <View
-                            key={`${order.id}-${index}`}
-                            style={style.dashcard}>
-                            <View style={style.dashcardContainer}>
-                              <Image
-                                source={{uri: order.imageUrl}}
-                                style={style.dashboardimage}
-                              />
-                              <View
-                                key={order.id}
-                                style={{
-                                  marginTop: 0,
-                                  width: 200,
-                                  height: 40,
-                                  // backgroundColor: Colors.white,
-                                }}>
-                                <Text style={style.Order}>
-                                  Order ID: {order.borrowerId}
-                                </Text>
-                                {/* <Text>Rented by</Text> */}
-                                <Text style={style.borrowerName}>
-                                  {order.borrowerName}
-                                </Text>
-                                {/* <Text style={style.Product}></Text> */}
-                                <Text style={style.price}>
-                                  ₹ {order.rentalCost}
-                                </Text>
-                                <Text style={style.order}> {order.name}</Text>
-                                <Text style={style.order}>
-                                  {' '}
-                                  {order.borrowerPhoneNumber}
-                                </Text>
+                        Sub-categories
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        elevation: 4,
+                        shadowColor: 'white',
+                        shadowOffset: {width: 0, height: 2},
+                        shadowOpacity: 0.2,
+                        shadowRadius: 4,
+                      }}>
+                      {/* <View
+                        style={{
+                          backgroundColor: Colors.buttonColor,
+                          borderRadius: 30,
+                          width: 40,
+                          height: 40,
+                          marginLeft: 75,
+                          marginTop: 10,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <PieIcon
+                          name="pie-chart"
+                          color={Colors.white}
+                          size={25}
+                          // style={{marginLeft: 30, marginTop: 10}}
+                        />
+                      </View> */}
+                      <PieChart
+                        data={transformedData}
+                        width={Dimensions.get('window').width}
+                        height={230}
+                        chartConfig={{
+                          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                          // Decrease the font size here
+                        }}
+                        style={{marginLeft: 50}}
+                        accessor="value"
+                        backgroundColor="transparent"
+                        absolute
+                      />
+                    </View>
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-SemiBold',
+                        color: 'black',
+                        fontSize: 20,
+                        marginTop: 20,
+                      }}>
+                      {' '}
+                      Rental Earnings{' '}
+                    </Text>
+                    <LineChart
+                      data={{
+                        // labels: rentalData.map(data => data.month),
+                        datasets: [
+                          {
+                            data: rentalData.map(data => data.totalEarnings),
+                          },
+                        ],
+                      }}
+                      width={Dimensions.get('window').width}
+                      height={220}
+                      style={{
+                        marginLeft: -10,
+                        marginTop: 20,
+                      }}
+                      withHorizontalLabels={true}
+                      chartConfig={{
+                        backgroundGradientFrom: 'rgba(255, 255, 255, 0)', // Transparent background start color
+                        backgroundGradientTo: 'rgba(255, 255, 255, 0)', // Transparent background end color
+                        decimalPlaces: 0,
+                        color: (opacity = 1) => `rgba(89, 74, 181, ${opacity})`,
+                      }}
+                      fromZero
+                      yAxisInterval={10}
+                    />
+                  </View>
+                  <View>
+                    <TouchableOpacity
+                      style={style.exportContainer}
+                      onPress={handleExportpdf}>
+                      <Text style={style.exportText}>Export</Text>
+                      <Icon
+                        name="export"
+                        size={15}
+                        color={Colors.white}
+                        style={{marginLeft: 10}}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  {/* </View> */}
+                  <View
+                    style={{
+                      marginTop: 20,
+                      height: '100%',
+                      width: '100%',
+                    }}>
+                    {orderData &&
+                    Object.keys(orderData).length > 0 &&
+                    orderData[selectedMonth] ? (
+                      <Modal
+                        visible={showModel}
+                        animationType="slide"
+                        transparent={true}>
+                        <ScrollView
+                          style={{
+                            backgroundColor: Colors.white,
+                            width: '100%',
+                            height: '100%',
+                            borderTopLeftRadius: 30,
+                            borderTopRightRadius: 30,
+                            marginTop: 200,
+                          }}>
+                          <TouchableOpacity onPress={handleVisibleModal}>
+                            <Text style={style.txtClose}>Close</Text>
+                          </TouchableOpacity>
+                          {orderData[selectedMonth].map((order, index) => (
+                            <View key={order.id} style={style.dashcard}>
+                              <View style={style.dashcardContainer}>
+                                <Image
+                                  source={{uri: order.imageUrl}}
+                                  style={style.dashboardimage}
+                                />
+                                <View
+                                  key={order.id}
+                                  style={{
+                                    marginTop: 0,
+                                    width: 200,
+                                    height: 40,
+                                    // backgroundColor: Colors.white,
+                                  }}>
+                                  <Text style={style.Order}>
+                                    Order ID: {order.borrowerId}
+                                  </Text>
+                                  {/* <Text>Rented by</Text> */}
+                                  <Text style={style.borrowerName}>
+                                    {order.borrowerName}
+                                  </Text>
+                                  {/* <Text style={style.Product}></Text> */}
+                                  <Text style={style.price}>
+                                    ₹ {order.rentalCost}
+                                  </Text>
+                                  <Text style={style.order}> {order.name}</Text>
+                                  <Text style={style.order}>
+                                    {' '}
+                                    {order.borrowerPhoneNumber}
+                                  </Text>
+                                </View>
                               </View>
                             </View>
-                          </View>
-                        ))}
-                      </ScrollView>
-                    </Modal>
-                  ) : (
-                    <Text style={{color: 'black'}}>
-                      No orders found for the selected month
-                    </Text>
-                  )}
-                </View>
-              </>
-            )}
+                          ))}
+                        </ScrollView>
+                      </Modal>
+                    ) : (
+                      <Text style={{color: 'black'}}>
+                        No orders found for the selected month
+                      </Text>
+                    )}
+                  </View>
+                </>
+              )}
+            </View>
           </>
         </ScrollView>
       )}

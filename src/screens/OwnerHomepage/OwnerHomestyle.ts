@@ -56,7 +56,7 @@ const Styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
     fontSize: 16,
     justifyContent: 'flex-end',
-    marginLeft: '80%',
+    marginLeft: '78%',
     width: '90%',
     marginTop: 20,
   },
