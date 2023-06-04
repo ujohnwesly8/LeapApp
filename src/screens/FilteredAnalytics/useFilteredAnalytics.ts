@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import ApiService from '../../network/network';
-
+import url from './../../constants/Apis';
 const useFilteredAnalytics = (startDate, endDate) => {
   const [chartData, setChartData] = useState([]);
   const [data,setData] = useState([]);
@@ -17,7 +17,7 @@ const useFilteredAnalytics = (startDate, endDate) => {
       const formattedEndDate = endDate.toISOString();
 
       const response = await ApiService.get(
-        `https://b8cf-106-51-70-135.ngrok-free.app/api/v1/order/dashboardDateSelector?startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
+        `https://ae30-119-82-120-139.ngrok-free.app/api/v1/order/dashboardDateSelector?startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
       );
 
       // const data = response.data;

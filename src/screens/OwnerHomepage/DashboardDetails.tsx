@@ -29,6 +29,7 @@ import AnalyticsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PieIcon from 'react-native-vector-icons/FontAwesome';
 import ForwardIcon from 'react-native-vector-icons/Ionicons';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
+import { useNavigation } from '@react-navigation/core';
 // import AnalyticsDropdown from '../../components/atoms/AnalyticsDropdown/AnalyticsDropdown';
 const monthNames = [
   'Jan',
@@ -58,6 +59,7 @@ const DashboardDetails = () => {
     DashboardYearly,
     Dashboardyeardata,
   } = useAnalytics();
+  const navigation = useNavigation();
   const [showModel, setShowModel] = useState(false);
   const [selectedBarIndex, setSelectedBarIndex] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(
@@ -250,7 +252,8 @@ const DashboardDetails = () => {
             </View>
             {selectedBarIndex !== null ? (
               <View style={{flexDirection: 'row', marginLeft: 8}}>
-                <View
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('FilteredAnalytics')}
                   style={{
                     width: 131,
                     height: 96,
@@ -290,7 +293,7 @@ const DashboardDetails = () => {
                       style={{marginTop: 16}}
                     />
                   </View>
-                </View>
+                </TouchableOpacity>
                 <TouchableOpacity
                   onPress={handleTotalOrdersClick}
                   style={{

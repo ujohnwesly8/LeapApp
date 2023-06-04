@@ -86,12 +86,7 @@ const Owneradditemsstack = () => {
       initialRouteName="Additems">
       <Stack.Screen name="Additems" component={Additems} />
       <Stack.Screen name="OwnerImage" component={OwnerImage} />
-<<<<<<< HEAD
-      {/* <Stack.Screen name="Imagepicker" component={Imagepicker} />
-       */}
-=======
       {/* <Stack.Screen name="Imagepicker" component={Imagepicker} /> */}
->>>>>>> 38b2bd1e1f7f8b1ff1b4a4a4e04043476fc8aace
       <Stack.Screen name="OwnerHome" component={OwnerHome} />
     </Stack.Navigator>
   );
