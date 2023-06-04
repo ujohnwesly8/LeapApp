@@ -14,7 +14,11 @@ import {
   removeproducts,
 } from '../../redux/actions/actions';
 import {useDispatch, useSelector} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {launchImageLibrary} from 'react-native-image-picker';
@@ -41,11 +45,25 @@ const Useowneredititems = () => {
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   console.log('snj xkcvn', editProductId);
+  const [isMinusDisabled, setIsMinusDisabled] = useState(true);
+  const [isPlusDisabled, setIsPlusDisabled] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [outofStock, setOutofstock] = useState(false);
+  const [totalQuantity, settotalQuantities] = useState(0);
+  const [updatedQuantity, setupdatedquantity] = useState(0);
+  const [disabledQuantity, setdisabledQuantity] = useState(0);
+  const [productQuantity, setProductQuantity] = useState(0);
+  const isFocused = useIsFocused();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [refreshData, setRefreshData] = useState(false);
   const openModal = () => {
     setShowModal(true);
+    fetchData();
+    setRefreshData(true);
   };
   const closeModal = () => {
     setShowModal(false);
+    setRefreshData(false);
   };
   const [Mapdata, setMapdata] = useState('');
   const handleName = () => {
@@ -59,38 +77,43 @@ const Useowneredititems = () => {
   const handleSelectItem = item => {
     setSelectedItem(item);
   };
+  const fetchData = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const response = await axios.get(EditItemsUrl, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const mappedData = response.data.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        image: item.imageUrl[0],
+        disabledQuantities: item.disabledQuantities,
+        availableQuantities: item.availableQuantities,
+        disabled: item.disabled,
+        totalQuantity: item.totalQuantity,
+      }));
+      setData(mappedData);
+      console.log(name);
+      console.log(response.data);
+      // setName(mappedData.name);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(true);
+    }
+  };
+
   useEffect(() => {
     setIsLoading(true);
-    const fetchData = async () => {
-      try {
-        const token = await AsyncStorage.getItem('token');
-        const response = await axios.get(EditItemsUrl, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const mappedData = response.data.map((item: any) => ({
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          image: item.imageUrl[0],
-        }));
-        setData(mappedData);
-        console.log(name);
-        console.log(response.data);
-        // setName(mappedData.name);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        setIsLoading(true);
-      }
-    };
     fetchData();
   }, []);
   console.log(name);
   const FetchData = async editProductId => {
     try {
-      setViisble(true);
+      // setViisble(true);
       const ProductData = await ApiService.get(
         `${ProductsById}/${editProductId}`,
       );
@@ -106,6 +129,25 @@ const Useowneredititems = () => {
       console.log('editProductId', editProductId);
     }
   };
+
+  // const FetchData = async editProductId => {
+  //   try {
+  //     setViisble(true);
+  //     const ProductData = await ApiService.get(
+  //       `${ProductsById}/${editProductId}`,
+  //     );
+  //     console.log('ProductData', ProductData);
+  //     setMapdata(ProductData);
+  //     setName(ProductData.name);
+  //     setPrice(ProductData.price);
+  //     setQuantity(ProductData.totalQuantity);
+  //     setDescription(ProductData.description);
+  //     return ProductData;
+  //   } catch (error) {
+  //     console.log('error is :', error);
+  //     console.log('editProductId', editProductId);
+  //   }
+  // };
   const [categoriesData, setCategoriesData] = useState([]);
   const [subCategoriesData, setSubCategoriesData] = useState([]);
   const [subEventCategoriesData, setSubEventCategoriesData] = useState([]);
@@ -387,10 +429,8 @@ const Useowneredititems = () => {
     })
       .then(data => {
         dispatch(removeproducts(productId));
+        // fetchData();
         openModal();
-        setTimeout(() => {
-          navigation.navigate('OwnerProfile');
-        }, 4000);
       })
       .catch(error => {
         console.error(error);
@@ -417,6 +457,89 @@ const Useowneredititems = () => {
     } catch (error) {
       throw error; // throw the error to be caught by the reject handler
     }
+  };
+  const handleDisableProduct = (item: number) => {
+    setIsModalVisible(true);
+    setProductQuantity(item.availableQuantities);
+    settotalQuantities(item.totalQuantity);
+    setSelectedProductId(item.id);
+    setdisabledQuantity(item.disabledQuantities);
+    console.log('the disabled quantities is :', item.disabledQuantities);
+    console.log('item id is ', item.id);
+    console.log('item is  :', item);
+    console.log('disabled Quantity : ', disabledQuantity);
+  };
+  const incrementQuantity = id => {
+    let maxQuantity = productQuantity; // Maximum quantity available by default
+
+    if (productQuantity < disabledQuantity && disabledQuantity !== 0) {
+      maxQuantity = disabledQuantity; // If no available quantity, set maximum as disabled quantity
+    }
+
+    if (updatedQuantity >= maxQuantity) {
+      setIsPlusDisabled(true);
+    } else {
+      setupdatedquantity(updatedQuantity + 1);
+    }
+  };
+  const handleRefresh = () => {
+    setRefreshData(false);
+  };
+
+  // const incrementQuantity = id => {
+  //   setupdatedquantity(updatedQuantity + 1);
+  // };
+
+  const decrementQuantity = id => {
+    if (updatedQuantity > 1) {
+      setupdatedquantity(updatedQuantity - 1);
+    }
+  };
+  const handleDisablebutton = async (id, disableQuantity) => {
+    console.log('item id', id);
+    console.log('product Quantity is', disableQuantity);
+
+    try {
+      if (disableQuantity <= productQuantity) {
+        const response = await ApiService.get(
+          `https://537d-106-51-70-135.ngrok-free.app/api/v1/product/disableProduct?productId=${id}&quantity=${disableQuantity}`,
+        );
+        console.log('product disable', response);
+        setOutofstock(true);
+        fetchData();
+        setRefreshData(true); // Set refreshData to true
+      } else {
+        console.log('Invalid disable quantity');
+        // Handle invalid disable quantity error
+      }
+    } catch (error) {
+      console.log('product enable Error', error);
+      // setIsLoading(true);
+    }
+    setIsModalVisible(false);
+  };
+
+  const handleEnablebutton = async (id, enableQuantity, disabledQuantity) => {
+    console.log('item id', id);
+    try {
+      if (enableQuantity <= disabledQuantity) {
+        const response = await ApiService.get(
+          `https://537d-106-51-70-135.ngrok-free.app/api/v1/product/enableProduct?productId=${id}&quantity=${enableQuantity}`,
+        );
+        console.log('product Enable', response);
+        setOutofstock(true);
+        fetchData(); // Set refreshData to true
+        setRefreshData(prevRefreshData => !prevRefreshData);
+      } else {
+        console.log('Invalid enable quantity');
+        // Handle invalid enable quantity error
+      }
+    } catch (error) {
+      console.log('product disable Error', error);
+      // setIsLoading(true);
+    }
+
+    setIsModalVisible(false);
   };
 
   return {
@@ -469,6 +592,30 @@ const Useowneredititems = () => {
     openModal,
     isLoading,
     setIsLoading,
+    fetchData,
+    setIsModalVisible,
+    handleDisablebutton,
+    setIsMinusDisabled,
+    setIsPlusDisabled,
+    incrementQuantity,
+    decrementQuantity,
+    isModalVisible,
+    isMinusDisabled,
+    isPlusDisabled,
+    productQuantity,
+
+    selectedProductId,
+    outofStock,
+    setOutofstock,
+    handleEnablebutton,
+    setSelectedProductId,
+    totalQuantity,
+    updatedQuantity,
+    disabledQuantity,
+    refreshData,
+    setRefreshData,
+    handleRefresh,
+    handleDisableProduct,
   };
 };
 
