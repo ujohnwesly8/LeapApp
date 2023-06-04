@@ -22,6 +22,7 @@ import DatePicker from '../../components/atoms/DatePicker Detail';
 import CardDatePiker from '../../components/atoms/DatePicker';
 import CalendarPicker from 'react-native-calendar-picker';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
+import React from 'react';
 
 type Props = {
   route: {params: {product: any}};

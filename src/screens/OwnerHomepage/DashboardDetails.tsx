@@ -29,6 +29,9 @@ import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import AnalyticsDropdown from '../../components/atoms/AnalyticsDropdown/AnalyticsDropdown';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
+
+import {useNavigation} from '@react-navigation/native';
+import FilteredAnalytics from '../FilteredAnalytics/FilteredAnalytics';
 const monthNames = [
   'Jan',
   'Feb',
@@ -45,6 +48,7 @@ const monthNames = [
 ];
 
 const DashboardDetails = () => {
+  const navigation = useNavigation();
   const {
     handleAnalytics,
     Data,
@@ -357,38 +361,42 @@ const DashboardDetails = () => {
             {selectedBarIndex !== null && (
               <>
                 <View style={{flexDirection: 'row'}}>
-                  <View
-                    style={{
-                      width: 131,
-                      height: 96,
-                      marginLeft: 38,
-                      marginTop: 30,
-                      borderRadius: 20,
-                      backgroundColor: 'white',
-                      elevation: 4,
-                    }}>
-                    <Text
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('FilteredAnalytics')}>
+                    <View
                       style={{
-                        color: 'black',
-                        fontFamily: 'Poppins-SemiBold',
-                        fontSize: 12,
-                        justifyContent: 'center',
-                        alignSelf: 'center',
-                        marginTop: 20,
+                        width: 131,
+                        height: 96,
+                        marginLeft: 38,
+                        marginTop: 30,
+                        borderRadius: 20,
+                        backgroundColor: 'white',
+                        elevation: 4,
                       }}>
-                      ₹ {rentalData[selectedBarIndex].totalEarnings}
-                    </Text>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontFamily: 'Poppins-SemiBold',
-                        fontSize: 12,
-                        alignSelf: 'center',
-                        marginTop: 20,
-                      }}>
-                      Total Earnings
-                    </Text>
-                  </View>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontFamily: 'Poppins-SemiBold',
+                          fontSize: 12,
+                          justifyContent: 'center',
+                          alignSelf: 'center',
+                          marginTop: 20,
+                        }}>
+                        ₹ {rentalData[selectedBarIndex].totalEarnings}
+                      </Text>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontFamily: 'Poppins-SemiBold',
+                          fontSize: 12,
+                          alignSelf: 'center',
+                          marginTop: 20,
+                        }}>
+                        Total Earnings
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+
                   <TouchableOpacity
                     onPress={handleTotalOrdersClick}
                     style={{

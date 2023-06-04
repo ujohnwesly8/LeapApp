@@ -27,6 +27,7 @@ import {View} from 'react-native';
 import AnalyticScreen from '../../screens/AnalyticsPage/AnalyticScreen';
 import DashboardDetails from '../../screens/OwnerHomepage/DashboardDetails';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
+import FilteredAnalytics from '../../screens/FilteredAnalytics/FilteredAnalytics';
 // import Init from './src/redux/actions/actions';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -71,6 +72,8 @@ const OwnerHomestack = () => {
       <Stack.Screen name="MyRentals" component={MyRentals} />
       {/* <Stack.Screen name="AnalyticScreen" component={DashboardDetails} /> */}
       <Stack.Screen name="DashboardDetails" component={DashboardDetails} />
+      <Stack.Screen name="FilteredAnalytics" component={FilteredAnalytics} />
+
       <Stack.Screen name="OproductDetails" component={OproductDetails} />
     </Stack.Navigator>
   );
@@ -83,7 +86,12 @@ const Owneradditemsstack = () => {
       initialRouteName="Additems">
       <Stack.Screen name="Additems" component={Additems} />
       <Stack.Screen name="OwnerImage" component={OwnerImage} />
+<<<<<<< HEAD
+      {/* <Stack.Screen name="Imagepicker" component={Imagepicker} />
+       */}
+=======
       {/* <Stack.Screen name="Imagepicker" component={Imagepicker} /> */}
+>>>>>>> 38b2bd1e1f7f8b1ff1b4a4a4e04043476fc8aace
       <Stack.Screen name="OwnerHome" component={OwnerHome} />
     </Stack.Navigator>
   );
