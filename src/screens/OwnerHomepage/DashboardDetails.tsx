@@ -29,16 +29,7 @@ import AnalyticsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PieIcon from 'react-native-vector-icons/FontAwesome';
 import ForwardIcon from 'react-native-vector-icons/Ionicons';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
-<<<<<<< HEAD
 // import AnalyticsDropdown from '../../components/atoms/AnalyticsDropdown/AnalyticsDropdown';
-=======
-import AnalyticsDropdown from '../../components/atoms/AnalyticsDropdown/AnalyticsDropdown';
-import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import Styles from '../../constants/themeColors';
-
-import {useNavigation} from '@react-navigation/native';
-import FilteredAnalytics from '../FilteredAnalytics/FilteredAnalytics';
->>>>>>> 8ea1e3e5a43ad9e6e284a5b176d11be19e3c2c90
 const monthNames = [
   'Jan',
   'Feb',
@@ -55,7 +46,6 @@ const monthNames = [
 ];
 
 const DashboardDetails = () => {
-  const navigation = useNavigation();
   const {
     handleAnalytics,
     Data,
@@ -262,7 +252,6 @@ const DashboardDetails = () => {
               <View style={{flexDirection: 'row', marginLeft: 8}}>
                 <View
                   style={{
-<<<<<<< HEAD
                     width: 131,
                     height: 96,
                     marginLeft: 38,
@@ -375,69 +364,6 @@ const DashboardDetails = () => {
                 <View style={{flexDirection: 'row'}}>
                   {/* <AnalyticsDropdown onSelect={handleDataSelect} /> */}
                   <Picker
-=======
-                    data: {
-                      fill: getBarColor,
-                    },
-                  }}
-                  labels={({datum}) =>
-                    selectedData === 'quantity'
-                      ? `${datum.totalNumberOfItems}`
-                      : `${Math.round(datum.totalEarnings / 1000)}k`
-                  }
-                  events={[
-                    {
-                      target: 'data',
-                      eventHandlers: {
-                        onPress: handleBarClick,
-                      },
-                    },
-                  ]}
-                />
-              </VictoryChart>
-            </View>
-            {selectedBarIndex !== null && (
-              <>
-                <View style={{flexDirection: 'row'}}>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('FilteredAnalytics')}>
-                    <View
-                      style={{
-                        width: 131,
-                        height: 96,
-                        marginLeft: 38,
-                        marginTop: 30,
-                        borderRadius: 20,
-                        backgroundColor: 'white',
-                        elevation: 4,
-                      }}>
-                      <Text
-                        style={{
-                          color: 'black',
-                          fontFamily: 'Poppins-SemiBold',
-                          fontSize: 12,
-                          justifyContent: 'center',
-                          alignSelf: 'center',
-                          marginTop: 20,
-                        }}>
-                        ₹ {rentalData[selectedBarIndex].totalEarnings}
-                      </Text>
-                      <Text
-                        style={{
-                          color: 'black',
-                          fontFamily: 'Poppins-SemiBold',
-                          fontSize: 12,
-                          alignSelf: 'center',
-                          marginTop: 20,
-                        }}>
-                        Total Earnings
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    onPress={handleTotalOrdersClick}
->>>>>>> 8ea1e3e5a43ad9e6e284a5b176d11be19e3c2c90
                     style={{
                       marginTop: 10,
                       width: 130,
