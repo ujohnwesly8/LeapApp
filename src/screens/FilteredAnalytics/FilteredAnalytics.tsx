@@ -1,3 +1,5 @@
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable react-native/no-inline-styles */
 // import React, {useState, useEffect} from 'react';
 // import {View, Text, TouchableOpacity} from 'react-native';
 // import {useNavigation} from '@react-navigation/native';
@@ -114,14 +116,7 @@
 // export default FilteredAnalytics;
 
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
+import {View, Text, ScrollView, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import style from './FilteredAnalyticsStyles';
 import BackButton from '../../components/atoms/BackButton/BackButton';
@@ -136,7 +131,6 @@ import Lottie from 'lottie-react-native';
 const FilteredAnalytics = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const navigation = useNavigation();
 
   const {chartData, data, isLoading, fetchData} = useFilteredAnalytics(
     startDate,
@@ -165,10 +159,10 @@ const FilteredAnalytics = () => {
     return months[month - 1];
   };
 
-  const addPrefixToYLabel = value => `₹ ${value}`;
+  const addPrefixToYLabel = (value: any) => `₹ ${value}`;
 
   return (
-    <ScrollView>
+    <ScrollView style={{marginTop: 50}}>
       <View
       // style={{backgroundColor: '#ECF2FF'}}
       >
@@ -181,11 +175,11 @@ const FilteredAnalytics = () => {
                 alignItems: 'center',
                 marginLeft: 40,
               }}>
-              <Text style={style.titleStyle}>Product Analytics</Text>
+              <Text style={style.titleStyle}>Rental Insights</Text>
             </View>
           </View>
 
-          <View style={{marginTop: 10, marginBottom: 20, flexDirection: 'row'}}>
+          <View style={{marginTop: 20, marginBottom: 20, flexDirection: 'row'}}>
             <Text style={[style.headingtext, {marginTop: 10, marginLeft: 10}]}>
               Select date
             </Text>
@@ -212,7 +206,7 @@ const FilteredAnalytics = () => {
                     flexDirection: 'row',
                     width: '10%',
                     justifyContent: 'space-between',
-                   
+
                     // marginLeft: 100,
                   }}>
                   {/* <View
@@ -223,7 +217,7 @@ const FilteredAnalytics = () => {
                     }}>
                     <Text style={style.axisLabel1}>Earnings</Text>
                   </View> */}
-                  <View  style={{marginLeft:20}}>
+                  <View style={{marginLeft: 20}}>
                     <LineChart
                       data={{
                         labels: chartData.map(dataPoint => {
@@ -266,7 +260,7 @@ const FilteredAnalytics = () => {
               <View>
                 <View style={{height: 300, width: 400}}>
                   <Lottie
-                    source={require('../../../assets/ownerHome.json')}
+                    source={require('../../../assets/business-analytics.json')}
                     autoPlay
                   />
                 </View>
@@ -281,8 +275,6 @@ const FilteredAnalytics = () => {
               </View>
             )}
           </View>
-          {console.log('data is ', data)}
-
           {Object.keys(data).length > 0 ? (
             Object.entries(data).map(([month, items]) => (
               <View key={month}>

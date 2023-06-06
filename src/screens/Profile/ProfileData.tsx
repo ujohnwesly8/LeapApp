@@ -181,8 +181,8 @@ const ProfileData = () => {
         setFirstName(profileData.firstName);
         setEmail(profileData.email);
         setPhone(profileData.phoneNumber);
-        setProfileImage(profileData.profileImageUrl);
-        console.log('profilePic', profilePic);
+        setProfileImage(profileData.profileImageUrl); // Assign directly to profilePic state
+        console.log('profilePic is ', profileData.profileImageUrl);
         console.log('Profile Data', profileData);
       } else {
         throw new Error('Failed to fetch profile name');
@@ -198,10 +198,13 @@ const ProfileData = () => {
   const handleRemoveProfilePic = async () => {
     const response = await ApiService.post(`${profileUpload}=${null}`);
     console.log('Upload response', response);
+    setProfileImage(null); // Update profile image state to indicate it has been removed
     openModal1();
   };
+
   const openModal = () => {
     setShowModall(true);
+    fetchProfileData();
   };
   const closeModal = () => {
     setShowModall(false);
@@ -285,7 +288,7 @@ const ProfileData = () => {
   const uploadImage = async imageurl => {
     console.log('selected image is ', imageurl);
     const response = await ApiService.post(`${profileUpload}=${imageurl}`);
-    setSelectedImage(imageurl);
+    setProfileImage(imageurl);
     console.log('Upload response', response);
   };
 

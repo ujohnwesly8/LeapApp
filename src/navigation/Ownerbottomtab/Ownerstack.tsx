@@ -327,7 +327,8 @@ const getRouteName = (route: Partial<Route<string>>) => {
     routeName?.includes('Owneredititems') ||
     routeName?.includes('OwnerImage') ||
     routeName?.includes('OproductDetails') ||
-    routeName?.includes('DashboardDetails')
+    routeName?.includes('DashboardDetails') ||
+    routeName?.includes('FilteredAnalytics')
   ) {
     return 'none';
   }

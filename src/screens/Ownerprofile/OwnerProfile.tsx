@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 import style from './OwnerProfilestyle';
@@ -35,6 +36,7 @@ const OwnerProfile = ({navigation}: Props) => {
     setSelectedImage,
     handleRemoveProfilePic,
     setProfileImage,
+    isloading,
   } = ProfileData();
   const {colorScheme} = useCart();
   const dispatch = useDispatch();
@@ -60,17 +62,15 @@ const OwnerProfile = ({navigation}: Props) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            {profilePic ? (
-              <TouchableOpacity onPress={() => pickImage()}>
-                <Avatar.Image size={100} source={{uri: profilePic}} />
-              </TouchableOpacity>
+            {isloading ? ( // Display loading indicator while uploading
+              <ActivityIndicator size="large" color="gray" />
+            ) : profilePic ? (
+              <Avatar.Image size={100} source={{uri: profilePic}} />
             ) : (
-              <TouchableOpacity onPress={() => pickImage()}>
-                <Avatar.Image
-                  size={100}
-                  source={require('../../../assets/profile.jpg')}
-                />
-              </TouchableOpacity>
+              <Avatar.Image
+                size={100}
+                source={require('../../../assets/profile.jpg')}
+              />
             )}
           </View>
         </View>
