@@ -26,10 +26,8 @@ import BackButton from '../../components/atoms/BackButton/BackButton';
 import Lottie from 'lottie-react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import AnalyticsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import PieIcon from 'react-native-vector-icons/FontAwesome';
 import ForwardIcon from 'react-native-vector-icons/Ionicons';
-import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
-import { useNavigation } from '@react-navigation/core';
+import {useNavigation} from '@react-navigation/core';
 // import AnalyticsDropdown from '../../components/atoms/AnalyticsDropdown/AnalyticsDropdown';
 const monthNames = [
   'Jan',
@@ -49,7 +47,6 @@ const monthNames = [
 const DashboardDetails = () => {
   const {
     handleAnalytics,
-    Data,
     handleOrders,
     orderData,
     loading,

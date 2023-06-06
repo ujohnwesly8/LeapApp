@@ -20,24 +20,25 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  titleStyle:{
-            color: 'black',
-            fontSize: 24,
-            fontWeight: 'bold',
-            margin: 15,
-          },
+  titleStyle: {
+    color: 'black',
+    fontSize: 24,
+    fontFamily: 'Poppins-SemiBold',
+    // margin: 15,
+    marginLeft: 25,
+    marginTop: 15,
+  },
 
-
-    headingtext: {
+  headingtext: {
     fontSize: 16,
-    
+
     // fontWeight: '400',
-    fontFamily: 'Poppins-Redular',
+    fontFamily: 'Poppins-Medium',
     color: Colors.black,
     // width: '80%',
   },
 
-   dashcard: {
+  dashcard: {
     backgroundColor: Colors.buttonColor,
     borderRadius: 10,
     padding: 10,
@@ -54,9 +55,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
 
-
-
-   dashcardContainer: {
+  dashcardContainer: {
     width: '50%',
     height: 150,
     // alignSelf: 'center',
@@ -64,44 +63,40 @@ const styles = StyleSheet.create({
     // backgroundColor: Colors.white,
   },
 
-
-   dashboardimage: {
+  dashboardimage: {
     width: '70%',
     height: 120,
     borderRadius: 8,
   },
 
-
-
-   cardStyle: {
+  cardStyle: {
     fontFamily: 'Poppins-SemiBold',
     fontSize: 10,
-    width:'100%',
+    width: '100%',
     color: Colors.white,
     marginLeft: '10%',
   },
 
-
-   textContainer1: {
+  textContainer1: {
     alignItems: 'center',
   },
   noAddressText1: {
     // fontWeight: '500',
-    fontFamily:'Poppins-Bold',
+    fontFamily: 'Poppins-SemiBold',
     fontSize: 20,
     marginTop: 20,
     marginBottom: 10,
     color: 'black',
   },
-    noAddressText2: {
+  noAddressText2: {
     // fontWeight: '500',
-    fontFamily:'Poppins-Bold',
+    fontFamily: 'Poppins-SemiBold',
     fontSize: 20,
     marginTop: 3,
     marginBottom: 10,
     color: 'black',
   },
-    overlay: {
+  overlay: {
     height: 163,
     width: '150%',
     // backgroundColor: 'rgba(255, 255, 255, 0.2)',
@@ -111,18 +106,17 @@ const styles = StyleSheet.create({
     elevation: 4,
     alignItems: 'center',
   },
-  axisLabel:{
-   
+  axisLabel: {
     // backgroundColor:'blue',
-    marginLeft:150,
+    marginLeft: 150,
   },
-    axisLabel1:{
-    color:'black',
-  
-    fontSize:10,
-    height:120,
-    width:30,
+  axisLabel1: {
+    color: 'black',
+
+    fontSize: 10,
+    height: 120,
+    width: 30,
     // marginLeft:20,
-  }
+  },
 });
 export default styles;
