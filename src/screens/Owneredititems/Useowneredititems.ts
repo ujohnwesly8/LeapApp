@@ -6,6 +6,7 @@ import {
   EditItemsUrl,
   OwnerCategoryUrl,
   ProductsById,
+  url,
 } from '../../constants/Apis';
 import {url as baseUrl} from '../../constants/Apis';
 import {
@@ -502,7 +503,7 @@ const Useowneredititems = () => {
     try {
       if (disableQuantity <= productQuantity) {
         const response = await ApiService.get(
-          `https://537d-106-51-70-135.ngrok-free.app/api/v1/product/disableProduct?productId=${id}&quantity=${disableQuantity}`,
+          `${url}/product/disableProduct?productId=${id}&quantity=${disableQuantity}`,
         );
         console.log('product disable', response);
         setOutofstock(true);
@@ -524,7 +525,7 @@ const Useowneredititems = () => {
     try {
       if (enableQuantity <= disabledQuantity) {
         const response = await ApiService.get(
-          `https://537d-106-51-70-135.ngrok-free.app/api/v1/product/enableProduct?productId=${id}&quantity=${enableQuantity}`,
+          `${url}/product/enableProduct?productId=${id}&quantity=${enableQuantity}`,
         );
         console.log('product Enable', response);
         setOutofstock(true);

@@ -82,7 +82,7 @@ const OwnerProfile = ({navigation}: Props) => {
             style={style.removeButton}
             onPress={() => {
               handleRemoveProfilePic();
-              setProfileImage(null);
+              // setProfileImage(null);
             }}>
             <Text style={style.uploadText}>Remove</Text>
           </TouchableOpacity>

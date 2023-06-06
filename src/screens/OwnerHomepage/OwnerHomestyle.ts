@@ -107,7 +107,7 @@ const Styles = StyleSheet.create({
     fontFamily: 'Poppins-Medium',
     marginBottom: 10,
     color: Colors.white,
-    marginLeft: '24%',
+    // marginLeft: '24%',
     marginTop: 20,
   },
   closeButton: {
@@ -141,7 +141,7 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
 
     alignItems: 'center',
-    marginTop: 60,
+    marginTop: 20,
   },
   okButtonText: {
     color: 'black',
@@ -271,7 +271,7 @@ const Styles = StyleSheet.create({
     // fontWeight: '500',
     fontFamily: 'Poppins-Medium',
     height: 20,
-    width: '40%',
+    width: '80%',
     marginTop: 5,
     marginLeft: 10,
     fontSize: 14,

@@ -258,5 +258,17 @@ const OwnerEditItemstyles = StyleSheet.create({
     // fontWeight: '500',
     fontFamily: 'Poppins-SemiBold',
   },
+  modalQuantityText: {
+    fontSize: 15,
+    // fontWeight: '700',
+    fontFamily: 'Poppins-Medium',
+    marginBottom: 10,
+    color: Colors.white,
+    // marginLeft: '24%',
+    marginTop: 5,
+    alignItems: 'center',
+    // backgroundColor: 'red',
+    justifyContent: 'center',
+  },
 });
 export default OwnerEditItemstyles;

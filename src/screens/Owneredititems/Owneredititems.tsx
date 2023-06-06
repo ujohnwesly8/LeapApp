@@ -427,20 +427,45 @@ const App = () => {
                         <Text style={styles.closeButtonText}>Close</Text>
                       </TouchableOpacity>
                     </View>
+                    <View style={{alignItems: 'center', marginTop: 10}}>
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins-SemiBold',
+                          fontSize: 20,
+                          color: Colors.white,
+                        }}>
+                        Quantities
+                      </Text>
+                    </View>
                     <View
                       style={{
                         flexDirection: 'row',
-                        width: '30%',
+                        width: '90%',
                         justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginLeft: 20,
                       }}>
-                      <Text style={styles.modalText}>
-                        Total {totalQuantity}
+                      <Text style={styles.modalText}>Total</Text>
+                      <Text style={styles.modalText}>Available</Text>
+                      <Text style={styles.modalText}>Disabled</Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        width: '80%',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        // backgroundColor: 'white',
+                        marginLeft: 25,
+                      }}>
+                      <Text style={OwnerEditItemstyles.modalQuantityText}>
+                        {totalQuantity}
                       </Text>
-                      <Text style={styles.modalText}>
-                        Available {productQuantity}
+                      <Text style={OwnerEditItemstyles.modalQuantityText}>
+                        {productQuantity}
                       </Text>
-                      <Text style={styles.modalText}>
-                        disabled {disabledQuantity}
+                      <Text style={OwnerEditItemstyles.modalQuantityText}>
+                        {disabledQuantity}
                       </Text>
                     </View>
                     <View style={styles.quantityContainer}>
@@ -456,6 +481,16 @@ const App = () => {
                         <Text style={styles.quantityButtonText}>+</Text>
                       </TouchableOpacity>
                     </View>
+                    <View style={{marginTop: 30, alignItems: 'center'}}>
+                      <Text
+                        style={{
+                          color: Colors.white,
+                          fontFamily: 'Poppins-Medium',
+                        }}>
+                        {' '}
+                        Note : you can only enable disabled products
+                      </Text>
+                    </View>
                     <View
                       style={{
                         justifyContent: 'space-between',
@@ -463,7 +498,7 @@ const App = () => {
                         flexDirection: 'row',
                         width: '80%',
                         marginLeft: 40,
-                        marginTop: 20,
+                        // marginTop: 20,
                       }}>
                       <TouchableOpacity
                         onPress={() =>

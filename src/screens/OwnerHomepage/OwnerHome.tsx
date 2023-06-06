@@ -250,12 +250,6 @@ export default function OwnerHome({navigation}: Props) {
                           ]}>
                           {item.name}
                         </Text>
-                        <TouchableOpacity
-                          onPress={() => handleDisableProduct(item)}
-                          style={styles.disableButton}>
-                          {console.log('is item disabled', item.disabled)}
-                          <Text style={styles.disableButtonText}>Manage</Text>
-                        </TouchableOpacity>
                       </View>
                       <View
                         style={{
@@ -263,9 +257,6 @@ export default function OwnerHome({navigation}: Props) {
                           justifyContent: 'space-between',
                         }}>
                         <Text style={styles.cardTextPrice}>₹ {item.price}</Text>
-                        <Text style={styles.disabledText}>
-                          Disabled : {item.disabledQuantities}{' '}
-                        </Text>
                       </View>
                     </View>
                   </TouchableOpacity>

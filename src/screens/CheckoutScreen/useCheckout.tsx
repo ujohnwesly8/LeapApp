@@ -36,7 +36,7 @@ function useCart() {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           };
-          const response = await axios.get(`${url}/address/listaddress`, {
+          const response = await axios.get(`${url}/address/listAddress`, {
             headers,
           });
           const data = await response.data;
