@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import React from 'react';
 import style from '../Ownerprofile/OwnerProfilestyle';
@@ -47,6 +48,8 @@ const Profile = ({navigation}: Props) => {
     isloading,
     handleRemoveProfilePic,
     setProfileImage,
+    refreshData,
+    refreshState,
   } = ProfileData();
   const {colorScheme} = useCart();
   const dispatch = useDispatch();
@@ -59,7 +62,12 @@ const Profile = ({navigation}: Props) => {
         style.profileStyle,
         colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
       ]}>
-      <ScrollView style={{width: '100%', height: '100%'}}>
+      <ScrollView
+        style={{width: '100%', height: '100%'}}
+        refreshControl={
+          <RefreshControl refreshing={refreshState} onRefresh={refreshData} />
+        }>
+        {console.log('refreshinggggg ', profilePic)}
         <View style={style.buttonContainer}>
           <View style={{zIndex: 1}}>
             <SwitchAccountButton />
@@ -105,7 +113,7 @@ const Profile = ({navigation}: Props) => {
             style={style.removeButton}
             onPress={() => {
               handleRemoveProfilePic();
-              setProfileImage(null);
+              // setProfileImage(null);
             }}>
             <Text style={style.uploadText}>Remove</Text>
           </TouchableOpacity>

@@ -212,7 +212,7 @@ const FilteredAnalytics = () => {
                     flexDirection: 'row',
                     width: '10%',
                     justifyContent: 'space-between',
-                   
+
                     // marginLeft: 100,
                   }}>
                   {/* <View
@@ -223,7 +223,7 @@ const FilteredAnalytics = () => {
                     }}>
                     <Text style={style.axisLabel1}>Earnings</Text>
                   </View> */}
-                  <View  style={{marginLeft:20}}>
+                  <View style={{marginLeft: 20}}>
                     <LineChart
                       data={{
                         labels: chartData.map(dataPoint => {
