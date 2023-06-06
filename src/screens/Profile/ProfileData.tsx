@@ -165,6 +165,7 @@ const ProfileData = () => {
   const [isloading, setIsloading] = useState(false);
   const [showModall, setShowModall] = useState(false);
   const [showModal1, setShowModall1] = useState(false);
+  const [refreshState, setRefreshState] = useState(false);
   const fetchProfileData = async () => {
     const token = await AsyncStorage.getItem('token');
     try {
@@ -182,7 +183,8 @@ const ProfileData = () => {
         setEmail(profileData.email);
         setPhone(profileData.phoneNumber);
         setProfileImage(profileData.profileImageUrl);
-        console.log('profilePic', profilePic);
+        // Assign directly to profilePic state
+        console.log('profilePic is ', profileData.profileImageUrl);
         console.log('Profile Data', profileData);
       } else {
         throw new Error('Failed to fetch profile name');
@@ -194,14 +196,15 @@ const ProfileData = () => {
       setIsLoading(false);
     }
   };
-
-  const handleRemoveProfilePic = async () => {
-    const response = await ApiService.post(`${profileUpload}=${null}`);
-    console.log('Upload response', response);
-    openModal1();
+  const refreshData = () => {
+    setRefreshState(true);
   };
+
   const openModal = () => {
     setShowModall(true);
+    setRefreshState(true);
+    fetchProfileData();
+    setRefreshState(false);
   };
   const closeModal = () => {
     setShowModall(false);
@@ -285,8 +288,16 @@ const ProfileData = () => {
   const uploadImage = async imageurl => {
     console.log('selected image is ', imageurl);
     const response = await ApiService.post(`${profileUpload}=${imageurl}`);
-    setSelectedImage(imageurl);
+    fetchProfileData();
+    // Update profile image state with the complete URL or empty string
+    // setProfileImage(imageurl);
     console.log('Upload response', response);
+  };
+  const handleRemoveProfilePic = async () => {
+    const response = await ApiService.post(`${profileUpload}=${null}`);
+    console.log('Upload response', response);
+    setProfileImage(''); // Update profile image state to indicate it has been removed
+    openModal1();
   };
 
   console.log(selectedImage);
@@ -313,6 +324,8 @@ const ProfileData = () => {
     closeModal1,
     openModal1,
     showModal1,
+    refreshData,
+    refreshState,
   };
 };
 
