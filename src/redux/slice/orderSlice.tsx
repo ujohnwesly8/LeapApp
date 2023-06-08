@@ -1,24 +1,17 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {OrderGetApi, url} from '../../constants/Apis';
+import {url} from '../../constants/Apis';
+import ApiService from '../../network/network';
 
 export const fetchOrderProducts = createAsyncThunk(
   'fetchOrderProducts',
   async () => {
     try {
-      const token = await AsyncStorage.getItem('token');
-      console.log('hello token', token);
-      const response = await fetch(`${url}/order/list`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
+      const response = await ApiService.get(`${url}/order/list`);
+      const data = await response;
       console.log('order of cladc', data);
       return data;
     } catch (error) {
-      throw error.response.data;
+      console.log(error);
     }
   },
 );

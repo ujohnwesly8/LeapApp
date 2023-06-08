@@ -1,24 +1,27 @@
 /* eslint-disable react-native/no-inline-styles */
+// External libraries/packages
 import React from 'react';
-import {
-  View,
-  TextInput,
-  Text,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from 'react-native';
-import Useformik from './Useloginscreen';
+import {View, TextInput, Text, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import Lottie from 'lottie-react-native';
+
+// Styles and assets
 import styles from './LoginStyle';
 import Colors from '../../constants/Colors';
-// import Style from '../Profile/profilestyles';
-import Lottie from 'lottie-react-native';
-import useCart from '../Cart/useCart';
 import Styles from '../../constants/themeColors';
+
+// Custom components and modules
+import useCart from '../Cart/useCart';
+import useLoginscreen from './useLoginscreen';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
+import {StackNavigationProp} from '@react-navigation/stack';
+
+type RootStackParamList = {
+  OtpScreen: undefined;
+  SignupScreen: undefined;
+};
 export default function LoginScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const {
     email,
     password,
@@ -30,7 +33,7 @@ export default function LoginScreen() {
     showModal,
     passwordError,
     handleLogin,
-  } = Useformik();
+  } = useLoginscreen();
   const {colorScheme} = useCart();
   return (
     <View
@@ -124,7 +127,7 @@ export default function LoginScreen() {
             styles.signuptext,
             colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
           ]}>
-          Don't have an account?{' '}
+          Don't have an account?
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
           <Text style={styles.Signuptext}>Sign up</Text>

@@ -1,10 +1,15 @@
 import {useState} from 'react';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
+import {Dispatch} from 'redux';
 import {useDispatch} from 'react-redux';
 import {Login} from '../../redux/actions/actions';
-function Useformik() {
-  const dispatch = useDispatch();
+function useLoginscreen() {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [showModal, setShowModal] = useState(false);
+  const [passwordError, setPasswordError] = useState<string>('');
+  const dispatch = useDispatch<Dispatch>();
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Enter valid email'),
@@ -17,21 +22,12 @@ function Useformik() {
       ),
   });
 
-  // const handleLogin = () => {
-  //   dispatch(Login(email, password));
-  // };
   const handleLogin = async () => {
     try {
       await dispatch(Login(email, password));
-      openModal();
+      // openModal();
     } catch (error) {}
   };
-
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [showModal, setShowModal] = useState(false);
-  const [passwordError, setPasswordError] = useState<string>('');
-
   const openModal = () => {
     setShowModal(true);
   };
@@ -68,7 +64,7 @@ function Useformik() {
   //   setShowModal(true);
   // };
   // const closeModal = () => {
-  //   setShowModal(false);
+  //   setShowModal(false);S
   // };
 
   return {
@@ -86,4 +82,4 @@ function Useformik() {
     handleLogin,
   };
 }
-export default Useformik;
+export default useLoginscreen;
