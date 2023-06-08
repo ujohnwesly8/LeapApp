@@ -4,7 +4,6 @@ import {
   applyMiddleware,
 } from 'redux';
 import ProductSlice from './slice/productSlice';
-import createSagaMiddleware from 'redux-saga';
 import Reducers from './reducers/reducers';
 import authReducer from './reducers/reducers';
 import {AddressReducers} from './reducers/AddressReducers';
@@ -19,9 +18,6 @@ import wishlistSlice from './slice/wishlistSlice';
 import cartSlice from './slice/cartSlice';
 import orderSlice from './slice/orderSlice';
 import editItemSlice from './slice/editItemSlice';
-// import EditItemSlice from '../redux/slice/editItemSlice';
-// import {fetchEditItemSaga} from './thunks/editItemThunk';
-import {all} from 'redux-saga/effects';
 import thunk from 'redux-thunk';
 
 const RootReducers = combineReducers({
@@ -42,14 +38,4 @@ const RootReducers = combineReducers({
   editItem: editItemSlice,
 });
 
-// function* rootSaga() {
-//   yield all([fetchEditItemSaga()]);
-// }
-
-const sagaMiddleware = createSagaMiddleware();
-
-export const store = createStore(
-  RootReducers,
-  applyMiddleware(sagaMiddleware, thunk),
-);
-// sagaMiddleware.run(rootSaga);
+export const store = createStore(RootReducers, applyMiddleware(thunk));
