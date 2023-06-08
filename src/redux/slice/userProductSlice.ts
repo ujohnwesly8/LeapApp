@@ -1,22 +1,17 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import axios from 'axios';
+
 import {UserProductsUrl} from '../../constants/Apis';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import ApiService from '../../network/network';
 
 export const fetchUserProducts = createAsyncThunk(
   'fetchUserProducts',
   async () => {
-    // get the token from the state
     try {
-      const token = await AsyncStorage.getItem('token');
-      const response = await axios.get(UserProductsUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return response.data;
+      const response = await ApiService.get(UserProductsUrl);
+      return response;
     } catch (error) {
-      throw error.response.data; // throw the error to be caught by the reject handler
+      console.log(error);
     }
   },
 );

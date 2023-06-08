@@ -114,7 +114,7 @@ export default function LoginScreen() {
             styles.signuptext,
             colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
           ]}>
-          Don't have an account?{' '}
+          Don't have an account?
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
           <Text style={styles.Signuptext}>Sign up</Text>

@@ -241,6 +241,7 @@ const SwitchAccountButton = () => {
   const handleOptionPress = async (option: SetStateAction<string>) => {
     try {
       setShowOptions(false);
+      console.log('option', option);
       const token = await AsyncStorage.getItem('token');
       const response = await axios.post(
         `${url}/user/switch?profile=${option}`,
@@ -273,7 +274,7 @@ const SwitchAccountButton = () => {
         onPress={handlePress}
         style={[styles.button, {opacity: 0.9}]} // Apply opacity animation
         accessibilityLabel={`Switch account type to ${
-          accountType === 'borrower' ? 'owner' : 'borrower'
+          accountType === 'BORROWER' ? 'OWNER' : 'BORROWER'
         }`}>
         <Text style={styles.label}>{accountType}</Text>
         <IonIcon
@@ -290,17 +291,17 @@ const SwitchAccountButton = () => {
             {opacity: optionsAnimation, transform: [{scale: optionsAnimation}]}, // Apply opacity and scale animations
           ]}>
           <TouchableOpacity
-            onPress={() => handleOptionPress('borrower')}
-            accessibilityLabel="borrower">
+            onPress={() => handleOptionPress('BORROWER')}
+            accessibilityLabel="BORROWER">
             <View
               style={
-                accountType === 'borrower'
+                accountType === 'BORROWER'
                   ? styles.buttonContainer
                   : styles.buttonUnselected
               }>
               <Text
                 style={
-                  accountType === 'borrower'
+                  accountType === 'BORROWER'
                     ? styles.optionSelected
                     : styles.option
                 }>
@@ -309,17 +310,17 @@ const SwitchAccountButton = () => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => handleOptionPress('owner')}
-            accessibilityLabel="owner">
+            onPress={() => handleOptionPress('OWNER')}
+            accessibilityLabel="OWNER">
             <View
               style={
-                accountType === 'owner'
+                accountType === 'OWNER'
                   ? styles.buttonContainer
                   : styles.buttonUnselected
               }>
               <Text
                 style={
-                  accountType === 'owner'
+                  accountType === 'OWNER'
                     ? styles.optionSelected
                     : styles.option
                 }>

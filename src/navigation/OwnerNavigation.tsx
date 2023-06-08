@@ -32,7 +32,7 @@ const OwnerNavigation = () => {
   return (
     <>
       <StatusBar backgroundColor="black" barStyle="light-content" />
-      {role === 'owner' ? <Ownerstack /> : <MyStack />}
+      {role === 'OWNER' ? <Ownerstack /> : <MyStack />}
     </>
   );
 };

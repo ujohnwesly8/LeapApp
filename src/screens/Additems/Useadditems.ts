@@ -13,9 +13,8 @@ import {
   addtype,
   addoutfit,
 } from '../../redux/actions/actions';
-import axios from 'axios';
 import {OwnerCategoryUrl} from '../../constants/Apis';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import ApiService from '../../network/network';
 // import AddItemsformik from '../../components/templates/addItemsformik';
 // import {useFormik} from 'formik';
 function Useadditems() {
@@ -66,16 +65,11 @@ function Useadditems() {
 
     const fetchSubCategoryData = async () => {
       try {
-        const token = await AsyncStorage.getItem('token');
-        const response = await axios.get(
+        // const token = await AsyncStorage.getItem('token');
+        const response = await ApiService.get(
           `${url}/subcategory/listbyid/${genderData}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
         );
-        const subCategoriesArray = response.data.map(
+        const subCategoriesArray = response.map(
           (category: {id: any; subcategoryName: any}) => ({
             value: category.id,
             label: category.subcategoryName,
@@ -99,14 +93,12 @@ function Useadditems() {
     const fetchEventCategoryData = async () => {
       try {
         // setIsLoading(true);
-        const token = await AsyncStorage.getItem('token');
-        const response = await axios.get(`${url}/subcategory/listbyid/${3}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        // const token = await AsyncStorage.getItem('token');
+        const response = await ApiService.get(
+          `${url}/subcategory/listbyid/${3}`,
+        );
         // console.log(response);
-        const subEventCategoriesArray = response.data.map(
+        const subEventCategoriesArray = response.map(
           (category: {id: any; subcategoryName: any}) => ({
             value: category.id,
             label: category.subcategoryName,
@@ -128,13 +120,11 @@ function Useadditems() {
     const subOutfitCategoriesData = async () => {
       try {
         // setIsLoading(true);
-        const token = await AsyncStorage.getItem('token');
-        const response = await axios.get(`${url}/subcategory/listbyid/${4}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const subOutfitCategoriesArray = response.data.map(
+        // const token = await AsyncStorage.getItem('token');
+        const response = await ApiService.get(
+          `${url}/subcategory/listbyid/${4}`,
+        );
+        const subOutfitCategoriesArray = response.map(
           (category: {id: any; subcategoryName: any}) => ({
             value: category.id,
             label: category.subcategoryName,
@@ -156,8 +146,8 @@ function Useadditems() {
     const fetchCategoryData = async () => {
       try {
         // setIsLoading(true);
-        const response = await axios.get(OwnerCategoryUrl);
-        const categoriesArray = response.data.map(
+        const response = await ApiService.get(OwnerCategoryUrl);
+        const categoriesArray = response.map(
           (category: {id: any; categoryName: any}) => ({
             ...category,
             value: category.id,

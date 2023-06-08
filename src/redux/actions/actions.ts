@@ -4,7 +4,7 @@ import {AnyAction, Dispatch} from 'redux';
 import {url} from '../../constants/Apis';
 import {Alert} from 'react-native';
 import {Orderreducer} from '../reducers/Orderreducer';
-import { ThunkDispatch } from 'redux-thunk';
+import {ThunkDispatch} from 'redux-thunk';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';

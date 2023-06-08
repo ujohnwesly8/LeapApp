@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
+import {Dispatch} from 'redux';
 import {useDispatch} from 'react-redux';
 import {Login} from '../../redux/actions/actions';
 import {ThunkDispatch} from 'redux-thunk';

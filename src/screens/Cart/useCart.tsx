@@ -17,6 +17,7 @@ import {useNavigation} from '@react-navigation/native';
 import RazorpayCheckout from 'react-native-razorpay';
 import ApiService from '../../network/network';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
+import axios from 'axios';
 function useCart() {
   // const {product} = route.params;
   const [refreshing, setRefreshing] = useState(false);
@@ -74,29 +75,18 @@ function useCart() {
     }
   }, [showModal]);
 
-  const handleUpdate = async (newQuantity, productId) => {
+  const handleUpdate = async (newQuantity: number, productId: any) => {
     try {
-      const token = await AsyncStorage.getItem('token');
-
       const data = {
         productId: productId,
         quantity: newQuantity,
       };
-
-      console.log('Important data is :', newQuantity, productId);
-      const response = await fetch(QuantityApi, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-      });
-      const Data = await response.json();
-      console.log('Update response:', Data);
+      console.log('Important data is:', newQuantity, productId);
+      const response = await ApiService.put(QuantityApi, data);
+      console.log('Update response:', response);
       setRefreshing(true);
     } catch (error) {
-      // console.error('Update error:', error);
+      console.error('Update error:', error);
     }
   };
 
@@ -104,12 +94,14 @@ function useCart() {
     try {
       const token = await AsyncStorage.getItem('token');
       // Map the cart items to the required format
-      const items = cartData?.cartItems?.map(item => ({
-        price: item.product.price,
-        productId: item.product.id,
-        productName: item.product.name,
-        quantity: item.product.quantity,
-      }));
+      const items = cartData?.cartItems?.map(
+        (item: {product: {price: any; id: any; name: any; quantity: any}}) => ({
+          price: item.product.price,
+          productId: item.product.id,
+          productName: item.product.name,
+          quantity: item.product.quantity,
+        }),
+      );
 
       // Make the API call to create the checkout session
       const response = await fetch(checkoutApi, {
@@ -170,13 +162,13 @@ function useCart() {
       theme: {color: '#F37254'},
     };
     RazorpayCheckout.open(options)
-      .then(paymentData => {
+      .then((paymentData: any) => {
         // handle success
         console.log(paymentData);
         navigation.navigate('OrderStatusScreen');
         dispatch(ADDORDER(razorpayId));
       })
-      .catch(error => {
+      .catch((error: any) => {
         // handle failure
         // Alert.alert('Try Again');
       });
@@ -184,9 +176,8 @@ function useCart() {
 
   const dispatch = useDispatch();
   const CartProducts = useSelector(state => state.CartProducts.data);
-  
   const handleIncrement = useCallback(
-    item => {
+    (item: any) => {
       const productId = item.product.id;
       console.log('itemID', productId);
       const productQuantity = item.product.availableQuantities;
@@ -204,7 +195,7 @@ function useCart() {
     [handleUpdate],
   );
 
-  const handleDecrement = item => {
+  const handleDecrement = (item: {quantity: number; product: {id: any}}) => {
     console.log(item.quantity);
     const productId = item.product.id;
     const newQuantity = item.quantity - 1;

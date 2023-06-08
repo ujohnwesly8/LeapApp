@@ -195,7 +195,7 @@ const Owneraddaddress = () => {
           <RadioButton
             value="Home"
             status={selectedOption === 'Home' ? 'checked' : 'unchecked'}
-            onPress={() => handleOptionChange('Home')}
+            onPress={() => handleOptionChange('HOME')}
             color={colorScheme === 'dark' ? Colors.white : Colors.black}
           />
           <Text
@@ -210,7 +210,7 @@ const Owneraddaddress = () => {
           <RadioButton
             value="Office"
             status={selectedOption === 'Office' ? 'checked' : 'unchecked'}
-            onPress={() => handleOptionChange('Office')}
+            onPress={() => handleOptionChange('OFFICE')}
             color={colorScheme === 'dark' ? Colors.white : Colors.black}
           />
           <Text
