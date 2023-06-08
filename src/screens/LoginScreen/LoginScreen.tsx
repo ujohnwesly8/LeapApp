@@ -15,25 +15,13 @@ import useCart from '../Cart/useCart';
 import useLoginscreen from './useLoginscreen';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import {StackNavigationProp} from '@react-navigation/stack';
-
 type RootStackParamList = {
   OtpScreen: undefined;
   SignupScreen: undefined;
 };
 export default function LoginScreen() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const {
-    email,
-    password,
-    handleEmailChange,
-    handlePasswordChange,
-    handleBlur,
-    formik,
-    closeModal,
-    showModal,
-    passwordError,
-    handleLogin,
-  } = useLoginscreen();
+  const {formik, closeModal, showModal, handleLogin} = useLoginscreen();
   const {colorScheme} = useCart();
   return (
     <View
@@ -66,10 +54,10 @@ export default function LoginScreen() {
           placeholderTextColor={
             colorScheme === 'dark' ? Colors.Textinput : Colors.black
           }
-          value={email}
+          value={formik.values.email}
           autoCapitalize="none"
-          onChangeText={handleEmailChange}
-          onBlur={() => handleBlur('email')}
+          onChangeText={formik.handleChange('email')}
+          onBlur={formik.handleBlur('email')}
         />
         {formik.touched.email && formik.errors.email && (
           <Text style={styles.errorText}>{formik.errors.email} </Text>
@@ -85,16 +73,15 @@ export default function LoginScreen() {
             placeholderTextColor={
               colorScheme === 'dark' ? Colors.Textinput : Colors.black
             }
-            value={password}
+            value={formik.values.password}
             secureTextEntry={true}
-            onChangeText={handlePasswordChange}
-            onBlur={() => handleBlur('password')}
+            onChangeText={formik.handleChange('password')}
+            onBlur={formik.handleBlur('password')}
           />
           {formik.touched.password && formik.errors.password && (
             <Text style={styles.errorText}>{formik.errors.password} </Text>
           )}
         </View>
-        {passwordError.length > 0 && <Text>{passwordError}</Text>}
       </View>
       <View style={styles.touchablebtnContainer}>
         <TouchableOpacity

@@ -4,12 +4,12 @@ import * as Yup from 'yup';
 import {Dispatch} from 'redux';
 import {useDispatch} from 'react-redux';
 import {Login} from '../../redux/actions/actions';
-function useLoginscreen() {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+import {ThunkDispatch} from 'redux-thunk';
+import {AnyAction} from 'redux';
+function Useloginscreen() {
   const [showModal, setShowModal] = useState(false);
   const [passwordError, setPasswordError] = useState<string>('');
-  const dispatch = useDispatch<Dispatch>();
+  const dispatch = useDispatch<ThunkDispatch<{}, {}, AnyAction>>();
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Enter valid email'),
@@ -24,7 +24,7 @@ function useLoginscreen() {
 
   const handleLogin = async () => {
     try {
-      await dispatch(Login(email, password));
+      dispatch(Login(formik.values.email, formik.values.password));
       // openModal();
     } catch (error) {}
   };
@@ -43,36 +43,7 @@ function useLoginscreen() {
     validationSchema: LoginSchema,
     onSubmit: handleLogin,
   });
-
-  const handleEmailChange = (value: string) => {
-    setEmail(value);
-    formik.setFieldValue('email', value);
-  };
-
-  const handlePasswordChange = (value: string) => {
-    setPassword(value);
-    formik.setFieldValue('password', value);
-  };
-
-  // const handleBlur = (field: string) => {
-  //   formik.setFieldTouched(field);
-  // };
-  const handleBlur = (field: string) => {
-    formik.setFieldTouched(field);
-  };
-  // const openModal = () => {
-  //   setShowModal(true);
-  // };
-  // const closeModal = () => {
-  //   setShowModal(false);S
-  // };
-
   return {
-    email,
-    password,
-    handleEmailChange,
-    handlePasswordChange,
-    handleBlur,
     openModal,
     closeModal,
     showModal,
@@ -82,4 +53,4 @@ function useLoginscreen() {
     handleLogin,
   };
 }
-export default useLoginscreen;
+export default Useloginscreen;

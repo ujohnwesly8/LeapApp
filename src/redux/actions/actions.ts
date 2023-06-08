@@ -1,12 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {ThunkDispatch} from 'redux-thunk';
-import {RootState} from '../reducers';
 import {AnyAction, Dispatch} from 'redux';
-import {AddAddressUrl, url} from '../../constants/Apis';
+import {url} from '../../constants/Apis';
 import {Alert} from 'react-native';
 import {Orderreducer} from '../reducers/Orderreducer';
-import {ThunkAction} from 'redux-thunk';
+import {ThunkDispatch} from 'redux-thunk';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -161,11 +159,8 @@ export const submitOTP = (phoneNo: string, otp: number) => {
   };
 };
 
-export const Login = (
-  email: string,
-  password: string,
-): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => {
-  return async (dispatch: ThunkDispatch<RootState, unknown, AnyAction>) => {
+export const Login = (email: string, password: string) => {
+  return async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     try {
       dispatch({
         type: LOGIN_REQUEST,
