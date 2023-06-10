@@ -1,23 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect, useContext} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  FlatList,
-  useColorScheme,
-} from 'react-native';
+import {Text, View, TouchableOpacity, Image, FlatList} from 'react-native';
 import Lottie from 'lottie-react-native';
-import MaterialIcon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import style from './categoryStyles';
 import axios from 'axios';
 import {url} from '../../constants/Apis';
-import Colors from '../../constants/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Styles from '../../constants/themeColors';
-import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 const Category = () => {
   const [categories, setCategories] = useState([]);

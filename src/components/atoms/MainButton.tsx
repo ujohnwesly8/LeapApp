@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import Styles from '../../screens/LoginScreen/LoginStyle';
+import Styles from '../../screens/LoginScreen/loginStyle';
 export default function Mainbutton(props: {onPress: any; text: string}) {
   const {onPress, text} = props;
   return (

@@ -32,8 +32,8 @@ const ApiService = {
     const response = await instance.put(url, body);
     return response.data;
   },
-  delete: async (url: string, body: any) => {
-    const response = await instance.delete(url, body);
+  delete: async (url: string) => {
+    const response = await instance.delete(url);
     return response.data;
   },
 };

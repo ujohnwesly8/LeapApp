@@ -23,6 +23,7 @@ const UserProductSlice = createSlice({
     isLoader: false,
     isError: false,
   },
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(fetchUserProducts.pending, state => {
@@ -37,7 +38,6 @@ const UserProductSlice = createSlice({
         state.isError = true;
       });
   },
-  reducers: undefined,
 });
 
 export default UserProductSlice.reducer;

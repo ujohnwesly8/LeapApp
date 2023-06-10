@@ -1,0 +1,25 @@
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useContext, useEffect} from 'react';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
+type RootStackParamList = {
+  CartScreen: undefined;
+  UserHomescreen: {screen: any};
+  ProfileScreen: {screen: any};
+};
+const usePayment = () => {
+  const {colorScheme} = useContext(ColorSchemeContext);
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  useEffect(() => {
+    const resetStack = setTimeout(() => {
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'CartScreen', params: {screen: 'Cart'}}],
+      });
+    }, 7000);
+    return () => clearTimeout(resetStack);
+  }, [navigation]);
+  return {navigation, colorScheme};
+};
+
+export default usePayment;

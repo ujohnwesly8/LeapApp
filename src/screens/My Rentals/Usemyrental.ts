@@ -4,11 +4,13 @@ import {useSelector, useDispatch} from 'react-redux';
 import {fetchProducts} from '../../redux/slice/productSlice';
 function Usemyrental() {
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts() as any);
   }, []);
 
   const dispatch = useDispatch();
-  const products = useSelector(state => state.products.data);
+  const products = useSelector(
+    (state: {products: {data: any[]}}) => state.products.data,
+  );
   console.log(JSON.stringify(products));
   return {products};
 }

@@ -10,7 +10,7 @@ export const fetchCartProducts = createAsyncThunk(
       console.log('john anna', response);
       return response;
     } catch (error) {
-      console.log(error);
+      console.log('error is is is is is is is', error);
     }
   },
 );
@@ -22,6 +22,7 @@ const CartSlice = createSlice({
     isLoader: false,
     isError: false,
   },
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(fetchCartProducts.pending, state => {
@@ -36,7 +37,6 @@ const CartSlice = createSlice({
         state.isError = true;
       });
   },
-  reducers: undefined,
 });
 
 export default CartSlice.reducer;

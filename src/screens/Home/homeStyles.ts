@@ -10,7 +10,6 @@ const style = StyleSheet.create({
     marginRight: '5%',
     marginTop: 10,
     marginBottom: 10,
-    // overflow: 'hidden',
     shadowColor: '#3E54AC1A',
     shadowOffset: {
       width: 1,
@@ -25,7 +24,6 @@ const style = StyleSheet.create({
   },
   CategoriesText: {
     fontSize: 24,
-    // fontWeight: '700',
     fontFamily: 'Poppins-SemiBold',
     color: Colors.black,
     marginTop: 15,
@@ -33,19 +31,16 @@ const style = StyleSheet.create({
   },
   Seetext: {
     fontSize: 16,
-    // fontWeight: '400',
+
     fontFamily: 'Poppins-Medium',
     color: Colors.buttonColor,
     marginTop: 25,
-    // marginLeft: 15,
     marginRight: 5,
   },
   categoriesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '95%',
-    // backgroundColor: Colors.white,
-    // height: '10%',
   },
   mainContainer: {
     height: '100%',
@@ -68,31 +63,26 @@ const style = StyleSheet.create({
   },
   Productstext: {
     color: Colors.black,
-    // fontWeight: '700',
+
     fontFamily: 'Poppins-SemiBold',
     fontSize: 24,
     marginLeft: 20,
-    // marginTop: 10,
     marginBottom: 5,
   },
   imageContainer: {
     backgroundColor: '#3E54AC1A',
     width: '100%',
     height: 150,
-    // marginTop: 5,
-    // borderRadius: 8,
   },
   image: {
     width: '100%',
     height: '100%',
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    // borderBottomRightRadius: 8,
-    // borderBottomLeftRadius: 8,
   },
   name: {
     fontSize: 12,
-    // fontWeight: '400',
+
     fontFamily: 'Poppins-Medium',
     color: Colors.black,
     marginLeft: 10,
@@ -107,7 +97,6 @@ const style = StyleSheet.create({
     alignItems: 'center',
     height: 18,
     width: 18,
-    // backgroundColor: '#fff',
   },
   price: {
     fontSize: 12,
@@ -131,7 +120,6 @@ const style = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 20,
-    // elevation: 5,
     position: 'absolute',
     backgroundColor: Colors.Textinput,
     top: 5,
@@ -141,7 +129,6 @@ const style = StyleSheet.create({
   },
   textContainer: {
     flexDirection: 'row',
-    // justifyContent: 'space-between',
     alignItems: 'center',
   },
   rentText: {color: '#3E54AC', fontWeight: 'bold', fontSize: 10},
@@ -165,36 +152,70 @@ const style = StyleSheet.create({
   subname: {
     color: Colors.black,
     fontSize: 12,
-    // fontWeight: '400',
-    // zIndex: 1,
     height: 100,
     marginLeft: 30,
     alignItems: 'center',
     marginTop: 10,
-    // backgroundColor: Colors.black,
     fontFamily: 'Poppins-Regular',
   },
   scroll: {
     width: '100%',
     height: '100%',
     flexDirection: 'row',
-    // marginLeft: 20,
   },
   corosal: {
-    // backgroundColor: Colors.black,
     height: '100%',
     width: '100%',
   },
   img: {
     height: 72,
     width: 72,
-    // resizeMode: 'cover',
     borderRadius: 50,
-    // borderWidth: 1,
-    // borderColor: Colors.white,
-    // padding: 30,
     marginLeft: 15,
-    // opacity: 1,
   },
+  corosalView: {
+    height: '100%',
+    width: '100%',
+  },
+  corousalContainer: {
+    marginTop: 30,
+    width: '100%',
+    height: 120,
+    borderRadius: 20,
+  },
+  corousalSubname: {
+    color: Colors.black,
+    fontSize: 14,
+    height: 100,
+    marginLeft: 30,
+    alignItems: 'center',
+    marginTop: 10,
+    fontFamily: 'Poppins-Regular',
+  },
+  corousalScroll: {
+    width: '100%',
+    height: '100%',
+    flexDirection: 'row',
+  },
+  corousalImage: {
+    height: 72,
+    width: 72,
+    borderRadius: 100,
+    padding: 30,
+    marginLeft: 15,
+    opacity: 1,
+  },
+  pagination: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 0,
+    alignSelf: 'center',
+  },
+  card: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  pagingText: {color: '#fff', margin: 3},
+  pagingActiveText: {color: '#3E54AC', margin: 3},
 });
 export default style;

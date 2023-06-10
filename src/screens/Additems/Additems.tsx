@@ -18,7 +18,7 @@ import TypeDropdown from '../../components/atoms/TypeDropdown';
 import OutfitDropdown from '../../components/atoms/OutfitDropdown';
 import Useadditems from './Useadditems';
 import Colors from '../../constants/Colors';
-import Styles from '../LoginScreen/LoginStyle';
+import Styles from '../LoginScreen/loginStyle';
 import styles from '../../constants/themeColors';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import BackButton from '../../components/atoms/BackButton/BackButton';

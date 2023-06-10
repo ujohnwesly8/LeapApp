@@ -1,18 +1,18 @@
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState, useContext} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Alert} from 'react-native';
+
 import {fetchWishlistProducts} from '../../redux/slice/wishlistSlice';
 import {removeFromWishlist} from '../../redux/actions/actions';
 import {url} from '../../constants/Apis';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Alert, useColorScheme} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {ColorSchemeContext} from '../../../ColorSchemeContext';
-function useWishlist() {
+const useWishlist = () => {
   const navigation = useNavigation();
   const {colorScheme} = useContext(ColorSchemeContext);
   const [refreshing, setRefreshing] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const openModal = () => {
     setShowModal(true);
   };
@@ -29,7 +29,7 @@ function useWishlist() {
       },
     })
       .then(response => response.json())
-      .then(data => {
+      .then(_data => {
         dispatch(removeFromWishlist(productId));
         openModal();
       })
@@ -40,27 +40,28 @@ function useWishlist() {
       });
   };
   const dispatch = useDispatch();
-  const WishlistProducts = useSelector(state => state.WishlistProducts.data);
+  const WishlistProducts = useSelector(
+    (state: {WishlistProducts: {data: null[]}}) => state.WishlistProducts.data,
+  );
   console.log(JSON.stringify(WishlistProducts));
-  // const length = WishlistProducts.length();
   console.log('wishlist succes');
   const onRefresh = async () => {
     setRefreshing(true);
-    await dispatch(fetchWishlistProducts());
+    await dispatch(fetchWishlistProducts() as any);
     setRefreshing(false);
   };
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      return dispatch(fetchWishlistProducts());
+      return dispatch(fetchWishlistProducts() as any);
     });
     return unsubscribe;
   }, [dispatch, navigation]);
   useEffect(() => {
-    dispatch(fetchWishlistProducts());
+    dispatch(fetchWishlistProducts() as any);
   }, [dispatch]);
   useEffect(() => {
     if (!showModal) {
-      dispatch(fetchWishlistProducts());
+      dispatch(fetchWishlistProducts() as any);
     }
   }, [dispatch, showModal]);
   return {
@@ -72,7 +73,6 @@ function useWishlist() {
     showModal,
     openModal,
     colorScheme,
-    isLoading,
   };
-}
+};
 export default useWishlist;
