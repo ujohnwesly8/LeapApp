@@ -16,7 +16,7 @@ import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import {login, signup} from '../../constants/languages/En';
 
 import Styles from './Signupstyle';
-import style from '../Owneraddaddress/Owneraddressstyle';
+import style from '../Owneraddaddress/AddressStyles';
 import Colors from '../../constants/Colors';
 import Style from '../../constants/themeColors';
 

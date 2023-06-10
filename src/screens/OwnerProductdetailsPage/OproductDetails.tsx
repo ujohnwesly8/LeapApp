@@ -5,7 +5,6 @@ import {StatusBar, Text, View, ImageBackground, ScrollView} from 'react-native';
 import styles from '../OwnerProductdetailsPage/OproductdetailsStyle';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Styles from '../../constants/themeColors';
-import useCart from '../Cart/useCart';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 type Props = {
@@ -34,7 +33,7 @@ export default function OproductDetails({route, navigation}: Props) {
       </View>
       <ScrollView horizontal={true}>
         <View style={{flexDirection: 'row'}}>
-          {product.imageUrl.map((item, index) => (
+          {product.imageUrl.map((item: any, index: number) => (
             <ImageBackground
               key={index}
               style={{

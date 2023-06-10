@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   Image,
   RefreshControl,
@@ -30,9 +31,8 @@ type OrderDetailsModalProps = {
 
 const MyOrder = ({navigation}: Props) => {
   const {
-    orderData,
     OrderProducts,
-    showModal,
+
     refreshing,
     selectedOrder,
     isModalOpen,

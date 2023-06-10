@@ -3,11 +3,11 @@ import {useContext, useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {fetchCartProducts} from '../../redux/slice/cartSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {ADDORDER, removeFromCart} from '../../redux/actions/actions';
+import {removeFromCart} from '../../redux/actions/actions';
 import {QuantityApi, checkoutApi, url} from '../../constants/Apis';
 import {Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import RazorpayCheckout from 'react-native-razorpay';
+
 import ApiService from '../../network/network';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -19,6 +19,7 @@ type RootStackParamList = {
 };
 const useCart = () => {
   const [refreshing, setRefreshing] = useState(false);
+  const [quantity, setQuantity] = useState(1);
   const [rentalStartDate, setRentalStartDate] = useState(new Date());
   const [rentalEndDate, setRentalEndDate] = useState(new Date());
   const [showModal, setShowModal] = useState(false);
@@ -42,8 +43,11 @@ const useCart = () => {
   ) || {
     cartItems: [],
   };
-
-  const [quantity, setQuantity] = useState(1);
+  const CartProducts = useSelector(
+    (state: {CartProducts: {data: any}}) => state.CartProducts.data,
+  ) || {
+    cartItems: [],
+  };
 
   // useEffect(() => {
   //   const unsubscribe = navigation.addListener('focus', () => {
@@ -127,34 +131,6 @@ const useCart = () => {
       });
   };
 
-  const totalPrice = 1;
-
-  const handlePayment = () => {
-    const options = {
-      description: 'Payment for food items',
-      image: 'https://i.imgur.com/3g7nmJC.png',
-      currency: 'INR',
-      key: 'rzp_live_vjRbx3MWMGxd9i',
-      amount: totalPrice * 100,
-      name: 'indranil',
-      prefill: {
-        email: 'example@example.com',
-        contact: '1234567890',
-        name: 'John Doe',
-      },
-      theme: {color: '#F37254'},
-    };
-    RazorpayCheckout.open(options)
-      .then((paymentData: any) => {
-        // handle success
-        console.log(paymentData);
-        navigation.navigate('OrderStatusScreen');
-        dispatch(ADDORDER(razorpayId));
-      })
-      .catch(() => {});
-  };
-
-  const CartProducts = useSelector(state => state.CartProducts.data);
   const handleIncrement = (item: any) => {
     const productId = item.product.id;
     console.log('itemID', productId);
@@ -171,7 +147,7 @@ const useCart = () => {
     console.log('refreshing :', refreshing); // Toggle the value of refreshing
   };
 
-  const handleDecrement = (item: {quantity: number; product: {id: any}}) => {
+  const handleDecrement = (item: any) => {
     console.log(item.quantity);
     const productId = item.product.id;
     const newQuantity = item.quantity - 1;
@@ -188,7 +164,7 @@ const useCart = () => {
     refreshing,
     setRefreshing,
     // onRefresh,
-    handlePayment,
+
     handleUpdate,
     rentalStartDate,
     rentalEndDate,

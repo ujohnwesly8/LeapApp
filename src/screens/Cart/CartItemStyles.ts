@@ -469,7 +469,6 @@ const styles = StyleSheet.create({
     height: 18,
     marginRight: 25,
     top: -12,
-    left: -95,
   },
   buttonQuantity: {
     backgroundColor: '#fff',
@@ -553,13 +552,7 @@ const styles = StyleSheet.create({
     top: -3,
     left: 3,
   },
-  quantityText: {
-    fontSize: 14,
-    marginHorizontal: 10,
-    fontWeight: 'bold',
-    top: 55,
-    left: -190,
-  },
+
   activeButtonText: {
     color: '#fff',
     backgroundColor: '#3E54AC',
