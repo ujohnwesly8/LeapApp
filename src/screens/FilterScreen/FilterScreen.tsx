@@ -1,9 +1,17 @@
-/* eslint-disable react-native/no-inline-styles */
 import {View, Text, TouchableOpacity, TextInput, Image} from 'react-native';
 import React from 'react';
+import styles from './filterStyles';
 import useFilterScreen from './useFilterScreen';
 import Colors from '../../constants/Colors';
-import styles from './filterStyles';
+
+
+interface Product {
+  id: string;
+  imageUrl: string[];
+  name: string;
+  brand: string;
+  price: number;
+}
 
 const FilterScreen = () => {
   const {
@@ -41,7 +49,7 @@ const FilterScreen = () => {
       </View>
       <View style={{width: '50%', height: 200}}>
         {filteredProducts && filteredProducts.length > 0 ? (
-          filteredProducts.map((product, index) => (
+          filteredProducts.map((product: Product, index: number) => (
             <View
               style={styles.productsContainer}
               key={`${product.id}-${index}`}>
@@ -56,7 +64,6 @@ const FilterScreen = () => {
                 <Text>Brand: {product.brand}</Text>
                 <Text>Price: {product.price}</Text>
               </View>
-              {/* Add more product information you want to display */}
             </View>
           ))
         ) : (

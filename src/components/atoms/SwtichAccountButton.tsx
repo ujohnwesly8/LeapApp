@@ -213,7 +213,7 @@ import React from 'react';
 const SwitchAccountButton = () => {
   const [showOptions, setShowOptions] = useState(false);
   const dispatch = useDispatch();
-  const userType = useSelector(state => state.Rolereducer.role);
+  const userType = useSelector((state: any) => state.Rolereducer.role);
   const [accountType, setAccountType] = useState(
     userType === 'borrower' ? 'Borrower' : 'Owner',
   );

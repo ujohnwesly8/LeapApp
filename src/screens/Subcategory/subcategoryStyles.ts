@@ -5,14 +5,13 @@ const style = StyleSheet.create({
     color: Colors.black,
     fontSize: 20,
     fontFamily: 'Poppins-Bold',
-    // fontWeight: '700',
+
     marginTop: 20,
     marginLeft: 30,
   },
   productforwardios: {
     marginLeft: 120,
-    // justifyContent:'flex-end',
-    // flexDirection:'row',
+
     color: 'black',
   },
   backBtn: {
@@ -66,12 +65,33 @@ const style = StyleSheet.create({
   categoryText: {
     color: 'black',
     width: '100%',
-    // justifyContent: 'space-evenly',
+
     fontSize: 20,
-    // marginRight: 100,
+
     padding: 15,
     fontFamily: 'Poppins-Medium',
     alignSelf: 'center',
+  },
+
+  lottieView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    backgroundColor: Colors.main,
+  },
+  lottieStyles: {
+    height: 200,
+    width: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 40,
+  },
+  iconS: {
+    width: '90%',
+    position: 'absolute',
+    marginLeft: '50%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 export default style;

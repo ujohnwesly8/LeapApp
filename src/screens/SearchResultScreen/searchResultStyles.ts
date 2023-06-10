@@ -445,5 +445,22 @@ const style = StyleSheet.create({
     marginLeft: -15,
     backgroundColor: Colors.main,
   },
+  cardView: {
+    width: '50%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  innerCard: {
+    width: '100%',
+  },
+  noResultsView: {width: '100%', height: '100%'},
+  innerView2: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  viewStyle1: {flexDirection: 'row', justifyContent: 'space-between'},
+  outerStyle: {width: '100%', height: '100%'},
+  btnStyle: {flexDirection: 'row'},
+  marginStyle: {marginTop: 20},
 });
 export default style;

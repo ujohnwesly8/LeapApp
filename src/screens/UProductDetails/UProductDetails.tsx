@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/self-closing-comp */
 import React, {
   useCallback,
   useContext,
@@ -13,12 +11,10 @@ import {
   View,
   ImageBackground,
   TouchableOpacity,
-  useColorScheme,
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import DatePicker from '../../components/atoms/DatePicker Detail';
-// import {ScrollView} from 'react-native-gesture-handler';
+
 import styles from './UProductDetailsStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {OwnerProductsById, ProductsById, url} from '../../constants/Apis';
@@ -26,10 +22,9 @@ import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import Styles from '../../constants/themeColors';
 import Colors from '../../constants/Colors';
 import DateRangePicker from '../../components/atoms/CalanderPicker';
-import CalendarPicker from 'react-native-calendar-picker';
-import {useNavigation} from '@react-navigation/native';
+
 import ApiService from '../../network/network';
-import useCart from '../Cart/useCart';
+
 import {Pagination} from 'react-native-snap-carousel';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 type Props = {
@@ -50,8 +45,7 @@ export default function UDetailScreen({route, navigation}: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
   const Quantity = product.quantity;
   const {colorScheme} = useContext(ColorSchemeContext);
-  // const {fetchQuantityData} = useCart();
-  // const navigation = useNavigation();
+
   useEffect(() => {
     console.log(colorScheme);
   });
@@ -110,7 +104,6 @@ export default function UDetailScreen({route, navigation}: Props) {
       })
       .catch(error => {
         console.log(error);
-        // console.error('Error:', error);
       });
   };
   const openModal = () => {
@@ -236,12 +229,7 @@ export default function UDetailScreen({route, navigation}: Props) {
             ]}>
             {product.description}
           </Text>
-          {/* <View style={{marginTop: 10}}>
-            <Text style={styles.headingtext}>Size</Text>
-          </View>
-          <View style={styles.productSizeBox}>
-            <Text style={styles.detailsSize}>{product.size}</Text>
-          </View> */}
+
           <View style={{marginTop: 10, marginBottom: 20, flexDirection: 'row'}}>
             <Text
               style={[

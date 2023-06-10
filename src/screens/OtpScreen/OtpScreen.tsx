@@ -4,23 +4,23 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
-  Image,
   ScrollView,
 } from 'react-native';
-import Lottie from 'lottie-react-native';
-import Styles from '../../screens/OtpScreen/Otpstyles';
-import style from '../../constants/themeColors';
-import Useotp from './Useotp';
+
+import Styles from '../../screens/OtpScreen/otpStyles';
+import Useotp from './useOtp';
 import useCart from '../Cart/useCart';
-import Colors from '../../constants/Colors';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-export default function LoginScreen() {
+import style from '../../constants/themeColors';
+import Colors from '../../constants/Colors';
+import LottieAnimation from '../../components/molecules/LottieAnimation/LottieAnimation';
+
+const OTPScreen = () => {
   const {
     phoneNo,
     otp,
     handlephoneNumberChange,
     handlePasswordChange,
-
     GETOTP,
     handleLogin,
     passwordError,
@@ -28,6 +28,7 @@ export default function LoginScreen() {
     showModal,
   } = Useotp();
   const {colorScheme} = useCart();
+
   return (
     <ScrollView
       style={[
@@ -36,15 +37,10 @@ export default function LoginScreen() {
       ]}>
       <View style={Styles.container}>
         <View style={[Styles.titleTextContainer]}>
-          <Lottie
-            style={Styles.image}
+          <LottieAnimation
             source={require('../../../assets/verify.json')}
-            autoPlay
-          />
-          {/* <Image
             style={Styles.image}
-            source={require('../../../assets/LeapsLogo.png')}
-          /> */}
+          />
         </View>
         <View>
           <Text
@@ -119,4 +115,6 @@ export default function LoginScreen() {
       </View>
     </ScrollView>
   );
-}
+};
+
+export default OTPScreen;

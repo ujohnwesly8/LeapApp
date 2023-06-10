@@ -382,10 +382,10 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Colors from '../../constants/Colors';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import ProfileData from '../Profile/ProfileData';
+import ProfileData from '../Profile/useProfile';
 import Styles from '../../constants/themeColors';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import Togglebutton from '../../components/atoms/Colorscheme/Togglebutton';
+
 type Props = {
   route: {name: string};
   navigation: any;

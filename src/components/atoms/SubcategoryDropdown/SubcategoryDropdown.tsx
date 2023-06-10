@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
-import useSearchresults from '../../../screens/SearchResultScreen/useSearchresults';
+import useSearchresults from '../../../screens/SearchResultScreen/useSearchResults';
 import Colors from '../../../constants/Colors';
 import {ColorSchemeContext} from '../../../../ColorSchemeContext';
 import Styles from '../../../constants/themeColors';

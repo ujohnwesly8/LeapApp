@@ -3,10 +3,10 @@ import Colors from '../../constants/Colors';
 const styles = StyleSheet.create({
   mainContainer: {
     backgroundColor: Colors.main,
-    // alignItems: 'center',
+
     width: '100%',
     height: '100%',
-    // padding: 7,
+
     borderRadius: 10,
   },
   backButton: {
@@ -38,12 +38,10 @@ const styles = StyleSheet.create({
   },
   arrowIcon: {
     marginLeft: '90%',
-    // marginTop: 20,
   },
   modalContainer: {
-    // flexDirection: 'row',
     alignItems: 'center',
-    // backgroundColor: Colors.white,
+
     borderRadius: 10,
     padding: 5,
     marginLeft: '5%',
@@ -58,7 +56,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    // elevation: 4,
   },
   closeButton: {
     backgroundColor: Colors.buttonColor,
@@ -74,20 +71,16 @@ const styles = StyleSheet.create({
     marginLeft: 17,
   },
   cardTextContainer: {
-    // flex: 1,
     justifyContent: 'space-between',
-    // backgroundColor: Colors.black,
+
     width: '100%',
     marginRight: 30,
-    // marginTop: -30,
-    // flexDirection: 'row',
   },
   orderInfoContainer: {
     justifyContent: 'space-between',
-    // backgroundColor: Colors.black,
+
     width: '100%',
     marginLeft: 10,
-    // marginRight: 30,
   },
   name: {
     fontSize: 10,
@@ -102,24 +95,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     fontFamily: 'poppins',
-    // marginTop: 2,
-    // marginLeft: 2,
   },
   productname: {
     fontSize: 14,
-    // fontWeight: 'bold',
+
     color: Colors.buttonColor,
     fontFamily: 'Poppins-SemiBold',
   },
   QuantityText: {
     fontSize: 13,
-    // fontWeight: 'bold',
+
     color: Colors.black,
     fontFamily: 'Poppins-Medium',
   },
   orderText: {
     fontSize: 13,
-    // fontWeight: 'bold',
+
     color: Colors.green,
     fontFamily: 'Poppins-Medium',
   },
@@ -128,19 +119,14 @@ const styles = StyleSheet.create({
     width: '35%',
     height: 20,
     fontFamily: 'Poppins-Bold',
-    // backgroundColor: 'white',
   },
   orderDate: {
     fontSize: 12,
     width: '25%',
     height: 20,
-    // marginTop: -30,
-    // marginBottom: 50,
-    // fontWeight: 'bold',
+
     color: Colors.black,
     fontFamily: 'Poppins-Bold',
-    // justifyContent: 'space-between',
-    // alignSelf: 'flex-end',
   },
   orderid: {
     fontSize: 15,
@@ -164,7 +150,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.black,
     fontFamily: 'Poppins-Bold',
-    // marginLeft: 10,
+
     marginTop: 10,
   },
   textContainer: {
@@ -193,7 +179,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    // marginBottom: 10,
+
     backgroundColor: '#3E54AC',
     width: 40,
     height: 25,
@@ -207,8 +193,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    // marginBottom: 10,
-    // backgroundColor: 'green',
+
     width: 80,
     height: 20,
     marginTop: 10,
@@ -216,16 +201,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   quantityButton: {
-    // backgroundColor: '#3E54AC',
     borderRadius: 5,
-    // padding: 5,
-    // marginHorizontal: 5,
   },
   quantityText: {
     fontSize: 16,
     color: '#3E54AC',
     fontWeight: 'bold',
-    // marginHorizontal: 5,
   },
   sizeContainer: {
     flexDirection: 'row',
@@ -236,7 +217,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    // marginTop: 10,
   },
   sizeButton: {
     backgroundColor: '#fff',
@@ -255,7 +235,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FDD',
     padding: 10,
     borderRadius: 5,
-    // marginTop: 10,
   },
   errorText: {
     color: '#F00',
@@ -263,11 +242,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   container: {
-    // flex: 1,
     height: '100%',
     backgroundColor: '#ECF2FF',
     paddingHorizontal: 20,
-    // paddingVertical: 30,
   },
   scrollContainer: {
     height: '100%',
@@ -292,9 +269,7 @@ const styles = StyleSheet.create({
     height: 20,
     width: 40,
     backgroundColor: '#3E54AC',
-    // margin: 15,
-    // marginTop: 5,
-    // marginLeft: 25,
+
     borderRadius: 3,
     color: '#FFFFFF',
     justifyContent: 'center',
@@ -304,8 +279,7 @@ const styles = StyleSheet.create({
     height: 20,
     width: 40,
     backgroundColor: 'white',
-    // margin: 15,
-    // marginTop: 5,
+
     marginLeft: 30,
     borderRadius: 3,
     color: '#FFFFFF',
@@ -316,9 +290,9 @@ const styles = StyleSheet.create({
     height: 60,
     width: 320,
     backgroundColor: '#3E54AC',
-    // margin: 15,
+
     marginTop: 5,
-    // marginLeft: 25,
+
     borderRadius: 8,
     color: '#FFFFFF',
     justifyContent: 'center',
@@ -343,21 +317,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleContainer: {
-    // marginBottom: -390,
-    // width: 355,
-    // height: 452,
     width: '70%',
     height: 80,
     flexDirection: 'row',
     marginTop: 10,
-    // top: 30,
+
     justifyContent: 'space-between',
-    // backgroundColor: '#3E54AC1A',
+
     borderRadius: 5,
   },
   titleText: {
     fontSize: 24,
-    // fontWeight: '500',
+
     color: 'white',
     fontFamily: 'Poppins-SemiBold',
   },
@@ -368,10 +339,10 @@ const styles = StyleSheet.create({
     marginLeft: 3,
     borderColor: '#3E54AC',
     backgroundColor: Colors.iconscolor,
-    width: 18, // set a width that works for your layout
-    height: 18, // set a height that works for your layout
-    justifyContent: 'center', // vertically center the text
-    alignItems: 'center', // horizontally center the text
+    width: 18,
+    height: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   detailsdescription: {
     fontSize: 8,
@@ -394,7 +365,7 @@ const styles = StyleSheet.create({
   image: {
     width: '40%',
     height: 134,
-    // marginRight: 10,
+
     backgroundColor: 'black',
     borderRadius: 5,
     marginTop: 8,
@@ -404,9 +375,7 @@ const styles = StyleSheet.create({
   priceText: {
     fontSize: 12,
     fontFamily: 'Poppins-Bold',
-    // marginBottom: 10,
-    // top: 55,
-    // left: 12,
+
     color: 'green',
     marginRight: 35,
   },
@@ -446,14 +415,12 @@ const styles = StyleSheet.create({
     color: Colors.iconscolor,
     fontSize: 7,
     fontWeight: '800',
-    // marginLeft: 23,
   },
   button: {
     backgroundColor: '#fff',
     paddingHorizontal: 60,
     paddingVertical: 5,
     borderRadius: 5,
-    // height: 10,
   },
   buttonSize: {
     backgroundColor: '#fff',
@@ -493,7 +460,6 @@ const styles = StyleSheet.create({
     height: 18,
     marginRight: 25,
     top: -12,
-    left: -95,
   },
   buttonQuantity: {
     backgroundColor: '#fff',
@@ -555,8 +521,7 @@ const styles = StyleSheet.create({
   buttonTextRentto: {
     fontSize: 5,
     fontWeight: 'bold',
-    // marginLeft: 5,
-    // marginRight: 5,
+
     alignContent: 'center',
     left: 8,
   },
@@ -577,13 +542,7 @@ const styles = StyleSheet.create({
     top: -3,
     left: 3,
   },
-  quantityText: {
-    fontSize: 14,
-    marginHorizontal: 10,
-    fontWeight: 'bold',
-    top: 55,
-    left: -190,
-  },
+
   activeButtonText: {
     color: '#fff',
     backgroundColor: '#3E54AC',
@@ -597,7 +556,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 30,
-    // backgroundColor: Colors.black,
   },
   titleTextContainer1: {
     alignItems: 'center',
@@ -625,5 +583,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#8E8E8E',
   },
+  viewStyle: {backgroundColor: Colors.main, width: '100%', height: '120%'},
+  viewS: {
+    flexDirection: 'row',
+    width: '90%',
+    height: 150,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  marginM: {marginTop: 10, marginLeft: 10},
 });
 export default styles;
