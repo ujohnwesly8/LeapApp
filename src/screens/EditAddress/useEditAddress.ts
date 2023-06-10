@@ -1,20 +1,19 @@
-import {View, Text, Alert} from 'react-native';
 import React, {useState} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {url} from '../../constants/Apis';
-export const useEditaddress = () => {
+import ApiService from '../../network/network';
+const useEditAddress = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const {address} = route.params;
+  const address = (route.params as any)?.address;
   const [city, setCity] = useState(address.city);
   const [state, setStateName] = useState(address.state);
   const [addressid] = useState(address.id);
   const [addressLine1, setAddressLine1] = useState(address.addressLine1);
   const [addressLine2, setAddressLine2] = useState(address.addressLine2);
   const [postalCode, setPostalCode] = useState(address.postalCode);
-  const [country, setCountry] = useState(address.country);
-  const [selectedOption, setSelectedOption] = useState('home');
+  const [country, _setCountry] = useState(address.country);
+  const [selectedOption, setSelectedOption] = useState('Home');
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const openModal = () => {
@@ -22,11 +21,12 @@ export const useEditaddress = () => {
   };
   const closeModal = () => {
     setShowModal(false);
+    navigation.goBack();
   };
-  const handleOptionChange = value => {
+  const handleOptionChange = (value: React.SetStateAction<string>) => {
     setSelectedOption(value);
   };
-  const handlePostalcode = value => {
+  const handlePostalcode = (value: React.SetStateAction<string>) => {
     setPostalCode(value);
     console.log(value);
   };
@@ -36,8 +36,6 @@ export const useEditaddress = () => {
   };
   const handleUpdateAddress = async () => {
     try {
-      openModal();
-      const token = await AsyncStorage.getItem('token');
       const updateaddress = {
         addressLine1: addressLine1,
         addressLine2: addressLine2,
@@ -48,20 +46,17 @@ export const useEditaddress = () => {
         state: state,
         defaultType: isChecked,
       };
-      const response = await fetch(`${url}/address/update/${addressid}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updateaddress),
-      });
-      if (response.ok) {
+      const response = await ApiService.put(
+        `${url}/address/update/${addressid}`,
+        updateaddress,
+      );
+      console.log(response);
+      if (response) {
         setIsLoading(false);
-        navigation.goBack();
+        openModal();
       }
     } catch (error) {
-      Alert.alert('Failed to update address');
+      console.log('Failed to update address');
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -91,3 +86,4 @@ export const useEditaddress = () => {
     isLoading,
   };
 };
+export default useEditAddress;

@@ -71,6 +71,7 @@ const useMyOrder = () => {
     onRefresh,
     openModal,
     closeModal,
+    setShowModal,
   };
 };
 

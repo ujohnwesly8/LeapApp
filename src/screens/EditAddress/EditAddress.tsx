@@ -7,29 +7,22 @@ import {
   ScrollView,
 } from 'react-native';
 import React, {useContext} from 'react';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import style from '../Owneraddaddress/Owneraddressstyle';
-import {OwnerAddAddressCustomHook} from '../Owneraddaddress/Useowneraddaddress';
+import style from '../Owneraddaddress/AddressStyles';
+import useAddAddress from '../Owneraddaddress/useAddAddress';
 import {CheckBox} from 'react-native-elements';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {RadioButton} from 'react-native-paper';
-import {OwnerAddressCustomHook} from '../Owneraddaddress/Useowneraddress';
-import {useEditaddress} from './UseEditAddress';
+import useEditaddress from './useEditAddress';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import BackButton from '../../components/atoms/BackButton/BackButton';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
 import styles from './editAddressStyles';
 const EditAddress = () => {
-  const navigation = useNavigation();
-  const route = useRoute();
   const {
     handleUpdateAddress,
     handleOptionChange,
-    handlePostalcode,
     selectedOption,
     isChecked,
     setAddressLine1,
@@ -48,7 +41,7 @@ const EditAddress = () => {
     setCity,
   } = useEditaddress();
   const {colorScheme} = useContext(ColorSchemeContext);
-  const {isLoading} = OwnerAddressCustomHook();
+  const {isLoading} = useAddAddress();
   return (
     <ScrollView
       style={[
@@ -77,11 +70,8 @@ const EditAddress = () => {
         </>
       ) : (
         <>
-          {/* <BackButton /> */}
-
           <HeadingText message="Edit address" />
           <View style={styles.subContainer}>
-            {/* <Text style={style.Titletext}>Edit address</Text> */}
             <Text
               style={[
                 styles.textField,
@@ -193,9 +183,9 @@ const EditAddress = () => {
               <View style={style.containerRadio}>
                 <View style={[style.optionRadio]}>
                   <RadioButton
-                    value="Home"
-                    status={selectedOption === 'Home' ? 'checked' : 'unchecked'}
-                    onPress={() => handleOptionChange('Home')}
+                    value="HOME"
+                    status={selectedOption === 'HOME' ? 'checked' : 'unchecked'}
+                    onPress={() => handleOptionChange('HOME')}
                     color={colorScheme === 'dark' ? Colors.white : Colors.black}
                   />
                   <Text
@@ -210,11 +200,11 @@ const EditAddress = () => {
                 </View>
                 <View style={style.optionRadio}>
                   <RadioButton
-                    value="Office"
+                    value="OFFICE"
                     status={
-                      selectedOption === 'Office' ? 'checked' : 'unchecked'
+                      selectedOption === 'OFFICE' ? 'checked' : 'unchecked'
                     }
-                    onPress={() => handleOptionChange('Office')}
+                    onPress={() => handleOptionChange('OFFICE')}
                     color={colorScheme === 'dark' ? Colors.white : Colors.black}
                   />
                   <Text

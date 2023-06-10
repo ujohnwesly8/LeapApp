@@ -1,14 +1,15 @@
-import {SetStateAction, useState} from 'react';
-import {NavigationProp} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {url} from '../../constants/Apis';
-import ApiService from '../../network/network';
-import {Alert} from 'react-native';
+import {useState, SetStateAction} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
-export const OwnerAddAddressCustomHook = (
-  navigation: NavigationProp<ReactNavigation.RootParamList>,
-) => {
+import {Alert} from 'react-native';
+
+import {url} from '../../constants/Apis';
+import ApiService from '../../network/network';
+import {RootStackParamList} from '../Subcategory/Subcategory';
+import {StackNavigationProp} from '@react-navigation/stack';
+
+const useAddAddress = () => {
   const [city, setCity] = useState('');
   const [addressLine1, setaddressLine1] = useState('');
   const [addressLine2, setaddressLine2] = useState('');
@@ -18,16 +19,13 @@ export const OwnerAddAddressCustomHook = (
   const [state, setStateName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const AddressSchema = Yup.object().shape({
     addressLine1: Yup.string().required('Enter Address Line 1'),
     addressLine2: Yup.string().required('Enter Street Name'),
-    // postalCode: Yup.string()
-    //   .required('Enter valid Pincode')
-    //   .matches(/^\d{6}$/, 'Pincode must be 6 digits'),
   });
 
   const FetchAddress = async () => {
-    // setIsLoading(true);
     try {
       const result = await ApiService.get(
         `https://api.postalpincode.in/pincode/${postalCode}`,
@@ -42,21 +40,19 @@ export const OwnerAddAddressCustomHook = (
     } catch (error) {
       console.error(error);
       Alert.alert('Enter valid Pincode');
-      // Handle error here (e.g., display an error message)
     } finally {
       setIsLoading(false);
     }
   };
 
-  const [selectedOption, setSelectedOption] = useState('home');
+  const [selectedOption, setSelectedOption] = useState('HOME');
   const handleOptionChange = (value: SetStateAction<string>) => {
     setSelectedOption(value);
-    console.log(addressType);
+    console.log('addressType is ', selectedOption);
   };
 
-  const handlePostalCodeChange = async text => {
+  const handlePostalCodeChange = async (text: string) => {
     setpostalCode(text);
-    // formik.handleChange('postalCode')(text);
     if (text.length > 6) {
       Alert.alert('Enter a valid pincode');
     } else if (text.length === 6) {
@@ -72,7 +68,6 @@ export const OwnerAddAddressCustomHook = (
   };
 
   const handleSaveAddress = async () => {
-    setIsLoading(true);
     const addressData = {
       addressLine1: addressLine1,
       addressLine2: addressLine2,
@@ -83,21 +78,11 @@ export const OwnerAddAddressCustomHook = (
       state: state,
       defaultType: isChecked,
     };
-    const token = await AsyncStorage.getItem('token');
+    console.log('selectedOption is', addressData);
     try {
-      const res = await fetch(`${url}/address/add`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(addressData),
-      });
-      const data = await res.json();
-      console.log(data); // log the returned data
-      if (!res.ok) {
-        throw new Error('Failed to save address');
-      }
+      setIsLoading(true);
+      const res = await ApiService.post(`${url}/address/add`, addressData);
+      console.log(res); // log the returned data
       navigation.goBack();
     } catch (error) {
       console.log(error);
@@ -109,27 +94,21 @@ export const OwnerAddAddressCustomHook = (
     initialValues: {
       addressLine1: '',
       addressLine2: '',
-      // email: '',
-      // password: '',
-      // phoneNumber: '',
     },
     validationSchema: AddressSchema,
     onSubmit: handleSaveAddress,
   });
-  const handleAddressLine1 = value => {
+  const handleAddressLine1 = (value: string) => {
     setaddressLine1(value);
     formik.setFieldValue('addressLine1', value);
   };
-  const handleAddressLine2 = value => {
+  const handleAddressLine2 = (value: string) => {
     setaddressLine2(value);
     formik.setFieldValue('addressLine2', value);
   };
   const handleBlur = (field: string) => {
     formik.setFieldTouched(field);
   };
-  // const handlePincodechange = value => {
-  //   setpostalCode(value);
-  // };
 
   return {
     city,
@@ -163,3 +142,4 @@ export const OwnerAddAddressCustomHook = (
     handleAddressLine2,
   };
 };
+export default useAddAddress;

@@ -25,14 +25,14 @@ import Carousal from './Carousal';
 import {postProductToAPI} from '../../redux/actions/actions';
 import useHome from './useHome';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import ProfileData from '../Profile/ProfileData';
+import useProfile from '../Profile/useProfile';
 type Props = {
   route: {name: string};
   navigation: any;
 };
 const Homescreen = ({navigation}: Props) => {
   const dispatch = useDispatch();
-  const {name} = ProfileData();
+  const {name} = useProfile();
   const UserProducts = useHome();
   const {
     refreshing,

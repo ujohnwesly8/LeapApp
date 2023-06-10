@@ -1,18 +1,21 @@
+import {useCallback, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+
+import {StackNavigationProp} from '@react-navigation/stack';
 import {removeAddress} from '../../redux/actions/actions';
-import axios from 'axios';
 import {url} from '../../constants/Apis';
-import {useEffect, useState} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import ApiService from '../../network/network';
 
-export const OwnerAddressCustomHook = () => {
+type RootStackParamList = {
+  EditAddress: {address: any};
+  Owneraddaddress: undefined;
+};
+const useAddress = () => {
   const [addressList, setAddress] = useState([]);
   const [city, setCity] = useState('');
   const [addressLine1, setaddressLine1] = useState('');
   const [addressLine2, setaddressLine2] = useState('');
-  // const [addressType, setaddressType] = useState('');
   const [postalCode, setpostalCode] = useState('');
   const [country, setCountry] = useState('india');
   const [state, setStateName] = useState('');
@@ -20,8 +23,7 @@ export const OwnerAddressCustomHook = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const navigation = useNavigation();
-  // const {FetchAddress} = OwnerAddressCustomHook();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const openModal = () => {
     setShowModal(true);
   };
@@ -30,21 +32,13 @@ export const OwnerAddressCustomHook = () => {
     fetchData();
   };
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const token = await AsyncStorage.getItem('token');
-      console.log(token);
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      };
-      const response = await axios.get(`${url}/address/listAddress`, {
-        headers,
-      });
-      const data = await response.data;
+      const response = await ApiService.get(`${url}/address/listAddress`);
+      const data = await response;
       setIsLoading(false);
-      console.log(response.data);
+      console.log(response);
       setIsLoading(false);
       setAddress(data);
       setCity(data.city);
@@ -64,12 +58,14 @@ export const OwnerAddressCustomHook = () => {
         addressLine2,
       );
     } catch (error) {
-      console.log(error);
+      console.log('Error is ', error);
       setIsLoading(true);
     }
-    // eslint-disable-next-line prettier/prettier
-  };
-  // Pincode Api call
+  }, [id, city, state, country, postalCode, addressLine1, addressLine2]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -79,19 +75,14 @@ export const OwnerAddressCustomHook = () => {
   }, [fetchData, navigation]);
 
   const dispatch = useDispatch();
-  const handleEditItems = item => {
+  const handleEditItems = (item: any) => {
     navigation.navigate('EditAddress', {address: item});
   };
-  const handlePostalCodeChange = text => {
-    setpostalCode(text);
-    // FetchAddress();
-  };
-
   const handleOwnerAddAddress = () => {
-    navigation.navigate('Owneraddaddress', addressList);
+    navigation.navigate('Owneraddaddress');
   };
-  const handleDeleteAddress = (id: string) => {
-    dispatch(removeAddress(id));
+  const handleDeleteAddress = (deleteId: number) => {
+    dispatch(removeAddress(deleteId) as any);
     openModal();
   };
   const goBackButton = () => {
@@ -122,3 +113,4 @@ export const OwnerAddressCustomHook = () => {
     // FetchAddress,
   };
 };
+export default useAddress;
