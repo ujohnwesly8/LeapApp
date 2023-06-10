@@ -3,7 +3,6 @@ import {
   AnalyticsUrl,
   Dashboardyearlydata,
   categoriyPiechart,
-  exportPdf,
   getdashboard,
   pieChartUrl,
   url,

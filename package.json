@@ -78,6 +78,8 @@
     "@types/jest": "^29.2.1",
     "@types/react": "^18.0.24",
     "@types/react-native-calendar-picker": "^7.0.3",
+    "@types/react-native-razorpay": "^2.2.1",
+    "@types/react-native-snap-carousel": "^3.8.5",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.2.1",
     "eslint": "^8.19.0",

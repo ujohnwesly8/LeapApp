@@ -1,13 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/react-in-jsx-scope */
-import {
-  Image,
-  RefreshControl,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import useCart from './useCart';
@@ -15,55 +8,41 @@ import style from './CartItemStyles';
 import Colors from '../../constants/Colors';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import Lottie from 'lottie-react-native';
-import {ReactNode, useState} from 'react';
+import {ReactNode} from 'react';
 import Styles from '../../constants/themeColors';
-import DateRangePicker from '../../components/atoms/CalanderPicker';
-import DatePicker from '../../components/atoms/DatePicker Detail';
 import CardDatePiker from '../../components/atoms/DatePicker';
-import CalendarPicker from 'react-native-calendar-picker';
-import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import React from 'react';
 
-type Props = {
-  route: {params: {product: any}};
-  navigation: any;
-};
-const Cart = ({navigation}: Props) => {
+const Cart = () => {
   // const {productData} = route.params;
   const {
     CartProducts,
     handleCheckout,
-    handlecartstate,
-    colorScheme,
     handleRemove,
-    refreshing,
-    onRefresh,
-    closeModal,
-    showModal,
-    iscartVisible,
     setRentalStartDate,
     setRentalEndDate,
-    rentalEndDate,
-    rentalStartDate,
-    quantity,
+    closeModal,
+    showModal,
+    colorScheme,
     handleDecrement,
     handleIncrement,
-    setProductQuantity,
-    isLoading,
     isplusDisable,
   } = useCart();
-  // const cartData = useSelector(state => state.CartProducts.data);
-  // console.log('cartItems:', cartData);
-  const cartData = useSelector(state => state.CartProducts.data) || {
+
+  const cartData = useSelector(
+    (state: {CartProducts: {data: any}}) => state.CartProducts.data,
+  ) || {
     cartItems: [],
   };
-  const productQuantities = cartData.cartItems.map(item => item.quantity);
+
+  const productQuantities = cartData.cartItems.map(
+    (item: {quantity: any}) => item.quantity,
+  );
   // setProductQuantity(productQuantities);
 
-  const Quantity = productQuantities;
   if (CartProducts && CartProducts.cartItems) {
     console.log('Product Quantity:');
-    CartProducts.cartItems.forEach(item => {
+    CartProducts.cartItems.forEach((item: {id: any; quantity: any}) => {
       console.log(`- Quantity for item with ID ${item.id}: ${item.quantity}`);
     });
   } else {
@@ -340,14 +319,13 @@ const Cart = ({navigation}: Props) => {
         <View>
           {cartData.cartItems.length === 0 ? (
             <TouchableOpacity
-              style={[style.PaymentButton, !iscartVisible && style.Disabled]}
-              onPress={handlecartstate}
+              style={[style.PaymentButton, style.Disabled]}
               disabled={true}>
               <Text style={style.PaymentButtonText}>Checkout</Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              style={[style.PaymentButton, iscartVisible && style.Disabled]}
+              style={[style.PaymentButton, style.Disabled]}
               onPress={handleCheckout}
               disabled={false}>
               <Text style={style.PaymentButtonText}>Checkout</Text>

@@ -47,7 +47,6 @@ export default function OwnerHome({navigation}: Props) {
         </View>
         <View>
           <View style={{flex: 1, backgroundColor: '#ECF2FF', flexWrap: 'wrap'}}>
-            {/* Other code */}
             <View
               style={{
                 marginTop: 20,
@@ -58,54 +57,25 @@ export default function OwnerHome({navigation}: Props) {
                 justifyContent: 'space-between',
               }}>
               {products &&
-                products.map(
-                  (item: {
-                    id: React.Key | null | undefined;
-                    imageURL: any;
-                    description:
-                      | string
-                      | number
-                      | boolean
-                      | React.ReactElement<
-                          any,
-                          string | React.JSXElementConstructor<any>
-                        >
-                      | React.ReactFragment
-                      | React.ReactPortal
-                      | null
-                      | undefined;
-                    price:
-                      | string
-                      | number
-                      | boolean
-                      | React.ReactElement<
-                          any,
-                          string | React.JSXElementConstructor<any>
-                        >
-                      | React.ReactFragment
-                      | React.ReactPortal
-                      | null
-                      | undefined;
-                  }) => (
-                    <TouchableOpacity
-                      key={item.id}
-                      style={styles.recentlyaddedcard}
-                      onPress={() =>
-                        navigation.navigate('OproductDetails', {product: item})
-                      }>
-                      <View style={styles.cardContainer}>
-                        <Image
-                          source={{uri: item.imageURL}}
-                          style={styles.recentlyaddedimage}
-                        />
-                      </View>
-                      <View style={styles.cardTextContainer}>
-                        <Text style={styles.cardText}>{item.description}</Text>
-                        <Text style={styles.cardText}>₹ {item.price}</Text>
-                      </View>
-                    </TouchableOpacity>
-                  ),
-                )}
+                products.map(item => (
+                  <TouchableOpacity
+                    key={item.id}
+                    style={styles.recentlyaddedcard}
+                    onPress={() =>
+                      navigation.navigate('OproductDetails', {product: item})
+                    }>
+                    <View style={styles.cardContainer}>
+                      <Image
+                        source={{uri: item!.imageURL}}
+                        style={styles.recentlyaddedimage}
+                      />
+                    </View>
+                    <View style={styles.cardTextContainer}>
+                      <Text style={styles.cardText}>{item!.description}</Text>
+                      <Text style={styles.cardText}>₹ {item!.price}</Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
             </View>
           </View>
         </View>

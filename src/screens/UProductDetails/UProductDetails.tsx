@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {
   useCallback,
   useContext,
@@ -14,24 +15,23 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
 import styles from './UProductDetailsStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {OwnerProductsById, ProductsById, url} from '../../constants/Apis';
+import {ProductsById, url} from '../../constants/Apis';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import Styles from '../../constants/themeColors';
 import Colors from '../../constants/Colors';
 import DateRangePicker from '../../components/atoms/CalanderPicker';
-
 import ApiService from '../../network/network';
-
 import {Pagination} from 'react-native-snap-carousel';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
+import {useDispatch} from 'react-redux';
+import {fetchCartProducts} from '../../redux/slice/cartSlice';
 type Props = {
   route: {params: {product: any}};
   navigation: any;
 };
-export default function UDetailScreen({route, navigation}: Props) {
+const UDetailScreen = ({route, navigation}: Props) => {
   const {product} = route.params;
   const [rentalStartDate, setRentalStartDate] = useState(new Date());
   const [rentalEndDate, setRentalEndDate] = useState(new Date());
@@ -41,15 +41,12 @@ export default function UDetailScreen({route, navigation}: Props) {
   const [, setIsQuantity] = useState(true);
   const [isMinusDisabled, setIsMinusDisabled] = useState(true);
   const [isPlusDisabled, setIsPlusDisabled] = useState(false);
-  const [productData, setProductData] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const scrollTimerRef = useRef<number | null>(null);
   const Quantity = product.quantity;
+  const dispatch = useDispatch();
   const {colorScheme} = useContext(ColorSchemeContext);
-
-  useEffect(() => {
-    console.log(colorScheme);
-  });
-  console.log('Product Quantity is :', Quantity);
   const handleDecrement = () => {
     setQuantity(quantity - 1);
     setIsQuantity(true);
@@ -66,12 +63,11 @@ export default function UDetailScreen({route, navigation}: Props) {
     }
     setIsMinusDisabled(false);
   };
-  console.log(product.id);
   const ProductId = product.id;
   const productsData = async () => {
     const result = await ApiService.get(`${ProductsById}/${ProductId}`);
     console.log('result is :', result);
-    setProductData(result);
+    // setProductData(result);
   };
 
   const handleSubmit = async () => {
@@ -114,40 +110,40 @@ export default function UDetailScreen({route, navigation}: Props) {
   };
   const closeModal = () => {
     setShowModal(false);
-    // navigation.navigate('CartScreen');
+    dispatch(fetchCartProducts() as any);
     productsData();
-    // fetchQuantityData();
   };
   const closeeModal = () => {
     settShowModal(false);
   };
-  const scrollViewRef = useRef<ScrollView>(null);
-  const scrollTimerRef = useRef<number | null>(null);
+  const scrollToNextImage = useCallback(() => {
+    if (scrollViewRef.current) {
+      const nextIndex =
+        activeIndex === product.imageUrl.length - 1 ? 0 : activeIndex + 1;
+      scrollViewRef.current.scrollTo({x: nextIndex * 405, animated: true});
+      setActiveIndex(nextIndex);
+    }
+  }, [activeIndex, product.imageUrl]);
+
+  const startScrollTimer = useCallback(() => {
+    stopScrollTimer();
+    scrollTimerRef.current = setInterval(scrollToNextImage, 2000);
+  }, [scrollToNextImage]);
+
   useEffect(() => {
     startScrollTimer();
     return () => {
       stopScrollTimer();
     };
-  }, [activeIndex]);
-  const startScrollTimer = () => {
-    stopScrollTimer(); // Stop the timer if it's already running
-    scrollTimerRef.current = setInterval(scrollToNextImage, 2000); // Adjust the duration as needed (in milliseconds)
-  };
+  }, [activeIndex, startScrollTimer]);
+
   const stopScrollTimer = () => {
     if (scrollTimerRef.current) {
       clearInterval(scrollTimerRef.current);
       scrollTimerRef.current = null;
     }
   };
-  const scrollToNextImage = () => {
-    if (scrollViewRef.current) {
-      const nextIndex =
-        activeIndex === product.imageUrl.length - 1 ? 0 : activeIndex + 1;
-      scrollViewRef.current.scrollTo({x: nextIndex * 405, animated: true});
-      // Adjust the width of the images as needed
-      setActiveIndex(nextIndex);
-    }
-  };
+
   const handleScroll = () => {
     startScrollTimer();
   };
@@ -187,17 +183,19 @@ export default function UDetailScreen({route, navigation}: Props) {
               startScrollTimer();
             }}
             onScroll={handleScroll}>
-            {product.imageUrl.map((item, index) => (
-              <ImageBackground
-                key={index}
-                style={{
-                  height: 500,
-                  width: 405,
-                  backgroundColor: '#3E54AC1A',
-                }}
-                source={{uri: item}}
-              />
-            ))}
+            {product.imageUrl.map(
+              (item: any, index: React.Key | null | undefined) => (
+                <ImageBackground
+                  key={index}
+                  style={{
+                    height: 500,
+                    width: 405,
+                    backgroundColor: '#3E54AC1A',
+                  }}
+                  source={{uri: item}}
+                />
+              ),
+            )}
           </ScrollView>
           <Text style={styles.startext}>{product.name}</Text>
           <Pagination
@@ -341,4 +339,5 @@ export default function UDetailScreen({route, navigation}: Props) {
       />
     </ScrollView>
   );
-}
+};
+export default UDetailScreen;

@@ -2,27 +2,28 @@
 // External libraries/packages
 import React from 'react';
 import {View, TextInput, Text, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import Lottie from 'lottie-react-native';
 
 // Styles and assets
-import styles from './LoginStyle';
+import styles from './loginStyle';
 import Colors from '../../constants/Colors';
 import Styles from '../../constants/themeColors';
 
 // Custom components and modules
-import useCart from '../Cart/useCart';
 import useLoginscreen from './useLoginscreen';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import {StackNavigationProp} from '@react-navigation/stack';
-type RootStackParamList = {
-  OtpScreen: undefined;
-  SignupScreen: undefined;
-};
-export default function LoginScreen() {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const {formik, closeModal, showModal, handleLogin} = useLoginscreen();
-  const {colorScheme} = useCart();
+import {signin, signup} from '../../constants/languages/En';
+
+const LoginScreen = () => {
+  const {
+    formik,
+    closeModal,
+    showModal,
+    handleLogin,
+    colorScheme,
+    handleOtpScreen,
+    handleSignUp,
+  } = useLoginscreen();
   return (
     <View
       style={[
@@ -79,13 +80,13 @@ export default function LoginScreen() {
             onBlur={formik.handleBlur('password')}
           />
           {formik.touched.password && formik.errors.password && (
-            <Text style={styles.errorText}>{formik.errors.password} </Text>
+            <Text style={styles.errorText}>{formik.errors.password}</Text>
           )}
         </View>
       </View>
       <View style={styles.touchablebtnContainer}>
         <TouchableOpacity
-          disabled={!formik.isValid}
+          disabled={!formik.isValid || !formik.dirty}
           style={[
             styles.touchablebtn,
             {
@@ -93,7 +94,7 @@ export default function LoginScreen() {
             },
           ]}
           onPress={handleLogin}>
-          <Text style={styles.touchableText}>Sign in</Text>
+          <Text style={styles.touchableText}>{signin}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.otp}>
@@ -102,9 +103,9 @@ export default function LoginScreen() {
             styles.otptext,
             colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
           ]}>
-          Continue with{' '}
+          Continue with
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('OtpScreen')}>
+        <TouchableOpacity onPress={handleOtpScreen}>
           <Text style={styles.Otptext}>OTP</Text>
         </TouchableOpacity>
       </View>
@@ -116,8 +117,8 @@ export default function LoginScreen() {
           ]}>
           Don't have an account?
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
-          <Text style={styles.Signuptext}>Sign up</Text>
+        <TouchableOpacity onPress={handleSignUp}>
+          <Text style={styles.Signuptext}>{signup}</Text>
         </TouchableOpacity>
       </View>
       <CustomModal
@@ -127,4 +128,5 @@ export default function LoginScreen() {
       />
     </View>
   );
-}
+};
+export default LoginScreen;

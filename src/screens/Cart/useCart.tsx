@@ -1,81 +1,66 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {useCallback, useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {fetchCartProducts} from '../../redux/slice/cartSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ADDORDER, removeFromCart} from '../../redux/actions/actions';
-import {
-  OwnerProductsById,
-  ProductsById,
-  QuantityApi,
-  cartUpdate,
-  checkoutApi,
-  url,
-} from '../../constants/Apis';
-import {Alert, useColorScheme} from 'react-native';
+import {QuantityApi, checkoutApi, url} from '../../constants/Apis';
+import {Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import RazorpayCheckout from 'react-native-razorpay';
 import ApiService from '../../network/network';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import axios from 'axios';
-function useCart() {
-  // const {product} = route.params;
+import {StackNavigationProp} from '@react-navigation/stack';
+
+type RootStackParamList = {
+  CheckoutScreen: undefined;
+  UserHomescreen: {screen: any};
+  ProfileScreen: {screen: any};
+};
+const useCart = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [rentalStartDate, setRentalStartDate] = useState(new Date());
   const [rentalEndDate, setRentalEndDate] = useState(new Date());
   const [showModal, setShowModal] = useState(false);
-  // const [quantity, setQuantity] = useState(1);
-  const [isloading, setIsLoading] = useState(false);
   const [isplusDisable, setisButtondisable] = useState(false); // Added loading state
-  const navigation = useNavigation();
-  // const colorScheme = useColorScheme();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const {colorScheme} = useContext(ColorSchemeContext);
-  const isLoading = useSelector(state => state.CartProducts.isLoader);
-
-  // const CartData = useSelector(state => state.CartProducts.data) || {
-  //   cartItems: [],
-  // };
+  const dispatch = useDispatch();
 
   const openModal = () => {
+    dispatch(fetchCartProducts as any);
     setShowModal(true);
   };
   const closeModal = () => {
     setShowModal(false);
   };
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      dispatch(fetchCartProducts());
-    });
-    return unsubscribe;
-  }, [navigation]);
-  const cartData = useSelector(state => state.CartProducts.data);
-  useEffect(() => {
-    dispatch(fetchCartProducts());
-  }, []);
+  const isLoading = useSelector(
+    (state: {CartProducts: {isLoader: Boolean}}) => state.CartProducts.isLoader,
+  );
+  const cartData = useSelector(
+    (state: {CartProducts: {data: any}}) => state.CartProducts.data,
+  ) || {
+    cartItems: [],
+  };
 
   const [quantity, setQuantity] = useState(1);
-  const [Productquantity, setProductQuantity] = useState<number[]>([]);
 
-  // Example usage
-  console.log('Quantity:', quantity);
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     dispatch(fetchCartProducts());
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
 
   useEffect(() => {
     if (refreshing) {
-      dispatch(fetchCartProducts());
-      console.log('it is refreshing');
+      console.log('what the heck bro ');
+      dispatch(fetchCartProducts() as any);
       setRefreshing(false);
     }
-  }, [dispatch, refreshing]);
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-  }, []);
-  useEffect(() => {
-    if (!showModal) {
-      dispatch(fetchCartProducts());
-    }
-  }, [showModal]);
+  }, [refreshing]);
 
-  const handleUpdate = async (newQuantity: number, productId: any) => {
+  const handleUpdate = async (newQuantity: number, productId: string) => {
     try {
       const data = {
         productId: productId,
@@ -93,7 +78,6 @@ function useCart() {
   const handleCheckout = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
-      // Map the cart items to the required format
       const items = cartData?.cartItems?.map(
         (item: {product: {price: any; id: any; name: any; quantity: any}}) => ({
           price: item.product.price,
@@ -102,8 +86,6 @@ function useCart() {
           quantity: item.product.quantity,
         }),
       );
-
-      // Make the API call to create the checkout session
       const response = await fetch(checkoutApi, {
         method: 'POST',
         headers: {
@@ -131,15 +113,16 @@ function useCart() {
       },
     })
       // .then(response => response.json())
-      .then(data => {
+      .then(_data => {
         // console.log('Item removed from cart:', data);
         dispatch(removeFromCart(productId));
+        dispatch(fetchCartProducts as any);
         openModal();
       })
       .catch(error => {
         console.error(error);
         const errorMessage = `Error removing item from cart: ${error.message}`;
-        // Handle the error and display a more informative error message to the user
+
         Alert.alert(errorMessage);
       });
   };
@@ -168,32 +151,25 @@ function useCart() {
         navigation.navigate('OrderStatusScreen');
         dispatch(ADDORDER(razorpayId));
       })
-      .catch((error: any) => {
-        // handle failure
-        // Alert.alert('Try Again');
-      });
+      .catch(() => {});
   };
 
-  const dispatch = useDispatch();
   const CartProducts = useSelector(state => state.CartProducts.data);
-  const handleIncrement = useCallback(
-    (item: any) => {
-      const productId = item.product.id;
-      console.log('itemID', productId);
-      const productQuantity = item.product.availableQuantities;
-      console.log('Validation of product Quantity is ', productQuantity);
-      if (item.quantity === productQuantity) {
-        setisButtondisable(true);
-      } else {
-        const Quantity = item.quantity + 1;
-        console.log(Quantity);
-        handleUpdate(Quantity, productId);
-      }
-      setRefreshing(prevRefreshing => !prevRefreshing);
-      console.log('refreshing :', refreshing); // Toggle the value of refreshing
-    },
-    [handleUpdate],
-  );
+  const handleIncrement = (item: any) => {
+    const productId = item.product.id;
+    console.log('itemID', productId);
+    const productQuantity = item.product.availableQuantities;
+    console.log('Validation of product Quantity is ', productQuantity);
+    if (item.quantity === productQuantity) {
+      setisButtondisable(true);
+    } else {
+      const Quantity = item.quantity + 1;
+      console.log(Quantity);
+      handleUpdate(Quantity, productId);
+    }
+    setRefreshing(prevRefreshing => !prevRefreshing);
+    console.log('refreshing :', refreshing); // Toggle the value of refreshing
+  };
 
   const handleDecrement = (item: {quantity: number; product: {id: any}}) => {
     console.log(item.quantity);
@@ -204,11 +180,6 @@ function useCart() {
     setisButtondisable(false);
     // setRefreshing(true);
   };
-
-  useEffect(() => {
-    console.log('Refreshing:', refreshing);
-    // setRefreshing(true);
-  }, [refreshing]);
 
   return {
     CartProducts,
@@ -235,5 +206,5 @@ function useCart() {
     isLoading,
     // fetchQuantityData,
   };
-}
+};
 export default useCart;

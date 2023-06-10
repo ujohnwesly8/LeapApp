@@ -1,12 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useContext} from 'react';
+import React from 'react';
 import styles from './paymentstylesheet';
 import {View, Text} from 'react-native';
 import Lottie from 'lottie-react-native';
-import {ColorSchemeContext} from '../../../ColorSchemeContext';
+
+import usePayment from './usePayment';
 import Styles from '../../constants/themeColors';
 const PaymentFailScreen = () => {
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {colorScheme} = usePayment();
   return (
     <View
       style={[
@@ -40,14 +41,14 @@ const PaymentFailScreen = () => {
             styles.successText,
             colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
           ]}>
-          Payment Failed!{' '}
+          Payment Failed!
         </Text>
         <Text
           style={[
             styles.successText1,
             colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
           ]}>
-          Something went wrong. Try Again.{' '}
+          Something went wrong. Try Again.
         </Text>
       </View>
     </View>

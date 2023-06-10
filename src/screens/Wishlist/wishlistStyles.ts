@@ -1,6 +1,5 @@
 import {StyleSheet} from 'react-native';
 import Colors from '../../constants/Colors';
-import {color} from 'react-native-elements/dist/helpers';
 const style = StyleSheet.create({
   textStyle: {
     color: Colors.black,
@@ -19,27 +18,22 @@ const style = StyleSheet.create({
     width: '83%',
     height: 200,
     borderRadius: 8,
-    // flexDirection: 'row',
-    // backgroundColor: '#000',
     backgroundColor: Colors.Inputtext,
     marginLeft: 20,
-    // marginRight: 20,
-    // marginBottom: 10,
     margin: 10,
   },
+  textContainer: {},
   textStylewishlist: {
     color: Colors.black,
     fontSize: 24,
     marginLeft: '37%',
-    // marginBottom: 20,
     marginTop: 10,
     fontFamily: 'Poppins-SemiBold',
   },
   imageContainer: {
-    // backgroundColor: 'green',
     width: '100%',
     height: '30%',
-    // borderRadius: 8,
+
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
   },
@@ -48,12 +42,10 @@ const style = StyleSheet.create({
     height: 145,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    // borderBottomRightRadius: 8,
-    // borderBottomLeftRadius: 8,
   },
   name: {
     fontSize: 12,
-    // fontWeight: '600',
+
     fontFamily: 'Poppins-Medium',
     color: Colors.black,
   },
@@ -68,7 +60,6 @@ const style = StyleSheet.create({
   },
   price: {
     fontSize: 12,
-    // fontWeight: '600',
     color: Colors.buttonColor,
     fontFamily: 'Poppins-SemiBold',
   },
@@ -77,7 +68,6 @@ const style = StyleSheet.create({
     borderRadius: 4,
 
     borderColor: '#3E54AC',
-
     width: 57,
     height: 18,
     backgroundColor: '#fff',
@@ -90,14 +80,13 @@ const style = StyleSheet.create({
     height: 35,
 
     borderRadius: 20,
-    // elevation: 5,
+
     position: 'absolute',
     top: 10,
     right: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  textContainer: {},
   rentText: {color: '#3E54AC', fontWeight: 'bold', fontSize: 10},
 
   searchInputContainer: {
@@ -114,9 +103,8 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
   cardTextContainer: {
-    // height: 40,
     width: '100%',
-    // backgroundColor: Colors.white,
+
     marginTop: 60,
     borderRadius: 5,
     padding: 6,
@@ -124,8 +112,19 @@ const style = StyleSheet.create({
   },
   Cartcontents: {
     marginTop: 25,
-    // flexDirection: 'row',
-    // backgroundColor: Colors.white,
+  },
+  lottieStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    backgroundColor: Colors.main,
+  },
+  lottieImage: {
+    height: 200,
+    width: 200,
+    marginTop: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 export default style;

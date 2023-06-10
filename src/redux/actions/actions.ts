@@ -5,6 +5,7 @@ import {url} from '../../constants/Apis';
 import {Alert} from 'react-native';
 import {Orderreducer} from '../reducers/Orderreducer';
 import {ThunkDispatch} from 'redux-thunk';
+import {SetStateAction} from 'react';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -165,21 +166,10 @@ export const Login = (email: string, password: string) => {
       dispatch({
         type: LOGIN_REQUEST,
       });
-      const response = await axios.post(
-        `${url}/login`,
-        {
-          email: email,
-          password: password,
-        },
-        {
-          headers: {
-            // Authorization: `Bearer ${await AsyncStorage.getItem(
-            //   'access_token',
-            // )}`,
-            // Authorization: `Bearer ${access_token}`,
-          },
-        },
-      );
+      const response = await axios.post(`${url}/login`, {
+        email: email,
+        password: password,
+      });
       const token = response.headers.access_token;
       await AsyncStorage.setItem('token', token);
       console.log('token stored');
@@ -236,7 +226,7 @@ export const Logout = () => {
   };
 };
 
-export const addGenderData = genderData => {
+export const addGenderData = (genderData: SetStateAction<string>) => {
   return {
     type: 'ADD_GENDER_DATA',
     payload: genderData,
@@ -252,7 +242,7 @@ export const setRole = (role: string) => ({
 
 //changes done for wishlist and cart
 
-export const addItemToCart = data => ({
+export const addItemToCart = (data: any) => ({
   type: ADD_TO_CART,
   payload: data,
 });
@@ -266,12 +256,12 @@ export const removeproducts = (productId: any) => ({
   payload: productId,
 });
 
-export const addToWishlist = data => ({
+export const addToWishlist = (data: any) => ({
   type: ADD_TO_WISHLIST,
   payload: data,
 });
 
-export const removeFromWishlist = productId => ({
+export const removeFromWishlist = (productId: any) => ({
   type: REMOVE_FROM_WISHLIST,
   payload: productId,
 });
@@ -281,9 +271,9 @@ export const removeFromWishlist = productId => ({
 
 // action creator
 
-export const postProductToAPI = item => {
+export const postProductToAPI = (item: {id: any}) => {
   console.log('hello', item);
-  return async dispatch => {
+  return async (dispatch: ThunkDispatch<any, any, AnyAction>) => {
     try {
       const token = await AsyncStorage.getItem('token');
       const id = item.id;
@@ -314,7 +304,7 @@ export const postProductToAPI = item => {
 export const ADD_PRODUCT_TO_STORE = 'ADD_PRODUCT_TO_STORE';
 
 // action creator
-export const addProductToStore = product => {
+export const addProductToStore = (product: any) => {
   return {
     type: ADD_PRODUCT_TO_STORE,
     payload: product,
@@ -444,7 +434,7 @@ export const ADDORDER = (razorpayId: string) => {
 export const ADD_PRODUCT_TO_CART_STORE = 'ADD_PRODUCT_TO_CART_STORE';
 
 // action creator
-export const addProductToCartStore = product => {
+export const addProductToCartStore = (product: any) => {
   return {
     type: ADD_PRODUCT_TO_CART_STORE,
     payload: product,

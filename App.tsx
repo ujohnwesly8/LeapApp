@@ -7,12 +7,13 @@ import LoginScreen from './src/screens/LoginScreen/LoginScreen';
 import {Provider, useDispatch, useSelector} from 'react-redux';
 import {store} from './src/redux/store';
 import {Init} from './src/redux/actions/actions';
-import SignupScreen from './src/screens/SignUp/SignupScreen';
 import OtpScreen from './src/screens/OtpScreen/OtpScreen';
 import OwnerNavigation from './src/navigation/OwnerNavigation';
 import SplashScreen from './src/screens/Splashscreen/Splashscreen';
 import {ColorSchemeProvider} from './ColorSchemeContext';
 import Lottie from 'lottie-react-native';
+import SignupScreen from './src/screens/SignUp/SignupScreen';
+
 const Stack = createSharedElementStackNavigator();
 const AuthStack = () => {
   return (
@@ -23,9 +24,7 @@ const AuthStack = () => {
       }}>
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
-
       <Stack.Screen name="SignupScreen" component={SignupScreen} />
-
       <Stack.Screen name="OtpScreen" component={OtpScreen} />
     </Stack.Navigator>
   );

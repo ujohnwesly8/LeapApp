@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import Colors from '../../constants/Colors';
 
-const styles = StyleSheet.create({
+const loginStyle = StyleSheet.create({
   mainContainer: {
     height: '100%',
     width: '100%',
@@ -44,14 +44,13 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     height: 100,
     width: '100%',
-    // backgroundColor: 'red',
   },
   touchablebtn: {
     height: 60,
     width: '90%',
     backgroundColor: '#9747FF',
     marginLeft: 15,
-    // marginTop: 20,
+
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'Poppins-Bold',
     fontSize: 18,
-    // fontWeight: '700',
+
     justifyContent: 'center',
   },
   errorText: {
@@ -73,10 +72,8 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignSelf: 'center',
-    // backgroundColor: 'white',
   },
   otptext: {
-    // marginTop: 20,
     alignSelf: 'center',
     color: Colors.black,
     fontFamily: 'Poppins-Regular',
@@ -85,7 +82,6 @@ const styles = StyleSheet.create({
     marginTop: 15,
     alignItems: 'center',
     color: Colors.buttonColor,
-    // fontWeight: '700',
     fontFamily: 'Poppins-Bold',
   },
   sign: {
@@ -104,19 +100,16 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   signuptext: {
-    // marginTop: '60%',
-    // marginLeft: '22%',
     alignItems: 'center',
     color: Colors.black,
-    // marginTop: 20,
+
     fontFamily: 'Poppins-Regular',
   },
   Signuptext: {
-    // marginTop: 230,
     alignItems: 'center',
     color: Colors.buttonColor,
     fontFamily: 'Poppins-Regular',
   },
 });
 
-export default styles;
+export default loginStyle;

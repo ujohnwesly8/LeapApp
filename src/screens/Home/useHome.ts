@@ -1,26 +1,29 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {fetchUserProducts} from '../../redux/slice/userProductSlice';
-import {url} from '../../constants/Apis';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {removeFromWishlist} from '../../redux/actions/actions';
-import {Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+
+import {fetchUserProducts} from '../../redux/slice/userProductSlice';
+import {removeFromWishlist} from '../../redux/actions/actions';
 import ApiService from '../../network/network';
-function useHome() {
+import {url} from '../../constants/Apis';
+
+type RootStackParamList = {
+  SearchResultsScreen: {searchResults: null[]};
+};
+const useHome = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [Data, setData] = useState([]);
   const [oldData, setOldDate] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  // const [loading, setLoading] = useState(true);
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const dispatch = useDispatch();
+
   const searchProducts = async (query: any) => {
     try {
       const data = await ApiService.get(`${url}/product/search?query=${query}`);
-      // const data = await response.json();
       navigation.navigate('SearchResultsScreen', {searchResults: data});
       setData(data);
       setOldDate(data);
@@ -37,38 +40,33 @@ function useHome() {
     setShowModal(false);
   };
   useEffect(() => {
-    dispatch(fetchUserProducts());
-    // setLoading(false);
-  }, []);
+    dispatch(fetchUserProducts() as any);
+  }, [dispatch]);
   const onRefresh = async () => {
     setRefreshing(true);
-    await dispatch(fetchUserProducts());
+    await dispatch(fetchUserProducts() as any);
     setRefreshing(false);
   };
   const removefromWishlist = async (productId: any) => {
-    const token = await AsyncStorage.getItem('token');
     console.log('chiranjeevi', productId);
-    fetch(`${url}/wishlist/removebyid?productId=${productId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        // console.log('Item removed from cart:', data);
-        dispatch(removeFromWishlist(productId));
-        // Alert.alert('Item Removed from Wishlist');
-        openModal();
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    try {
+      const response = await ApiService.delete(
+        `${url}/wishlist/remove?productId=${productId}`,
+      );
+      dispatch(removeFromWishlist(productId));
+      openModal();
+      console.log(response);
+    } catch (error) {
+      console.log(' error is here ', error);
+    }
   };
 
-  const dispatch = useDispatch();
-  const WishlistProducts = useSelector(state => state.WishlistProducts.data);
-  const loading = useSelector(state => state.UserProducts.isLoader);
+  const WishlistProducts = useSelector(
+    (state: {WishlistProducts: {data: null[]}}) => state.WishlistProducts.data,
+  );
+  const loading = useSelector(
+    (state: {UserProducts: {isLoader: null[]}}) => state.UserProducts.isLoader,
+  );
   console.log(JSON.stringify(WishlistProducts));
   return {
     WishlistProducts,
@@ -84,6 +82,8 @@ function useHome() {
     openModal,
     closeModal,
     showModal,
+    Data,
+    oldData,
   };
-}
+};
 export default useHome;

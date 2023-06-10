@@ -9,7 +9,7 @@ import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import RazorpayCheckout from 'react-native-razorpay';
 import axios from 'axios';
 import React from 'react';
-function useCart() {
+const useChectout = () => {
   // const {product} = route.params;
   const [refreshing, setRefreshing] = useState(false);
   const [rentalStartDate, setRentalStartDate] = useState(new Date());
@@ -246,5 +246,5 @@ function useCart() {
     isChecked,
     setIsCheckedArray,
   };
-}
-export default useCart;
+};
+export default useChectout;

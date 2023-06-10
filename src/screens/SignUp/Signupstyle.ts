@@ -11,21 +11,17 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     justifyContent: 'center',
-    // alignItems: 'center',
   },
   Container: {
-    // height: '100%',
     width: '100%',
     justifyContent: 'center',
-    // alignItems: 'center',
   },
   titleText: {
-    // marginTop: 60,
     fontSize: 30,
-    // fontWeight: '700',
+
     fontFamily: 'Poppins-SemiBold',
     color: Colors.black,
-    // margin: 25,
+
     marginLeft: 20,
   },
   textView: {height: 43, width: 286},
@@ -37,7 +33,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#3E54AC26',
     width: 320,
-    // padding: 35,
+
     borderRadius: 15,
     margin: 15,
     marginLeft: 45,
@@ -48,7 +44,7 @@ const styles = StyleSheet.create({
   cardText: {
     color: Colors.black,
     fontSize: 16,
-    // fontWeight: '400',
+
     fontFamily: 'Poppins-Medium',
     marginTop: 10,
     marginLeft: 20,
@@ -68,7 +64,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginLeft: 15,
     fontFamily: 'Poppins-Regular',
-    // opacity: 0.2,
+
     borderColor: '#3E54AC',
     color: 'black',
   },
@@ -91,9 +87,8 @@ const styles = StyleSheet.create({
   },
   touchablebtnContainer: {
     justifyContent: 'center',
-    // marginLeft: -20,
+
     marginTop: 15,
-    // alignItems:"center",
   },
   subTitileText: {
     color: '#FFFFFF',
@@ -155,9 +150,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: 'center',
     color: Colors.black,
-    //marginRight: 20,
-    //margin: 15,
-    //paddingLeft: 25,
   },
   LoginText: {
     marginTop: 20,

@@ -196,7 +196,13 @@ import GenderDropdown from '../../components/atoms/GenderDropdown';
 import EventsDropdown from '../../components/atoms/EventsDropdown';
 import TypeDropdown from '../../components/atoms/TypeDropdown';
 import OutfitDropdown from '../../components/atoms/OutfitDropdown';
-import useAddItems from './Useadditems';
+import Useadditems from './Useadditems';
+import Colors from '../../constants/Colors';
+import Styles from '../LoginScreen/loginStyle';
+import styles from '../../constants/themeColors';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import BackButton from '../../components/atoms/BackButton/BackButton';
+import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Colors from '../../constants/Colors';
 

@@ -4,132 +4,83 @@ import {
   View,
   Image,
   Text,
-  StyleSheet,
   ScrollView,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
-import {TouchableOpacity} from 'react-native';
+import styles from './homeStyles';
 import {url} from '../../constants/Apis';
 import ApiService from '../../network/network';
-import Colors from '../../constants/Colors';
+
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
+import {StackNavigationProp} from '@react-navigation/stack';
+type RootStackParamList = {
+  Subcategory: {categoryId: number};
+};
 
 const Carousal = () => {
-  const [active, setActive] = useState(0);
-  const [subcategories, setSubcategories] = useState([]);
+  const [subcategories, setSubcategories] = useState<
+    {id: number; imageUrl: string; categoryName: string}[]
+  >([]);
+
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const {colorScheme} = useContext(ColorSchemeContext);
   useEffect(() => {
     async function fetchSubcategories() {
-      try {
-        const Categoriesdata = await ApiService.get(`${url}/category/list`);
-        setSubcategories(Categoriesdata);
-        console.log('john', Categoriesdata);
-      } catch (error) {
-        console.error('error is ', error.message);
-      }
+      ApiService.get(`${url}/category/list`)
+        .then(Categoriesdata => {
+          setSubcategories(Categoriesdata);
+          console.log('john', Categoriesdata);
+        })
+        .catch(error => {
+          console.error('error is', error);
+        });
     }
     fetchSubcategories();
-  }, []);
-
-  const navigation = useNavigation();
+  }, []); // Add the dependency 'url' to the dependency array
 
   return (
-    <View style={styles.container}>
+    <View style={styles.corousalContainer}>
       <ScrollView
         pagingEnabled
         horizontal
         snapToInterval={SCREEN_WIDTH}
-        // onScroll={change}
         showsHorizontalScrollIndicator={false}
-        style={styles.scroll}>
-        {subcategories &&
+        style={styles.corousalScroll}>
+        {subcategories.length > 0 ? (
           subcategories.map(subcategory => (
             <View key={subcategory.id}>
-              <View>
-                <TouchableOpacity
-                  style={styles.corosal}
-                  onPress={() =>
-                    navigation.navigate('Subcategory', {
-                      categoryId: subcategory.id,
-                    })
-                  }>
-                  <Image
-                    source={{uri: subcategory.imageUrl}}
-                    style={styles.image}
-                  />
-                  <Text
-                    style={[
-                      styles.subname,
-                      colorScheme === 'dark'
-                        ? Styles.whitetext
-                        : Styles.blackText,
-                    ]}>
-                    {subcategory.categoryName}
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+                style={styles.corosalView}
+                onPress={() =>
+                  navigation.navigate('Subcategory', {
+                    categoryId: subcategory.id,
+                  })
+                }>
+                <Image
+                  source={{uri: subcategory.imageUrl}}
+                  style={styles.corousalImage}
+                />
+                <Text
+                  style={[
+                    styles.corousalSubname,
+                    colorScheme === 'dark'
+                      ? Styles.whitetext
+                      : Styles.blackText,
+                  ]}>
+                  {subcategory.categoryName}
+                </Text>
+              </TouchableOpacity>
             </View>
-          ))}
+          ))
+        ) : (
+          <Text>No subcategories found.</Text>
+        )}
       </ScrollView>
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 30,
-    width: '100%',
-    height: 120,
-    borderRadius: 20,
-    // backgroundColor: Colors.white,
-  },
-  subname: {
-    color: Colors.black,
-    fontSize: 14,
-    // fontWeight: '400',
-    // zIndex: 1,
-    height: 100,
-    marginLeft: 30,
-    alignItems: 'center',
-    marginTop: 10,
-    // backgroundColor: Colors.black,
-    fontFamily: 'Poppins-Regular',
-  },
-  scroll: {
-    width: '100%',
-    height: '100%',
-    flexDirection: 'row',
-    // marginLeft: 20,
-  },
-  corosal: {
-    // backgroundColor: Colors.black,
-    height: '100%',
-    width: '100%',
-  },
-  image: {
-    height: 72,
-    width: 72,
-    // resizeMode: 'cover',
-    borderRadius: 100,
-    // borderWidth: 1,
-    // borderColor: Colors.white,
-    padding: 30,
-    marginLeft: 15,
-    opacity: 1,
-  },
-  pagination: {
-    flexDirection: 'row',
-    position: 'absolute',
-    bottom: 0,
-    alignSelf: 'center',
-  },
-  card: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  pagingText: {color: '#fff', margin: 3},
-  pagingActiveText: {color: '#3E54AC', margin: 3},
-});
 
 export default Carousal;
