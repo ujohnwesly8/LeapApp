@@ -90,5 +90,12 @@ const style = StyleSheet.create({
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
   },
+  iconView: {
+    width: '90%',
+    position: 'absolute',
+    marginLeft: '50%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });
 export default style;

@@ -18,10 +18,9 @@ const Styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   titleTextContainer: {
-    // flexDirection: 'row',
     width: '100%',
     height: 200,
-    // marginLeft: 50,
+
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -48,7 +47,6 @@ const Styles = StyleSheet.create({
     marginTop: '5%',
     marginLeft: '11%',
     fontFamily: 'Poppins-Medium',
-    // fontWeight: '400',
   },
   cardTextOTP: {
     color: '#FFFFFF',

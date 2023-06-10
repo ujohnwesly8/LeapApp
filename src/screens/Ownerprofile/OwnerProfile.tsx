@@ -11,7 +11,7 @@ import React from 'react';
 import style from './OwnerProfilestyle';
 import SwitchAccountButton from '../../components/atoms/SwtichAccountButton';
 import AddImages from '../../components/atoms/AddImages';
-import ProfileData from '../Profile/ProfileData';
+import ProfileData from '../Profile/useProfile';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch} from 'react-redux';

@@ -1,36 +1,33 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useContext} from 'react';
 import {Text, View, TouchableOpacity, Image, FlatList} from 'react-native';
 import Lottie from 'lottie-react-native';
 import {useNavigation} from '@react-navigation/native';
-import style from './categoryStyles';
-import axios from 'axios';
-import {url} from '../../constants/Apis';
+import {StackNavigationProp} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Styles from '../../constants/themeColors';
-import {ColorSchemeContext} from '../../../ColorSchemeContext';
-const Category = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigation = useNavigation();
-  const {colorScheme} = useContext(ColorSchemeContext);
-  useEffect(() => {
-    axios
-      .get(`${url}/category/list`)
-      .then(response => {
-        console.log('====================================');
-        console.log(response.data);
-        console.log('====================================');
-        setCategories(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.log(error);
-        setLoading(false);
-      });
-  }, []);
 
-  const renderItem = ({item}) => (
+import style from './categoryStyles';
+import {useCategory} from './useCategory';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
+import Styles from '../../constants/themeColors';
+import LottieAnimation from '../../components/molecules/LottieAnimation/LottieAnimation';
+
+type RootStackParamList = {
+  Subcategory: {categoryId: number};
+};
+
+interface CategoryItem {
+  id: number;
+  categoryName: string;
+  imageUrl: string;
+}
+
+const Category = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const {colorScheme} = useContext(ColorSchemeContext);
+  const {categories, loading} = useCategory();
+
+  const renderItem = ({item}: {item: CategoryItem}) => (
     <TouchableOpacity
       style={[
         style.MainView,
@@ -54,14 +51,7 @@ const Category = () => {
             {item.categoryName}
           </Text>
         </View>
-        <View
-          style={{
-            width: '90%',
-            position: 'absolute',
-            marginLeft: '50%',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}>
+        <View style={style.iconView}>
           <Icon
             name="arrow-forward-ios"
             size={20}
@@ -72,7 +62,6 @@ const Category = () => {
           />
         </View>
       </View>
-      {/* </View> */}
     </TouchableOpacity>
   );
 
@@ -89,28 +78,13 @@ const Category = () => {
         ]}>
         Categories
       </Text>
-      {/* <TouchableOpacity
-        style={style.backBtn}
-        onPress={() => {
-          navigation.goBack();
-        }}>
-        <MaterialIcon
-          name="md-chevron-back"
-          color={Colors.black}
-          size={26}
-          style={{alignSelf: 'center'}}
-        />
-      </TouchableOpacity>
-      <Text
-        style={[
-          style.textStyle,
-          colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-        ]}>
-        Shop by categories
-      </Text> */}
+
       {loading ? (
         <View style={style.loaderContainer}>
-          <Lottie source={require('../../../assets/loading2.json')} autoPlay />
+          <LottieAnimation
+            source={require('../../../assets/loading2.json')}
+            style={{}}
+          />
         </View>
       ) : (
         <FlatList

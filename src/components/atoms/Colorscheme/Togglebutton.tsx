@@ -23,12 +23,7 @@ const Togglebutton = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    // alignItems: 'flex-end',
-    // width: 100,
-    // height: 100,
     marginRight: 10,
-    // marginBottom: 20,
-    // backgroundColor: 'black',
   },
 });
 

@@ -227,12 +227,7 @@ const UDetailScreen = ({route, navigation}: Props) => {
             ]}>
             {product.description}
           </Text>
-          {/* <View style={{marginTop: 10}}>
-            <Text style={styles.headingtext}>Size</Text>
-          </View>
-          <View style={styles.productSizeBox}>
-            <Text style={styles.detailsSize}>{product.size}</Text>
-          </View> */}
+
           <View style={{marginTop: 10, marginBottom: 20, flexDirection: 'row'}}>
             <Text
               style={[

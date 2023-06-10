@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import {
   Image,
   RefreshControl,
@@ -7,63 +6,42 @@ import {
   TouchableOpacity,
   View,
   Modal,
-  ActivityIndicator,
 } from 'react-native';
-import React, {useContext, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, {useContext} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/MaterialIcons';
-import style from './Myorderstyles';
-import Colors from '../../constants/Colors';
-import {fetchOrderProducts} from '../../redux/slice/orderSlice';
 import Lottie from 'lottie-react-native';
-import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
-import useCart from '../Cart/useCart';
+import style from './myOrderStyles';
+import useMyOrder from './useMyOrder';
 import Styles from '../../constants/themeColors';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
+import Colors from '../../constants/Colors';
+
 type Props = {
   route: {name: string};
   navigation: any;
 };
+
+type OrderDetailsModalProps = {
+  order: any;
+  onClose: () => void;
+  visible: boolean;
+};
+
 const MyOrder = ({navigation}: Props) => {
-  const dispatch = useDispatch();
-  const orderData = useSelector(state => state.OrderProducts.data);
-  const OrderProducts = useSelector(state => state.OrderProducts.data);
-  const [showModal, setShowModal] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); // New state variable
+  const {
+    orderData,
+    OrderProducts,
+    showModal,
+    refreshing,
+    selectedOrder,
+    isModalOpen,
+    isLoading,
+    onRefresh,
+    openModal,
+    closeModal,
+  } = useMyOrder();
   const {colorScheme} = useContext(ColorSchemeContext);
-  const [isLoading, setIsLoading] = useState(true);
-  const onRefresh = async () => {
-    setRefreshing(true);
-    dispatch(fetchOrderProducts());
-    setRefreshing(false);
-  };
-  useEffect(() => {
-    dispatch(fetchOrderProducts());
-  }, [dispatch]);
-  const openModal = order => {
-    setSelectedOrder(order);
-    setIsModalOpen(true);
-  };
-  useEffect(() => {
-    const fetchOrderData = async () => {
-      setIsLoading(true);
-      await dispatch(fetchOrderProducts());
-      setIsLoading(false);
-    };
-
-    fetchOrderData();
-  }, [dispatch]);
-
-  const closeModal = () => {
-    setSelectedOrder(null);
-    setIsModalOpen(false);
-  };
-  {
-    console.log('isLoading is :', isLoading);
-  }
 
   if (isLoading) {
     return (
@@ -90,21 +68,8 @@ const MyOrder = ({navigation}: Props) => {
     );
   }
 
-  // if (!OrderProducts) {
-  //   return (
-  //     <View style={style.loadingContainer}>
-  //       <Lottie
-  //         source={require('../../../assets/order1.json')}
-  //         autoPlay
-  //         style={style.loadingAnimation}
-  //       />
-  //       <Text style={style.loadingText}>The Items are Loading...</Text>
-  //     </View>
-  //   );
-  // }
   return (
     <>
-      {/* <HeadingText message="Your orders" /> */}
       <ScrollView
         style={[
           style.container,
@@ -114,20 +79,13 @@ const MyOrder = ({navigation}: Props) => {
           <TouchableOpacity
             style={style.backButton}
             onPress={() => navigation.navigate('Profile')}>
-            <Icons
-              // style={{marginLeft: 5}}
-              name="arrow-back-ios"
-              size={16}
-              color="black"
-              // onPress={() => navigation.goBack()}
-            />
+            <Icons name="arrow-back-ios" size={16} color="black" />
           </TouchableOpacity>
           <Text
             style={[
               style.titleText,
               colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
             ]}>
-            {' '}
             My orders
           </Text>
         </View>
@@ -166,7 +124,7 @@ const MyOrder = ({navigation}: Props) => {
                 disabled={isModalOpen}>
                 {order.orderItems.map((item: any) => (
                   <TouchableOpacity
-                    key={`${order.id}-${item.id}`} // Update the key to include both order.id and item.id
+                    key={`${order.id}-${item.id}`}
                     style={style.cardTextContainer}
                     onPress={() => openModal(order)}
                     disabled={isModalOpen}>
@@ -229,7 +187,12 @@ const MyOrder = ({navigation}: Props) => {
     </>
   );
 };
-const OrderDetailsModal = ({order, onClose, visible}) => {
+
+const OrderDetailsModal = ({
+  order,
+  onClose,
+  visible,
+}: OrderDetailsModalProps) => {
   const {colorScheme} = useContext(ColorSchemeContext);
   if (!visible) {
     return null;
@@ -252,7 +215,7 @@ const OrderDetailsModal = ({order, onClose, visible}) => {
       </View>
       <View
         style={[
-          {backgroundColor: Colors.main, width: '100%', height: '120%'},
+          style.viewStyle,
           colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
         ]}>
         <View style={style.modalContainer}>
@@ -276,21 +239,15 @@ const OrderDetailsModal = ({order, onClose, visible}) => {
                   Total Price: {'₹' + order.totalPrice}
                 </Text>
               </View>
-              {order.orderItems.map(item => (
+              {order.orderItems.map((item: any) => (
                 <View
                   style={[
-                    {
-                      flexDirection: 'row',
-                      width: '90%',
-                      height: 150,
-                      borderRadius: 10,
-                      marginBottom: 10,
-                    },
+                    style.viewS,
                     colorScheme === 'dark' ? Styles.cardColor : Styles.main,
                   ]}
                   key={item.id}>
                   <Image source={{uri: item.imageUrl}} style={style.image} />
-                  <View style={{marginTop: 10, marginLeft: 10}}>
+                  <View style={style.marginM}>
                     <Text
                       style={[
                         style.productname,
@@ -328,7 +285,6 @@ const OrderDetailsModal = ({order, onClose, visible}) => {
                       {item.rentalEndDate}
                     </Text>
                     <Text style={[style.orderText]}>{item.status}</Text>
-                    {/* <Text style={style.productname}>Size: {item.size}</Text> */}
                   </View>
                 </View>
               ))}
@@ -339,4 +295,5 @@ const OrderDetailsModal = ({order, onClose, visible}) => {
     </Modal>
   );
 };
+
 export default MyOrder;

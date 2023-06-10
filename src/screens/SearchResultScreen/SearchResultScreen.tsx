@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useContext} from 'react';
 import {
   FlatList,
@@ -8,28 +7,31 @@ import {
   View,
   Modal,
 } from 'react-native';
-import style from './searchResultStyle';
-import {useNavigation} from '@react-navigation/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Colors from '../../constants/Colors';
 import Lottie from 'lottie-react-native';
-import useCart from '../Cart/useCart';
-import Styles from '../../constants/themeColors';
-import useSearchresults from './useSearchresults';
-import Sizeselection from '../../components/atoms/Sizeselect';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import style from './searchResultStyles';
+import useSearchresults from './useSearchResults';
 import FilterSelectSize from '../../components/atoms/FilterSizes/FilterSizeSelect';
 import PriceRangeDropdown from '../../components/atoms/PriceRange/PriceDropdown';
 import SubCategoryDropdown from '../../components/atoms/SubcategoryDropdown/SubcategoryDropdown';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-const SearchResultsScreen = ({route}) => {
-  const navigation = useNavigation();
+import Colors from '../../constants/Colors';
+import Styles from '../../constants/themeColors';
+
+type RootStackParamList = {
+  UProductDetails: {product: number};
+};
+
+const SearchResultsScreen = ({route}: {route: any}) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const {searchResults} = route.params;
   const goBackButton = () => {
     navigation.goBack();
   };
-  // const {colorScheme} = useCart();
+
   const {
-    FilterData,
     minimumPrice,
     setMinimumPrice,
     maximumPrice,
@@ -41,9 +43,9 @@ const SearchResultsScreen = ({route}) => {
     setModalVisible,
     handleFilterButtonPress,
     filteredProducts,
-    SubcategoryData,
+
     handleFilterapply,
-    selectedSubCategory,
+
     setSelectedSubCategory,
     subcategoriesData,
   } = useSearchresults();
@@ -54,13 +56,13 @@ const SearchResultsScreen = ({route}) => {
     <View
       style={[
         colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-        {width: '100%', height: '100%'},
+        style.outerStyle,
       ]}>
       <View style={style.addAddressHeader}>
         <TouchableOpacity style={style.backBtn} onPress={goBackButton}>
           <MaterialIcons color={Colors.black} size={20} name="arrow-back-ios" />
         </TouchableOpacity>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={style.viewStyle1}>
           <Text
             style={[
               style.addAddressText,
@@ -106,7 +108,7 @@ const SearchResultsScreen = ({route}) => {
               <FilterSelectSize
                 selectedSize={selectedSize}
                 sizes={sizes}
-                onSelectSize={size => setSelectedSize(size)}
+                onSelectSize={(size: any) => setSelectedSize(size)}
               />
             </View>
             <Text
@@ -119,7 +121,7 @@ const SearchResultsScreen = ({route}) => {
             <PriceRangeDropdown
               minPrice={minimumPrice}
               maxPrice={maximumPrice}
-              onSelectPriceRange={(min, max) => {
+              onSelectPriceRange={(min: string, max: string) => {
                 setMinimumPrice(min);
                 setMaximumPrice(max);
               }}
@@ -132,12 +134,12 @@ const SearchResultsScreen = ({route}) => {
               Select Category
             </Text>
             <SubCategoryDropdown
-              value={subcategoriesData} // Pass the subCategories data here
+              value={subcategoriesData}
               onChange={(selectedOption: React.SetStateAction<{}>) =>
                 setSelectedSubCategory(selectedOption)
               }
             />
-            <View style={{flexDirection: 'row'}}>
+            <View style={style.btnStyle}>
               <TouchableOpacity
                 style={style.closetouchablecontainer}
                 onPress={() => setModalVisible(false)}>
@@ -171,18 +173,8 @@ const SearchResultsScreen = ({route}) => {
           keyExtractor={item => item.id.toString()}
           renderItem={({item}) => {
             return (
-              <View
-                style={{
-                  width: '50%',
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  // backgroundColor:'white',
-                }}>
-                <View
-                  style={{
-                    // alignItems: 'center',
-                    width: '100%',
-                  }}>
+              <View style={style.cardView}>
+                <View style={style.innerCard}>
                   <View
                     style={[
                       style.container,
@@ -204,7 +196,7 @@ const SearchResultsScreen = ({route}) => {
                       </View>
                     </TouchableOpacity>
                     <View style={style.cardTextContainer}>
-                      <View style={{marginTop: 20}}>
+                      <View style={style.marginStyle}>
                         <Text
                           style={[
                             style.name,
@@ -229,16 +221,10 @@ const SearchResultsScreen = ({route}) => {
       ) : (
         <View
           style={[
-            {width: '100%', height: '100%'},
+            style.noResultsView,
             colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
           ]}>
-          <View
-            style={[
-              {
-                justifyContent: 'center',
-                alignSelf: 'center',
-              },
-            ]}>
+          <View style={style.innerView2}>
             <Text
               style={[
                 style.titleText,
@@ -255,7 +241,7 @@ const SearchResultsScreen = ({route}) => {
             <Lottie
               style={[
                 style.imageS,
-                colorScheme === 'dark' ? Styles.blacktheme : Styles.w,
+                colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
               ]}
               source={require('../../../assets/search.json')}
               autoPlay

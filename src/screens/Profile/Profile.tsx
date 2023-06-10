@@ -1,35 +1,32 @@
-/* eslint-disable react-native/no-inline-styles */
 import {
   Text,
   View,
   TouchableOpacity,
   ScrollView,
-  Image,
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
 import React from 'react';
-import style from '../Ownerprofile/OwnerProfilestyle';
-import SwitchAccountButton from '../../components/atoms/SwtichAccountButton';
-import AddImages from '../../components/atoms/AddImages';
-import ProfileData from './ProfileData';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch} from 'react-redux';
-import {Logout} from '../../redux/actions/actions';
-import useCart from '../Cart/useCart';
-import Styles from '../../constants/themeColors';
-import Colors from '../../constants/Colors';
-import ToggleButton from 'react-native-paper/lib/typescript/src/components/ToggleButton/ToggleButton';
-import Togglebutton from '../../components/atoms/Colorscheme/Togglebutton';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {TextInput} from 'react-native-gesture-handler';
 import {Avatar} from 'react-native-paper';
+import {Logout} from '../../redux/actions/actions';
+
+import style from '../Ownerprofile/OwnerProfilestyle';
+import useProfile from './useProfile';
+import useCart from '../Cart/useCart';
+import SwitchAccountButton from '../../components/atoms/SwtichAccountButton';
+import Togglebutton from '../../components/atoms/Colorscheme/Togglebutton';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
+import Styles from '../../constants/themeColors';
 
 type Props = {
   navigation: any;
 };
+
 const Profile = ({navigation}: Props) => {
   const {
     name,
@@ -37,25 +34,26 @@ const Profile = ({navigation}: Props) => {
     phonenumber,
     isLoading,
     pickImage,
-    uploadImage,
+
     profilePic,
-    selectedImage,
-    setSelectedImage,
+
     showModall,
     closeModal,
     showModal1,
     closeModal1,
     isloading,
     handleRemoveProfilePic,
-    setProfileImage,
+
     refreshData,
     refreshState,
-  } = ProfileData();
+  } = useProfile();
   const {colorScheme} = useCart();
+
   const dispatch = useDispatch();
   const handleLogout = () => {
-    dispatch(Logout());
+    dispatch(Logout() as any);
   };
+
   return (
     <View
       style={[
@@ -67,14 +65,12 @@ const Profile = ({navigation}: Props) => {
         refreshControl={
           <RefreshControl refreshing={refreshState} onRefresh={refreshData} />
         }>
-        {console.log('refreshinggggg ', profilePic)}
         <View style={style.buttonContainer}>
           <View style={{zIndex: 1}}>
             <SwitchAccountButton />
             <Togglebutton />
           </View>
           <View style={style.imageContainer}>
-            {/* <AddImages /> */}
             <View
               style={{
                 width: 130,
@@ -82,7 +78,7 @@ const Profile = ({navigation}: Props) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              {isloading ? ( // Display loading indicator while uploading
+              {isloading ? (
                 <ActivityIndicator size="large" color="gray" />
               ) : profilePic ? (
                 <Avatar.Image size={100} source={{uri: profilePic}} />
@@ -94,17 +90,8 @@ const Profile = ({navigation}: Props) => {
               )}
             </View>
           </View>
-          {/* <View style={{flexDirection: 'row', marginLeft: '80%'}}> */}
-          {/* <Text
-              style={[
-                {fontFamily: 'Poppins-Medium', fontSize: 16},
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
-              {colorScheme}
-            </Text> */}
-          {/* </View> */}
         </View>
-        {/* <Togglebutton /> */}
+
         <View style={style.uploadButtoncontainer}>
           <TouchableOpacity style={style.uploadButton} onPress={pickImage}>
             <Text style={style.uploadText}>Upload</Text>
@@ -113,7 +100,6 @@ const Profile = ({navigation}: Props) => {
             style={style.removeButton}
             onPress={() => {
               handleRemoveProfilePic();
-              // setProfileImage(null);
             }}>
             <Text style={style.uploadText}>Remove</Text>
           </TouchableOpacity>
@@ -156,7 +142,6 @@ const Profile = ({navigation}: Props) => {
           </View>
         )}
 
-        {/* </View> */}
         <View style={style.profileFields}>
           <TouchableOpacity
             style={[
