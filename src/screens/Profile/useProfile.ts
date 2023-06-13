@@ -35,7 +35,6 @@ const useProfile = () => {
         setEmail(profileData.email);
         setPhone(profileData.phoneNumber);
         setProfileImage(profileData.profileImageUrl);
-
         console.log('profilePic is ', profileData.profileImageUrl);
         console.log('Profile Data', profileData);
       } else {
