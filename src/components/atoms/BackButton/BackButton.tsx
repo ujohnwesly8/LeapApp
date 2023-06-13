@@ -1,7 +1,7 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import style from './BackButtonStyle';
+import style from './backButtonstyles';
 import {useNavigation} from '@react-navigation/native';
 
 const BackButton = () => {
@@ -11,7 +11,7 @@ const BackButton = () => {
       <View style={style.backButtonContainer}>
         <View style={style.redCircle}>
           <Icon
-            style={{marginLeft: 5}}
+            style={style.viewStyle}
             name="arrow-back-ios"
             size={16}
             color="#000000"
@@ -24,5 +24,3 @@ const BackButton = () => {
 };
 
 export default BackButton;
-
-const styles = StyleSheet.create({});

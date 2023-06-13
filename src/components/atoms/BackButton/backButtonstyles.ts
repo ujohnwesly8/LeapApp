@@ -4,8 +4,6 @@ const style = StyleSheet.create({
   headerS: {
     marginTop: 17,
 
-    // justifyContent: 'space-between',
-    // paddingHorizontal: 1,
     zIndex: 1,
     marginLeft: 8,
   },
@@ -14,7 +12,7 @@ const style = StyleSheet.create({
     height: 40,
     width: 40,
     justifyContent: 'center',
-    // marginRight:10,
+
     alignItems: 'center',
   },
   redCircle: {
@@ -25,5 +23,6 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  viewStyle: {marginLeft: 5},
 });
 export default style;
