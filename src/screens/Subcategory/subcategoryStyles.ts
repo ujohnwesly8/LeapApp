@@ -9,6 +9,11 @@ const style = StyleSheet.create({
     marginTop: 20,
     marginLeft: 30,
   },
+  Lottietext: {
+    color: Colors.white,
+    fontSize: 15,
+    fontWeight: '600',
+  },
   productforwardios: {
     marginLeft: 120,
 

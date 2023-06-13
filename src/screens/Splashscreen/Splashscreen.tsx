@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Dimensions, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import Swiper from 'react-native-swiper';
 import Lottie from 'lottie-react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
@@ -7,9 +7,6 @@ import style from './splashScreenStyles';
 import {useSplashScreen} from './useSplashScreen';
 import Colors from '../../constants/colors';
 import Styles from '../../constants/themeColors';
-
-const {height} = Dimensions.get('window');
-
 const walkthroughTitleList = [
   {
     id: 1,
@@ -46,14 +43,7 @@ export default function SplashScreen() {
         activeDotColor={Colors.buttonColor}
         activeDotStyle={style.activeS}
         dotStyle={style.dotS}
-        paginationStyle={[
-          {
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: height / 13,
-          },
-        ]}>
+        paginationStyle={[style.paginationstyle]}>
         {walkthroughTitleList.map(item => {
           return (
             <View
