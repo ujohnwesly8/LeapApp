@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {fetchCartProducts} from '../../redux/slice/cartSlice';
@@ -22,12 +23,12 @@ const useChectout = () => {
   const [rentalEndDate, setRentalEndDate] = useState(new Date());
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [addressList, setAddress] = useState([]);
-  const [city, setCity] = useState('');
-  const [addressLine1, setaddressLine1] = useState('');
-  const [addressLine2, setaddressLine2] = useState('');
-  const [postalCode, setpostalCode] = useState('');
-  const [country] = useState('india');
-  const [State, setStateName] = useState('');
+  const [_city, setCity] = useState('');
+  const [_addressLine1, setaddressLine1] = useState('');
+  const [_addressLine2, setaddressLine2] = useState('');
+  const [_postalCode, setpostalCode] = useState('');
+  const [_country] = useState('india');
+  const [_State, setStateName] = useState('');
   const [isChecked, setIschecked] = useState(true);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(-1);
   const [isCheckedArray, setIsCheckedArray] = useState<boolean[]>([]);
@@ -54,14 +55,7 @@ const useChectout = () => {
           setaddressLine1(data.addressLine1);
           setaddressLine2(data.addressLine2);
           setpostalCode(data.postalCode);
-          console.log(
-            city,
-            State,
-            country,
-            postalCode,
-            addressLine1,
-            addressLine2,
-          );
+
           console.log(addressList);
         } catch (error) {
           console.log(error);
@@ -69,15 +63,7 @@ const useChectout = () => {
       };
 
       fetchData();
-    }, [
-      addressLine1,
-      addressLine2,
-      addressList,
-      city,
-      country,
-      postalCode,
-      State,
-    ]),
+    }, []),
   );
   const cartData = useSelector(
     (state: {CartProducts: {data: any}}) => state.CartProducts.data,

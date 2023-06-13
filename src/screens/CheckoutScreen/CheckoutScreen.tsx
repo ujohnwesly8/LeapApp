@@ -30,7 +30,6 @@ const CheckoutScreen = ({navigation}: Props) => {
     refreshing,
     onRefresh,
     addressList,
-
     isChecked,
   } = useCheckout();
   const {colorScheme} = useCart();
@@ -235,6 +234,7 @@ const CheckoutScreen = ({navigation}: Props) => {
                 (
                   item: {
                     addressLine1: string;
+                    addressLine2: string;
                     postalCode: string;
                     city: string;
                     country: string;
@@ -276,7 +276,8 @@ const CheckoutScreen = ({navigation}: Props) => {
                               : Styles.blackText,
                           ]}>
                           <Text>{item.addressLine1},</Text>
-                          {item.postalCode},{item.city},{item.country},
+                          {item.addressLine2},{item.postalCode},{item.city},
+                          {item.country},
                         </Text>
                       </View>
                       <View style={style.containerCheckbox}>

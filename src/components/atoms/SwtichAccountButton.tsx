@@ -13,13 +13,13 @@ const SwitchAccountButton = () => {
   const dispatch = useDispatch();
   const userType = useSelector((state: any) => state.Rolereducer.role);
   const [accountType, setAccountType] = useState(
-    userType === 'borrower' ? 'Borrower' : 'Owner',
+    userType === 'BORROWER' ? 'Borrower' : 'Owner',
   );
   // Define animation values
   const buttonAnimation = useState(new Animated.Value(0))[0];
   const optionsAnimation = useState(new Animated.Value(0))[0];
   useEffect(() => {
-    setAccountType(userType === 'owner' ? 'Owner' : 'Borrower');
+    setAccountType(userType === 'OWNER' ? 'Owner' : 'Borrower');
   }, [userType]);
   const handlePress = () => {
     setShowOptions(!showOptions);

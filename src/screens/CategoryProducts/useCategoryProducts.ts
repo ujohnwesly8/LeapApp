@@ -16,7 +16,7 @@ const useCategoryProducts = (subcategoryId: number) => {
       const response = await ApiService.get(
         `${url}/product/listBySubcategoryId/${subcategoryId}`,
       );
-      const subcategoriesData = response.data;
+      const subcategoriesData = response;
       setSubcategories(subcategoriesData);
     };
 
