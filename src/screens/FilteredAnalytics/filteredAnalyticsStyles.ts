@@ -13,7 +13,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flexDirection: 'row',
   },
-
+  filterView: {
+    marginLeft: 20,
+  },
   exportText: {
     color: Colors.white,
     fontFamily: 'Poppins-Medium',
