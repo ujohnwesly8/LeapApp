@@ -459,7 +459,7 @@ const Useowneredititems = () => {
       throw error; // throw the error to be caught by the reject handler
     }
   };
-  const handleDisableProduct = (item: number) => {
+  const handleDisableProduct = (item: any) => {
     setIsModalVisible(true);
     setProductQuantity(item.availableQuantities);
     settotalQuantities(item.totalQuantity);
@@ -470,9 +470,8 @@ const Useowneredititems = () => {
     console.log('item is  :', item);
     console.log('disabled Quantity : ', disabledQuantity);
   };
-  const incrementQuantity = id => {
+  const incrementQuantity = () => {
     let maxQuantity = productQuantity; // Maximum quantity available by default
-
     if (productQuantity < disabledQuantity && disabledQuantity !== 0) {
       maxQuantity = disabledQuantity; // If no available quantity, set maximum as disabled quantity
     }
