@@ -13,7 +13,7 @@ const OwnerImagestyles = StyleSheet.create({
     height: 163,
     width: '150%',
     // backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.Textinput,
     borderRadius: 15,
     justifyContent: 'center',
     elevation: 4,
@@ -44,6 +44,7 @@ const OwnerImagestyles = StyleSheet.create({
   },
   removeText: {
     color: Colors.white,
+    fontFamily: 'Poppins-Medium',
   },
   removeContainer: {
     alignItems: 'center',
