@@ -30,7 +30,7 @@ import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
-import Useownerhome from '../OwnerHomepage/Useownerhome';
+import Useownerhome from '../OwnerHomepage/useOwnerHome';
 import styles from '../OwnerHomepage/OwnerHomestyle';
 
 const App = () => {

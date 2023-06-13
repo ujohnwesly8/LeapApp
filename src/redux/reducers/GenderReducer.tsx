@@ -2,7 +2,7 @@ const initialState = {
   genderData: null,
 };
 
-const GenderReducer = (state = initialState, action) => {
+const GenderReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case 'ADD_GENDER_DATA':
       return {

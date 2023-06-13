@@ -7,9 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Recentlyadded, url} from '../../constants/Apis';
 import useAnalytics from '../AnalyticsPage/useAnalytics';
 import ApiService from '../../network/network';
-import {Alert} from 'react-native';
-function Useownerhome() {
-  const {handleOrders} = useAnalytics();
+const useOwnerHome = () => {
   const [name, setName] = useState('');
   const [refresh, setRefresh] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -17,7 +15,7 @@ function Useownerhome() {
   const [isLoading, setIsLoading] = useState(true);
   const [totalEarnings, setTotalEarnings] = useState(0);
   const [rentedItems, setRentedItems] = useState(0);
-  const [recentyAdded, setRecentlyAdded] = useState();
+  const [recentyAdded, setRecentlyAdded] = useState([]);
   const [productQuantity, setProductQuantity] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [, setIsQuantity] = useState(true);
@@ -27,14 +25,14 @@ function Useownerhome() {
   const [outofStock, setOutofstock] = useState(false);
   const isFocused = useIsFocused();
 
-  const handleDisableProduct = (item: number) => {
+  const handleDisableProduct = (item: any) => {
     setProductQuantity(item.availableQuantities);
     setIsModalVisible(true);
     setSelectedProductId(item.id);
     console.log('item id is ', item.id);
     console.log('Product Quantity is :', item.availableQuantities);
   };
-  const incrementQuantity = id => {
+  const incrementQuantity = () => {
     setProductQuantity(prevQuantity => prevQuantity + 1);
   };
   const decrementQuantity = () => {
@@ -44,11 +42,11 @@ function Useownerhome() {
   };
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts() as any);
   }, [dispatch]);
   const onRefresh = async () => {
     setRefreshing(true);
-    dispatch(fetchProducts());
+    dispatch(fetchProducts() as any);
     setRefreshing(false);
   };
   const {HandlePiechart} = useAnalytics();
@@ -202,5 +200,5 @@ function Useownerhome() {
     setOutofstock,
     handleEnablebutton,
   };
-}
-export default Useownerhome;
+};
+export default useOwnerHome;

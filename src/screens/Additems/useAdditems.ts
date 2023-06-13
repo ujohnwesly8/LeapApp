@@ -1,9 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import {useDispatch, useSelector} from 'react-redux';
-import {url} from '../../constants/Apis';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
+
+import {useNavigation} from '@react-navigation/native';
+import {url, OwnerCategoryUrl} from '../../constants/Apis';
+import ApiService from '../../network/network';
+
 import {
   addItemsData,
   addGender,
@@ -13,14 +17,13 @@ import {
   addtype,
   addoutfit,
 } from '../../redux/actions/actions';
-import {OwnerCategoryUrl} from '../../constants/Apis';
-import ApiService from '../../network/network';
-// import AddItemsformik from '../../components/templates/addItemsformik';
-// import {useFormik} from 'formik';
-function Useadditems() {
+
+type RootStackParamList = {
+  OwnerImage: undefined;
+};
+const useAdditems = () => {
   const dispatch = useDispatch();
-  // const {formik} = AddItemsformik();
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [gender, setGender] = useState('');
@@ -28,17 +31,20 @@ function Useadditems() {
   const [outfitType, setOutfitType] = useState('');
   const [itemType, setItemType] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [categoriesData, setCategoriesData] = useState([]);
+  const [subCategoriesData, setSubCategoriesData] = useState([]);
+  const [subEventCategoriesData, setSubEventCategoriesData] = useState([]);
+  const [subOutfitCategoriesData, setSubOutfitCategoriesData] = useState([]);
+
   const handleGenderChange = (selectedGender: React.SetStateAction<string>) => {
     setGender(selectedGender);
     formik.setFieldValue('gender', selectedGender);
     dispatch(addGenderData(selectedGender));
   };
-  const [categoriesData, setCategoriesData] = useState([]);
-  const [subCategoriesData, setSubCategoriesData] = useState([]);
-  const [subEventCategoriesData, setSubEventCategoriesData] = useState([]);
-  const [subOutfitCategoriesData, setSubOutfitCategoriesData] = useState([]);
-  const genderData = useSelector(state => state.GenderReducer.genderData);
-  console.log(genderData);
+  const genderData = useSelector(
+    (state: {GenderReducer: {genderData: string}}) =>
+      state.GenderReducer.genderData,
+  );
   const AdditemsvalidationSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     description: Yup.string().required('Description is required'),
@@ -59,7 +65,6 @@ function Useadditems() {
   const handleOutfitChange = (selectedOutfit: React.SetStateAction<string>) => {
     setOutfitType(selectedOutfit);
   };
-  // 1st api endpoint code starts
   useEffect(() => {
     console.log(gender);
 
@@ -92,8 +97,6 @@ function Useadditems() {
     // console.log(gender);
     const fetchEventCategoryData = async () => {
       try {
-        // setIsLoading(true);
-        // const token = await AsyncStorage.getItem('token');
         const response = await ApiService.get(
           `${url}/subcategory/listbyid/${3}`,
         );
@@ -117,7 +120,7 @@ function Useadditems() {
   }, []);
   useEffect(() => {
     // console.log(gender);
-    const subOutfitCategoriesData = async () => {
+    const OutfitCategoriesData = async () => {
       try {
         // setIsLoading(true);
         // const token = await AsyncStorage.getItem('token');
@@ -139,7 +142,7 @@ function Useadditems() {
         // setIsLoading(false); // Set isLoading to false after the API call completes
       }
     };
-    subOutfitCategoriesData();
+    OutfitCategoriesData();
   }, []);
   // 2nd api call here
   useEffect(() => {
@@ -225,6 +228,10 @@ function Useadditems() {
     subEventCategoriesData,
     subOutfitCategoriesData,
     formik,
+    gender,
+    eventType,
+    outfitType,
+    itemType,
   };
-}
-export default Useadditems;
+};
+export default useAdditems;

@@ -1,4 +1,3 @@
-/* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import {
   ActivityIndicator,
@@ -13,21 +12,17 @@ import React, {useContext} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import OwnerImagestyles from './OwnerImagestyles';
 import Sizeselection from '../../components/atoms/Sizeselect';
-// import {ScrollView, TextInput} from 'react-native-gesture-handler';
+import Lottie from 'lottie-react-native';
+
 import Useownerimage from './Useownerimage';
 import Styles from '../LoginScreen/loginStyle';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import Colors from '../../constants/Colors';
-import Ownerstyles from '../Additems/Additemsstyle';
-import BackButton from '../../components/atoms/BackButton/BackButton';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
-import Lottie from 'lottie-react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
 import styles from '../../constants/themeColors';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-export default function Owneraddimages() {
+const AddImages = () => {
   const {
-    onHandleOwnerItems,
     // Onhandlepress,
     handleRemoveImage,
     handleSizeTypeChange,
@@ -35,8 +30,7 @@ export default function Owneraddimages() {
     handlePriceChange,
     handleQuantityChange,
     handleBlur,
-    handleremove,
-    selectedImage,
+
     imageUrls,
     pickImages,
     closeModal,
@@ -60,11 +54,6 @@ export default function Owneraddimages() {
         ]}>
         <HeadingText message="Add products" />
         <View style={[OwnerImagestyles.form]}>
-          {/* <Spinner
-            visible={isLoading}
-            textContent={'Loading...'}
-            textStyle={{color: Colors.white}}
-          /> */}
           <View style={[OwnerImagestyles.ImageBox]}>
             {imageUrls && areImagesUploaded ? (
               <>
@@ -124,7 +113,7 @@ export default function Owneraddimages() {
                     onPress={pickImages}>
                     <Lottie
                       source={require('../../../assets/addimageol.json')}
-                      style={OwnerImagestyles.imagesText}
+                      style={OwnerImagestyles.LottieStyle}
                       autoPlay
                     />
                     {!isLoading && (
@@ -144,9 +133,8 @@ export default function Owneraddimages() {
             )}
             <View style={OwnerImagestyles.Sizecontainer}>
               <Sizeselection
-                onSelectSize={setSelectedsize}
+                onSelectSize={setSelectedsize} // Use onSelectSize instead of onChange
                 onChange={handleSizeTypeChange}
-                onBlur={() => formik.setFieldTouched('size')}
               />
             </View>
             <View style={{marginTop: 20}}>
@@ -209,4 +197,5 @@ export default function Owneraddimages() {
       />
     </ScrollView>
   );
-}
+};
+export default AddImages;
