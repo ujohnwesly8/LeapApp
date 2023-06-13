@@ -271,6 +271,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
   },
+  descriptionContainer: {
+    marginTop: 3,
+    // backgroundColor: Colors.buttonColor,
+    width: 40,
+    // height: 25,
+    borderRadius: 5,
+    marginLeft: '60%',
+    justifyContent: 'center',
+  },
   textContainer: {
     flex: 1,
     justifyContent: 'center',
