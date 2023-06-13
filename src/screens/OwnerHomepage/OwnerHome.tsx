@@ -26,6 +26,13 @@ type Props = {
   route: {name: string};
   navigation: any;
 };
+interface Product {
+  id: number;
+  imageUrl: string[];
+  name: string;
+  price: number;
+  // Add other properties as needed
+}
 const OwnerHome = ({navigation}: Props) => {
   const {
     products,
@@ -51,7 +58,6 @@ const OwnerHome = ({navigation}: Props) => {
   }, [rentedItems, totalEarnings]);
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      // Trigger auto-refresh when navigating to this screen
       setRefreshTrigger(prev => !prev);
     });
     return unsubscribe;
@@ -90,7 +96,7 @@ const OwnerHome = ({navigation}: Props) => {
               delay={1000}
               max={200}
               refreshTrigger={refreshTrigger}
-              textcolor={Colors.buttonColor}
+              textcolor={Colors.white}
             />
           </View>
           <View style={styles.cardsTotalprices}>
@@ -100,7 +106,7 @@ const OwnerHome = ({navigation}: Props) => {
               delay={1000}
               max={1000000}
               refreshTrigger={refreshTrigger}
-              textcolor={Colors.buttonColor}
+              textcolor={Colors.white}
             />
           </View>
         </View>
@@ -195,7 +201,7 @@ const OwnerHome = ({navigation}: Props) => {
           ) : (
             <View>
               <FlatList
-                data={recentyAdded}
+                data={recentyAdded as Product[]}
                 keyExtractor={item => item.id.toString()}
                 horizontal={true}
                 renderItem={({item}) => (
