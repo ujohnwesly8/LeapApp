@@ -4,9 +4,11 @@ import Colors from './Colors';
 const Styles = StyleSheet.create({
   blacktheme: {
     backgroundColor: Colors.black,
+    color: Colors.main,
   },
   whiteTheme: {
     backgroundColor: Colors.main,
+    color: Colors.black,
   },
   main: {
     backgroundColor: Colors.white,

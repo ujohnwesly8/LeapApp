@@ -1,14 +1,23 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import Ownerstyles from '../../screens/Additems/Additemsstyle';
 import Colors from '../../constants/Colors';
-import axios from 'axios';
-import Useadditems from '../../screens/Additems/Useadditems';
+
+import Useadditems from '../../screens/Additems/useAdditems';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
 
-const DropdownComponent = ({value, onChange}) => {
+type OutfitDropdownProps = {
+  onSelectOutfit: (selectedOutfit: string) => void;
+  onChange: (selectedOutfit: string) => void;
+  value: any;
+};
+
+const DropdownComponent: React.FC<OutfitDropdownProps> = ({
+  onChange,
+  value,
+}) => {
   const {subOutfitCategoriesData} = Useadditems();
   const {colorScheme} = useContext(ColorSchemeContext);
   // const [categoriesData, setCategoriesData] = useState([]);

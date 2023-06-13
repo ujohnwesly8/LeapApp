@@ -11,7 +11,7 @@ const useProfile = () => {
   const [email, setEmail] = useState('');
   const [phonenumber, setPhone] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [imageUrls, setImageUrls] = useState([]);
+  const [imageUrls, _setImageUrls] = useState([]);
   const [profilePic, setProfileImage] = useState('');
   const [selectedImage, setSelectedImage] = useState('');
   const [isloading, setIsloading] = useState(false);

@@ -1,14 +1,18 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import Ownerstyles from '../../screens/Additems/Additemsstyle';
 import Colors from '../../constants/Colors';
-import axios from 'axios';
-import Useadditems from '../../screens/Additems/Useadditems';
+import Useadditems from '../../screens/Additems/useAdditems';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
 
-const DropdownComponent = ({value, onChange}) => {
+type TypeDropdownProps = {
+  onSelectType: (selectedType: string) => void;
+  onChange: (selectedType: string) => void;
+  value: any;
+};
+const DropdownComponent: React.FC<TypeDropdownProps> = ({onChange, value}) => {
   const {subCategoriesData} = Useadditems();
   const [isFocus, setIsFocus] = useState(false);
   const {colorScheme} = useContext(ColorSchemeContext);

@@ -1,4 +1,8 @@
 import {useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import RNFetchBlob from 'rn-fetch-blob';
+import notifee, {AndroidColor, AndroidImportance} from '@notifee/react-native';
+
 import {
   AnalyticsUrl,
   Dashboardyearlydata,
@@ -7,10 +11,9 @@ import {
   pieChartUrl,
   url,
 } from '../../constants/Apis';
+
 import ApiService from '../../network/network';
-import notifee, {AndroidColor, AndroidImportance} from '@notifee/react-native';
-import RNFetchBlob from 'rn-fetch-blob';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const useAnalytics = () => {
   const [Data, setData] = useState('');
   const [orderData, setOrderdata] = useState([]);
@@ -58,7 +61,10 @@ const useAnalytics = () => {
       const blob = await response.blob();
       const reader = new FileReader();
       reader.onloadend = async () => {
-        const base64String = reader.result.replace(/^data:.+;base64,/, '');
+        const base64String = (reader.result as string).replace(
+          /^data:.+;base64,/,
+          '',
+        );
         const filePath = `${RNFetchBlob.fs.dirs.DownloadDir}/file.pdf`;
         await RNFetchBlob.fs.writeFile(filePath, base64String, 'base64');
         console.log('File downloaded successfully:', filePath);

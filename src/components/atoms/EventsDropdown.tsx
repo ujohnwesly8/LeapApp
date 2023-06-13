@@ -3,11 +3,16 @@ import {StyleSheet, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import Ownerstyles from '../../screens/Additems/Additemsstyle';
 import Colors from '../../constants/Colors';
-import Useadditems from '../../screens/Additems/Useadditems';
+import Useadditems from '../../screens/Additems/useAdditems';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
 
-const DropdownComponent = ({value, onChange, genderId}) => {
+type EventDropdownProps = {
+  onSelectEvent: (selectedEvent: string) => void;
+  onChange: (selectedEvent: string) => void;
+  value: any;
+};
+const DropdownComponent: React.FC<EventDropdownProps> = ({onChange, value}) => {
   // const [categoriesData, setCategoriesData] = useState([]);
   const [isFocus, setIsFocus] = useState(false);
   const {subEventCategoriesData} = Useadditems();

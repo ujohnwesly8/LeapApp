@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import Colors from '../../constants/Colors';
-import {colors} from 'react-native-elements';
+
 const styles = StyleSheet.create({
   Fullcontainer: {
     width: '100%',
@@ -554,7 +554,6 @@ const styles = StyleSheet.create({
     height: 18,
     marginRight: 25,
     top: -12,
-    left: -95,
   },
   buttonTextRentto: {
     fontSize: 5,
@@ -579,13 +578,7 @@ const styles = StyleSheet.create({
     top: -3,
     left: 3,
   },
-  // quantityText: {
-  //   fontSize: 14,
-  //   marginHorizontal: 10,
-  //   fontWeight: 'bold',
-  //   top: 55,
-  //   left: -190,
-  // },
+
   activeButtonText: {
     color: '#fff',
     backgroundColor: '#3E54AC',

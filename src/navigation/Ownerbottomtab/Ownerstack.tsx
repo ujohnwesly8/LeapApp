@@ -17,14 +17,13 @@ import {
   getFocusedRouteNameFromRoute,
   useIsFocused,
 } from '@react-navigation/native';
-import OwnerImage from '../../screens/OwnerImage/OwnerImage';
+import OwnerImage from '../../screens/OwnerImage/AddImages';
 // import Imagepicker from '../../components/atoms/Imagepicker';
 import OproductDetails from '../../screens/OwnerProductdetailsPage/OproductDetails';
 import Owneredititems from '../../screens/Owneredititems/Owneredititems';
 import Colors from '../../constants/Colors';
 import EditAddress from '../../screens/EditAddress/EditAddress';
 import {View} from 'react-native';
-import AnalyticScreen from '../../screens/AnalyticsPage/AnalyticScreen';
 import DashboardDetails from '../../screens/OwnerHomepage/DashboardDetails';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import FilteredAnalytics from '../../screens/FilteredAnalytics/FilteredAnalytics';

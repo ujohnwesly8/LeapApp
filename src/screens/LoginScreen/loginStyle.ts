@@ -77,12 +77,15 @@ const loginStyle = StyleSheet.create({
     alignSelf: 'center',
     color: Colors.black,
     fontFamily: 'Poppins-Regular',
+    justifyContent: 'center',
   },
   Otptext: {
-    marginTop: 15,
+    marginTop: 12,
     alignItems: 'center',
+    fontSize: 14,
     color: Colors.buttonColor,
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Regular',
+    marginLeft: 5,
   },
   sign: {
     marginLeft: '45%',

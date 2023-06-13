@@ -1,17 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
 
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import {useSelector} from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import useCart from './useCart';
-import style from './CartItemStyles';
-import Colors from '../../constants/Colors';
-import CustomModal from '../../components/atoms/CustomModel/CustomModel';
+import React from 'react';
 import Lottie from 'lottie-react-native';
 import {ReactNode} from 'react';
-import Styles from '../../constants/themeColors';
+import {useSelector} from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import useCart from './useCart';
 import CardDatePiker from '../../components/atoms/DatePicker';
-import React from 'react';
+import CustomModal from '../../components/atoms/CustomModel/CustomModel';
+
+import Styles from '../../constants/themeColors';
+import style from './CartItemStyles';
+import Colors from '../../constants/Colors';
 
 const Cart = () => {
   const {

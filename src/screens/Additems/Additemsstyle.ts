@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import Colors from '../../constants/Colors';
-import {CollapsedItem} from 'react-native-paper/lib/typescript/src/components/Drawer/Drawer';
+
 const Ownerstyles = StyleSheet.create({
   mainContainer: {
     backgroundColor: Colors.black,
