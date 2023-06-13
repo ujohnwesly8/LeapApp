@@ -1,8 +1,7 @@
-/* eslint-disable react-native/no-inline-styles */
 import {Modal, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import style from './CustomModelStyles';
-import Colors from '../../../constants/Colors';
+import Colors from '../../../constants/colors';
 const CustomModal = ({showModal, onClose, message}) => {
   return (
     <Modal visible={showModal} animationType="slide" transparent>

@@ -17,7 +17,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Lottie from 'lottie-react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Styles from '../../constants/themeColors';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import style from './homeStyles';
@@ -25,7 +25,7 @@ import Carousal from './Carousal';
 import {postProductToAPI} from '../../redux/actions/actions';
 import useHome from './useHome';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import ProfileData from '../Profile/ProfileData';
+import ProfileData from '../Profile/useProfile';
 type Props = {
   route: {name: string};
   navigation: any;

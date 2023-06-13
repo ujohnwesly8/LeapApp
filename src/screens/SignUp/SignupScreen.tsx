@@ -17,7 +17,7 @@ import {login, signup} from '../../constants/languages/En';
 
 import Styles from './Signupstyle';
 import style from '../Owneraddaddress/Owneraddressstyle';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Style from '../../constants/themeColors';
 
 const SignUpScreen = () => {

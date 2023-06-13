@@ -187,24 +187,22 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import Ownerstyles from './Additemsstyle';
-import Styles from '../LoginScreen/LoginStyle';
+
 import styles from '../../constants/themeColors';
 import GenderDropdown from '../../components/atoms/GenderDropdown';
 import EventsDropdown from '../../components/atoms/EventsDropdown';
 import TypeDropdown from '../../components/atoms/TypeDropdown';
 import OutfitDropdown from '../../components/atoms/OutfitDropdown';
 import Useadditems from './Useadditems';
-import Colors from '../../constants/Colors';
+
 import Styles from '../LoginScreen/loginStyle';
-import styles from '../../constants/themeColors';
+
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import BackButton from '../../components/atoms/BackButton/BackButton';
-import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
+
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 
 const Additems = () => {
   const {

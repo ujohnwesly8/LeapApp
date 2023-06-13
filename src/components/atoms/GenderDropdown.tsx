@@ -153,7 +153,7 @@ import Ownerstyles from '../../screens/Additems/Additemsstyle';
 import Useadditems from '../../screens/Additems/Useadditems';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 
 const DropdownComponent = ({value, onChange}) => {
   const {categoriesData} = Useadditems();

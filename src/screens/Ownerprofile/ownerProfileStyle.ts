@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 const style = StyleSheet.create({
   btnfield: {
     alignItems: 'center',
@@ -13,25 +13,21 @@ const style = StyleSheet.create({
   },
   btntext: {
     width: '30%',
-    // fontWeight: 'bold',
+
     fontFamily: 'Poppins-SemiBold',
     fontSize: 20,
     marginLeft: '37%',
     marginTop: -40,
     color: '#FB6565',
-    // backgroundColor: '#FFFFFF',
-    // color: 'red',
   },
   uploadButton: {
-    // backgroundColor: Colors.white,
     width: 100,
-    // height: 80,
+
     alignItems: 'center',
-    // marginTop: 200,
   },
   removeButton: {
     width: 100,
-    // height: 80,
+
     alignItems: 'center',
   },
   uploadText: {
@@ -41,7 +37,7 @@ const style = StyleSheet.create({
   uploadButtoncontainer: {
     flexDirection: 'row',
     height: 40,
-    // backgroundColor: 'white',
+
     marginLeft: 65,
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -70,22 +66,19 @@ const style = StyleSheet.create({
     marginLeft: 15,
     width: '100%',
     marginTop: 8,
-    // fontWeight: 'bold',
-    // color: '#FFFFFF',
+
     color: Colors.black,
     fontFamily: 'Poppins-SemiBold',
     fontSize: 16,
-    // padding: 5,
   },
   profileText1: {
     textAlign: 'left',
     marginLeft: 15,
     width: '87%',
-    // color: 'rgba(255, 255, 255, 0.2)',
+
     color: 'rgba(5, 5, 5, 0.5)',
     fontFamily: 'Poppins-SemiBold',
     fontSize: 16,
-    // padding: 5,
   },
   profileFields: {
     height: 300,
@@ -94,17 +87,17 @@ const style = StyleSheet.create({
   },
   editprofileicon: {
     marginLeft: 30,
-    // color: 'rgba(255, 255, 255, 0.5)',
+
     color: 'rgba(5, 5, 5, 0.5)',
   },
   addressicon: {
     marginLeft: 30,
-    // color: 'rgba(255, 255, 255, 0.5)',
+
     color: 'rgba(5, 5, 5, 0.5)',
   },
   producticon: {
     marginLeft: 30,
-    // color: 'rgba(255, 255, 255, 0.5)',
+
     color: 'rgba(5, 5, 5, 0.5)',
   },
   editprofile: {
@@ -116,7 +109,7 @@ const style = StyleSheet.create({
     textAlign: 'center',
     width: '92%',
     height: 56,
-    // backgroundColor: 'rgba(255, 255, 255, 0.2)',
+
     backgroundColor: Colors.white,
     flexDirection: 'row',
     borderRadius: 10,
@@ -132,8 +125,6 @@ const style = StyleSheet.create({
     elevation: 5,
   },
   card: {
-    // backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    // backgroundColor: Colors.white,
     width: '87%',
     height: 96,
     marginTop: 20,
@@ -149,28 +140,25 @@ const style = StyleSheet.create({
     fontWeight: '700',
     fontFamily: 'Poppins-Regular',
     fontSize: 16,
-    // color: 'rgba(255, 255, 255, 0.5)',
+
     color: 'hsla(0, 0%, 2%, 1)',
-    // color: '#FFFFFF',
+
     alignItems: 'center',
   },
   forwardios: {
     marginLeft: '5%',
-    // color: 'rgba(255, 255, 255, 0.5)',
+
     color: 'rgba(5, 5, 5, 0.5)',
-    // color: '#FFFFFF',
   },
   addressforwardios: {
     marginLeft: '68%',
-    // color: 'rgba(255, 255, 255, 0.5)',
+
     color: 'rgba(5, 5, 5, 0.5)',
-    // color: '#FFFFFF',
   },
   productforwardios: {
     marginLeft: '5%',
-    // color: 'rgba(255, 255, 255, 0.5)',
+
     color: 'rgba(5, 5, 5, 0.5)',
-    // color: '#FFFFFF',
   },
   AddressbtnPText: {
     position: 'absolute',
@@ -179,10 +167,10 @@ const style = StyleSheet.create({
     fontFamily: 'Poppins',
     fontSize: 16,
     color: 'hsla(0, 0%, 2%, 1)',
-    // color: 'rgba(5, 5, 5, 0.5)',
+
     alignItems: 'center',
   },
-  //switch button css
+
   button: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -214,7 +202,13 @@ const style = StyleSheet.create({
   buttonContainer: {
     marginTop: 15,
     zIndex: 2,
-    // flexDirection: 'row',
+  },
+  outerView: {marginTop: 10},
+  viewS: {
+    width: 130,
+    height: 150,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 export default style;

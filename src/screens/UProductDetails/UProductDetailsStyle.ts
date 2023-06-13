@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 const styles = StyleSheet.create({
   productSizeBox: {
     marginTop: 10,

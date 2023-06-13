@@ -10,14 +10,13 @@ import {useNavigation} from '@react-navigation/native';
 import style from './Owneraddressstyle';
 import {OwnerAddAddressCustomHook} from './Useowneraddaddress';
 import {CheckBox} from 'react-native-elements';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import {RadioButton} from 'react-native-paper';
 import BackButton from '../../components/atoms/BackButton/BackButton';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import useCart from '../Cart/useCart';
 import Styles from '../../constants/themeColors';
 import Spinner from 'react-native-loading-spinner-overlay';
-// import {ScrollView} from 'react-native-gesture-handler';
 
 const Owneraddaddress = () => {
   const navigation = useNavigation();

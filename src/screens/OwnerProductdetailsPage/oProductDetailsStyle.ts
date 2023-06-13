@@ -1,8 +1,7 @@
 import {StyleSheet} from 'react-native';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: 'white',
     width: '100%',
     height: '100%',
   },
@@ -48,9 +47,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     height: '100%',
     width: '100%',
-    // borderTopLeftRadius: 30,
-    // borderTopRightRadius: 30,
-    // paddingVertical: 40,
+
     paddingHorizontal: 20,
     backgroundColor: Colors.main,
     flex: 20,
@@ -84,30 +81,28 @@ const styles = StyleSheet.create({
     top: 288,
   },
   headingtext: {
+    marginTop:30,
     fontSize: 20,
-    // fontWeight: '900',
+
     fontFamily: 'Poppins-SemiBold',
     color: Colors.white,
-    // width: '80%',
   },
   image: {
     flex: 0.7,
     justifyContent: 'center',
   },
   startext: {
-    marginTop: -70,
+    marginTop: -100,
     color: Colors.white,
     fontFamily: 'Poppins-Bold',
-    // backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    // shadowRadius: 90,
-    // shadowOpacity: 0.9,
+
     marginLeft: 10,
-    // fontWeight: '700',
+
     zIndex: 1,
     fontSize: 35,
-    textShadowColor: 'rgba(0, 0, 0, 0.75)', // Shadow color
-    textShadowOffset: {width: -1, height: 1}, // Shadow offset
-    textShadowRadius: 5, // Shadow blur radius
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 5,
   },
   title: {
     fontFamily: '800',
@@ -237,5 +232,12 @@ const styles = StyleSheet.create({
     zIndex: 1,
     opacity: 0.5,
   },
+  imgBack: {
+    height: 500,
+    width: 405,
+    backgroundColor: 'green',
+    marginLeft: -5,
+  },
+  titleText: {marginTop: 20},
 });
 export default styles;

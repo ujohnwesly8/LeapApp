@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import Ownerstyles from '../../screens/Additems/Additemsstyle';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Useadditems from '../../screens/Additems/Useadditems';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';

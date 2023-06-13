@@ -1,18 +1,12 @@
-/* eslint-disable react-native/no-inline-styles */
-// External libraries/packages
 import React from 'react';
 import {View, TextInput, Text, TouchableOpacity} from 'react-native';
 import Lottie from 'lottie-react-native';
-
-// Styles and assets
 import styles from './loginStyle';
-import Colors from '../../constants/Colors';
-import Styles from '../../constants/themeColors';
-
-// Custom components and modules
 import useLoginscreen from './useLoginscreen';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import {signin, signup} from '../../constants/languages/En';
+import Colors from '../../constants/colors';
+import Styles from '../../constants/themeColors';
 
 const LoginScreen = () => {
   const {

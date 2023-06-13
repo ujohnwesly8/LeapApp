@@ -19,7 +19,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Lottie from 'lottie-react-native';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import useCart from '../Cart/useCart';
 import Styles from '../../constants/themeColors';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';

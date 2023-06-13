@@ -1,9 +1,14 @@
 import {useState, useEffect} from 'react';
 import ApiService from '../../network/network';
-// import url from './../../constants/Apis';
-const useFilteredAnalytics = (startDate, endDate) => {
-  const [chartData, setChartData] = useState([]);
-  const [data, setData] = useState([]);
+import {url} from './../../constants/Apis';
+
+const useFilteredAnalytics = (startDate: any, endDate: any) => {
+  const [chartData, setChartData] = useState<
+    {month: string; rentalCost: number}[]
+  >([]);
+
+  const [data, setData] = useState<{[key: string]: any[]}>({});
+
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -17,26 +22,27 @@ const useFilteredAnalytics = (startDate, endDate) => {
       const formattedEndDate = endDate.toISOString();
 
       const response = await ApiService.get(
-        `https://96d9-106-51-70-135.ngrok-free.app/api/v1/order/dashboardDateSelector?startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
+        `${url}/order/dashboardDateSelector?startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
       );
 
-      // const data = response.data;
       console.log('hey', response);
       setData(response);
       setIsLoading(false);
-      const chartData = Object.entries(response).map(([month, rentals]) => ({
-        month,
-        rentalCost: rentals.reduce(
-          (total, rental) => total + rental.rentalCost,
-          0,
-        ),
-      }));
+
+      const chartData = Object.entries(response).map(
+        ([month, rentals]: [string, unknown]) => ({
+          month,
+          rentalCost: (rentals as {rentalCost: number}[]).reduce(
+            (total, rental) => total + rental.rentalCost,
+            0,
+          ),
+        }),
+      );
 
       setChartData(chartData);
     } catch (error) {
       console.log('Error fetching data:', error);
     } finally {
-      // setIsLoading(false);
       setIsLoading(false);
     }
   };

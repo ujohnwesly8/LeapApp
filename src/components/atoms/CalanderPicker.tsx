@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Modal} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import moment from 'moment';
 import useCart from '../../screens/Cart/useCart';
 import Styles from '../../constants/themeColors';

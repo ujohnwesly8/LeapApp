@@ -7,7 +7,7 @@ import style from './Owneraddressstyle';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import Lottie from 'lottie-react-native';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import useCart from '../Cart/useCart';
 import Styles from '../../constants/themeColors';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';

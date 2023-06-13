@@ -20,13 +20,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ProductsById, url} from '../../constants/Apis';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import Styles from '../../constants/themeColors';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import DateRangePicker from '../../components/atoms/CalanderPicker';
 import ApiService from '../../network/network';
 import {Pagination} from 'react-native-snap-carousel';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import {useDispatch} from 'react-redux';
 import {fetchCartProducts} from '../../redux/slice/cartSlice';
+import ModalContext from '../../../CustomModalProvider';
 type Props = {
   route: {params: {product: any}};
   navigation: any;
@@ -46,7 +47,13 @@ const UDetailScreen = ({route, navigation}: Props) => {
   const scrollTimerRef = useRef<number | null>(null);
   const Quantity = product.quantity;
   const dispatch = useDispatch();
+  // const {openModal: any} = useContext(ModalContext);
   const {colorScheme} = useContext(ColorSchemeContext);
+
+  // const handleOpenModal = () => {
+  //   openModal('This is a custom modal message!');
+  // };
+
   const handleDecrement = () => {
     setQuantity(quantity - 1);
     setIsQuantity(true);

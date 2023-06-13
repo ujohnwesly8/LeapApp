@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import {CollapsedItem} from 'react-native-paper/lib/typescript/src/components/Drawer/Drawer';
 const Ownerstyles = StyleSheet.create({
   mainContainer: {

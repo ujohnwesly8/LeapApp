@@ -6,16 +6,15 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-
+import LottieAnimation from '../../components/molecules/LottieAnimation/LottieAnimation';
 import Styles from '../../screens/OtpScreen/otpStyles';
 import Useotp from './useOtp';
 import useCart from '../Cart/useCart';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import style from '../../constants/themeColors';
-import Colors from '../../constants/Colors';
-import LottieAnimation from '../../components/molecules/LottieAnimation/LottieAnimation';
+import Colors from '../../constants/colors';
 
-const OTPScreen = () => {
+const OTPScreen = (): JSX.Element => {
   const {
     phoneNo,
     otp,

@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import useCart from './useCart';
 import style from './CartItemStyles';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import Lottie from 'lottie-react-native';
 import {ReactNode} from 'react';

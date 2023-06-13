@@ -23,7 +23,7 @@ import OutfitDropdown from '../../components/atoms/OutfitDropdown';
 import Sizeselection from '../../components/atoms/Sizeselect';
 import OwnerEditItemstyles from './Owneredititemsstyles';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Lottie from 'lottie-react-native';
 import BackButton from '../../components/atoms/BackButton/BackButton';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';

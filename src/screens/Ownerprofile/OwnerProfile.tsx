@@ -1,4 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
 import {
   Text,
   View,
@@ -7,19 +7,19 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import React from 'react';
-import style from './OwnerProfilestyle';
-import SwitchAccountButton from '../../components/atoms/SwtichAccountButton';
-import AddImages from '../../components/atoms/AddImages';
-import ProfileData from '../Profile/useProfile';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch} from 'react-redux';
 import {Logout} from '../../redux/actions/actions';
-import useCart from '../Cart/useCart';
-import Styles from '../../constants/themeColors';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {Avatar} from 'react-native-paper';
+
+import style from './ownerProfileStyle';
+import ProfileData from '../Profile/useProfile';
+import SwitchAccountButton from '../../components/atoms/SwtichAccountButton';
+import useCart from '../Cart/useCart';
+import Styles from '../../constants/themeColors';
+
 type Props = {
   navigation: any;
 };
@@ -30,18 +30,17 @@ const OwnerProfile = ({navigation}: Props) => {
     phonenumber,
     isLoading,
     pickImage,
-    uploadImage,
+
     profilePic,
-    selectedImage,
-    setSelectedImage,
+
     handleRemoveProfilePic,
-    setProfileImage,
+
     isloading,
   } = ProfileData();
   const {colorScheme} = useCart();
   const dispatch = useDispatch();
   const handleLogout = () => {
-    dispatch(Logout());
+    dispatch(Logout() as any);
   };
   return (
     <View
@@ -54,15 +53,8 @@ const OwnerProfile = ({navigation}: Props) => {
           <SwitchAccountButton />
         </View>
         <View style={style.imageContainer}>
-          {/* <AddImages /> */}
-          <View
-            style={{
-              width: 130,
-              height: 150,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            {isloading ? ( // Display loading indicator while uploading
+          <View style={style.viewS}>
+            {isloading ? (
               <ActivityIndicator size="large" color="gray" />
             ) : profilePic ? (
               <Avatar.Image size={100} source={{uri: profilePic}} />
@@ -82,7 +74,6 @@ const OwnerProfile = ({navigation}: Props) => {
             style={style.removeButton}
             onPress={() => {
               handleRemoveProfilePic();
-              // setProfileImage(null);
             }}>
             <Text style={style.uploadText}>Remove</Text>
           </TouchableOpacity>
@@ -124,7 +115,7 @@ const OwnerProfile = ({navigation}: Props) => {
             </Text>
           </View>
         )}
-        {/* </View> */}
+
         <View style={style.profileFields}>
           <TouchableOpacity
             style={[
@@ -223,7 +214,7 @@ const OwnerProfile = ({navigation}: Props) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <View style={{marginTop: 10}} />
+      <View style={style.outerView} />
     </View>
   );
 };

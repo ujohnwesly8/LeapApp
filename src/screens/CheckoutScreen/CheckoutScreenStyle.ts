@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import {colors} from 'react-native-elements';
 const styles = StyleSheet.create({
   Fullcontainer: {

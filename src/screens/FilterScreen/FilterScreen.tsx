@@ -2,8 +2,7 @@ import {View, Text, TouchableOpacity, TextInput, Image} from 'react-native';
 import React from 'react';
 import styles from './filterStyles';
 import useFilterScreen from './useFilterScreen';
-import Colors from '../../constants/Colors';
-
+import Colors from '../../constants/colors';
 
 interface Product {
   id: string;

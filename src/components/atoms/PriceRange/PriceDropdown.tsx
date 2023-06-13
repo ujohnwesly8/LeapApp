@@ -71,7 +71,7 @@
 import React, {useState, useRef, useContext} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Animated} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'; // Import the icon component from the library
-import Colors from '../../../constants/Colors';
+import Colors from '../../../constants/colors';
 import {ColorSchemeContext} from '../../../../ColorSchemeContext';
 import Styles from '../../../constants/themeColors';
 const options = [

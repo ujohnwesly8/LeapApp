@@ -13,7 +13,7 @@ import {CheckBox} from 'react-native-elements';
 import {useDispatch, useSelector} from 'react-redux';
 import useCheckout from './useCheckout';
 import style from './CheckoutScreenStyle';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import useCart from '../Cart/useCart';
 import Styles from '../../constants/themeColors';

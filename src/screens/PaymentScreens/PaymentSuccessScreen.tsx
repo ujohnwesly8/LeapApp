@@ -6,7 +6,7 @@ import Lottie from 'lottie-react-native';
 
 import usePayment from './usePayment';
 import styles from './paymentstylesheet';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Styles from '../../constants/themeColors';
 
 const PaymentSuccessScreen = () => {

@@ -1,8 +1,7 @@
 import {StyleSheet} from 'react-native';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 const style = StyleSheet.create({
   container: {
-    // backgroundColor: '#000000',
     backgroundColor: Colors.main,
     width: '100%',
     height: 800,
@@ -14,9 +13,7 @@ const style = StyleSheet.create({
     paddingTop: 10,
     shadowColor: 'black',
     borderRadius: 20,
-    shadowOffset: {
-      height: 2,
-    },
+
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
@@ -39,7 +36,7 @@ const style = StyleSheet.create({
   },
   text: {
     marginLeft: 38,
-    // color: '#FFFFFF',
+
     color: Colors.black,
     fontSize: 16,
     fontFamily: 'poppins',
@@ -49,7 +46,7 @@ const style = StyleSheet.create({
   input: {
     textAlign: 'left',
     paddingLeft: 25,
-    // backgroundColor: 'rgba(255, 255, 255, 0.2)',
+
     backgroundColor: Colors.white,
     marginTop: 25,
     marginBottom: 20,
@@ -67,18 +64,18 @@ const style = StyleSheet.create({
   emailinput: {
     textAlign: 'left',
     paddingLeft: 20,
-    // backgroundColor: 'rgba(255, 255, 255, 0.2)',
+
     backgroundColor: Colors.white,
     marginTop: 25,
     marginBottom: 20,
     margin: 40,
-    // textAlign: 'center',
+
     fontSize: 18,
-    // color: 'rgba(255, 255, 255, 0.2)',
+
     color: 'rgba(5, 5, 5, 0.5)',
     fontWeight: '500',
     borderRadius: 10,
-    shadowOffset: {},
+
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
@@ -101,7 +98,7 @@ const style = StyleSheet.create({
     top: 40,
   },
   btntext: {
-    // position: 'absolute',
+  
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -206,7 +203,7 @@ const style = StyleSheet.create({
     marginTop: 10,
     marginLeft: 25,
     color: 'black',
-    // backgroundColor: 'rgba(255, 255, 255, 0.2)',
+   
     backgroundColor: Colors.black,
     borderRadius: 100,
     width: '9%',

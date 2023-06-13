@@ -17,7 +17,7 @@ import Sizeselection from '../../components/atoms/Sizeselect';
 import Useownerimage from './Useownerimage';
 import Styles from '../LoginScreen/loginStyle';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Ownerstyles from '../Additems/Additemsstyle';
 import BackButton from '../../components/atoms/BackButton/BackButton';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
