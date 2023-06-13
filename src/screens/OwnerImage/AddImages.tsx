@@ -12,7 +12,7 @@ import React, {useContext} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Lottie from 'lottie-react-native';
 
-import Useownerimage from './Useownerimage';
+import Useownerimage from './useAddImages';
 import Sizeselection from '../../components/atoms/Sizeselect';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import {addImages} from '../../constants/languages/en';

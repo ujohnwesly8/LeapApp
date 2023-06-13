@@ -1,8 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, Text, View, useColorScheme} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React, {useContext} from 'react';
 import BackButton from '../BackButton/BackButton';
-import useCart from '../../../screens/Cart/useCart';
 import Styles from '../../../constants/themeColors';
 import {ColorSchemeContext} from '../../../../ColorSchemeContext';
 
