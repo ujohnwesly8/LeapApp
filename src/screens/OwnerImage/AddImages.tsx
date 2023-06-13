@@ -21,6 +21,7 @@ import Colors from '../../constants/colors';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import styles from '../../constants/themeColors';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
+import {addImages} from '../../constants/languages/En';
 const AddImages = () => {
   const {
     // Onhandlepress,
@@ -30,7 +31,6 @@ const AddImages = () => {
     handlePriceChange,
     handleQuantityChange,
     handleBlur,
-
     imageUrls,
     pickImages,
     closeModal,
@@ -40,7 +40,6 @@ const AddImages = () => {
   } = Useownerimage();
   const areImagesUploaded = imageUrls && imageUrls.length > 0;
   const {colorScheme} = useContext(ColorSchemeContext);
-  // console.log('johnresly', imageUrls);
   return (
     <ScrollView
       style={[
@@ -102,7 +101,7 @@ const AddImages = () => {
               <>
                 {isLoading ? (
                   <View style={OwnerImagestyles.overlay}>
-                    <ActivityIndicator size="large" color="black" />
+                    <ActivityIndicator size="large" color="white" />
                   </View>
                 ) : (
                   <TouchableOpacity
@@ -124,7 +123,7 @@ const AddImages = () => {
                             ? styles.whitetext
                             : styles.blackText,
                         ]}>
-                        Add Images{' '}
+                        {addImages}
                       </Text>
                     )}
                   </TouchableOpacity>

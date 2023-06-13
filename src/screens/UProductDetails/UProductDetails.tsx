@@ -27,7 +27,7 @@ import {Pagination} from 'react-native-snap-carousel';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import {useDispatch} from 'react-redux';
 import {fetchCartProducts} from '../../redux/slice/cartSlice';
-import ModalContext from '../../../CustomModalProvider';
+
 type Props = {
   route: {params: {product: any}};
   navigation: any;

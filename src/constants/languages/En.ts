@@ -12,3 +12,4 @@ export const dashboard = 'Dashboard';
 export const recentlyAdded = 'Recently Added';
 export const rentalHistory = 'Rental History';
 export const continueText = 'Continue with';
+export const addImages = 'Add Images';
