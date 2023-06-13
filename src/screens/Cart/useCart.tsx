@@ -48,14 +48,6 @@ const useCart = () => {
   ) || {
     cartItems: [],
   };
-
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     dispatch(fetchCartProducts());
-  //   });
-  //   return unsubscribe;
-  // }, [navigation]);
-
   useEffect(() => {
     if (refreshing) {
       console.log('what the heck bro ');
@@ -109,14 +101,10 @@ const useCart = () => {
         },
         body: JSON.stringify(items),
       });
-
-      // Handle the response
       const data = await response.json();
       navigation.navigate('CheckoutScreen');
       console.log('Checkout Session created:', data);
-    } catch (error) {
-      // console.error('Error creating Checkout Session:', error);
-    }
+    } catch (error) {}
   };
   const handleRemove = async (productId: any) => {
     const token = await AsyncStorage.getItem('token');
@@ -127,9 +115,7 @@ const useCart = () => {
         Authorization: `Bearer ${token}`,
       },
     })
-      // .then(response => response.json())
       .then(_data => {
-        // console.log('Item removed from cart:', data);
         dispatch(removeFromCart(productId));
         dispatch(fetchCartProducts as any);
         openModal();
@@ -165,7 +151,6 @@ const useCart = () => {
     console.log('itemID', productId);
     handleUpdate(newQuantity, productId);
     setisButtondisable(false);
-    // setRefreshing(true);
   };
 
   return {
@@ -174,8 +159,6 @@ const useCart = () => {
     handleRemove,
     refreshing,
     setRefreshing,
-    // onRefresh,
-
     handleUpdate,
     rentalStartDate,
     rentalEndDate,
@@ -191,7 +174,6 @@ const useCart = () => {
     handleIncrement,
     isplusDisable,
     isLoading,
-    // fetchQuantityData,
   };
 };
 export default useCart;
