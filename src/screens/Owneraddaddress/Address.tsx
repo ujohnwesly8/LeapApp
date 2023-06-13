@@ -10,7 +10,7 @@ import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import useAddress from './useAddress';
 import useCart from '../Cart/useCart';
 
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Styles from '../../constants/themeColors';
 import style from './AddressStyles';
 

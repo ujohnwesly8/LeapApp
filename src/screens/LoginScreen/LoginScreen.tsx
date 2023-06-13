@@ -18,7 +18,7 @@ import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 // Styles and assets
 import styles from './loginStyle';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Styles from '../../constants/themeColors';
 
 const LoginScreen = () => {

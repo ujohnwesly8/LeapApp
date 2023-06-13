@@ -1,6 +1,6 @@
 import React from 'react';
 import Styles from './src/constants/themeColors';
-import Colors from './src/constants/Colors';
+import Colors from './src/constants/colors';
 
 export const ColorSchemeContext = React.createContext({
   colorScheme: 'dark',

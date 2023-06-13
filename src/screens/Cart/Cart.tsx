@@ -13,7 +13,7 @@ import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 
 import Styles from '../../constants/themeColors';
 import style from './CartItemStyles';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 
 const Cart = () => {
   const {
