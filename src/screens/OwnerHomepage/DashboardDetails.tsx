@@ -73,11 +73,6 @@ const DashboardDetails = () => {
   const [selectedYear, setSelectedYear] = useState('');
   const years = Object.keys(DashboardYearly);
 
-  const [selectedData, setSelectedData] = useState('quantity'); // Selected data for the bar graph
-
-  const handleDataSelect = data => {
-    setSelectedData(data);
-  };
   console.log('orderData:', orderData);
   const handleVisibleModal = () => {
     setShowModel(!showModel);

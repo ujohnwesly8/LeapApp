@@ -29,7 +29,7 @@ const CategoryProducts = ({route}: any) => {
       ]}>
       <HeadingText message={'Products'} />
       <View style={style.direction}>
-        {subcategories.length === 0 ? (
+        {subcategories && subcategories.length === 0 ? (
           <View>
             <Lottie
               style={style.lottieS}
