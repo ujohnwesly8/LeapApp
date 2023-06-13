@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import Colors from '../../../constants/colors';
-import style from '../CustomModel/CustomModelStyles';
+
 const styles = StyleSheet.create({
   mainContainer: {
     backgroundColor: Colors.buttonColor,
@@ -14,9 +14,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 4,
     flexDirection: 'row',
-
-    // borderTopRightRadius: 10,
-    // borderTopLeftRadius: 10,
   },
   buttonText: {
     color: Colors.white,
@@ -25,8 +22,6 @@ const styles = StyleSheet.create({
     // marginTop: 10,
   },
   dropdownConatiner: {
-    // position: 'absolute',
-    // marginTop: 20,
     backgroundColor: Colors.white,
     width: 140,
     height: 70,
