@@ -154,7 +154,7 @@ const useAddImages = () => {
     };
     getImageUrls();
   }, [imageUris]);
-  const pickImages = async () => {
+  const pickImages = () => {
     launchImageLibrary(
       {
         mediaType: 'photo',
@@ -173,7 +173,6 @@ const useAddImages = () => {
               name: 'image.png',
             }),
           );
-
           const formData = new FormData();
           images.forEach((file, _index) => {
             formData.append('file', {
@@ -182,23 +181,26 @@ const useAddImages = () => {
               name: 'image.png',
             });
           });
-
           setIsLoading(true);
-
           try {
             const token = await AsyncStorage.getItem('token');
             console.log(token);
-
-            const result = await axios.post(`${baseUrl}/file/upload`, formData);
-
-            if (result.status === 200) {
-              const res = result.data;
+            const result = await fetch(`${baseUrl}/file/upload`, {
+              method: 'POST',
+              body: formData,
+              headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            if (result.ok) {
+              const res = await result.json();
               console.log(res);
               setImageUrls(prevUrls => [...prevUrls, ...res.urls]);
               setIsLoading(false);
               console.log(imageUrls);
             } else {
-              const res = result.data;
+              const res = await result.json();
               console.log('Upload failed');
               console.log(res);
               console.log(token);

@@ -1,15 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-// import Colors from '../../../constants/Colors';
 import styles from './analyticStyle';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 
-const AnalyticsDropdown = ({onSelect}) => {
+type AnalyticsDropdownProps = {
+  onSelect: (value: string) => void;
+};
+
+const AnalyticsDropdown = ({onSelect}: AnalyticsDropdownProps) => {
   const [selectedValue, setSelectedValue] = useState('Quantity');
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSelect = value => {
+  const handleSelect = (value: string) => {
     setSelectedValue(value);
     onSelect(value);
     setIsOpen(false);
@@ -20,7 +23,6 @@ const AnalyticsDropdown = ({onSelect}) => {
       <TouchableOpacity
         style={styles.mainContainer}
         onPress={() => setIsOpen(!isOpen)}>
-        {/* <Text style={{color: 'black'}}>Select Data:</Text> */}
         <Text style={styles.buttonText}>{selectedValue}</Text>
         <Icons style={{marginLeft: 5}} size={20} name="keyboard-arrow-down" />
       </TouchableOpacity>
