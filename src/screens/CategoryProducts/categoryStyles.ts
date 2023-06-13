@@ -1,4 +1,3 @@
-// ProductItem.styles.js
 import {StyleSheet} from 'react-native';
 import Colors from '../../constants/colors';
 
@@ -7,28 +6,24 @@ const style = StyleSheet.create({
     width: '83%',
     height: 200,
     borderRadius: 8,
-    // flexDirection: 'row',
-    // backgroundColor: '#000',
+
     backgroundColor: Colors.white,
     marginLeft: 20,
-    // marginRight: 20,
-    // marginBottom: 10,
+
     margin: 10,
   },
   dheader: {
     marginTop: 3,
-    // top: 90,
-    // flexDirection: 'row',
+
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     zIndex: 1,
     marginLeft: -50,
   },
   imageContainer: {
-    // backgroundColor: 'green',
     width: '100%',
     height: '30%',
-    // borderRadius: 8,
+
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
   },
@@ -56,7 +51,7 @@ const style = StyleSheet.create({
   },
   price: {
     fontSize: 10,
-    // fontWeight: '600',
+
     fontFamily: 'Poppins-SemiBold',
     color: Colors.buttonColor,
   },
@@ -77,7 +72,7 @@ const style = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 20,
-    // elevation: 5,
+
     position: 'absolute',
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     top: 5,
@@ -114,15 +109,10 @@ const style = StyleSheet.create({
   },
   Cartcontents: {
     marginTop: 25,
-    // flexDirection: 'row',
-    // backgroundColor: Colors.white,
   },
   cardTextContainer: {
-    // height: 40,
     width: '100%',
-    // backgroundColor: Colors.white,
     marginTop: 60,
-    // borderRadius: 5,
     padding: 6,
     marginLeft: 5,
   },
@@ -132,7 +122,6 @@ const style = StyleSheet.create({
     color: Colors.black,
     fontSize: 24,
     fontFamily: 'Poppins-Bold',
-    // fontWeight: '700',
     marginTop: 20,
     marginLeft: 30,
   },
@@ -146,13 +135,25 @@ const style = StyleSheet.create({
   maincontainer: {
     height: '100%',
     width: '100%',
-    // flexDirection: 'row',
+
     backgroundColor: Colors.main,
   },
   listContainer: {
     paddingHorizontal: 10,
     paddingTop: 10,
   },
+  viewS: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '100%',
+    flexWrap: 'wrap',
+  },
+  outerView: {
+    width: '100%',
+  },
+  lottieS: {height: 400, width: '100%', marginLeft: 15},
+  direction: {flex: 1},
+  size: {width: '50%'},
 });
 
 export default style;
