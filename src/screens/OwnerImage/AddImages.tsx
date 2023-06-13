@@ -10,18 +10,20 @@ import {
 } from 'react-native';
 import React, {useContext} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import OwnerImagestyles from './OwnerImagestyles';
-import Sizeselection from '../../components/atoms/Sizeselect';
 import Lottie from 'lottie-react-native';
 
 import Useownerimage from './Useownerimage';
-import Styles from '../LoginScreen/loginStyle';
+import Sizeselection from '../../components/atoms/Sizeselect';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import Colors from '../../constants/colors';
-import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
-import styles from '../../constants/themeColors';
-import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import {addImages} from '../../constants/languages/En';
+import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
+
+import Styles from '../LoginScreen/loginStyle';
+import styles from '../../constants/themeColors';
+import OwnerImagestyles from './OwnerImagestyles';
+import Colors from '../../constants/colors';
+
 const AddImages = () => {
   const {
     // Onhandlepress,
