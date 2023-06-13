@@ -39,7 +39,6 @@ const Cart = () => {
   const productQuantities = cartData.cartItems.map(
     (item: {quantity: any}) => item.quantity,
   );
-  // setProductQuantity(productQuantities);
 
   if (CartProducts && CartProducts.cartItems) {
     console.log('Product Quantity:');
@@ -54,23 +53,11 @@ const Cart = () => {
 
   if (!cartData) {
     return (
-      <View
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100%',
-          backgroundColor: Colors.main,
-        }}>
+      <View style={style.lottiecontainer}>
         <Lottie
           source={require('../../../assets/loading2.json')}
           autoPlay
-          style={{
-            height: 200,
-            width: 200,
-            alignItems: 'center',
-            marginLeft: 5,
-            justifyContent: 'center',
-          }}
+          style={style.lottie}
         />
         <Text style={{color: Colors.iconscolor}}>The Items are Loading...</Text>
       </View>
@@ -104,12 +91,7 @@ const Cart = () => {
           </Text>
         </View>
         <View>
-          <ScrollView
-            style={style.ScrollContainer}
-            // refreshControl={
-            //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            // }
-          >
+          <ScrollView style={style.ScrollContainer}>
             {cartData?.cartItems.length === 0 ? (
               <View style={style.noAddressContainer1}>
                 <View style={style.titleTextContainer1}>
@@ -219,7 +201,6 @@ const Cart = () => {
                             ]}>
                             Size
                           </Text>
-                          {/* <View style={style.productSizeBox}> */}
                           <Text
                             style={[
                               style.detailsdescription,
