@@ -15,7 +15,7 @@ import Lottie from 'lottie-react-native';
 import Useownerimage from './Useownerimage';
 import Sizeselection from '../../components/atoms/Sizeselect';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import {addImages} from '../../constants/languages/En';
+import {addImages} from '../../constants/languages/en';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 

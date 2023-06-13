@@ -1,6 +1,6 @@
 import {PermissionsAndroid, Platform} from 'react-native';
 export const androidCameraPermission = () =>
-  new Promise(async (resolve, reject) => {
+  new Promise(async resolve => {
     try {
       if (Platform.OS === 'android' && Platform.Version > 22) {
         const granted = await PermissionsAndroid.requestMultiple([
@@ -14,7 +14,6 @@ export const androidCameraPermission = () =>
           granted['android.permission.WRITE_EXTERNAL_STORAGE'] !== 'granted' ||
           granted['android.permission.READ_EXTERNAL_STORAGE'] !== 'granted'
         ) {
-          showError("Don't have required permission.Please allow permissions");
           return resolve(false);
         }
         return resolve(true);
