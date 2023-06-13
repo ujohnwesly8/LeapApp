@@ -15,7 +15,7 @@ import useCart from '../Cart/useCart';
 import useAddAddress from './useAddAddress';
 
 import style from './AddressStyles';
-import Colors from '../../constants/colors';
+import colors from '../../constants/colors';
 import Styles from '../../constants/themeColors';
 const AddAddress = () => {
   const {
@@ -55,7 +55,7 @@ const AddAddress = () => {
   return (
     <ScrollView
       style={{
-        backgroundColor: colorScheme === 'dark' ? Colors.black : Colors.main,
+        backgroundColor: colorScheme === 'dark' ? colors.black : colors.main,
         height: '100%',
       }}>
       <View>
@@ -67,7 +67,7 @@ const AddAddress = () => {
           <TextInput
             placeholder="Flat no / Building"
             placeholderTextColor={
-              colorScheme === 'dark' ? Colors.Textinput : Colors.black
+              colorScheme === 'dark' ? colors.Textinput : colors.black
             }
             value={addressLine1}
             onChangeText={handleAddressLine1}
@@ -87,7 +87,7 @@ const AddAddress = () => {
           <TextInput
             placeholder="Street name"
             placeholderTextColor={
-              colorScheme === 'dark' ? Colors.Textinput : Colors.black
+              colorScheme === 'dark' ? colors.Textinput : colors.black
             }
             value={addressLine2}
             onChangeText={handleAddressLine2}
@@ -107,7 +107,7 @@ const AddAddress = () => {
           <TextInput
             placeholder="Pincode"
             placeholderTextColor={
-              colorScheme === 'dark' ? Colors.Textinput : Colors.black
+              colorScheme === 'dark' ? colors.Textinput : colors.black
             }
             style={[
               style.smalltextInput,
@@ -122,7 +122,7 @@ const AddAddress = () => {
           <TextInput
             placeholder="City"
             placeholderTextColor={
-              colorScheme === 'dark' ? Colors.Textinput : Colors.black
+              colorScheme === 'dark' ? colors.Textinput : colors.black
             }
             value={city}
             editable={false}
@@ -142,7 +142,7 @@ const AddAddress = () => {
           value={state}
           editable={false}
           placeholderTextColor={
-            colorScheme === 'dark' ? Colors.Textinput : Colors.black
+            colorScheme === 'dark' ? colors.Textinput : colors.black
           }
           style={[
             style.inputAddress,
@@ -154,7 +154,7 @@ const AddAddress = () => {
         <TextInput
           placeholder="Country "
           placeholderTextColor={
-            colorScheme === 'dark' ? Colors.Textinput : Colors.black
+            colorScheme === 'dark' ? colors.Textinput : colors.black
           }
           value={country}
           editable={false}
@@ -180,7 +180,7 @@ const AddAddress = () => {
             value="HOME"
             status={selectedOption === 'HOME' ? 'checked' : 'unchecked'}
             onPress={() => handleOptionChange('HOME')}
-            color={colorScheme === 'dark' ? Colors.white : Colors.black}
+            color={colorScheme === 'dark' ? colors.white : colors.black}
           />
           <Text
             style={[
@@ -195,7 +195,7 @@ const AddAddress = () => {
             value="OFFICE"
             status={selectedOption === 'OFFICE' ? 'checked' : 'unchecked'}
             onPress={() => handleOptionChange('OFFICE')}
-            color={colorScheme === 'dark' ? Colors.white : Colors.black}
+            color={colorScheme === 'dark' ? colors.white : colors.black}
           />
           <Text
             style={[
@@ -218,7 +218,7 @@ const AddAddress = () => {
         <CheckBox
           checked={isChecked}
           onPress={handleCheckboxChange}
-          checkedColor={colorScheme === 'dark' ? Colors.white : Colors.black}
+          checkedColor={colorScheme === 'dark' ? colors.white : colors.black}
           containerStyle={style.checkboxContainer}
           size={24}
         />
