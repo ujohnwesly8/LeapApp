@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {Text, TextInput, View, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import style from './ownerEditProfileStyle';

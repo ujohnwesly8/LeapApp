@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import Colors from '../../constants/colors';
-
+const {height} = Dimensions.get('window');
 const style = StyleSheet.create({
   container: {
     flex: 1,
@@ -11,6 +11,12 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.main,
+  },
+  paginationstyle: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: height / 13,
   },
   title: {
     fontFamily: 'Poppins-Bold',

@@ -8,7 +8,6 @@ import styles from './subcategoryStyles';
 import {useSubcategory} from './useSubcategory';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import Colors from '../../constants/colors';
 import Styles from '../../constants/themeColors';
 
 interface Subcategory {
@@ -46,7 +45,7 @@ const SubcategoryList = ({
         />
         <Text
           style={[
-            {color: Colors.white, fontSize: 15, fontWeight: '600'},
+            styles.Lottietext,
             colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
           ]}>
           The Items are Loading...
