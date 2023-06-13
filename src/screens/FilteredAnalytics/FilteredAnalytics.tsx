@@ -54,9 +54,8 @@ const FilteredAnalytics = () => {
               />
             ) : chartData.length > 0 ? (
               <>
-                <View
-                  style={style.chartView}>
-                  <View style={{marginLeft: 20}}>
+                <View style={style.chartView}>
+                  <View style={style.filterView}>
                     <LineChart
                       data={{
                         labels: chartData.map(dataPoint => {
