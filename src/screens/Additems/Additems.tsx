@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import GenderDropdown from '../../components/atoms/GenderDropdown';
 import EventsDropdown from '../../components/atoms/EventsDropdown';

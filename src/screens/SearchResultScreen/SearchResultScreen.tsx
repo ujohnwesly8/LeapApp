@@ -17,7 +17,7 @@ import FilterSelectSize from '../../components/atoms/FilterSizes/FilterSizeSelec
 import PriceRangeDropdown from '../../components/atoms/PriceRange/PriceDropdown';
 import SubCategoryDropdown from '../../components/atoms/SubcategoryDropdown/SubcategoryDropdown';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Styles from '../../constants/themeColors';
 
 type RootStackParamList = {

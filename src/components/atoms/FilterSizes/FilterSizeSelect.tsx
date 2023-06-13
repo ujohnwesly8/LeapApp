@@ -68,7 +68,7 @@
 import React, {useState, useRef, useContext} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Animated} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Colors from '../../../constants/Colors';
+import Colors from '../../../constants/colors';
 import {ColorSchemeContext} from '../../../../ColorSchemeContext';
 import Styles from '../../../constants/themeColors';
 const FilterSelectSize = ({sizes, selectedSize, onSelectSize}) => {

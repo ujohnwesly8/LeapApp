@@ -1,25 +1,15 @@
-/* eslint-disable react/self-closing-comp */
-/* eslint-disable react-native/no-inline-styles */
-import {
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import {Text, TextInput, View, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {useNavigation} from '@react-navigation/native';
-import style from './Ownereditprofilestyle';
-import Colors from '../../constants/Colors';
-import MaterialIcon from 'react-native-vector-icons/Ionicons';
-import useOwnerProfile from './Useownerprofile';
+import style from './ownerEditProfileStyle';
+import Colors from '../../constants/colors';
+
+import useOwnerProfile from './useOwnerProfile';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import useCart from '../Cart/useCart';
 import Styles from '../../constants/themeColors';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 export default function OwnerEditProfileCustomHook() {
-  const navigation = useNavigation();
   const {
     firstName,
     setFirstName,
@@ -45,7 +35,6 @@ export default function OwnerEditProfileCustomHook() {
     );
   }, [firstName, lastName, email, phoneNumber]);
   return (
-    // <ScrollView>
     <View
       style={[
         style.container,
@@ -53,22 +42,6 @@ export default function OwnerEditProfileCustomHook() {
       ]}>
       <View style={style.addAddressHeader}>
         <HeadingText message="Edit profile" />
-        {/* <TouchableOpacity
-              style={[
-                style.backBtn,
-                colorScheme === 'dark' ? Styles.whiteTheme : Styles.blacktheme,
-              ]}
-              onPress={() => {
-                navigation.goBack();
-              }}>
-              <MaterialIcon
-                name="md-chevron-back"
-                color={colorScheme === 'dark' ? Colors.black : Colors.white}
-                size={26}
-                marginLeft={3}
-                marginTop={3}
-              />
-            </TouchableOpacity> */}
       </View>
       <View>
         {isLoading ? (
@@ -84,14 +57,6 @@ export default function OwnerEditProfileCustomHook() {
           </SkeletonPlaceholder>
         ) : (
           <View>
-            {/* <Text
-                  style={[
-                    style.addAddressText1,
-                    colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-                  ]}>
-                  Edit profile
-                </Text> */}
-            {/* <View style={style.line} /> */}
             <Text
               style={[
                 style.text,
@@ -166,16 +131,13 @@ export default function OwnerEditProfileCustomHook() {
         )}
       </View>
       <View style={style.buttons}>
-        <TouchableOpacity
+        <View
           style={[
             style.btnfield,
             {
               opacity: isFormValid ? 1 : 0.5,
-              pointerEvents: isFormValid ? 'auto' : 'none',
             },
-          ]}
-          onPress={handleUpdate} // using handleUpdateWithLoading instead of handleUpdate
-          disabled={!isFormValid}>
+          ]}>
           {isLoading ? (
             <SkeletonPlaceholder borderRadius={4}>
               <SkeletonPlaceholder.Item
@@ -185,16 +147,21 @@ export default function OwnerEditProfileCustomHook() {
               />
             </SkeletonPlaceholder>
           ) : (
-            <Text style={style.btntext}>Update</Text>
+            <TouchableOpacity
+              onPress={handleUpdate}
+              disabled={!isFormValid}
+              style={{flex: 1}}>
+              <Text style={style.btntext}>Update</Text>
+            </TouchableOpacity>
           )}
-        </TouchableOpacity>
+        </View>
       </View>
+
       <CustomModal
         showModal={showModal}
         onClose={closeModal}
         message="Profile Updated!"
       />
     </View>
-    // </ScrollView>
   );
 }

@@ -30,7 +30,7 @@ import {Route, getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import MyOrder from '../../screens/MyOrder/MyOrder';
 import EditAddress from '../../screens/EditAddress/EditAddress';
 import {useIsFocused} from '@react-navigation/native';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import {View, useColorScheme} from 'react-native';
 import Styles from '../../constants/themeColors';
 import useCart from '../../screens/Cart/useCart';

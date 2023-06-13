@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 type Props = {
   fromDate: Date;
   toDate: Date;

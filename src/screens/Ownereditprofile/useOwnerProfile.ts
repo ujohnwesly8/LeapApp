@@ -4,7 +4,7 @@ import {Alert} from 'react-native';
 import {url} from '../../constants/Apis';
 function OwnerEditProfileCustomHook() {
   const [isLoading, setIsLoading] = useState(false);
-  // Initialize isLoading to true
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -73,9 +73,7 @@ function OwnerEditProfileCustomHook() {
       });
       console.log();
       if (response.ok) {
-        // Alert.alert('Profile updated!');
         openModal();
-        // navigation.navigate('OwnerProfile');
       } else {
         throw new Error('Failed to update profile');
       }

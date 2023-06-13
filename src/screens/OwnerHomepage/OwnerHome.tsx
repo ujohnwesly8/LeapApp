@@ -14,7 +14,7 @@ import {Text} from 'react-native';
 // import {ScrollView} from 'react-native-gesture-handler';
 
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Donut from '../../components/atoms/DonutChart';
 import Lottie from 'lottie-react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';

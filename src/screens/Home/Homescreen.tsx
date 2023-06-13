@@ -17,7 +17,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Lottie from 'lottie-react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Styles from '../../constants/themeColors';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import style from './homeStyles';

@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 const style = StyleSheet.create({
   categoryBox: {
     // justifyContent: 'center',

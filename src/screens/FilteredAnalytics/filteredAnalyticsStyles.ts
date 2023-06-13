@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 
 const styles = StyleSheet.create({
   exportContainer: {
@@ -24,18 +24,18 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 24,
     fontFamily: 'Poppins-SemiBold',
-    // margin: 15,
+
     marginLeft: 25,
     marginTop: 15,
   },
 
   headingtext: {
+    marginTop: 10,
+    marginLeft: 10,
     fontSize: 16,
 
-    // fontWeight: '400',
     fontFamily: 'Poppins-Medium',
     color: Colors.black,
-    // width: '80%',
   },
 
   dashcard: {
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     width: '85%',
-    // flexDirection: 'row',
+
     margin: 28,
     height: 140,
     shadowOffset: {
@@ -58,9 +58,8 @@ const styles = StyleSheet.create({
   dashcardContainer: {
     width: '50%',
     height: 150,
-    // alignSelf: 'center',
+
     flexDirection: 'row',
-    // backgroundColor: Colors.white,
   },
 
   dashboardimage: {
@@ -81,7 +80,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   noAddressText1: {
-    // fontWeight: '500',
     fontFamily: 'Poppins-SemiBold',
     fontSize: 20,
     marginTop: 20,
@@ -89,7 +87,6 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   noAddressText2: {
-    // fontWeight: '500',
     fontFamily: 'Poppins-SemiBold',
     fontSize: 20,
     marginTop: 3,
@@ -99,7 +96,7 @@ const styles = StyleSheet.create({
   overlay: {
     height: 163,
     width: '150%',
-    // backgroundColor: 'rgba(255, 255, 255, 0.2)',
+
     backgroundColor: Colors.white,
     borderRadius: 15,
     justifyContent: 'center',
@@ -107,7 +104,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   axisLabel: {
-    // backgroundColor:'blue',
     marginLeft: 150,
   },
   axisLabel1: {
@@ -116,7 +112,23 @@ const styles = StyleSheet.create({
     fontSize: 10,
     height: 120,
     width: 30,
-    // marginLeft:20,
   },
+  titleView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 40,
+  },
+  btnDirection: {flexDirection: 'row'},
+  scrollDirection: {marginTop: 50},
+  dateView: {marginTop: 20, marginBottom: 20, flexDirection: 'row'},
+  chartView: {
+    flexDirection: 'row',
+    width: '10%',
+    justifyContent: 'space-between',
+  },
+  xAxisS: {marginLeft: 20, marginBottom: 10, marginTop: 5},
+  animationS: {height: 300, width: 400},
+  textDirection: {flexDirection: 'column', marginLeft: 5},
+  spinnerS: {color: '#FFF'},
 });
 export default styles;

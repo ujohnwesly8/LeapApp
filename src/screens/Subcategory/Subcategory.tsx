@@ -5,12 +5,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {RouteProp} from '@react-navigation/native';
 
 import styles from './subcategoryStyles';
+import {useSubcategory} from './useSubcategory';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Styles from '../../constants/themeColors';
-
-import {useSubcategory} from './useSubcategory';
 
 interface Subcategory {
   id: string;

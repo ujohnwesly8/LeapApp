@@ -16,7 +16,7 @@ import style from './myOrderStyles';
 import useMyOrder from './useMyOrder';
 import Styles from '../../constants/themeColors';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 
 type Props = {
   route: {name: string};

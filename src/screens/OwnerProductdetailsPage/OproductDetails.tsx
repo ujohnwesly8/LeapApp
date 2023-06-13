@@ -1,9 +1,8 @@
-/* eslint-disable react/self-closing-comp */
-/* eslint-disable react-native/no-inline-styles */
-import React, {useContext} from 'react';
+import React from 'react';
 import {StatusBar, Text, View, ImageBackground, ScrollView} from 'react-native';
-import styles from '../OwnerProductdetailsPage/OproductdetailsStyle';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import styles from '../OwnerProductdetailsPage/oProductDetailsStyle';
+import useOProductDetails from './useOProductDetails';
 import Styles from '../../constants/themeColors';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
@@ -12,9 +11,11 @@ type Props = {
   navigation: any;
 };
 
-export default function OproductDetails({route, navigation}: Props) {
-  const {product} = route.params;
-  const {colorScheme} = useContext(ColorSchemeContext);
+const OproductDetails = ({route, navigation}: Props) => {
+  const {product, colorScheme, goBack} = useOProductDetails({
+    route,
+    navigation,
+  });
 
   return (
     <View
@@ -24,24 +25,14 @@ export default function OproductDetails({route, navigation}: Props) {
       ]}>
       <StatusBar translucent backgroundColor={'rgba(0,0,0,0)'} />
       <View style={styles.dheader}>
-        <Icon
-          name="arrow-back-ios"
-          size={28}
-          color="black"
-          onPress={() => navigation.goBack()}
-        />
+        <Icon name="arrow-back-ios" size={28} color="black" onPress={goBack} />
       </View>
       <ScrollView horizontal={true}>
         <View style={{flexDirection: 'row'}}>
           {product.imageUrl.map((item: any, index: number) => (
             <ImageBackground
               key={index}
-              style={{
-                height: 500,
-                width: 405,
-                backgroundColor: 'green',
-                marginLeft: -5,
-              }}
+              style={styles.imgBack}
               source={{uri: item}}></ImageBackground>
           ))}
         </View>
@@ -59,7 +50,7 @@ export default function OproductDetails({route, navigation}: Props) {
           ]}>
           {product.name}
         </Text>
-        <View style={{marginTop: 20}}>
+        <View style={styles.titleText}>
           <Text
             style={[
               styles.headingtext,
@@ -69,7 +60,7 @@ export default function OproductDetails({route, navigation}: Props) {
           </Text>
         </View>
         <Text style={styles.detailsdescription}>₹ {product.price}</Text>
-        <View style={{marginTop: 20}}>
+        <View style={styles.titleText}>
           <Text
             style={[
               styles.headingtext,
@@ -82,4 +73,6 @@ export default function OproductDetails({route, navigation}: Props) {
       </View>
     </View>
   );
-}
+};
+
+export default OproductDetails;

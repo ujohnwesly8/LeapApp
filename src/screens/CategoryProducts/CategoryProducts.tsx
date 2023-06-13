@@ -8,10 +8,8 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import axios from 'axios';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Lottie from 'lottie-react-native';
-
-import style from './categoryStyles';
-import {postProductToAPI} from '../../redux/actions/actions';
-import {url} from '../../constants/Apis';
+import Colors from '../../constants/colors';
+import useCart from '../Cart/useCart';
 import Styles from '../../constants/themeColors';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';

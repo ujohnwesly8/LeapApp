@@ -204,7 +204,7 @@ import {useState, useEffect, SetStateAction} from 'react';
 import {setRole} from '../../redux/actions/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {StyleSheet, Text, TouchableOpacity, View, Animated} from 'react-native'; // Import Animated from react-native
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';

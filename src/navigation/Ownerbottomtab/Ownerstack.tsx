@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
 import React, {useContext} from 'react';
-import OwnerEditProfile from '../../screens/Ownereditprofile/Ownereditprofile';
+import OwnerEditProfile from '../../screens/Ownereditprofile/OwnerEditProfile';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -21,7 +21,7 @@ import OwnerImage from '../../screens/OwnerImage/AddImages';
 // import Imagepicker from '../../components/atoms/Imagepicker';
 import OproductDetails from '../../screens/OwnerProductdetailsPage/OproductDetails';
 import Owneredititems from '../../screens/Owneredititems/Owneredititems';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import EditAddress from '../../screens/EditAddress/EditAddress';
 import {View} from 'react-native';
 import DashboardDetails from '../../screens/OwnerHomepage/DashboardDetails';

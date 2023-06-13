@@ -16,7 +16,7 @@ import {TextInput} from 'react-native-gesture-handler';
 import {Avatar} from 'react-native-paper';
 import {Logout} from '../../redux/actions/actions';
 
-import style from '../Ownerprofile/OwnerProfilestyle';
+import style from '../Ownerprofile/ownerProfileStyle';
 import useProfile from './useProfile';
 import useCart from '../Cart/useCart';
 import SwitchAccountButton from '../../components/atoms/SwtichAccountButton';

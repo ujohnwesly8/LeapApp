@@ -1,6 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
-// /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useContext} from 'react';
 import {useSelector} from 'react-redux';
 import {
   Image,
@@ -12,17 +10,28 @@ import {
 } from 'react-native';
 import Lottie from 'lottie-react-native';
 
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Styles from '../../constants/themeColors';
 
 import useWishlist from './useWishlist';
 import style from './wishlistStyles';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
+
+// import CustomModalContext from '../../../CustomModalContext';
+
 type Props = {
   route: {name: string};
   navigation: any;
 };
 const Wishlist = ({navigation}: Props) => {
+  //new changes
+  // const {openModal} = useContext(CustomModalContext);
+
+  // const handleRemoveFromWishlist = () => {
+  //   // Remove item from wishlist logic
+  //   openModal('Item removed!');
+  // };
+
   const {
     WishlistProducts,
     removefromWishlist,
@@ -42,6 +51,7 @@ const Wishlist = ({navigation}: Props) => {
       state.WishlistProducts.isLoader,
   );
   console.log(isLoading);
+
   if (isLoading) {
     return (
       <View
@@ -217,7 +227,9 @@ const Wishlist = ({navigation}: Props) => {
                           <TouchableOpacity
                             style={style.wishlistButton}
                             onPress={() => removefromWishlist(item.id)}
-                            onPressIn={() => openModal()}>
+                            onPressIn={() => openModal()}
+                            // onPressIn={() => handleRemoveFromWishlist()}
+                          >
                             <Image
                               source={require('../../../assets/fillheart.png')}
                               style={{width: 24, height: 24}}
