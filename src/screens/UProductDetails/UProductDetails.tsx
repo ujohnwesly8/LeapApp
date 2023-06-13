@@ -1,4 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
+
 import React, {useContext} from 'react';
 import {
   StatusBar,
@@ -9,14 +10,16 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import styles from './UProductDetailsStyle';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import Styles from '../../constants/themeColors';
-import Colors from '../../constants/colors';
 import DateRangePicker from '../../components/atoms/CalanderPicker';
 import {Pagination} from 'react-native-snap-carousel';
+
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import useProductdetails from './useProductdetails';
+
+import Styles from '../../constants/themeColors';
+import Colors from '../../constants/colors';
+import styles from './UProductDetailsStyle';
 type Props = {
   route: {params: {product: any}};
   navigation: any;
@@ -153,16 +156,7 @@ export default function UDetailScreen({route, navigation}: Props) {
               ]}>
               Size
             </Text>
-            <View
-              style={{
-                marginTop: 3,
-                // backgroundColor: Colors.buttonColor,
-                width: 40,
-                // height: 25,
-                borderRadius: 5,
-                marginLeft: '60%',
-                justifyContent: 'center',
-              }}>
+            <View style={styles.descriptionContainer}>
               <Text
                 style={[
                   styles.detailsSize,
