@@ -13,6 +13,36 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.main,
   },
+  Lottiestyle: {
+    height: 200,
+    width: 200,
+    alignSelf: 'center',
+    marginTop: '50%',
+    justifyContent: 'center',
+  },
+  Lottietext: {
+    color: Colors.white,
+    marginLeft: '30%',
+  },
+  Emptytext: {
+    marginBottom: 20,
+    color: Colors.iconscolor,
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  whishlistView: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '100%',
+    flexWrap: 'wrap',
+  },
+  wishlistViewContaner: {
+    width: '100%',
+  },
+  wishlistConatinerwrap: {
+    width: '50%',
+    flexDirection: 'row',
+  },
   textConatiner: {marginLeft: 20, marginTop: 10},
   container: {
     width: '83%',
@@ -125,6 +155,10 @@ const style = StyleSheet.create({
     marginTop: 50,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  EmptyImage: {
+    width: 24,
+    height: 24,
   },
 });
 export default style;

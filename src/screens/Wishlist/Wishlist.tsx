@@ -1,4 +1,5 @@
-import React, {useContext} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
 import {useSelector} from 'react-redux';
 import {
   Image,
@@ -62,17 +63,9 @@ const Wishlist = ({navigation}: Props) => {
         <Lottie
           source={require('../../../assets/loading2.json')}
           autoPlay
-          style={{
-            height: 200,
-            width: 200,
-            alignSelf: 'center',
-            marginTop: '50%',
-            justifyContent: 'center',
-          }}
+          style={style.Lottiestyle}
         />
-        <Text style={{color: Colors.white, marginLeft: '30%'}}>
-          The Items are Loading...
-        </Text>
+        <Text style={style.Lottietext}>The Items are Loading...</Text>
       </View>
     );
   }
@@ -86,17 +79,9 @@ const Wishlist = ({navigation}: Props) => {
         <Lottie
           source={require('../../../assets/loading2.json')}
           autoPlay
-          style={{
-            height: 200,
-            width: 200,
-            alignSelf: 'center',
-            marginTop: '50%',
-            justifyContent: 'center',
-          }}
+          style={style.Lottiestyle}
         />
-        <Text style={{color: Colors.white, marginLeft: '30%'}}>
-          The Items are Loading...
-        </Text>
+        <Text style={style.Lottietext}>The Items are Loading...</Text>
       </View>
     );
   }
@@ -143,15 +128,7 @@ const Wishlist = ({navigation}: Props) => {
                 autoPlay
                 style={style.lottieImage}
               />
-              <Text
-                style={{
-                  marginBottom: 20,
-                  color: Colors.iconscolor,
-                  fontSize: 15,
-                  fontWeight: '600',
-                }}>
-                Your wishlist is empty
-              </Text>
+              <Text style={style.Emptytext}>Your wishlist is empty</Text>
             </View>
           </>
         ) : (
@@ -160,26 +137,12 @@ const Wishlist = ({navigation}: Props) => {
               style.maincontainer,
               colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
             ]}>
-            <View
-              style={{
-                width: '100%',
-              }}>
-              <View
-                style={{
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  width: '100%',
-                  flexWrap: 'wrap',
-                }}>
+            <View style={style.wishlistViewContaner}>
+              <View style={style.whishlistView}>
                 {allWishlistProducts &&
                   allWishlistProducts.map((item, index) => {
                     return (
-                      <View
-                        style={{
-                          width: '50%',
-                          flexDirection: 'row',
-                        }}
-                        key={index}>
+                      <View style={style.wishlistConatinerwrap} key={index}>
                         <View
                           style={[
                             style.container,
@@ -232,7 +195,7 @@ const Wishlist = ({navigation}: Props) => {
                           >
                             <Image
                               source={require('../../../assets/fillheart.png')}
-                              style={{width: 24, height: 24}}
+                              style={style.EmptyImage}
                             />
                           </TouchableOpacity>
                         </View>
