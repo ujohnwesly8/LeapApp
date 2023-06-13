@@ -15,7 +15,7 @@ import OutfitDropdown from '../../components/atoms/OutfitDropdown';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import useAddItems from './useAdditems';
 
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Ownerstyles from './Additemsstyle';
 import Styles from '../LoginScreen/loginStyle';
 

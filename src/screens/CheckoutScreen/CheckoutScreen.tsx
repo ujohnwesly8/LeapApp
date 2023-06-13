@@ -12,7 +12,7 @@ import {CheckBox} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import useCheckout from './useCheckout';
 import style from './CheckoutScreenStyle';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import useCart from '../Cart/useCart';
 import Styles from '../../constants/themeColors';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';

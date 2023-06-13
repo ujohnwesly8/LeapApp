@@ -23,7 +23,7 @@ import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 import Styles from './Signupstyle';
 import style from '../Owneraddaddress/AddressStyles';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 
 const SignUpScreen = () => {
   const {

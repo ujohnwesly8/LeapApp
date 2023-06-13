@@ -15,7 +15,7 @@ import useCart from '../Cart/useCart';
 import useAddAddress from './useAddAddress';
 
 import style from './AddressStyles';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Styles from '../../constants/themeColors';
 const AddAddress = () => {
   const {

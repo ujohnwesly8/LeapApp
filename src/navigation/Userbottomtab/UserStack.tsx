@@ -23,7 +23,7 @@ import CheckoutScreen from '../../screens/CheckoutScreen/CheckoutScreen';
 import SearchResultsScreen from '../../screens/SearchResultScreen/SearchResultScreen';
 import Owneraddresspage from '../../screens/Owneraddaddress/Address';
 import Owneraddaddress from '../../screens/Owneraddaddress/AddAddress';
-import Ownereditprofile from '../../screens/Ownereditprofile/Ownereditprofile';
+import Ownereditprofile from '../../screens/Ownereditprofile/OwnerEditProfile';
 import PaymentSuccessScreen from '../../screens/PaymentScreens/PaymentSuccessScreen';
 import PaymentFailScreen from '../../screens/PaymentScreens/PaymentFailScreen';
 import {Route, getFocusedRouteNameFromRoute} from '@react-navigation/native';

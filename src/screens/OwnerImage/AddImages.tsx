@@ -17,7 +17,7 @@ import Lottie from 'lottie-react-native';
 import Useownerimage from './Useownerimage';
 import Styles from '../LoginScreen/loginStyle';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import styles from '../../constants/themeColors';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
