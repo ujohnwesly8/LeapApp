@@ -1,29 +1,31 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Text, TouchableOpacity, View, FlatList} from 'react-native';
-// import {FlatList} from 'react-native-gesture-handler';
-import {OwnerAddressCustomHook} from './Useowneraddress';
-import style from './Owneraddressstyle';
+import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import Lottie from 'lottie-react-native';
-import Colors from '../../constants/colors';
-import useCart from '../Cart/useCart';
-import Styles from '../../constants/themeColors';
+
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
-const Owneraddresspage = () => {
+import CustomModal from '../../components/atoms/CustomModel/CustomModel';
+
+import useAddress from './useAddress';
+import useCart from '../Cart/useCart';
+
+import Colors from '../../constants/Colors';
+import Styles from '../../constants/themeColors';
+import style from './AddressStyles';
+
+const Address = () => {
   const {
     handleOwnerAddAddress,
     handleDeleteAddress,
-    goBackButton,
     closeModal,
     showModal,
     addressList,
     handleEditItems,
     isLoading,
-  } = OwnerAddressCustomHook();
+  } = useAddress();
   const {colorScheme} = useCart();
-  const renderAddressItem = ({item, index}) => {
+  const renderAddressItem = ({item}: {item: any; index: number}) => {
     return (
       <View
         style={[
@@ -36,7 +38,7 @@ const Owneraddresspage = () => {
               style.city,
               colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
             ]}>
-            Address :
+            Address:
           </Text>
           <View style={style.AdresstextContainer}>
             <Text
@@ -44,61 +46,24 @@ const Owneraddresspage = () => {
                 style.input,
                 colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
               ]}>
-              {item.addressLine1},{item.addressLine2},{item.postalCode},
-              {item.city},{item.state},{item.country}
+              {item.addressLine1}, {item.addressLine2}, {item.postalCode},{' '}
+              {item.city}, {item.state}, {item.country}
             </Text>
           </View>
-
-          {/* <Text
-            style={[
-              style.input,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
-            {'State: ' + item.state}
-          </Text>
-          <Text
-            style={[
-              style.input,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
-            {'Postal Code: ' + item.postalCode}
-          </Text>
-          <Text
-            style={[
-              style.input,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
-            {'City : ' + item.city}
-          </Text>
-          <Text
-            style={[
-              style.stateName,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
-            {'Country: ' + item.country}
-          </Text> */}
         </View>
         <View>
-          <TouchableOpacity
-            // style={style.deleteBtn}
-            onPress={() => {
-              handleEditItems(item);
-            }}>
+          <TouchableOpacity onPress={() => handleEditItems(item)}>
             <MaterialIcons
               name="edit"
               size={25}
               color={colorScheme === 'dark' ? Colors.white : Colors.black}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            // style={style.deleteBtn}
-            onPress={() => {
-              handleDeleteAddress(item.id);
-            }}>
+          <TouchableOpacity onPress={() => handleDeleteAddress(item.id)}>
             <MaterialIcons
               name="delete"
               size={25}
-              color={'#FF726F'}
+              color="#FF726F"
               style={style.deleteBtnText}
             />
           </TouchableOpacity>
@@ -106,6 +71,7 @@ const Owneraddresspage = () => {
       </View>
     );
   };
+
   return (
     <View
       style={[
@@ -166,4 +132,4 @@ const Owneraddresspage = () => {
     </View>
   );
 };
-export default Owneraddresspage;
+export default Address;

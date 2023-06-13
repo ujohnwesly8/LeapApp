@@ -1,31 +1,26 @@
-import React, {useEffect, useState} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useEffect} from 'react';
 import {
-  Text,
-  TouchableOpacity,
   View,
+  Text,
   TextInput,
+  TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import style from './Owneraddressstyle';
-import {OwnerAddAddressCustomHook} from './Useowneraddaddress';
 import {CheckBox} from 'react-native-elements';
-import Colors from '../../constants/colors';
 import {RadioButton} from 'react-native-paper';
-import BackButton from '../../components/atoms/BackButton/BackButton';
+import Spinner from 'react-native-loading-spinner-overlay';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import useCart from '../Cart/useCart';
-import Styles from '../../constants/themeColors';
-import Spinner from 'react-native-loading-spinner-overlay';
+import useAddAddress from './useAddAddress';
 
-const Owneraddaddress = () => {
-  const navigation = useNavigation();
+import style from './AddressStyles';
+import Colors from '../../constants/Colors';
+import Styles from '../../constants/themeColors';
+const AddAddress = () => {
   const {
     setStateName,
     setCity,
-    setaddressLine1,
-    setaddressLine2,
-    setpostalCode,
     addressLine2,
     FetchAddress,
     addressLine1,
@@ -41,25 +36,19 @@ const Owneraddaddress = () => {
     country,
     setCountry,
     isLoading,
-    setIsLoading,
-    showLoader,
+
     formik,
     handleAddressLine1,
     handleAddressLine2,
     handleBlur,
-    // setShowLoader,
-  } = OwnerAddAddressCustomHook(navigation);
+  } = useAddAddress();
 
   const {colorScheme} = useCart();
-  // const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
     if (postalCode !== '') {
-      // setShowLoader(true);
       FetchAddress();
-      // setIsLoading(true);
     } else {
-      // setIsLoading(false);
     }
   }, [FetchAddress, postalCode]);
 
@@ -78,7 +67,7 @@ const Owneraddaddress = () => {
           <TextInput
             placeholder="Flat no / Building"
             placeholderTextColor={
-              colorScheme === 'dark' ? Colors.Inputtext : Styles.blackText
+              colorScheme === 'dark' ? Colors.Textinput : Colors.black
             }
             value={addressLine1}
             onChangeText={handleAddressLine1}
@@ -98,7 +87,7 @@ const Owneraddaddress = () => {
           <TextInput
             placeholder="Street name"
             placeholderTextColor={
-              colorScheme === 'dark' ? Colors.Inputtext : Styles.blackText
+              colorScheme === 'dark' ? Colors.Textinput : Colors.black
             }
             value={addressLine2}
             onChangeText={handleAddressLine2}
@@ -118,7 +107,7 @@ const Owneraddaddress = () => {
           <TextInput
             placeholder="Pincode"
             placeholderTextColor={
-              colorScheme === 'dark' ? Colors.Inputtext : Styles.blackText
+              colorScheme === 'dark' ? Colors.Textinput : Colors.black
             }
             style={[
               style.smalltextInput,
@@ -129,15 +118,11 @@ const Owneraddaddress = () => {
             onChangeText={handlePostalCodeChange}
             onBlur={() => handleBlur('postalCode')}
           />
-          {/* {formik.touched.postalCode && formik.errors.postalCode && (
-                <Text style={style.errorText}>{formik.errors.postalCode}</Text>
-              )} */}
-          {/* </View> */}
-          {/* <View style={{width: 250}}> */}
+
           <TextInput
             placeholder="City"
             placeholderTextColor={
-              colorScheme === 'dark' ? Colors.Inputtext : Styles.blackText
+              colorScheme === 'dark' ? Colors.Textinput : Colors.black
             }
             value={city}
             editable={false}
@@ -157,7 +142,7 @@ const Owneraddaddress = () => {
           value={state}
           editable={false}
           placeholderTextColor={
-            colorScheme === 'dark' ? Colors.Inputtext : Styles.blackText
+            colorScheme === 'dark' ? Colors.Textinput : Colors.black
           }
           style={[
             style.inputAddress,
@@ -169,7 +154,7 @@ const Owneraddaddress = () => {
         <TextInput
           placeholder="Country "
           placeholderTextColor={
-            colorScheme === 'dark' ? Colors.Inputtext : Styles.blackText
+            colorScheme === 'dark' ? Colors.Textinput : Colors.black
           }
           value={country}
           editable={false}
@@ -192,8 +177,8 @@ const Owneraddaddress = () => {
       <View style={style.containerRadio}>
         <View style={style.optionRadio}>
           <RadioButton
-            value="Home"
-            status={selectedOption === 'Home' ? 'checked' : 'unchecked'}
+            value="HOME"
+            status={selectedOption === 'HOME' ? 'checked' : 'unchecked'}
             onPress={() => handleOptionChange('HOME')}
             color={colorScheme === 'dark' ? Colors.white : Colors.black}
           />
@@ -207,8 +192,8 @@ const Owneraddaddress = () => {
         </View>
         <View style={style.optionRadio}>
           <RadioButton
-            value="Office"
-            status={selectedOption === 'Office' ? 'checked' : 'unchecked'}
+            value="OFFICE"
+            status={selectedOption === 'OFFICE' ? 'checked' : 'unchecked'}
             onPress={() => handleOptionChange('OFFICE')}
             color={colorScheme === 'dark' ? Colors.white : Colors.black}
           />
@@ -249,4 +234,4 @@ const Owneraddaddress = () => {
   );
 };
 
-export default Owneraddaddress;
+export default AddAddress;

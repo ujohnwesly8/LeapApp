@@ -9,23 +9,30 @@ import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import RazorpayCheckout from 'react-native-razorpay';
 import axios from 'axios';
 import React from 'react';
+import {StackNavigationProp} from '@react-navigation/stack';
+
+type RootStackParamList = {
+  CheckoutScreen: undefined;
+  PaymentSuccessScreen: undefined;
+  PaymentFailScreen: undefined;
+};
 const useChectout = () => {
-  // const {product} = route.params;
   const [refreshing, setRefreshing] = useState(false);
   const [rentalStartDate, setRentalStartDate] = useState(new Date());
   const [rentalEndDate, setRentalEndDate] = useState(new Date());
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [addressList, setAddress] = useState([]);
   const [city, setCity] = useState('');
   const [addressLine1, setaddressLine1] = useState('');
   const [addressLine2, setaddressLine2] = useState('');
   const [postalCode, setpostalCode] = useState('');
   const [country] = useState('india');
-  const [state, setStateName] = useState('');
-  const [isFocused, setIsFocused] = useState(false);
+  const [State, setStateName] = useState('');
   const [isChecked, setIschecked] = useState(true);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(-1);
-  const [isCheckedArray, setIsCheckedArray] = useState([]);
+  const [isCheckedArray, setIsCheckedArray] = useState<boolean[]>([]);
+  const dispatch = useDispatch();
+
   useFocusEffect(
     React.useCallback(() => {
       const fetchData = async () => {
@@ -49,38 +56,47 @@ const useChectout = () => {
           setpostalCode(data.postalCode);
           console.log(
             city,
-            state,
+            State,
             country,
             postalCode,
             addressLine1,
             addressLine2,
           );
-          console.log(address);
+          console.log(addressList);
         } catch (error) {
           console.log(error);
         }
       };
 
       fetchData();
-    }, []),
+    }, [
+      addressLine1,
+      addressLine2,
+      addressList,
+      city,
+      country,
+      postalCode,
+      State,
+    ]),
   );
-  const cartData = useSelector(state => state.CartProducts.data);
+  const cartData = useSelector(
+    (state: {CartProducts: {data: any}}) => state.CartProducts.data,
+  ) || {
+    cartItems: [],
+  };
   useEffect(() => {
-    dispatch(fetchCartProducts());
-  }, []);
-  // const handleCheckboxChange = (index: number) => {
-  //   const newIsCheckedArray = isCheckedArray.map((isChecked, i) => i === index);
-  //   setIsCheckedArray(newIsCheckedArray);
-  // };
-  function handleCheckboxChange(index) {
+    dispatch(fetchCartProducts() as any);
+  }, [dispatch]);
+
+  const handleCheckboxChange = (index: any) => {
     setSelectedAddressIndex(index);
     const newIsCheckedArray = addressList.map((_, i) => i === index);
     setIsCheckedArray(newIsCheckedArray);
     setIschecked(false);
-  }
+  };
   const onRefresh = async () => {
     setRefreshing(true);
-    await dispatch(fetchCartProducts());
+    await dispatch(fetchCartProducts() as any);
     setRefreshing(false);
   };
   const handleUpdate = async () => {
@@ -92,13 +108,15 @@ const useChectout = () => {
         return;
       }
       const items = {
-        cartItems: cartItems.map(item => ({
-          id: 0,
-          productId: item.product.id,
-          quantity: item.product.quantity,
-          rentalEndDate: rentalEndDate.toISOString(),
-          rentalStartDate: rentalStartDate.toISOString(),
-        })),
+        cartItems: cartItems.map(
+          (item: {product: {id: any; quantity: any}}) => ({
+            id: 0,
+            productId: item.product.id,
+            quantity: item.product.quantity,
+            rentalEndDate: rentalEndDate.toISOString(),
+            rentalStartDate: rentalStartDate.toISOString(),
+          }),
+        ),
       };
       const response = await fetch(cartUpdate, {
         method: 'PUT',
@@ -118,12 +136,14 @@ const useChectout = () => {
     try {
       const token = await AsyncStorage.getItem('token');
       // Map the cart items to the required format
-      const items = cartData?.cartItems?.map(item => ({
-        price: item.product.price,
-        productId: item.product.id,
-        productName: item.product.name,
-        quantity: item.product.quantity,
-      }));
+      const items = cartData?.cartItems?.map(
+        (item: {product: {price: any; id: any; name: any; quantity: any}}) => ({
+          price: item.product.price,
+          productId: item.product.id,
+          productName: item.product.name,
+          quantity: item.product.quantity,
+        }),
+      );
       // Make the API call to create the checkout session
       const response = await fetch(checkoutApi, {
         method: 'POST',
@@ -151,7 +171,7 @@ const useChectout = () => {
       },
     })
       // .then(response => response.json())
-      .then(data => {
+      .then(_data => {
         // console.log('Item removed from cart:', data);
         dispatch(removeFromCart(productId));
         Alert.alert('Item Removed from cart');
@@ -159,7 +179,7 @@ const useChectout = () => {
       .catch(error => {
         console.error(error);
         const errorMessage = `Error removing item from cart: ${error.message}`;
-        // Handle the error and display a more informative error message to the user
+
         Alert.alert(errorMessage);
       });
   };
@@ -211,20 +231,17 @@ const useChectout = () => {
         // handle success
         console.log(paymentData);
         navigation.navigate('PaymentSuccessScreen');
-        dispatch(ADDORDER(paymentData.razorpay_payment_id));
+        dispatch(ADDORDER(paymentData.razorpay_payment_id) as any);
       })
-      .catch(error => {
+      .catch(_error => {
         // handle failure
+
         Alert.alert('Try Again');
         navigation.navigate('PaymentFailScreen');
       });
   };
-  const dispatch = useDispatch();
-  const CartProducts = useSelector(state => state.CartProducts.data);
-  console.log(JSON.stringify(CartProducts));
-  console.log('cart succes');
+
   return {
-    CartProducts,
     handleCheckout,
     handleRemove,
     refreshing,

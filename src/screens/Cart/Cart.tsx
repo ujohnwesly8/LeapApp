@@ -1,20 +1,21 @@
 /* eslint-disable react-native/no-inline-styles */
 
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import {useSelector} from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import useCart from './useCart';
-import style from './CartItemStyles';
-import Colors from '../../constants/colors';
-import CustomModal from '../../components/atoms/CustomModel/CustomModel';
+import React from 'react';
 import Lottie from 'lottie-react-native';
 import {ReactNode} from 'react';
-import Styles from '../../constants/themeColors';
+import {useSelector} from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import useCart from './useCart';
 import CardDatePiker from '../../components/atoms/DatePicker';
-import React from 'react';
+import CustomModal from '../../components/atoms/CustomModel/CustomModel';
+
+import Styles from '../../constants/themeColors';
+import style from './CartItemStyles';
+import Colors from '../../constants/Colors';
 
 const Cart = () => {
-  // const {productData} = route.params;
   const {
     CartProducts,
     handleCheckout,
@@ -137,8 +138,9 @@ const Cart = () => {
                     item: {
                       rentalEndDate: ReactNode;
                       rentalStartDate: ReactNode;
+                      imageUrl: string;
+                      quantity: number;
                       product: {
-                        imageURL: any;
                         name:
                           | string
                           | number
@@ -227,18 +229,6 @@ const Cart = () => {
                             ]}>
                             {item.product.size}
                           </Text>
-                          {/* <View style={{flexDirection: 'row'}}>
-                            <View style={style.DateContainer}>
-                              <Text style={style.DateTxt}>
-                                {item.rentalStartDate?.toLocaleString()}
-                              </Text>
-                            </View>
-                            <View style={style.DateContainer}>
-                              <Text style={style.DateTxt}>
-                                {item.rentalEndDate?.toLocaleString()}
-                              </Text>
-                            </View>
-                          </View> */}
                           <CardDatePiker
                             startDate={item.rentalStartDate?.toLocaleString()}
                             endDate={item.rentalEndDate?.toLocaleString()}
@@ -247,24 +237,18 @@ const Cart = () => {
                           />
                         </View>
                         <View style={style.removeAndQuantity}>
-                          {/* <View style={style.RemoveContainer}> */}
-                          {console.log(isplusDisable)}
                           <TouchableOpacity
                             style={style.RemoveButton}
                             onPress={() => handleRemove(item.product.id)}>
                             <Text style={style.RemoveButtonText}>Remove</Text>
                           </TouchableOpacity>
-                          {/* </View> */}
                           <View style={style.quantityContainer}>
                             <TouchableOpacity
                               onPress={() => handleDecrement(item)}
                               style={style.quantityButton}>
-                              {/* <View> */}
                               <Icon name="minus" color={'white'} size={10} />
-                              {/* </View> */}
                             </TouchableOpacity>
-                            {/* <View> */}
-                            {/* {console.log('Quantity is ', Quantity)} */}
+
                             <View>
                               <Text
                                 style={[
@@ -286,7 +270,6 @@ const Cart = () => {
                               ]}>
                               <Icon name="plus" color={'white'} size={10} />
                             </TouchableOpacity>
-                            {/* </View> */}
                           </View>
                         </View>
                       </View>
@@ -304,7 +287,6 @@ const Cart = () => {
               ]}>
               Grand Total
             </Text>
-            {/* <Text>Total Amount</Text> */}
             <View style={{width: 100, height: 25}}>
               <Text
                 style={[
@@ -325,7 +307,7 @@ const Cart = () => {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              style={[style.PaymentButton, style.Disabled]}
+              style={style.PaymentButton}
               onPress={handleCheckout}
               disabled={false}>
               <Text style={style.PaymentButtonText}>Checkout</Text>

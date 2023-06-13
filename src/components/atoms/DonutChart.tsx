@@ -9,8 +9,8 @@ const Donut = ({
   duration = 500,
   color = 'tomato',
   delay = 500,
-  textcolor,
   max = 1000,
+  textcolor,
 }) => {
   const AnimatedCircle = Animated.createAnimatedComponent(Circle);
   const AnimatedInput = Animated.createAnimatedComponent(TextInput);
@@ -20,7 +20,7 @@ const Donut = ({
   const inputRef = useRef();
   const halfCircle = radius + strokeWidth;
   const circleCircumference = 2 * Math.PI * radius;
-  const animation = toValue => {
+  const animation = (toValue: number) => {
     return Animated.timing(animatedValue, {
       toValue,
       duration,

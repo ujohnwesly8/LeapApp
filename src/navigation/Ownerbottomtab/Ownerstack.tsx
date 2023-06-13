@@ -5,8 +5,8 @@ import OwnerEditProfile from '../../screens/Ownereditprofile/OwnerEditProfile';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Owneraddresspage from '../../screens/Owneraddaddress/Owneraddresspage';
-import Owneraddaddress from '../../screens/Owneraddaddress/Owneraddaddress';
+import Owneraddresspage from '../../screens/Owneraddaddress/Address';
+import Owneraddaddress from '../../screens/Owneraddaddress/AddAddress';
 import OwnerProfile from '../../screens/Ownerprofile/OwnerProfile';
 import MyRentals from '../../screens/My Rentals/MyRentals';
 import OwnerHome from '../../screens/OwnerHomepage/OwnerHome';
@@ -17,14 +17,13 @@ import {
   getFocusedRouteNameFromRoute,
   useIsFocused,
 } from '@react-navigation/native';
-import OwnerImage from '../../screens/OwnerImage/OwnerImage';
+import OwnerImage from '../../screens/OwnerImage/AddImages';
 // import Imagepicker from '../../components/atoms/Imagepicker';
 import OproductDetails from '../../screens/OwnerProductdetailsPage/OproductDetails';
 import Owneredititems from '../../screens/Owneredititems/Owneredititems';
 import Colors from '../../constants/colors';
 import EditAddress from '../../screens/EditAddress/EditAddress';
 import {View} from 'react-native';
-import AnalyticScreen from '../../screens/AnalyticsPage/AnalyticScreen';
 import DashboardDetails from '../../screens/OwnerHomepage/DashboardDetails';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import FilteredAnalytics from '../../screens/FilteredAnalytics/FilteredAnalytics';

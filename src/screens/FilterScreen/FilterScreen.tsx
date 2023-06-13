@@ -1,8 +1,9 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, Text, TouchableOpacity, TextInput, Image} from 'react-native';
 import React from 'react';
 import styles from './filterStyles';
 import useFilterScreen from './useFilterScreen';
-import Colors from '../../constants/colors';
+import Colors from '../../constants/Colors';
 
 interface Product {
   id: string;

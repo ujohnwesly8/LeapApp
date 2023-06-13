@@ -1,11 +1,24 @@
-import React from 'react';
+/* eslint-disable react-native/no-inline-styles */
+// External libraries/packages
+import React, {useContext} from 'react';
 import {View, TextInput, Text, TouchableOpacity} from 'react-native';
 import Lottie from 'lottie-react-native';
-import styles from './loginStyle';
+
+// Custom components and modules
 import useLoginscreen from './useLoginscreen';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import {signin, signup} from '../../constants/languages/En';
-import Colors from '../../constants/colors';
+import {
+  Donthavetext,
+  continueText,
+  otp,
+  signin,
+  signup,
+} from '../../constants/languages/En';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
+
+// Styles and assets
+import styles from './loginStyle';
+import Colors from '../../constants/Colors';
 import Styles from '../../constants/themeColors';
 
 const LoginScreen = () => {
@@ -14,37 +27,24 @@ const LoginScreen = () => {
     closeModal,
     showModal,
     handleLogin,
-    colorScheme,
     handleOtpScreen,
     handleSignUp,
   } = useLoginscreen();
+  const {colorScheme, getContainerStyle, getTextInputStyle, getTextColor} =
+    useContext(ColorSchemeContext);
   return (
-    <View
-      style={[
-        styles.mainContainer,
-        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-      ]}>
+    <View style={[styles.mainContainer, getContainerStyle()]}>
       <Lottie
         style={styles.image}
         source={require('../../../assets/loginlottie.json')}
         autoPlay
       />
       <View>
-        <Text
-          style={[
-            styles.TitleText,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}>
-          SignIn
-        </Text>
+        <Text style={[styles.TitleText, getTextColor()]}>{signin}</Text>
       </View>
       <View>
         <TextInput
-          style={[
-            styles.textinput,
-            colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}
+          style={[styles.textinput, getTextInputStyle(), getTextColor()]}
           placeholder="Email Address"
           placeholderTextColor={
             colorScheme === 'dark' ? Colors.Textinput : Colors.black
@@ -59,11 +59,7 @@ const LoginScreen = () => {
         )}
         <View>
           <TextInput
-            style={[
-              styles.textinput,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}
+            style={[styles.textinput, getTextInputStyle(), getTextColor()]}
             placeholder="Enter password"
             placeholderTextColor={
               colorScheme === 'dark' ? Colors.Textinput : Colors.black
@@ -92,15 +88,9 @@ const LoginScreen = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.otp}>
-        <Text
-          style={[
-            styles.otptext,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}>
-          Continue with
-        </Text>
+        <Text style={[styles.otptext, getTextColor()]}>{continueText}</Text>
         <TouchableOpacity onPress={handleOtpScreen}>
-          <Text style={styles.Otptext}>OTP</Text>
+          <Text style={styles.Otptext}>{otp}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.sign}>
@@ -109,7 +99,7 @@ const LoginScreen = () => {
             styles.signuptext,
             colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
           ]}>
-          Don't have an account?
+          {Donthavetext}
         </Text>
         <TouchableOpacity onPress={handleSignUp}>
           <Text style={styles.Signuptext}>{signup}</Text>

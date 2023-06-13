@@ -43,9 +43,7 @@ const OwnerImagestyles = StyleSheet.create({
     backgroundColor: Colors.buttonColor,
   },
   removeText: {
-    fontWeight: 400,
     color: Colors.white,
-    alignItems: 'center',
   },
   removeContainer: {
     alignItems: 'center',
@@ -110,6 +108,9 @@ const OwnerImagestyles = StyleSheet.create({
     color: Colors.black,
     // fontWeight: '500',
     fontFamily: 'Poppins-SemiBold',
+  },
+  LottieStyle: {
+    // fontWeight: '500',
   },
   Price: {
     fontSize: 16,

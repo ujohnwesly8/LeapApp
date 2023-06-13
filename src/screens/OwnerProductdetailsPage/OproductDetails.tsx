@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../OwnerProductdetailsPage/oProductDetailsStyle';
 import useOProductDetails from './useOProductDetails';
 import Styles from '../../constants/themeColors';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 type Props = {
   route: {params: {product: any}};
@@ -28,7 +29,7 @@ const OproductDetails = ({route, navigation}: Props) => {
       </View>
       <ScrollView horizontal={true}>
         <View style={{flexDirection: 'row'}}>
-          {product.imageUrl.map((item: any, index: any) => (
+          {product.imageUrl.map((item: any, index: number) => (
             <ImageBackground
               key={index}
               style={styles.imgBack}

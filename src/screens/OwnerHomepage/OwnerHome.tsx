@@ -8,13 +8,11 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
-  Modal,
-  ActivityIndicator,
 } from 'react-native';
 import styles from './OwnerHomestyle';
 import {Text} from 'react-native';
 // import {ScrollView} from 'react-native-gesture-handler';
-import Useownerhome from './Useownerhome';
+
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import Colors from '../../constants/colors';
 import Donut from '../../components/atoms/DonutChart';
@@ -23,11 +21,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import useAnalytics from '../AnalyticsPage/useAnalytics';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
+import useOwnerHome from './useOwnerHome';
 type Props = {
   route: {name: string};
   navigation: any;
 };
-export default function OwnerHome({navigation}: Props) {
+const OwnerHome = ({navigation}: Props) => {
   const {
     products,
     name,
@@ -36,21 +35,10 @@ export default function OwnerHome({navigation}: Props) {
     rentedItems,
     refreshing,
     onRefresh,
-    setIsModalVisible,
-    handleDisablebutton,
-    handleDisableProduct,
-    decrementQuantity,
-    incrementQuantity,
     handleAnalatyics,
-    productQuantity,
-    isModalVisible,
     recentyAdded,
-    selectedProductId,
-    outofStock,
-    handleEnablebutton,
-  } = Useownerhome();
-  const {handleOrders, HandlePiechart, CategoriePieData, Dashboardyeardata} =
-    useAnalytics();
+  } = useOwnerHome();
+  const {handleOrders, CategoriePieData, Dashboardyeardata} = useAnalytics();
   const {colorScheme} = useContext(ColorSchemeContext);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
   const [rentedItemsPercentage, setRentedItemsPercentage] =
@@ -102,6 +90,7 @@ export default function OwnerHome({navigation}: Props) {
               delay={1000}
               max={200}
               refreshTrigger={refreshTrigger}
+              textcolor={Colors.buttonColor}
             />
           </View>
           <View style={styles.cardsTotalprices}>
@@ -111,6 +100,7 @@ export default function OwnerHome({navigation}: Props) {
               delay={1000}
               max={1000000}
               refreshTrigger={refreshTrigger}
+              textcolor={Colors.buttonColor}
             />
           </View>
         </View>
@@ -230,11 +220,6 @@ export default function OwnerHome({navigation}: Props) {
                         styles.cardTextContainer,
                         colorScheme === 'dark' ? Styles.cardColor : Styles.main,
                       ]}>
-                      {/* <TouchableOpacity
-                        onPress={() => handleDisableProduct(item.quantity)}
-                        style={styles.enableButton}>
-                        <Text style={styles.disableButtonText}>Enable</Text>
-                      </TouchableOpacity> */}
                       <View
                         style={{
                           width: '100%',
@@ -373,4 +358,5 @@ export default function OwnerHome({navigation}: Props) {
       )}
     </ScrollView>
   );
-}
+};
+export default OwnerHome;

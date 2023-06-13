@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
-  FlatList,
   Image,
   RefreshControl,
   ScrollView,
@@ -8,13 +7,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {ReactNode, useState} from 'react';
+import React, {ReactNode} from 'react';
 import {CheckBox} from 'react-native-elements';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import useCheckout from './useCheckout';
 import style from './CheckoutScreenStyle';
-import Colors from '../../constants/colors';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Colors from '../../constants/Colors';
 import useCart from '../Cart/useCart';
 import Styles from '../../constants/themeColors';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
@@ -24,24 +22,25 @@ type Props = {
   navigation: any;
 };
 
-const Cart = ({navigation}: Props) => {
+const CheckoutScreen = ({navigation}: Props) => {
   const {
-    setIsCheckedArray,
     selectedAddressIndex,
-    CartProducts,
     handlePayment,
     handleCheckboxChange,
     refreshing,
     onRefresh,
     addressList,
-    isCheckedArray,
+
     isChecked,
   } = useCheckout();
   const {colorScheme} = useCart();
-  const cartData = useSelector(state => state.CartProducts.data);
-  const isAddressEmpty = addressList.length === 0;
+  const cartData = useSelector(
+    (state: {CartProducts: {data: any}}) => state.CartProducts.data,
+  ) || {
+    cartItems: [],
+  };
   console.log('johnwesly', addressList);
-  if (!CartProducts) {
+  if (!cartData) {
     return (
       <View
         style={{
@@ -71,15 +70,7 @@ const Cart = ({navigation}: Props) => {
           colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
         ]}>
         <HeadingText message="Checkout" />
-        {/* <View style={style.titleContainer}>
-          <Text
-            style={[
-              style.titleText,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
-            Checkout
-          </Text>
-        </View> */}
+
         <ScrollView>
           <View>
             <ScrollView
@@ -92,8 +83,9 @@ const Cart = ({navigation}: Props) => {
                   item: {
                     rentalEndDate: ReactNode;
                     rentalStartDate: ReactNode;
+                    imageUrl: string;
+                    quantity: number;
                     product: {
-                      imageURL: any;
                       name:
                         | string
                         | number
@@ -239,73 +231,77 @@ const Cart = ({navigation}: Props) => {
             </View>
             {/* <Text style={{margin: 5, width: '100%'}}>{selectedAddress}</Text> */}
             {addressList &&
-              addressList.map((item, index) => (
-                <View
-                  key={index}
-                  style={[
-                    style.card,
-                    colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                  ]}>
-                  <View style={[style.addressContainer]}>
-                    <View>
-                      <Text
-                        style={[
-                          {
-                            width: 60,
-                            marginLeft: 10,
-                            // width: 140,
-                            height: 20,
-                            marginTop: 20,
-                            color: Colors.black,
-                            fontSize: 12,
-                            // fontWeight: '500',
-                            fontFamily: 'Poppins-Regular',
-                          },
-                          colorScheme === 'dark'
-                            ? Styles.whitetext
-                            : Styles.blackText,
-                        ]}>
-                        Address :
-                      </Text>
-                      <Text
-                        style={[
-                          style.city,
-                          colorScheme === 'dark'
-                            ? Styles.whitetext
-                            : Styles.blackText,
-                        ]}>
-                        <Text>{item.addressLine1},</Text>
-                        {/* </Text>
-                      <Text style={style.city}>{'State: ' + item.state}</Text>
-                      <Text style={style.city}> */}
-                        {item.postalCode},{/* </Text> */}
-                        {/* <Text style={style.city}> */}
-                        {item.city},{/* <Text style={style.city}> */}
-                        {item.country},
-                      </Text>
-                    </View>
-                    <View style={style.containerCheckbox}>
-                      <Text
-                        style={[
-                          style.textCheckbox,
-                          colorScheme === 'dark'
-                            ? Styles.whitetext
-                            : Styles.blackText,
-                        ]}>
-                        Delivery Address
-                      </Text>
-                      {console.log(isChecked)}
-                      <CheckBox
-                        checked={selectedAddressIndex === index}
-                        onPress={() => handleCheckboxChange(index)}
-                        checkedColor={Colors.buttonColor}
-                        containerStyle={style.checkboxContainer}
-                        size={24}
-                      />
+              addressList.map(
+                (
+                  item: {
+                    addressLine1: string;
+                    postalCode: string;
+                    city: string;
+                    country: string;
+                  },
+                  index,
+                ) => (
+                  <View
+                    key={index}
+                    style={[
+                      style.card,
+                      colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+                    ]}>
+                    <View style={[style.addressContainer]}>
+                      <View>
+                        <Text
+                          style={[
+                            {
+                              width: 60,
+                              marginLeft: 10,
+                              // width: 140,
+                              height: 20,
+                              marginTop: 20,
+                              color: Colors.black,
+                              fontSize: 12,
+                              // fontWeight: '500',
+                              fontFamily: 'Poppins-Regular',
+                            },
+                            colorScheme === 'dark'
+                              ? Styles.whitetext
+                              : Styles.blackText,
+                          ]}>
+                          Address :
+                        </Text>
+                        <Text
+                          style={[
+                            style.city,
+                            colorScheme === 'dark'
+                              ? Styles.whitetext
+                              : Styles.blackText,
+                          ]}>
+                          <Text>{item.addressLine1},</Text>
+                          {item.postalCode},{item.city},{item.country},
+                        </Text>
+                      </View>
+                      <View style={style.containerCheckbox}>
+                        <Text
+                          style={[
+                            style.textCheckbox,
+                            colorScheme === 'dark'
+                              ? Styles.whitetext
+                              : Styles.blackText,
+                          ]}>
+                          Delivery Address
+                        </Text>
+
+                        <CheckBox
+                          checked={selectedAddressIndex === index}
+                          onPress={() => handleCheckboxChange(index)}
+                          checkedColor={Colors.buttonColor}
+                          containerStyle={style.checkboxContainer}
+                          size={24}
+                        />
+                      </View>
                     </View>
                   </View>
-                </View>
-              ))}
+                ),
+              )}
           </View>
         </ScrollView>
         <View style={[style.GrandtotalContainer]}>
@@ -384,7 +380,7 @@ const Cart = ({navigation}: Props) => {
           {/* <Text style={style.TextGrand}>Grand Total</Text> */}
           <TouchableOpacity
             style={[style.PaymentButton, isChecked && {opacity: 0.5}]}
-            onPress={isChecked ? null : handlePayment}
+            onPress={isChecked ? undefined : handlePayment}
             disabled={isChecked}>
             <Text style={style.priceTotal}> ₹ {cartData.finalPrice}</Text>
             <Text style={style.PaymentButtonText}>Place order</Text>
@@ -395,4 +391,4 @@ const Cart = ({navigation}: Props) => {
   );
 };
 
-export default Cart;
+export default CheckoutScreen;

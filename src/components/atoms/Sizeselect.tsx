@@ -1,11 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
-import Ownerstyles from '../../screens/OwnerHomepage/OwnerHomestyle';
-import Colors from '../../constants/colors';
-import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-import axios from 'axios';
-import {object} from 'yup';
+
+import Colors from '../../constants/Colors';
+
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
 // import AntDesign from '@expo/vector-icons/AntDesign';
@@ -16,14 +14,13 @@ const data = [
   {label: 'XL', value: '4'},
   {label: 'XXL', value: '5'},
 ];
-const Sizeselection = ({onChange}) => {
-  //   const [CategoriesData, setCategoriesData] = useState([]);
-  const [value, setValue] = useState(null);
+const Sizeselection = ({onSelectSize, onChange}) => {
+  const [value, _setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const {colorScheme} = useContext(ColorSchemeContext);
 
   return (
-    <View style={Ownerstyles.scrollView}>
+    <View>
       <View
         style={[
           styles.dropdownContainer,

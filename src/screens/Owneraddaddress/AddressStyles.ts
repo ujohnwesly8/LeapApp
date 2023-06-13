@@ -220,10 +220,7 @@ const OwnerAddressStyles = StyleSheet.create({
     alignItems: 'center',
     fontWeight: '700',
     borderRadius: 5,
-    shadowOffset: {
-      // width: 0,
-      // height: 3,
-    },
+
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     shadowColor: '#000',
@@ -242,10 +239,7 @@ const OwnerAddressStyles = StyleSheet.create({
     alignItems: 'center',
     fontWeight: '700',
     borderRadius: 5,
-    shadowOffset: {
-      // width: 0,
-      // height: 3,
-    },
+
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     shadowColor: '#000',
@@ -263,10 +257,7 @@ const OwnerAddressStyles = StyleSheet.create({
     alignItems: 'center',
     // fontWeight: '700',
     borderRadius: 5,
-    shadowOffset: {
-      // width: 0,
-      // height: 3,
-    },
+
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     shadowColor: '#000',

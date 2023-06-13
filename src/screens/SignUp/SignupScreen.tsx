@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   TextInput,
@@ -10,15 +10,20 @@ import {
 import {RadioButton} from 'react-native-paper';
 import Lottie from 'lottie-react-native';
 
-import useCart from '../Cart/useCart';
 import useSignup from './useSignup';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import {login, signup} from '../../constants/languages/En';
+import {
+  alreadyExistingtext,
+  borrower,
+  login,
+  owner,
+  signup,
+} from '../../constants/languages/En';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 import Styles from './Signupstyle';
-import style from '../Owneraddaddress/Owneraddressstyle';
-import Colors from '../../constants/colors';
-import Style from '../../constants/themeColors';
+import style from '../Owneraddaddress/AddressStyles';
+import Colors from '../../constants/Colors';
 
 const SignUpScreen = () => {
   const {
@@ -30,25 +35,23 @@ const SignUpScreen = () => {
     showModal,
     handleSignupfun,
   } = useSignup();
-  const {colorScheme} = useCart();
+  const {colorScheme, getContainerStyle, getTextInputStyle, getTextColor} =
+    useContext(ColorSchemeContext);
   const isDarkMode = colorScheme === 'dark';
-  const containerStyle = isDarkMode ? Style.blacktheme : Style.whiteTheme;
-  const textInputStyle = isDarkMode ? Style.cardColor : Style.main;
-  const textColor = isDarkMode ? Style.whitetext : Style.blackText;
 
   return (
-    <ScrollView style={[Styles.scrollContainer, containerStyle]}>
-      <View style={[Styles.mainContainer, containerStyle]}>
+    <ScrollView style={[Styles.scrollContainer, getContainerStyle()]}>
+      <View style={[Styles.mainContainer, getContainerStyle()]}>
         <Lottie
           style={Styles.image}
           source={require('../../../assets/Signup_lotte.json')}
           autoPlay
         />
-        <Text style={[Styles.titleText, textColor]}>{signup}</Text>
+        <Text style={[Styles.titleText, getTextColor()]}>{signup}</Text>
         <View style={Styles.Container}>
           <View>
             <TextInput
-              style={[Styles.textinput, textInputStyle, textColor]}
+              style={[Styles.textinput, getTextInputStyle(), getTextColor()]}
               placeholder="Enter First name"
               placeholderTextColor={
                 isDarkMode ? Colors.Textinput : Colors.black
@@ -64,7 +67,7 @@ const SignUpScreen = () => {
           </View>
           <View>
             <TextInput
-              style={[Styles.textinput, textInputStyle, textColor]}
+              style={[Styles.textinput, getTextInputStyle(), getTextColor()]}
               placeholder="Enter Last name"
               placeholderTextColor={
                 isDarkMode ? Colors.Textinput : Colors.black
@@ -80,7 +83,7 @@ const SignUpScreen = () => {
           </View>
           <View>
             <TextInput
-              style={[Styles.textinput, textInputStyle, textColor]}
+              style={[Styles.textinput, getTextInputStyle(), getTextColor()]}
               placeholder="Enter email"
               placeholderTextColor={
                 isDarkMode ? Colors.Textinput : Colors.black
@@ -96,7 +99,7 @@ const SignUpScreen = () => {
           </View>
           <View>
             <TextInput
-              style={[Styles.textinput, textInputStyle, textColor]}
+              style={[Styles.textinput, getTextInputStyle(), getTextColor()]}
               placeholder="Enter Phone number"
               placeholderTextColor={
                 isDarkMode ? Colors.Textinput : Colors.black
@@ -110,7 +113,7 @@ const SignUpScreen = () => {
             )}
           </View>
           <TextInput
-            style={[Styles.textinput, textInputStyle, textColor]}
+            style={[Styles.textinput, getTextInputStyle(), getTextColor()]}
             placeholder="Enter password"
             placeholderTextColor={isDarkMode ? Colors.Textinput : Colors.black}
             value={formik.values.password}
@@ -121,7 +124,7 @@ const SignUpScreen = () => {
           {formik.touched.password && formik.errors.password && (
             <Text style={Styles.errorTxt}>{formik.errors.password}</Text>
           )}
-          <Text style={[Styles.cardText, textColor]}>Select Role</Text>
+          <Text style={[Styles.cardText, getTextColor()]}>{role}</Text>
           <View style={style.containerRadio}>
             <View style={style.optionRadio}>
               <RadioButton
@@ -129,7 +132,7 @@ const SignUpScreen = () => {
                 status={role === 'BORROWER' ? 'checked' : 'unchecked'}
                 onPress={() => handleRole('BORROWER')}
               />
-              <Text style={[style.textRadio, textColor]}>Borrower</Text>
+              <Text style={[style.textRadio, getTextColor()]}>{borrower}</Text>
             </View>
             <View style={style.optionRadio}>
               <RadioButton
@@ -137,7 +140,7 @@ const SignUpScreen = () => {
                 status={role === 'OWNER' ? 'checked' : 'unchecked'}
                 onPress={() => handleRole('OWNER')}
               />
-              <Text style={[style.textRadio, textColor]}>Owner</Text>
+              <Text style={[style.textRadio, getTextColor()]}>{owner}</Text>
             </View>
           </View>
         </View>
@@ -156,8 +159,8 @@ const SignUpScreen = () => {
         </View>
         <View>
           <View style={[Styles.touchablebtnContainer, {flexDirection: 'row'}]}>
-            <Text style={[Styles.signuptext, textColor]}>
-              Already have an account?
+            <Text style={[Styles.signuptext, getTextColor()]}>
+              {alreadyExistingtext}
             </Text>
             <TouchableOpacity onPress={handleLogin}>
               <Text style={Styles.LoginText}>{login}</Text>
