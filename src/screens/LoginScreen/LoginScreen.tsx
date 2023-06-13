@@ -13,7 +13,7 @@ import {
   otp,
   signin,
   signup,
-} from '../../constants/languages/En';
+} from '../../constants/languages/en';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 // Styles and assets

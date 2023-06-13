@@ -8,7 +8,6 @@ export const owner = 'Owner';
 export const borrower = 'Borrower';
 export const role = 'Select Role';
 export const dashboard = 'Dashboard';
-
 export const recentlyAdded = 'Recently Added';
 export const rentalHistory = 'Rental History';
 export const continueText = 'Continue with';
