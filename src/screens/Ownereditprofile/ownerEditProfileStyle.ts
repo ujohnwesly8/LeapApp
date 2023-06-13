@@ -98,7 +98,6 @@ const style = StyleSheet.create({
     top: 40,
   },
   btntext: {
-  
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -203,7 +202,7 @@ const style = StyleSheet.create({
     marginTop: 10,
     marginLeft: 25,
     color: 'black',
-   
+
     backgroundColor: Colors.black,
     borderRadius: 100,
     width: '9%',
