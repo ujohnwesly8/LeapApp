@@ -4,7 +4,6 @@ import {Alert} from 'react-native';
 import {url} from '../../constants/Apis';
 function OwnerEditProfileCustomHook() {
   const [isLoading, setIsLoading] = useState(false);
-
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [showModal, setShowModal] = useState(false);

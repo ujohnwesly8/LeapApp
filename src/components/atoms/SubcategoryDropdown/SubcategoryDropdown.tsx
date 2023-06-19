@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import useSearchresults from '../../../screens/SearchResultScreen/useSearchResults';
 import Colors from '../../../constants/colors';
@@ -27,10 +27,7 @@ const SubCategoryDropdown = ({value, onChange}) => {
         ]}
         inputSearchStyle={styles.inputSearch}
         itemTextStyle={styles.itemText}
-        selectedItemTextStyle={[
-          styles.selectedItemText,
-          colorScheme === 'dark' ? Styles.blackText : Styles.blackText,
-        ]}
+        selectedItemTextStyle={[styles.selectedItemText]}
         itemContainerStyle={styles.itemContainer}
         selectedItemContainerStyle={styles.selectedItemContainer}
         iconColor={Colors.white}

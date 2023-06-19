@@ -26,14 +26,15 @@ import Owneraddaddress from '../../screens/Owneraddaddress/AddAddress';
 import Ownereditprofile from '../../screens/Ownereditprofile/OwnerEditProfile';
 import PaymentSuccessScreen from '../../screens/PaymentScreens/PaymentSuccessScreen';
 import PaymentFailScreen from '../../screens/PaymentScreens/PaymentFailScreen';
-import {Route, getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import {
+  Route,
+  getFocusedRouteNameFromRoute,
+  useIsFocused,
+} from '@react-navigation/native';
 import MyOrder from '../../screens/MyOrder/MyOrder';
 import EditAddress from '../../screens/EditAddress/EditAddress';
-import {useIsFocused} from '@react-navigation/native';
 import Colors from '../../constants/colors';
-import {View, useColorScheme} from 'react-native';
-import Styles from '../../constants/themeColors';
-import useCart from '../../screens/Cart/useCart';
+import {View} from 'react-native';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
