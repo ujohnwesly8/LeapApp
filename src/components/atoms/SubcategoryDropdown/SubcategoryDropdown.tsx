@@ -27,10 +27,7 @@ const SubCategoryDropdown = ({value, onChange}) => {
         ]}
         inputSearchStyle={styles.inputSearch}
         itemTextStyle={styles.itemText}
-        selectedItemTextStyle={[
-          styles.selectedItemText,
-          colorScheme === 'dark' ? Styles.blackText : Styles.blackText,
-        ]}
+        selectedItemTextStyle={[styles.selectedItemText]}
         itemContainerStyle={styles.itemContainer}
         selectedItemContainerStyle={styles.selectedItemContainer}
         iconColor={Colors.white}
