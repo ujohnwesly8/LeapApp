@@ -1,8 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Image, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import styles from '../OwnerHomepage/OwnerHomestyle';
-import {Text} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Usemyrental from './Usemyrental';
@@ -66,13 +65,13 @@ export default function OwnerHome({navigation}: Props) {
                     }>
                     <View style={styles.cardContainer}>
                       <Image
-                        source={{uri: item!.imageURL}}
+                        source={{uri: item.imageURL}}
                         style={styles.recentlyaddedimage}
                       />
                     </View>
                     <View style={styles.cardTextContainer}>
-                      <Text style={styles.cardText}>{item!.description}</Text>
-                      <Text style={styles.cardText}>₹ {item!.price}</Text>
+                      <Text style={styles.cardText}>{item.description}</Text>
+                      <Text style={styles.cardText}>₹ {item.price}</Text>
                     </View>
                   </TouchableOpacity>
                 ))}

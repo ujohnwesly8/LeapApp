@@ -71,9 +71,7 @@ export default function OwnerEditProfileCustomHook() {
                 colorScheme === 'dark' ? Styles.cardColor : Styles.main,
                 colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
               ]}
-              placeholderTextColor={
-                colorScheme === 'dark' ? Colors.white : Colors.white
-              }
+              placeholderTextColor={Colors.white}
               value={firstName}
               onChangeText={text => setFirstName(text)}
             />

@@ -93,7 +93,7 @@ const style = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.buttonColor,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     marginTop: '50%',

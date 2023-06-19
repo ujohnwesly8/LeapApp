@@ -7,12 +7,10 @@ import {
   RefreshControl,
   TouchableOpacity,
   View,
+  Text,
   ScrollView,
 } from 'react-native';
 import styles from './OwnerHomestyle';
-import {Text} from 'react-native';
-// import {ScrollView} from 'react-native-gesture-handler';
-
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import Colors from '../../constants/colors';
 import Donut from '../../components/atoms/DonutChart';

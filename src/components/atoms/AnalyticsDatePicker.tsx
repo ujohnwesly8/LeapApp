@@ -4,7 +4,6 @@ import {View, Text, TouchableOpacity, Modal} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import Colors from '../../constants/colors';
 import moment from 'moment';
-import useCart from '../../screens/Cart/useCart';
 
 const AnalyticsDatePicker = ({
   startDate,
@@ -19,7 +18,6 @@ const AnalyticsDatePicker = ({
   const initialDate = `${currentYear}-${currentMonth}-${currentDay}`;
   const [selectedStartDate, setSelectedStartDate] = useState(startDate);
   const [selectedEndDate, setSelectedEndDate] = useState(endDate);
-  const {colorScheme} = useCart();
   const [showPicker, setShowPicker] = useState(false);
   const [showPickerClone, setShowPickerClone] = useState(false);
   const [pickerType, setPickerType] = useState('');

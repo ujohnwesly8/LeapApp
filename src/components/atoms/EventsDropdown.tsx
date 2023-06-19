@@ -13,7 +13,6 @@ type EventDropdownProps = {
   value: any;
 };
 const DropdownComponent: React.FC<EventDropdownProps> = ({onChange, value}) => {
-  // const [categoriesData, setCategoriesData] = useState([]);
   const [isFocus, setIsFocus] = useState(false);
   const {subEventCategoriesData} = Useadditems();
   const {colorScheme} = useContext(ColorSchemeContext);

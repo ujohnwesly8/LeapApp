@@ -1,3 +1,4 @@
+
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect, SetStateAction} from 'react';
 import {setRole} from '../../redux/actions/actions';
@@ -8,7 +9,6 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {url} from '../../constants/Apis';
-
 const SwitchAccountButton = () => {
   const [showOptions, setShowOptions] = useState(false);
   const dispatch = useDispatch();
