@@ -49,6 +49,7 @@ const AddAddress = () => {
     if (postalCode !== '') {
       FetchAddress();
     } else {
+      console.log('Wrong Postalcode');
     }
   }, [FetchAddress, postalCode]);
 

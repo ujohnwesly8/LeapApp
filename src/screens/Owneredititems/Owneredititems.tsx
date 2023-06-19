@@ -98,7 +98,6 @@ const App = () => {
   }, [isModalVisible]);
 
   console.log('Refreshhhhhh:', refreshData);
-
   const {colorScheme} = useContext(ColorSchemeContext);
 
   return (

@@ -151,6 +151,7 @@ const Useowneredititems = () => {
       } catch (error) {
         console.log(error);
       } finally {
+        console.log('finally');
       }
     };
     fetchSubCategoryData();
@@ -173,6 +174,7 @@ const Useowneredititems = () => {
       } catch (error) {
         console.log(error);
       } finally {
+        console.log('finally');
       }
     };
     fetchEventCategoryData();
@@ -195,6 +197,7 @@ const Useowneredititems = () => {
       } catch (error) {
         console.log(error);
       } finally {
+        console.log('finally');
       }
     };
     subOutfitCategoriesData();
