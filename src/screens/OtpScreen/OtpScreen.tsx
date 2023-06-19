@@ -14,7 +14,7 @@ import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import style from '../../constants/themeColors';
 import Colors from '../../constants/colors';
 
-const OTPScreen = (): JSX.Element => {
+const OTPScreen = (): React.JSX.Element => {
   const {
     phoneNo,
     otp,
