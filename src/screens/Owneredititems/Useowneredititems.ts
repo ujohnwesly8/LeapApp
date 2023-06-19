@@ -70,7 +70,6 @@ const Useowneredititems = () => {
   const handleGenderChange = (selectedGender: React.SetStateAction<string>) => {
     setGender(selectedGender);
     dispatch(addGenderData(selectedGender));
-    // console.log(selectedGender);
   };
   const handleSelectItem = (item: SetStateAction<null>) => {
     setSelectedItem(item);
@@ -96,7 +95,6 @@ const Useowneredititems = () => {
       setData(mappedData);
       console.log(name);
       console.log(response.data);
-      // setName(mappedData.name);
       setIsLoading(false);
     } catch (error) {
       console.error(error);
@@ -111,7 +109,6 @@ const Useowneredititems = () => {
   console.log(name);
   const FetchData = async (editProductId: any) => {
     try {
-      // setViisble(true);
       const ProductData = await ApiService.get(
         `${ProductsById}/${editProductId}`,
       );
@@ -137,17 +134,12 @@ const Useowneredititems = () => {
   );
   console.log(genderData);
 
-  // 1st api endpoint code starts
-
   useEffect(() => {
-    // console.log(gender);
     const fetchSubCategoryData = async () => {
       try {
-        // setIsLoading(true);
         const response = await axios.get(
           `${baseUrl}/api/v1/subcategory/listbyid/${genderData}`,
         );
-        // console.log(response);
         const subCategoriesArray = response.data.map(
           (category: {id: any; subcategoryName: any}) => ({
             value: category.id,
@@ -158,23 +150,18 @@ const Useowneredititems = () => {
         console.log(subCategoriesArray);
       } catch (error) {
         console.log(error);
-        // setIsLoading(true);
       } finally {
-        // setIsLoading(false); // Set isLoading to false after the API call completes
       }
     };
     fetchSubCategoryData();
   }, [genderData]);
 
   useEffect(() => {
-    // console.log(gender);
     const fetchEventCategoryData = async () => {
       try {
-        // setIsLoading(true);
         const response = await axios.get(
           `${baseUrl}/api/v1/subcategory/listbyid/${1}`,
         );
-        // console.log(response);
         const subEventCategoriesArray = response.data.map(
           (category: {id: any; subcategoryName: any}) => ({
             value: category.id,
@@ -185,23 +172,18 @@ const Useowneredititems = () => {
         console.log(subEventCategoriesArray);
       } catch (error) {
         console.log(error);
-        // setIsLoading(true);
       } finally {
-        // setIsLoading(false); // Set isLoading to false after the API call completes
       }
     };
     fetchEventCategoryData();
   }, []);
 
   useEffect(() => {
-    // console.log(gender);
     const subOutfitCategoriesData = async () => {
       try {
-        // setIsLoading(true);
         const response = await axios.get(
           `${baseUrl}/api/v1/subcategory/listbyid/${2}`,
         );
-        // console.log(response);
         const subOutfitCategoriesArray = response.data.map(
           (category: {id: any; subcategoryName: any}) => ({
             value: category.id,
@@ -212,9 +194,7 @@ const Useowneredititems = () => {
         console.log(subOutfitCategoriesArray);
       } catch (error) {
         console.log(error);
-        // setIsLoading(true);
       } finally {
-        // setIsLoading(false); // Set isLoading to false after the API call completes
       }
     };
     subOutfitCategoriesData();
@@ -224,7 +204,6 @@ const Useowneredititems = () => {
   useEffect(() => {
     const fetchCategoryData = async () => {
       try {
-        // setIsLoading(true);
         const response = await axios.get(OwnerCategoryUrl);
         const categoriesArray = response.data.map(
           (category: {id: any; categoryName: any}) => ({
@@ -242,7 +221,6 @@ const Useowneredititems = () => {
   }, []);
   const getImageUrl = async () => {
     const url = await AsyncStorage.getItem('url');
-    // setUrl(url);
     console.log('Retrieved URL:', url);
   };
   useEffect(() => {
@@ -392,11 +370,9 @@ const Useowneredititems = () => {
       console.log(data);
 
       dispatch(addsize(selectedsize));
-      // Alert.alert('Item Successfully Edited');
       navigation.navigate('OwnerProfile');
     } catch (error) {
       console.log(error);
-      // Alert.alert('Failed to Edit Item');
     }
   };
   const RemoveProducts = async (productId: any) => {
@@ -404,20 +380,16 @@ const Useowneredititems = () => {
     console.log('chiranjeevi', productId);
     fetch(`${baseUrl}/product/deleteProduct/${productId}`, {
       method: 'DELETE',
-      // openModal();
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then(_data => {
         dispatch(removeproducts(productId));
-        // fetchData();
         openModal();
       })
       .catch(error => {
         console.error(error);
-        // const errorMessage = `Error removing item from ProductsList: ${error.message}`;
-        // Alert.alert(errorMessage);
       });
   };
 
@@ -437,8 +409,7 @@ const Useowneredititems = () => {
       setPrefill(response.data);
       return response.data;
     } catch (error) {
-      console.log('error in edititems', error);
-      throw error; // throw the error to be caught by the reject handler
+      throw error;
     }
   };
   const handleDisableProduct = (item: any) => {
@@ -453,9 +424,9 @@ const Useowneredititems = () => {
     console.log('disabled Quantity : ', disabledQuantity);
   };
   const incrementQuantity = () => {
-    let maxQuantity = productQuantity; // Maximum quantity available by default
+    let maxQuantity = productQuantity;
     if (productQuantity < disabledQuantity && disabledQuantity !== 0) {
-      maxQuantity = disabledQuantity; // If no available quantity, set maximum as disabled quantity
+      maxQuantity = disabledQuantity;
     }
 
     if (updatedQuantity >= maxQuantity) {
@@ -467,10 +438,6 @@ const Useowneredititems = () => {
   const handleRefresh = () => {
     setRefreshData(false);
   };
-
-  // const incrementQuantity = id => {
-  //   setupdatedquantity(updatedQuantity + 1);
-  // };
 
   const decrementQuantity = () => {
     if (updatedQuantity > 1) {
@@ -489,14 +456,12 @@ const Useowneredititems = () => {
         console.log('product disable', response);
         setOutofstock(true);
         fetchData();
-        setRefreshData(true); // Set refreshData to true
+        setRefreshData(true);
       } else {
         console.log('Invalid disable quantity');
-        // Handle invalid disable quantity error
       }
     } catch (error) {
       console.log('product enable Error', error);
-      // setIsLoading(true);
     }
     setIsModalVisible(false);
   };
@@ -514,15 +479,13 @@ const Useowneredititems = () => {
         );
         console.log('product Enable', response);
         setOutofstock(true);
-        fetchData(); // Set refreshData to true
+        fetchData();
         setRefreshData(prevRefreshData => !prevRefreshData);
       } else {
         console.log('Invalid enable quantity');
-        // Handle invalid enable quantity error
       }
     } catch (error) {
       console.log('product disable Error', error);
-      // setIsLoading(true);
     }
 
     setIsModalVisible(false);
