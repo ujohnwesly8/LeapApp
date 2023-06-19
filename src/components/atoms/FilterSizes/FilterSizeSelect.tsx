@@ -85,13 +85,7 @@ const FilterSelectSize = ({
             key={size}
             style={styles.option}
             onPress={() => handleSelectSize(size)}>
-            <Text
-              style={[
-                styles.optionText,
-                colorScheme === 'dark' ? Styles.blackText : Styles.blackText,
-              ]}>
-              {size}
-            </Text>
+            <Text style={[styles.optionText]}>{size}</Text>
           </TouchableOpacity>
         ))}
       </Animated.View>

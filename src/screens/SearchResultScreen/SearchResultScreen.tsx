@@ -85,11 +85,7 @@ const SearchResultsScreen = ({route}: {route: any}) => {
         animationType="slide"
         transparent={true}
         onRequestClose={() => setModalVisible(false)}>
-        <View
-          style={[
-            style.mainContainer,
-            colorScheme === 'dark' ? Styles.ButtonColor : Styles.ButtonColor,
-          ]}>
+        <View style={[style.mainContainer]}>
           <Text
             style={[
               style.headertext,

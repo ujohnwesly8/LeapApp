@@ -114,13 +114,7 @@ export default function UDetailScreen({route, navigation}: Props) {
             styles.detailsContainer,
             colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
           ]}>
-          <Text
-            style={[
-              styles.detailsPrice,
-              colorScheme === 'dark' ? Styles.priceTect : Styles.priceTect,
-            ]}>
-            ₹{product.price}
-          </Text>
+          <Text style={[styles.detailsPrice]}>₹{product.price}</Text>
           <Text
             style={[
               styles.detailsdescription,
