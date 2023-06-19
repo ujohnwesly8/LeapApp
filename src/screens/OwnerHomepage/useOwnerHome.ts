@@ -99,7 +99,6 @@ const useOwnerHome = () => {
           const profileData = await response.json();
           setName(profileData.firstName);
         } else {
-          // throw new Error('Failed to get Owner name on Home page');
         }
       } catch (error) {
         console.error(error);
@@ -117,7 +116,7 @@ const useOwnerHome = () => {
   const products = useSelector(
     (state: {products: {data: any[]}}) => state.products.data,
   );
-  // console.log(JSON.stringify(products));
+
   const handleAdditems = () => {
     navigation.navigate('Additems');
   };
@@ -125,7 +124,6 @@ const useOwnerHome = () => {
     navigation.navigate('MyRentals');
   };
   const handleAnalatyics = () => {
-    // handleAnalatyics;
     HandlePiechart();
     navigation.navigate('DashboardDetails');
   };

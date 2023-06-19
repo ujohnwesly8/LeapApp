@@ -8,10 +8,9 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  Text,
 } from 'react-native';
 import styles from './OwnerHomestyle';
-import {Text} from 'react-native';
-// import {ScrollView} from 'react-native-gesture-handler';
 
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import Colors from '../../constants/colors';
@@ -31,7 +30,6 @@ interface Product {
   imageUrl: string[];
   name: string;
   price: number;
-  // Add other properties as needed
 }
 const OwnerHome = ({navigation}: Props) => {
   const {
@@ -87,8 +85,6 @@ const OwnerHome = ({navigation}: Props) => {
           <Text style={styles.renteditems2}>Total Earnings</Text>
         </View>
         <View style={styles.rentalitemscard}>
-          {/* <Text style={styles.cardsrentalprices}>{rentedItems}</Text>
-          <Text style={styles.cardsTotalprices}>₹{totalEarnings}</Text> */}
           <View style={styles.cardsrentalprices}>
             <Donut
               percentage={rentedItemsPercentage}
@@ -122,7 +118,7 @@ const OwnerHome = ({navigation}: Props) => {
             style={{
               color: Colors.white,
               fontSize: 10,
-              // marginTop: 3,
+
               fontFamily: 'Poppins-Medium',
               marginLeft: 20,
               alignSelf: 'center',
@@ -163,7 +159,6 @@ const OwnerHome = ({navigation}: Props) => {
                 </View>
               </TouchableOpacity>
               <View>
-                {/* Other code */}
                 <View
                   style={{
                     marginTop: 20,
@@ -277,7 +272,6 @@ const OwnerHome = ({navigation}: Props) => {
                 {flex: 1, backgroundColor: Colors.main, flexWrap: 'wrap'},
                 colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
               ]}>
-              {/* Other code */}
               <View
                 style={{
                   marginTop: 20,

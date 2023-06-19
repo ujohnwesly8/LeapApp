@@ -92,7 +92,6 @@ const useProductdetails = (product: {id: any; imageUrl: string | any[]}) => {
   const productsData = async () => {
     const result = await ApiService.get(`${ProductsById}/${product.id}`);
     console.log('result is :', result);
-    // setProductData(result);
   };
   const scrollToNextImage = useCallback(() => {
     if (scrollViewRef.current) {
