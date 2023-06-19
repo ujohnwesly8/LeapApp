@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {StatusBar, View} from 'react-native';
@@ -10,7 +11,6 @@ import OtpScreen from './src/screens/OtpScreen/OtpScreen';
 import OwnerNavigation from './src/navigation/OwnerNavigation';
 import SplashScreen from './src/screens/Splashscreen/Splashscreen';
 import {ColorSchemeProvider} from './ColorSchemeContext';
-import {CustomModalProvider} from './CustomModalContext';
 import Lottie from 'lottie-react-native';
 import SignupScreen from './src/screens/SignUp/SignupScreen';
 

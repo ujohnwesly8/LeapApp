@@ -36,7 +36,7 @@ const useCart = () => {
     setShowModal(false);
   };
   const isLoading = useSelector(
-    (state: {CartProducts: {isLoader: Boolean}}) => state.CartProducts.isLoader,
+    (state: {CartProducts: {isLoader: boolean}}) => state.CartProducts.isLoader,
   );
   const cartData = useSelector(
     (state: {CartProducts: {data: any}}) => state.CartProducts.data,
