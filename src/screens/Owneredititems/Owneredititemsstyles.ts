@@ -208,6 +208,7 @@ const OwnerEditItemstyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.buttonColor,
+    backgroundColor: Colors.buttonColor,
   },
   Sizecontainer: {
     marginTop: 20,
@@ -241,6 +242,7 @@ const OwnerEditItemstyles = StyleSheet.create({
   imagehorizontal: {
     width: 300,
     marginLeft: 35,
+    marginBottom: 10,
   },
   Pricetext: {
     fontSize: 18,

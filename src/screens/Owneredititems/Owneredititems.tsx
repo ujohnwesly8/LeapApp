@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
+
 /* eslint-disable react-native/no-inline-styles */
 import React, {useContext, useState, useEffect} from 'react';
 import {
@@ -333,7 +334,7 @@ const App = () => {
                       ? Styles.blacktheme
                       : Styles.whiteTheme,
                   ]}
-                  key={`${`item_${item.id.toString()}-${index}`}`}>
+                  key={`item_${item.id}`}>
                   <View style={[Style.item_course]}>
                     <View style={[OwnerEditItemstyles.imagePriceContainer]}>
                       <View style={[OwnerEditItemstyles.cardImageContainer]}>
