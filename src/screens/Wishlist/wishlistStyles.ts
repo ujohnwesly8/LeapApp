@@ -5,7 +5,6 @@ const style = StyleSheet.create({
     color: Colors.black,
     fontSize: 20,
     fontFamily: 'Poppins-SemiBold',
-    // fontWeight: 'bold',
   },
   maincontainer: {
     height: '100%',

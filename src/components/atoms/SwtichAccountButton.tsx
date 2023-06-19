@@ -1,7 +1,9 @@
+
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect, SetStateAction} from 'react';
 import {setRole} from '../../redux/actions/actions';
 import {useDispatch, useSelector} from 'react-redux';
-import {StyleSheet, Text, TouchableOpacity, View, Animated} from 'react-native'; // Import Animated from react-native
+import {StyleSheet, Text, TouchableOpacity, View, Animated} from 'react-native';
 import Colors from '../../constants/colors';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
@@ -14,7 +16,6 @@ const SwitchAccountButton = () => {
   const [accountType, setAccountType] = useState(
     userType === 'BORROWER' ? 'Borrower' : 'Owner',
   );
-  // Define animation values
   const buttonAnimation = useState(new Animated.Value(0))[0];
   const optionsAnimation = useState(new Animated.Value(0))[0];
   useEffect(() => {
@@ -22,13 +23,11 @@ const SwitchAccountButton = () => {
   }, [userType]);
   const handlePress = () => {
     setShowOptions(!showOptions);
-    // Toggle button animation
     Animated.timing(buttonAnimation, {
       toValue: showOptions ? 0 : 1,
       duration: 300,
       useNativeDriver: false,
     }).start();
-    // Toggle options animation
     Animated.timing(optionsAnimation, {
       toValue: showOptions ? 0 : 1,
       duration: 300,
@@ -55,7 +54,6 @@ const SwitchAccountButton = () => {
         await AsyncStorage.removeItem('token');
         await AsyncStorage.setItem('token', newToken);
         console.log(newToken);
-        // dispatch(setRole(option === 'borrower' ? 'borrower' : 'owner'));
         dispatch(setRole(option));
         setAccountType(option);
       } else {
@@ -69,7 +67,7 @@ const SwitchAccountButton = () => {
     <View>
       <TouchableOpacity
         onPress={handlePress}
-        style={[styles.button, {opacity: 0.9}]} // Apply opacity animation
+        style={[styles.button, {opacity: 0.9}]}
         accessibilityLabel={`Switch account type to ${
           accountType === 'BORROWER' ? 'OWNER' : 'BORROWER'
         }`}>
@@ -85,7 +83,7 @@ const SwitchAccountButton = () => {
         <Animated.View
           style={[
             styles.options,
-            {opacity: optionsAnimation, transform: [{scale: optionsAnimation}]}, // Apply opacity and scale animations
+            {opacity: optionsAnimation, transform: [{scale: optionsAnimation}]},
           ]}>
           <TouchableOpacity
             onPress={() => handleOptionPress('BORROWER')}
@@ -134,7 +132,6 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    // backgroundColor: 'rgba(255, 255, 255, 0.2)',
     backgroundColor: '#363062',
     borderRadius: 40,
     height: 50,
@@ -158,7 +155,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   label: {
-    // fontWeight: 'bold',
     marginTop: 3,
     fontFamily: 'Poppins-SemiBold',
     fontSize: 16,
@@ -168,7 +164,6 @@ const styles = StyleSheet.create({
   options: {
     position: 'absolute',
     top: '100%',
-    // backgroundColor: 'rgba(255, 255, 255, 0.2)',
     backgroundColor: 'rgba(5, 5, 5, 0.1)',
     borderRadius: 15,
     paddingVertical: 10,
@@ -183,7 +178,6 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    // elevation: 5,
   },
   option: {
     fontWeight: '700',

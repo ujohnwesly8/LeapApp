@@ -2,9 +2,11 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Modal} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
-import Colors from '../../constants/colors';
 import moment from 'moment';
+
 import useCart from '../../screens/Cart/useCart';
+
+import Colors from '../../constants/colors';
 import Styles from '../../constants/themeColors';
 
 const DateRangePicker = ({
@@ -65,7 +67,6 @@ const DateRangePicker = ({
         flexDirection: 'row',
         width: 270,
         marginLeft: 40,
-        // marginTop: 12,
         justifyContent: 'space-between',
       }}>
       <TouchableOpacity
@@ -74,8 +75,6 @@ const DateRangePicker = ({
           width: 120,
           height: 40,
           borderRadius: 60,
-          // marginBottom: 10,
-          // paddingHorizontal: 10,
           alignItems: 'center',
           justifyContent: 'center',
         }}
@@ -179,8 +178,6 @@ const DateRangePicker = ({
           </View>
         </View>
       </Modal>
-
-      {/* {renderRentalDates()} */}
     </View>
   );
 };
