@@ -226,7 +226,7 @@ export default function UDetailScreen({route, navigation}: Props) {
       <CustomModal
         showModal={showwModal}
         onClose={closeeModal}
-        message="Quantity is unavailable"
+        message="Product already added"
       />
     </ScrollView>
   );
