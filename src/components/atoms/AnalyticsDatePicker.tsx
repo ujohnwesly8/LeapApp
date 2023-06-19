@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Modal} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -131,7 +132,7 @@ const AnalyticsDatePicker = ({
             selectedEndDate={selectedEndDate}
             onDateChange={onDateChange}
             selectedDayColor={Colors.buttonColor}
-            minDate={initialDate}
+            // minDate={initialDate}
           />
           <View
             style={{
