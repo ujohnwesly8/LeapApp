@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useContext, useState, useEffect} from 'react';
@@ -14,7 +15,6 @@ import {
   RefreshControl,
 } from 'react-native';
 import Useowneredititems from './Useowneredititems';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import GenderDropdown from '../../components/atoms/GenderDropdown';
 import Ownerstyles from '../Additems/Additemsstyle';
 import TypeDropdown from '../../components/atoms/TypeDropdown';
@@ -22,10 +22,9 @@ import EventsDropdown from '../../components/atoms/EventsDropdown';
 import OutfitDropdown from '../../components/atoms/OutfitDropdown';
 import Sizeselection from '../../components/atoms/Sizeselect';
 import OwnerEditItemstyles from './Owneredititemsstyles';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import Colors from '../../constants/colors';
 import Lottie from 'lottie-react-native';
-import BackButton from '../../components/atoms/BackButton/BackButton';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
@@ -48,8 +47,6 @@ const App = () => {
     RemoveProducts,
     closeModal,
     showModal,
-    setShowModal,
-    handleRemoveImage,
     handleremove,
     name,
     pickImg,
@@ -65,19 +62,16 @@ const App = () => {
     setQuantity,
     setEditProductId,
     FetchData,
-    Mapdata,
     description,
     price,
     quantity,
     isLoading,
-    fetchData,
     productQuantity,
     isModalVisible,
     // recentyAdded,
     selectedProductId,
     setSelectedProductId,
     handleEnablebutton,
-    setIsMinusDisabled,
     setIsModalVisible,
     handleDisablebutton,
     handleDisableProduct,
@@ -119,7 +113,6 @@ const App = () => {
         animationType="slide"
         visible={visible}
         onRequestClose={handleVisibleModal}>
-        {console.log('Refreshinf is happpening :', refreshData)}
         <SafeAreaView>
           <ScrollView
             style={[
@@ -132,7 +125,6 @@ const App = () => {
             </TouchableOpacity>
             <View
               style={[
-                styles.form,
                 colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
               ]}>
               <View
@@ -170,29 +162,32 @@ const App = () => {
                         : Styles.blackText,
                     ]}
                     onChangeText={setDescription}
-                    multiline
                     value={description}
                   />
                   <GenderDropdown
                     onSelectGender={setGender}
                     onChange={handleGenderChange}
+                    value={undefined}
                   />
                   <View style={{marginTop: -18}}>
                     <TypeDropdown
                       onSelectType={setItemType}
                       onChange={handleItemTypeChange}
+                      value={undefined}
                     />
                   </View>
                   <View style={{marginTop: -26}}>
                     <EventsDropdown
                       onSelectEvent={setEventType}
                       onChange={handleEventTypeChange}
+                      value={undefined}
                     />
                   </View>
                   <View style={{marginTop: -12}}>
                     <OutfitDropdown
                       onSelectOutfit={setOutfitType}
                       onChange={handleOutfitChange}
+                      value={undefined}
                     />
                   </View>
                   <View style={OwnerEditItemstyles.Sizecontainer}>
@@ -203,7 +198,7 @@ const App = () => {
                       />
                     </View>
                   </View>
-                  <View style={[OwnerEditItemstyles.ImageBox]}>
+                  <View>
                     <View style={{marginTop: -20}}>
                       {selectedImage ? (
                         <>
@@ -322,228 +317,243 @@ const App = () => {
             />
           </View>
         ) : (
-          data.map(item => (
-            <>
-              <View
-                style={[
-                  Style.mainContainer,
-                  colorScheme === 'dark'
-                    ? Styles.blacktheme
-                    : Styles.whiteTheme,
-                ]}
-                key={item.id}>
-                <View style={[Style.item_course]}>
-                  <View style={[OwnerEditItemstyles.imagePriceContainer]}>
-                    <View style={[OwnerEditItemstyles.cardImageContainer]}>
-                      <Image
-                        style={OwnerEditItemstyles.cardImage}
-                        source={{uri: item.image}}
-                      />
-                    </View>
-                    <View
-                      style={[
-                        OwnerEditItemstyles.priceContainer,
-                        colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                      ]}>
-                      <View>
+          data.map(
+            (
+              item: {
+                id: number;
+                name: string;
+                price: number;
+                availableQuantities: number;
+                image: string;
+              },
+              index: any,
+            ) => (
+              <>
+                <View
+                  style={[
+                    Style.mainContainer,
+                    colorScheme === 'dark'
+                      ? Styles.blacktheme
+                      : Styles.whiteTheme,
+                  ]}
+                  key={`${item.id.toString()}-${index}`}>
+                  <View style={[Style.item_course]}>
+                    <View style={[OwnerEditItemstyles.imagePriceContainer]}>
+                      <View style={[OwnerEditItemstyles.cardImageContainer]}>
+                        <Image
+                          style={OwnerEditItemstyles.cardImage}
+                          source={{uri: item.image}}
+                        />
+                      </View>
+                      <View
+                        style={[
+                          OwnerEditItemstyles.priceContainer,
+                          colorScheme === 'dark'
+                            ? Styles.cardColor
+                            : Styles.main,
+                        ]}>
                         <View>
+                          <View>
+                            <Text
+                              style={[
+                                Style.txt_name,
+                                colorScheme === 'dark'
+                                  ? Styles.whitetext
+                                  : Styles.blackText,
+                              ]}>
+                              {item.name}
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            // width: '50%',
+                            // backgroundColor: 'white',
+                            justifyContent: 'space-between',
+                          }}>
+                          <Text style={Style.txt_item}>₹ {item.price}</Text>
                           <Text
-                            style={[
-                              Style.txt_name,
-                              colorScheme === 'dark'
-                                ? Styles.whitetext
-                                : Styles.blackText,
-                            ]}>
-                            {item.name}
+                            style={{
+                              color: 'white',
+                              fontFamily: 'Poppins-Regular',
+                              fontSize: 12,
+                            }}>
+                            {' '}
+                            Available: {item.availableQuantities}
                           </Text>
                         </View>
+                      </View>
+                    </View>
+                    <View style={OwnerEditItemstyles.buttonContainer}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          FetchData(item.id);
+                          setEditProductId(item.id);
+                          setViisble(true);
+                        }}>
+                        <View style={OwnerEditItemstyles.button}>
+                          <Text style={Style.txt_edit}>Edit</Text>
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          // FetchData(item.id);
+                          // setEditProductId(item.id);
+                          setSelectedProductId(item.id);
+                          handleDisableProduct(item);
+                        }}>
+                        <View style={OwnerEditItemstyles.button}>
+                          <Text style={Style.txt_edit}>Manage</Text>
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={() => RemoveProducts(item.id)}>
+                        <View style={OwnerEditItemstyles.button}>
+                          <Text style={Style.txt_del}>Delete</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                  <CustomModal
+                    showModal={showModal}
+                    onClose={closeModal}
+                    message="Product has been deleted!"
+                  />
+                </View>
+                <View>
+                  <Modal
+                    animationType="slide"
+                    visible={isModalVisible}
+                    onRequestClose={() => setIsModalVisible(false)}
+                    transparent={true}>
+                    <View style={styles.modalContainer}>
+                      <View style={{alignItems: 'flex-end', marginRight: 20}}>
+                        <TouchableOpacity
+                          onPress={() => setIsModalVisible(false)}
+                          style={styles.closeButton}>
+                          <Text style={styles.closeButtonText}>Close</Text>
+                        </TouchableOpacity>
+                      </View>
+                      <View style={{alignItems: 'center', marginTop: 10}}>
+                        <Text
+                          style={{
+                            fontFamily: 'Poppins-SemiBold',
+                            fontSize: 20,
+                            color: Colors.white,
+                          }}>
+                          Quantities
+                        </Text>
                       </View>
                       <View
                         style={{
                           flexDirection: 'row',
-                          // width: '50%',
-                          // backgroundColor: 'white',
+                          width: '90%',
                           justifyContent: 'space-between',
+                          alignItems: 'center',
+                          marginLeft: 20,
                         }}>
-                        <Text style={Style.txt_item}>₹ {item.price}</Text>
+                        <Text style={styles.modalText}>Total</Text>
+                        <Text style={styles.modalText}>Available</Text>
+                        <Text style={styles.modalText}>Disabled</Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          width: '80%',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          // backgroundColor: 'white',
+                          marginLeft: 25,
+                        }}>
+                        <Text style={OwnerEditItemstyles.modalQuantityText}>
+                          {totalQuantity}
+                        </Text>
+                        <Text style={OwnerEditItemstyles.modalQuantityText}>
+                          {productQuantity}
+                        </Text>
+                        <Text style={OwnerEditItemstyles.modalQuantityText}>
+                          {disabledQuantity}
+                        </Text>
+                      </View>
+                      <View style={styles.quantityContainer}>
+                        <TouchableOpacity
+                          onPress={() => decrementQuantity()}
+                          style={styles.quantityButton}>
+                          <Text style={styles.quantityButtonText}>-</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.quantityText}>
+                          {updatedQuantity}
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => incrementQuantity()}
+                          style={styles.quantityButton}>
+                          <Text style={styles.quantityButtonText}>+</Text>
+                        </TouchableOpacity>
+                      </View>
+                      <View style={{marginTop: 30, alignItems: 'center'}}>
                         <Text
                           style={{
-                            color: 'white',
-                            fontFamily: 'Poppins-Regular',
-                            fontSize: 12,
+                            color: Colors.white,
+                            fontFamily: 'Poppins-Medium',
                           }}>
                           {' '}
-                          Available: {item.availableQuantities}
+                          Note : you can only enable disabled products
                         </Text>
                       </View>
+                      <View
+                        style={{
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          flexDirection: 'row',
+                          width: '80%',
+                          marginLeft: 40,
+                          // marginTop: 20,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() =>
+                            handleDisablebutton(
+                              selectedProductId,
+                              updatedQuantity,
+                            )
+                          }
+                          style={styles.okButton}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontFamily: 'Poppins-SemiBold',
+                              fontSize: 16,
+                              includeFontPadding: false,
+                            }}>
+                            Disable
+                          </Text>
+                          {/* Render disable button content */}
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() =>
+                            handleEnablebutton(
+                              selectedProductId,
+                              updatedQuantity,
+                              disabledQuantity,
+                            )
+                          }
+                          style={styles.okButton}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontFamily: 'Poppins-SemiBold',
+                              fontSize: 16,
+                              includeFontPadding: false,
+                            }}>
+                            Enable
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
                     </View>
-                  </View>
-                  <View style={OwnerEditItemstyles.buttonContainer}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        FetchData(item.id);
-                        setEditProductId(item.id);
-                        setViisble(true);
-                      }}>
-                      <View style={OwnerEditItemstyles.button}>
-                        <Text style={Style.txt_edit}>Edit</Text>
-                      </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => {
-                        // FetchData(item.id);
-                        // setEditProductId(item.id);
-                        setSelectedProductId(item.id);
-                        handleDisableProduct(item);
-                      }}>
-                      <View style={OwnerEditItemstyles.button}>
-                        <Text style={Style.txt_edit}>Manage</Text>
-                      </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => RemoveProducts(item.id)}>
-                      <View style={OwnerEditItemstyles.button}>
-                        <Text style={Style.txt_del}>Delete</Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
+                  </Modal>
                 </View>
-                <CustomModal
-                  showModal={showModal}
-                  onClose={closeModal}
-                  message="Product has been deleted!"
-                />
-              </View>
-              <View>
-                <Modal
-                  animationType="slide"
-                  visible={isModalVisible}
-                  onRequestClose={() => setIsModalVisible(false)}
-                  transparent={true}>
-                  <View style={styles.modalContainer}>
-                    <View style={{alignItems: 'flex-end', marginRight: 20}}>
-                      <TouchableOpacity
-                        onPress={() => setIsModalVisible(false)}
-                        style={styles.closeButton}>
-                        <Text style={styles.closeButtonText}>Close</Text>
-                      </TouchableOpacity>
-                    </View>
-                    <View style={{alignItems: 'center', marginTop: 10}}>
-                      <Text
-                        style={{
-                          fontFamily: 'Poppins-SemiBold',
-                          fontSize: 20,
-                          color: Colors.white,
-                        }}>
-                        Quantities
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        width: '90%',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginLeft: 20,
-                      }}>
-                      <Text style={styles.modalText}>Total</Text>
-                      <Text style={styles.modalText}>Available</Text>
-                      <Text style={styles.modalText}>Disabled</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        width: '80%',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        // backgroundColor: 'white',
-                        marginLeft: 25,
-                      }}>
-                      <Text style={OwnerEditItemstyles.modalQuantityText}>
-                        {totalQuantity}
-                      </Text>
-                      <Text style={OwnerEditItemstyles.modalQuantityText}>
-                        {productQuantity}
-                      </Text>
-                      <Text style={OwnerEditItemstyles.modalQuantityText}>
-                        {disabledQuantity}
-                      </Text>
-                    </View>
-                    <View style={styles.quantityContainer}>
-                      <TouchableOpacity
-                        onPress={() => decrementQuantity(selectedProductId)}
-                        style={styles.quantityButton}>
-                        <Text style={styles.quantityButtonText}>-</Text>
-                      </TouchableOpacity>
-                      <Text style={styles.quantityText}>{updatedQuantity}</Text>
-                      <TouchableOpacity
-                        onPress={() => incrementQuantity(selectedProductId)}
-                        style={styles.quantityButton}>
-                        <Text style={styles.quantityButtonText}>+</Text>
-                      </TouchableOpacity>
-                    </View>
-                    <View style={{marginTop: 30, alignItems: 'center'}}>
-                      <Text
-                        style={{
-                          color: Colors.white,
-                          fontFamily: 'Poppins-Medium',
-                        }}>
-                        {' '}
-                        Note : you can only enable disabled products
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        flexDirection: 'row',
-                        width: '80%',
-                        marginLeft: 40,
-                        // marginTop: 20,
-                      }}>
-                      <TouchableOpacity
-                        onPress={() =>
-                          handleDisablebutton(
-                            selectedProductId,
-                            updatedQuantity,
-                          )
-                        }
-                        style={styles.okButton}>
-                        <Text
-                          style={{
-                            color: 'black',
-                            fontFamily: 'Poppins-SemiBold',
-                            fontSize: 16,
-                            includeFontPadding: false,
-                          }}>
-                          Disable
-                        </Text>
-                        {/* Render disable button content */}
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() =>
-                          handleEnablebutton(
-                            selectedProductId,
-                            updatedQuantity,
-                            disabledQuantity,
-                          )
-                        }
-                        style={styles.okButton}>
-                        <Text
-                          style={{
-                            color: 'black',
-                            fontFamily: 'Poppins-SemiBold',
-                            fontSize: 16,
-                            includeFontPadding: false,
-                          }}>
-                          Enable
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </Modal>
-              </View>
-            </>
-          ))
+              </>
+            ),
+          )
         )}
       </ScrollView>
     </SafeAreaView>

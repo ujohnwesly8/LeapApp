@@ -1,20 +1,45 @@
 import {useNavigation} from '@react-navigation/native';
+import {launchImageLibrary} from 'react-native-image-picker';
 import * as Yup from 'yup';
-import {useDispatch, useSelector} from 'react-redux';
-import {url as baseUrl} from '../../constants/Apis';
-import axios from 'axios';
-import {addsize} from '../../redux/actions/actions';
 import {SetStateAction, useEffect, useState} from 'react';
-import {Alert} from 'react-native';
+import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFormik} from 'formik';
-import {launchImageLibrary} from 'react-native-image-picker';
-const OwnerImage = () => {
-  const navigation = useNavigation();
+
+import {addsize} from '../../redux/actions/actions';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useDispatch, useSelector} from 'react-redux';
+import {url as baseUrl} from '../../constants/Apis';
+
+type RootStackParamList = {
+  Home: {screen: any};
+  ProfileScreen: {screen: any};
+};
+const useAddImages = () => {
+  const [selectedsize, setSelectedsize] = useState('');
+  const [price, setPrice] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [_url, setUrl] = useState<string | null>(null);
+
+  const [selectedImage, setSelectedImage] = useState('');
+
+  const [imageUris, setImageUris] = useState([]);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const dispatch = useDispatch();
-  const name = useSelector(state => state.ItemsReducer.Name);
-  const description = useSelector(state => state.ItemsReducer.Description);
-  const categoryIds = useSelector(state => state.ItemsReducer.CategoryId);
+  const name = useSelector(
+    (state: {ItemsReducer: {Name: string}}) => state.ItemsReducer.Name,
+  );
+  const description = useSelector(
+    (state: {ItemsReducer: {Description: string}}) =>
+      state.ItemsReducer.Description,
+  );
+  const categoryIds = useSelector(
+    (state: {ItemsReducer: {CategoryId: string}}) =>
+      state.ItemsReducer.CategoryId,
+  );
   const [showModal, setShowModal] = useState(false);
   const openModal = () => {
     setShowModal(true);
@@ -24,17 +49,15 @@ const OwnerImage = () => {
     setShowModal(false);
   };
   const subcategoryIds = useSelector(
-    state => state.ItemsReducer.subcategoryIds,
+    (state: {ItemsReducer: {subcategoryIds: string}}) =>
+      state.ItemsReducer.subcategoryIds,
   );
   console.log(categoryIds);
   console.log(subcategoryIds);
-  const size = useSelector(state => state.SizeReducer.selected);
-  // const {selectedImage, setSelectedImage} = useImagepicker();
-  const [selectedsize, setSelectedsize] = useState('');
-  const [price, setPrice] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [, setUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const size = useSelector(
+    (state: {SizeReducer: {selected: string}}) => state.SizeReducer.selected,
+  );
+
   const getImageUrl = async () => {
     const url = await AsyncStorage.getItem('url');
     setUrl(url);
@@ -106,24 +129,16 @@ const OwnerImage = () => {
       console.log('added', response.data);
       dispatch(addsize(selectedsize));
       openModal();
-      // navigation.navigate('Home', {screen: 'OwnerHome'});
-      // navigation.navigate('OwnerHomestack', {screen: 'OwnerHome'});
     } catch (error) {
       console.log(error);
-      // Alert.alert('Failed to add item');
     }
   };
-
-  const [selectedImage, setSelectedImage] = useState('');
-
-  const [imageUris, setImageUris] = useState([]);
-  const [imageUrls, setImageUrls] = useState([]);
 
   const handleremove = () => {
     setSelectedImage('');
   };
-  const handleRemoveImage = index => {
-    setImageUrls(prevUrls => prevUrls.filter((_url, i) => i !== index));
+  const handleRemoveImage = (index: number) => {
+    setImageUrls(prevUrls => prevUrls.filter((url, i) => i !== index));
     setIsLoading(false);
   };
 
@@ -131,7 +146,6 @@ const OwnerImage = () => {
     const getImageUrls = async () => {
       const url = await AsyncStorage.getItem('url');
       if (url) {
-        // eslint-disable-next-line @typescript-eslint/no-shadow
         const imageUrls = Array.from({length: 10}, (_, index) => {
           return `${url}/file${index + 1}`;
         });
@@ -149,14 +163,16 @@ const OwnerImage = () => {
       async response => {
         if (response.didCancel) {
           console.log('User cancelled image picker');
-        } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
+        } else if (response.errorMessage) {
+          console.log('ImagePicker Error: ', response.errorMessage);
         } else {
-          const images = response.assets.map(imagePath => ({
-            uri: imagePath.uri,
-            type: 'image/png',
-            name: 'image.png',
-          }));
+          const images = (response as {assets: {uri: string}[]}).assets.map(
+            imagePath => ({
+              uri: imagePath.uri,
+              type: 'image/png',
+              name: 'image.png',
+            }),
+          );
           const formData = new FormData();
           images.forEach((file, _index) => {
             formData.append('file', {
@@ -197,7 +213,6 @@ const OwnerImage = () => {
       },
     );
   };
-
   console.log(name, size);
   const formik = useFormik({
     initialValues: {
@@ -235,4 +250,4 @@ const OwnerImage = () => {
     isLoading,
   };
 };
-export default OwnerImage;
+export default useAddImages;

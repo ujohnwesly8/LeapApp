@@ -1,11 +1,10 @@
+/* eslint-disable react/self-closing-comp */
 import React from 'react';
 import {StatusBar, Text, View, ImageBackground, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../OwnerProductdetailsPage/oProductDetailsStyle';
 import useOProductDetails from './useOProductDetails';
 import Styles from '../../constants/themeColors';
-import {ColorSchemeContext} from '../../../ColorSchemeContext';
-
 type Props = {
   route: {params: {product: any}};
   navigation: any;
@@ -28,7 +27,7 @@ const OproductDetails = ({route, navigation}: Props) => {
         <Icon name="arrow-back-ios" size={28} color="black" onPress={goBack} />
       </View>
       <ScrollView horizontal={true}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={styles.productImagecon}>
           {product.imageUrl.map((item: any, index: number) => (
             <ImageBackground
               key={index}
@@ -41,7 +40,6 @@ const OproductDetails = ({route, navigation}: Props) => {
         style={[
           styles.detailsContainer,
           colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-          {marginTop: -50},
         ]}>
         <Text
           style={[

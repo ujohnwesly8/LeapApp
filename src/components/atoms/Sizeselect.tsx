@@ -6,7 +6,6 @@ import Colors from '../../constants/colors';
 
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
-// import AntDesign from '@expo/vector-icons/AntDesign';
 const data = [
   {label: 'XS', value: '1'},
   {label: 'S', value: '2'},

@@ -10,12 +10,14 @@ import {
 import React, {ReactNode} from 'react';
 import {CheckBox} from 'react-native-elements';
 import {useSelector} from 'react-redux';
+
 import useCheckout from './useCheckout';
-import style from './CheckoutScreenStyle';
-import Colors from '../../constants/colors';
 import useCart from '../Cart/useCart';
-import Styles from '../../constants/themeColors';
+
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
+import Colors from '../../constants/colors';
+import Styles from '../../constants/themeColors';
+import style from './CheckoutScreenStyle';
 
 type Props = {
   route: {name: string};
@@ -30,7 +32,6 @@ const CheckoutScreen = ({navigation}: Props) => {
     refreshing,
     onRefresh,
     addressList,
-
     isChecked,
   } = useCheckout();
   const {colorScheme} = useCart();
@@ -42,21 +43,10 @@ const CheckoutScreen = ({navigation}: Props) => {
   console.log('johnwesly', addressList);
   if (!cartData) {
     return (
-      <View
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100%',
-          backgroundColor: Colors.main,
-        }}>
+      <View style={style.checkoutcontainer}>
         <Image
           source={require('../../../assets/LoginImage.png')}
-          style={{
-            height: 200,
-            width: 200,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
+          style={style.checkoutimage}
         />
         <Text style={{color: Colors.iconscolor}}>The Items are Loading...</Text>
       </View>
@@ -126,7 +116,6 @@ const CheckoutScreen = ({navigation}: Props) => {
                       style={{
                         flexDirection: 'row',
                         width: '100%',
-                        // backgroundColor: 'white',
                       }}>
                       <View style={style.imageContainer}>
                         <Image
@@ -172,7 +161,6 @@ const CheckoutScreen = ({navigation}: Props) => {
                         </View>
                         <View style={style.SizeandDate}>
                           <View style={style.quantityContainer}>
-                            {/* {console.log(item.product.quantity)} */}
                             <Text
                               style={[
                                 style.quantityText,
@@ -229,12 +217,12 @@ const CheckoutScreen = ({navigation}: Props) => {
                 </Text>
               </View>
             </View>
-            {/* <Text style={{margin: 5, width: '100%'}}>{selectedAddress}</Text> */}
             {addressList &&
               addressList.map(
                 (
                   item: {
                     addressLine1: string;
+                    addressLine2: string;
                     postalCode: string;
                     city: string;
                     country: string;
@@ -251,22 +239,12 @@ const CheckoutScreen = ({navigation}: Props) => {
                       <View>
                         <Text
                           style={[
-                            {
-                              width: 60,
-                              marginLeft: 10,
-                              // width: 140,
-                              height: 20,
-                              marginTop: 20,
-                              color: Colors.black,
-                              fontSize: 12,
-                              // fontWeight: '500',
-                              fontFamily: 'Poppins-Regular',
-                            },
+                            style.addresstext,
                             colorScheme === 'dark'
                               ? Styles.whitetext
                               : Styles.blackText,
                           ]}>
-                          Address :
+                          Address:
                         </Text>
                         <Text
                           style={[
@@ -276,7 +254,8 @@ const CheckoutScreen = ({navigation}: Props) => {
                               : Styles.blackText,
                           ]}>
                           <Text>{item.addressLine1},</Text>
-                          {item.postalCode},{item.city},{item.country},
+                          {item.addressLine2},{item.postalCode},{item.city},
+                          {item.country},
                         </Text>
                       </View>
                       <View style={style.containerCheckbox}>
@@ -312,7 +291,6 @@ const CheckoutScreen = ({navigation}: Props) => {
             ]}>
             Shipping Cost
           </Text>
-          {/* <Text>Total Amount</Text> */}
           <Text
             style={[
               style.priceTotalText,
@@ -330,7 +308,6 @@ const CheckoutScreen = ({navigation}: Props) => {
             ]}>
             Tax
           </Text>
-          {/* <Text>Total Amount</Text> */}
           <Text
             style={[
               style.priceTotalText,
@@ -348,7 +325,6 @@ const CheckoutScreen = ({navigation}: Props) => {
             ]}>
             Grand Total
           </Text>
-          {/* <Text>Total Amount</Text> */}
           <Text
             style={[
               style.priceTotalText,
@@ -366,7 +342,6 @@ const CheckoutScreen = ({navigation}: Props) => {
             ]}>
             final Price
           </Text>
-          {/* <Text>Total Amount</Text> */}
           <Text
             style={[
               style.priceTotalText,
@@ -377,7 +352,6 @@ const CheckoutScreen = ({navigation}: Props) => {
           </Text>
         </View>
         <View style={{alignItems: 'center'}}>
-          {/* <Text style={style.TextGrand}>Grand Total</Text> */}
           <TouchableOpacity
             style={[style.PaymentButton, isChecked && {opacity: 0.5}]}
             onPress={isChecked ? undefined : handlePayment}

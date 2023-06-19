@@ -1,89 +1,37 @@
-// import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-// import React, {useState} from 'react';
-// import Colors from '../../../constants/Colors';
-
-// const PriceRangeDropdown = ({minPrice, maxPrice, onSelectPriceRange}) => {
-//   const [open, setOpen] = React.useState(false);
-
-//   const handleToggle = () => {
-//     setOpen(!open);
-//   };
-
-//   const handleSelectPriceRange = (min, max) => {
-//     onSelectPriceRange(min, max);
-//     setOpen(false);
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <TouchableOpacity style={styles.button} onPress={handleToggle}>
-//         <Text>{`${minPrice} - ${maxPrice}`}</Text>
-//       </TouchableOpacity>
-//       {open && (
-//         <View style={styles.dropdown}>
-//           <TouchableOpacity
-//             style={styles.option}
-//             onPress={() => handleSelectPriceRange(100, 1000)}>
-//             <Text>100 - 1000</Text>
-//           </TouchableOpacity>
-//           <TouchableOpacity
-//             style={styles.option}
-//             onPress={() => handleSelectPriceRange(1000, 2000)}>
-//             <Text>1000 - 2000</Text>
-//           </TouchableOpacity>
-//         </View>
-//       )}
-//     </View>
-//   );
-// };
-
-// export default PriceRangeDropdown;
-// const styles = StyleSheet.create({
-//   container: {
-//     // position: 'relative',
-//     width: '85%',
-//     height: '20%',
-//     borderRadius: 100,
-//     // backgroundColor: Colors.black,
-//   },
-//   Text: {color: Colors.white},
-//   button: {
-//     padding: 10,
-//     backgroundColor: Colors.buttonColor,
-//     borderRadius: 8,
-//     // borderWidth: 1,
-//     // borderColor: 'gray',
-//   },
-//   dropdown: {
-//     // position: 'absolute',
-//     // top: '100%',
-//     // left: 0,
-//     // right: 0,
-//     backgroundColor: 'white',
-//     // borderWidth: 1,
-//     // borderColor: 'gray',
-//     // zIndex: 1,
-//   },
-//   option: {
-//     padding: 10,
-//   },
-// });
 import React, {useState, useRef, useContext} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, Animated} from 'react-native';
+import {View, Text, TouchableOpacity, Animated} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'; // Import the icon component from the library
 import Colors from '../../../constants/colors';
 import {ColorSchemeContext} from '../../../../ColorSchemeContext';
 import Styles from '../../../constants/themeColors';
+import styles from './priceRangestyles';
 const options = [
   {label: '₹0 - ₹100', min: 0, max: 100},
   {label: '₹100 - ₹1000', min: 100, max: 1000},
   {label: '₹1000 - ₹2000', min: 1000, max: 2000},
   {label: '₹2000 - ₹3000', min: 2000, max: 3000},
 ];
-const PriceRangeDropdown = ({minPrice, maxPrice, onSelectPriceRange}) => {
+type PriceRange = {
+  label: string;
+  min: number;
+  max: number;
+};
+
+type PriceRangeProps = {
+  minPrice: number;
+  maxPrice: number;
+  onSelectPriceRange: (min: number, max: number) => void;
+};
+
+const PriceRangeDropdown = ({
+  minPrice,
+  maxPrice,
+  onSelectPriceRange,
+}: PriceRangeProps) => {
   const [open, setOpen] = useState(false);
   const {colorScheme} = useContext(ColorSchemeContext);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState<PriceRange | null>(null);
+
   const dropdownHeight = useRef(new Animated.Value(0)).current;
   const handleDropdownToggle = () => {
     setOpen(!open);
@@ -107,7 +55,7 @@ const PriceRangeDropdown = ({minPrice, maxPrice, onSelectPriceRange}) => {
       useNativeDriver: false,
     }).start();
   };
-  const handleSelectOption = option => {
+  const handleSelectOption = (option: any) => {
     setSelectedOption(option);
     onSelectPriceRange(option.min, option.max);
     setOpen(false); // Adjust the delay as needed to allow time for the selection animation
@@ -153,38 +101,5 @@ const PriceRangeDropdown = ({minPrice, maxPrice, onSelectPriceRange}) => {
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    width: '95%',
-    borderRadius: 20,
-  },
-  button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    backgroundColor: Colors.buttonColor,
-    borderRadius: 20,
-  },
-  buttonText: {
-    color: Colors.white,
-    fontSize: 16,
-    fontFamily: 'Poppins-SemiBold',
-  },
-  dropdown: {
-    marginTop: 10,
-    backgroundColor: Colors.white,
-    borderRadius: 8,
-    elevation: 5,
-    overflow: 'hidden',
-  },
-  option: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-  },
-  optionText: {
-    color: Colors.black,
-  },
-});
+
 export default PriceRangeDropdown;

@@ -1,11 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+
+import React, {useContext} from 'react';
 import {
   StatusBar,
   Text,
@@ -15,146 +10,45 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import styles from './UProductDetailsStyle';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {ProductsById, url} from '../../constants/Apis';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
+import DateRangePicker from '../../components/atoms/CalanderPicker';
+import {Pagination} from 'react-native-snap-carousel';
+
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
+import useProductdetails from './useProductdetails';
+
 import Styles from '../../constants/themeColors';
 import Colors from '../../constants/colors';
-import DateRangePicker from '../../components/atoms/CalanderPicker';
-import ApiService from '../../network/network';
-import {Pagination} from 'react-native-snap-carousel';
-import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import {useDispatch} from 'react-redux';
-import {fetchCartProducts} from '../../redux/slice/cartSlice';
-import ModalContext from '../../../CustomModalProvider';
+import styles from './UProductDetailsStyle';
 type Props = {
   route: {params: {product: any}};
   navigation: any;
 };
-const UDetailScreen = ({route, navigation}: Props) => {
+export default function UDetailScreen({route, navigation}: Props) {
   const {product} = route.params;
-  const [rentalStartDate, setRentalStartDate] = useState(new Date());
-  const [rentalEndDate, setRentalEndDate] = useState(new Date());
-  const [quantity, setQuantity] = useState(1);
-  const [showModal, setShowModal] = useState(false);
-  const [showwModal, settShowModal] = useState(false);
-  const [, setIsQuantity] = useState(true);
-  const [isMinusDisabled, setIsMinusDisabled] = useState(true);
-  const [isPlusDisabled, setIsPlusDisabled] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const scrollViewRef = useRef<ScrollView>(null);
-  const scrollTimerRef = useRef<number | null>(null);
-  const Quantity = product.quantity;
-  const dispatch = useDispatch();
-  // const {openModal: any} = useContext(ModalContext);
   const {colorScheme} = useContext(ColorSchemeContext);
-
-  // const handleOpenModal = () => {
-  //   openModal('This is a custom modal message!');
-  // };
-
-  const handleDecrement = () => {
-    setQuantity(quantity - 1);
-    setIsQuantity(true);
-    if (quantity === 1) {
-      setIsMinusDisabled(true);
-    }
-    setIsPlusDisabled(false);
-  };
-  const handleIncrement = () => {
-    setQuantity(quantity + 1);
-    setIsQuantity(true);
-    if (quantity === product.quantity - 1) {
-      setIsPlusDisabled(true);
-    }
-    setIsMinusDisabled(false);
-  };
-  const ProductId = product.id;
-  const productsData = async () => {
-    const result = await ApiService.get(`${ProductsById}/${ProductId}`);
-    console.log('result is :', result);
-    // setProductData(result);
-  };
-
-  const handleSubmit = async () => {
-    const item = {
-      productId: product.id,
-      quantity: quantity,
-      rentalEndDate: rentalEndDate.toISOString(),
-      rentalStartDate: rentalStartDate.toISOString(),
-    };
-    const token = await AsyncStorage.getItem('token');
-    fetch(`${url}/cart/add`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(item),
-    })
-      .then(response => {
-        console.log('Success:', response);
-        if (response.status === 400) {
-          opennModal();
-        }
-        console.log(response);
-        return response.json();
-      })
-      .then(data => {
-        console.log('Data:', data);
-        openModal();
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-  const openModal = () => {
-    setShowModal(true);
-  };
-  const opennModal = () => {
-    settShowModal(true);
-  };
-  const closeModal = () => {
-    setShowModal(false);
-    dispatch(fetchCartProducts() as any);
-    productsData();
-  };
-  const closeeModal = () => {
-    settShowModal(false);
-  };
-  const scrollToNextImage = useCallback(() => {
-    if (scrollViewRef.current) {
-      const nextIndex =
-        activeIndex === product.imageUrl.length - 1 ? 0 : activeIndex + 1;
-      scrollViewRef.current.scrollTo({x: nextIndex * 405, animated: true});
-      setActiveIndex(nextIndex);
-    }
-  }, [activeIndex, product.imageUrl]);
-
-  const startScrollTimer = useCallback(() => {
-    stopScrollTimer();
-    scrollTimerRef.current = setInterval(scrollToNextImage, 2000);
-  }, [scrollToNextImage]);
-
-  useEffect(() => {
-    startScrollTimer();
-    return () => {
-      stopScrollTimer();
-    };
-  }, [activeIndex, startScrollTimer]);
-
-  const stopScrollTimer = () => {
-    if (scrollTimerRef.current) {
-      clearInterval(scrollTimerRef.current);
-      scrollTimerRef.current = null;
-    }
-  };
-
-  const handleScroll = () => {
-    startScrollTimer();
-  };
-
+  const {
+    rentalStartDate,
+    setRentalStartDate,
+    rentalEndDate,
+    setRentalEndDate,
+    quantity,
+    showModal,
+    showwModal,
+    isMinusDisabled,
+    isPlusDisabled,
+    handleDecrement,
+    handleIncrement,
+    handleSubmit,
+    closeModal,
+    closeeModal,
+    scrollViewRef,
+    setActiveIndex,
+    activeIndex,
+    startScrollTimer,
+    handleScroll,
+  } = useProductdetails(product);
+  const Quantity = product.quantity;
   return (
     <ScrollView
       style={{
@@ -234,7 +128,6 @@ const UDetailScreen = ({route, navigation}: Props) => {
             ]}>
             {product.description}
           </Text>
-
           <View style={{marginTop: 10, marginBottom: 20, flexDirection: 'row'}}>
             <Text
               style={[
@@ -263,16 +156,7 @@ const UDetailScreen = ({route, navigation}: Props) => {
               ]}>
               Size
             </Text>
-            <View
-              style={{
-                marginTop: 3,
-                // backgroundColor: Colors.buttonColor,
-                width: 40,
-                // height: 25,
-                borderRadius: 5,
-                marginLeft: '60%',
-                justifyContent: 'center',
-              }}>
+            <View style={styles.descriptionContainer}>
               <Text
                 style={[
                   styles.detailsSize,
@@ -342,9 +226,8 @@ const UDetailScreen = ({route, navigation}: Props) => {
       <CustomModal
         showModal={showwModal}
         onClose={closeeModal}
-        message="Quantity is unavailable"
+        message="Product already added"
       />
     </ScrollView>
   );
-};
-export default UDetailScreen;
+}

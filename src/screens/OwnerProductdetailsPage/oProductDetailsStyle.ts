@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     height: '100%',
     width: '100%',
-
+    marginTop: -50,
     paddingHorizontal: 20,
     backgroundColor: Colors.main,
     flex: 20,
@@ -73,6 +73,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#3E54AC',
   },
+  productImagecon: {
+    flexDirection: 'row',
+  },
   headphoto: {
     position: 'absolute',
     width: 186,
@@ -81,7 +84,7 @@ const styles = StyleSheet.create({
     top: 288,
   },
   headingtext: {
-    marginTop:30,
+    marginTop: 30,
     fontSize: 20,
 
     fontFamily: 'Poppins-SemiBold',

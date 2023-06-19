@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-shadow */
 import {useState, useEffect} from 'react';
 import ApiService from '../../network/network';
 import {url} from './../../constants/Apis';

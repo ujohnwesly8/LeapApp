@@ -10,17 +10,20 @@ import {
 } from 'react-native';
 import React, {useContext} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import OwnerImagestyles from './OwnerImagestyles';
-import Sizeselection from '../../components/atoms/Sizeselect';
 import Lottie from 'lottie-react-native';
 
-import Useownerimage from './Useownerimage';
-import Styles from '../LoginScreen/loginStyle';
+import Useownerimage from './useAddImages';
+import Sizeselection from '../../components/atoms/Sizeselect';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import Colors from '../../constants/colors';
+import {addImages} from '../../constants/languages/en';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
-import styles from '../../constants/themeColors';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
+
+import Styles from '../LoginScreen/loginStyle';
+import styles from '../../constants/themeColors';
+import OwnerImagestyles from './OwnerImagestyles';
+import Colors from '../../constants/colors';
+
 const AddImages = () => {
   const {
     // Onhandlepress,
@@ -30,7 +33,6 @@ const AddImages = () => {
     handlePriceChange,
     handleQuantityChange,
     handleBlur,
-
     imageUrls,
     pickImages,
     closeModal,
@@ -40,7 +42,6 @@ const AddImages = () => {
   } = Useownerimage();
   const areImagesUploaded = imageUrls && imageUrls.length > 0;
   const {colorScheme} = useContext(ColorSchemeContext);
-  // console.log('johnresly', imageUrls);
   return (
     <ScrollView
       style={[
@@ -102,7 +103,7 @@ const AddImages = () => {
               <>
                 {isLoading ? (
                   <View style={OwnerImagestyles.overlay}>
-                    <ActivityIndicator size="large" color="black" />
+                    <ActivityIndicator size="large" color="white" />
                   </View>
                 ) : (
                   <TouchableOpacity
@@ -124,7 +125,7 @@ const AddImages = () => {
                             ? styles.whitetext
                             : styles.blackText,
                         ]}>
-                        Add Images{' '}
+                        {addImages}
                       </Text>
                     )}
                   </TouchableOpacity>

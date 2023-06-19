@@ -1,77 +1,23 @@
-// import React from 'react';
-// import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-// import Colors from '../../../constants/Colors';
-// const FilterSelectSize = ({sizes, selectedSize, onSelectSize}) => {
-//   const [open, setOpen] = React.useState(false);
-
-//   const handleToggle = () => {
-//     setOpen(!open);
-//   };
-
-//   const handleSelectSize = size => {
-//     onSelectSize(size);
-//     setOpen(false);
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <TouchableOpacity style={styles.button} onPress={handleToggle}>
-//         <Text style={styles.Text}>{selectedSize}</Text>
-//       </TouchableOpacity>
-//       {open && (
-//         <View style={styles.dropdown}>
-//           {sizes.map(size => (
-//             <TouchableOpacity
-//               key={size}
-//               style={styles.option}
-//               onPress={() => handleSelectSize(size)}>
-//               <Text>{size}</Text>
-//             </TouchableOpacity>
-//           ))}
-//         </View>
-//       )}
-//     </View>
-//   );
-// };
-
-// export default FilterSelectSize;
-// const styles = StyleSheet.create({
-//   container: {
-//     // position: 'relative',
-//     width: '85%',
-//     height: '20%',
-//     borderRadius: 100,
-//     // backgroundColor: Colors.black,
-//   },
-//   Text: {color: Colors.white},
-//   button: {
-//     padding: 10,
-//     backgroundColor: Colors.buttonColor,
-//     borderRadius: 8,
-//     // borderWidth: 1,
-//     // borderColor: 'gray',
-//   },
-//   dropdown: {
-//     // position: 'absolute',
-//     // top: '100%',
-//     // left: 0,
-//     // right: 0,
-//     backgroundColor: 'white',
-//     // borderWidth: 1,
-//     // borderColor: 'gray',
-//     // zIndex: 1,
-//   },
-//   option: {
-//     padding: 10,
-//   },
-// });
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useRef, useContext} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, Animated} from 'react-native';
+import {View, Text, TouchableOpacity, Animated} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Colors from '../../../constants/colors';
+
 import {ColorSchemeContext} from '../../../../ColorSchemeContext';
+import Colors from '../../../constants/colors';
 import Styles from '../../../constants/themeColors';
-const FilterSelectSize = ({sizes, selectedSize, onSelectSize}) => {
+import styles from './filterstyles';
+
+type FilterSelectSizeProps = {
+  sizes: string[]; // Specify that sizes is an array of strings
+  selectedSize: string;
+  onSelectSize: (size: string) => void;
+};
+const FilterSelectSize = ({
+  sizes,
+  selectedSize,
+  onSelectSize,
+}: FilterSelectSizeProps) => {
   const [open, setOpen] = useState(false);
   const dropdownHeight = useRef(new Animated.Value(0)).current;
   const {colorScheme} = useContext(ColorSchemeContext);
@@ -97,7 +43,7 @@ const FilterSelectSize = ({sizes, selectedSize, onSelectSize}) => {
       useNativeDriver: false,
     }).start();
   };
-  const handleSelectSize = size => {
+  const handleSelectSize = (size: string) => {
     onSelectSize(size);
     setOpen(false);
     closeDropdown();
@@ -153,41 +99,3 @@ const FilterSelectSize = ({sizes, selectedSize, onSelectSize}) => {
   );
 };
 export default FilterSelectSize;
-const styles = StyleSheet.create({
-  container: {
-    width: '95%',
-    zIndex: 1, // Add zIndex to make the dropdown appear above other components
-  },
-  button: {
-    padding: 10,
-    backgroundColor: Colors.buttonColor,
-    borderRadius: 20,
-    alignItems: 'center',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  text: {
-    color: Colors.white,
-    fontFamily: 'Poppins-SemiBold',
-    marginRight: 260,
-    fontSize: 15,
-  },
-  dropdown: {
-    left: 0,
-    right: 0,
-    backgroundColor: 'white',
-    overflow: 'hidden',
-    borderRadius: 8,
-    elevation: 4,
-  },
-  option: {
-    padding: 8,
-    alignItems: 'center',
-  },
-  optionText: {
-    fontSize: 16,
-    color: Colors.black,
-  },
-});

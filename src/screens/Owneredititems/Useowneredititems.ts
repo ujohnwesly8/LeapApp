@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-shadow */
 import {SetStateAction, useEffect, useState} from 'react';
 import axios from 'axios';
@@ -15,48 +15,46 @@ import {
   removeproducts,
 } from '../../redux/actions/actions';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  useFocusEffect,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
-import {Alert} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {launchImageLibrary} from 'react-native-image-picker';
 import ApiService from '../../network/network';
-import {Data} from 'victory-core';
+import {StackNavigationProp} from '@react-navigation/stack';
+type RootStackParamList = {
+  OwnerProfile: undefined;
+};
 const Useowneredititems = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [gender, setGender] = useState('');
-  const navigation = useNavigation();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState('');
   const [outfitType, setOutfitType] = useState('');
   const [itemType, setItemType] = useState('');
   const [selectedsize, setSelectedsize] = useState('');
-  const [editProductId, setEditProductId] = useState(null);
+  const [editProductId, setEditProductId] = useState<number | null>(null);
   const [pref, setPrefill] = useState([]);
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   const [selectedItem, setSelectedItem] = useState(null);
-  // const [showModal, setShowModal] = useState(false);
   const [visible, setViisble] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   console.log('snj xkcvn', editProductId);
   const [isMinusDisabled, setIsMinusDisabled] = useState(true);
   const [isPlusDisabled, setIsPlusDisabled] = useState(false);
-  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(
+    null,
+  );
   const [outofStock, setOutofstock] = useState(false);
   const [totalQuantity, settotalQuantities] = useState(0);
   const [updatedQuantity, setupdatedquantity] = useState(0);
   const [disabledQuantity, setdisabledQuantity] = useState(0);
   const [productQuantity, setProductQuantity] = useState(0);
-  const isFocused = useIsFocused();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [refreshData, setRefreshData] = useState(false);
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const openModal = () => {
     setShowModal(true);
     fetchData();
@@ -75,7 +73,7 @@ const Useowneredititems = () => {
     dispatch(addGenderData(selectedGender));
     // console.log(selectedGender);
   };
-  const handleSelectItem = item => {
+  const handleSelectItem = (item: SetStateAction<null>) => {
     setSelectedItem(item);
   };
   const fetchData = async () => {
@@ -112,7 +110,7 @@ const Useowneredititems = () => {
     fetchData();
   }, []);
   console.log(name);
-  const FetchData = async editProductId => {
+  const FetchData = async (editProductId: any) => {
     try {
       // setViisble(true);
       const ProductData = await ApiService.get(
@@ -130,30 +128,14 @@ const Useowneredititems = () => {
       console.log('editProductId', editProductId);
     }
   };
-
-  // const FetchData = async editProductId => {
-  //   try {
-  //     setViisble(true);
-  //     const ProductData = await ApiService.get(
-  //       `${ProductsById}/${editProductId}`,
-  //     );
-  //     console.log('ProductData', ProductData);
-  //     setMapdata(ProductData);
-  //     setName(ProductData.name);
-  //     setPrice(ProductData.price);
-  //     setQuantity(ProductData.totalQuantity);
-  //     setDescription(ProductData.description);
-  //     return ProductData;
-  //   } catch (error) {
-  //     console.log('error is :', error);
-  //     console.log('editProductId', editProductId);
-  //   }
-  // };
   const [categoriesData, setCategoriesData] = useState([]);
   const [subCategoriesData, setSubCategoriesData] = useState([]);
   const [subEventCategoriesData, setSubEventCategoriesData] = useState([]);
   const [subOutfitCategoriesData, setSubOutfitCategoriesData] = useState([]);
-  const genderData = useSelector(state => state.GenderReducer.genderData);
+  const genderData = useSelector(
+    (state: {GenderReducer: {genderData: null[]}}) =>
+      state.GenderReducer.genderData,
+  );
   console.log(genderData);
 
   // 1st api endpoint code starts
@@ -272,9 +254,6 @@ const Useowneredititems = () => {
   const [imageUris, setImageUris] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
 
-  const handleImageUris = urls => {
-    setImageUrls(urls);
-  };
   const handleremove = () => {
     setSelectedImage('');
   };
@@ -299,56 +278,59 @@ const Useowneredititems = () => {
         mediaType: 'photo',
         selectionLimit: 10,
       },
-      async response => {
+      async (response: any) => {
         if (response.didCancel) {
           console.log('User cancelled image picker');
         } else if (response.error) {
           console.log('ImagePicker Error: ', response.error);
         } else {
-          const images = response.assets.map(imagePath => ({
-            uri: imagePath.uri,
-            type: 'image/png',
-            name: 'image.png',
-          }));
-          const formData = new FormData();
-          images.forEach((file, index) => {
-            formData.append('file', {
-              uri: file.uri,
+          if (response.assets) {
+            const images = response.assets.map((imagePath: any) => ({
+              uri: imagePath.uri,
               type: 'image/png',
               name: 'image.png',
+            }));
+            const formData = new FormData();
+            images.forEach((file: {uri: any}) => {
+              formData.append('file', {
+                uri: file.uri,
+                type: 'image/png',
+                name: 'image.png',
+              });
             });
-          });
-          try {
-            const token = await AsyncStorage.getItem('token');
-            console.log(token);
-            const result = await fetch(`${baseUrl}/file/upload`, {
-              method: 'POST',
-              body: formData,
-              headers: {
-                'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${token}`,
-              },
-            });
-            if (result.ok) {
-              const res = await result.json();
-              console.log(res);
-              setImageUrls(res.urls);
-              setSelectedImage(res.urls);
-              console.log(imageUrls); // Update this line
-            } else {
-              const res = await result.json();
-              console.log('Upload failed');
-              console.log(res);
+            try {
+              const token = await AsyncStorage.getItem('token');
               console.log(token);
+              const result = await fetch(`${baseUrl}/file/upload`, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+              if (result.ok) {
+                const res = await result.json();
+                console.log(res);
+                setImageUrls(res.urls);
+                setSelectedImage(res.urls);
+                console.log(imageUrls); // Update this line
+              } else {
+                const res = await result.json();
+                console.log('Upload failed');
+                console.log(res);
+                console.log(token);
+              }
+            } catch (error) {
+              console.error(error);
             }
-          } catch (error) {
-            console.error(error);
+          } else {
+            console.log('Response assets not found');
           }
         }
       },
     );
   };
-
   const handleEventTypeChange = (
     selectedEventType: React.SetStateAction<string>,
   ) => {
@@ -428,14 +410,14 @@ const Useowneredititems = () => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(data => {
+      .then(_data => {
         dispatch(removeproducts(productId));
         // fetchData();
         openModal();
       })
       .catch(error => {
         console.error(error);
-        const errorMessage = `Error removing item from ProductsList: ${error.message}`;
+        // const errorMessage = `Error removing item from ProductsList: ${error.message}`;
         // Alert.alert(errorMessage);
       });
   };
@@ -459,7 +441,7 @@ const Useowneredititems = () => {
       throw error; // throw the error to be caught by the reject handler
     }
   };
-  const handleDisableProduct = (item: number) => {
+  const handleDisableProduct = (item: any) => {
     setIsModalVisible(true);
     setProductQuantity(item.availableQuantities);
     settotalQuantities(item.totalQuantity);
@@ -470,9 +452,8 @@ const Useowneredititems = () => {
     console.log('item is  :', item);
     console.log('disabled Quantity : ', disabledQuantity);
   };
-  const incrementQuantity = id => {
+  const incrementQuantity = () => {
     let maxQuantity = productQuantity; // Maximum quantity available by default
-
     if (productQuantity < disabledQuantity && disabledQuantity !== 0) {
       maxQuantity = disabledQuantity; // If no available quantity, set maximum as disabled quantity
     }
@@ -491,12 +472,12 @@ const Useowneredititems = () => {
   //   setupdatedquantity(updatedQuantity + 1);
   // };
 
-  const decrementQuantity = id => {
+  const decrementQuantity = () => {
     if (updatedQuantity > 1) {
       setupdatedquantity(updatedQuantity - 1);
     }
   };
-  const handleDisablebutton = async (id, disableQuantity) => {
+  const handleDisablebutton = async (id: any, disableQuantity: number) => {
     console.log('item id', id);
     console.log('product Quantity is', disableQuantity);
 
@@ -520,7 +501,11 @@ const Useowneredititems = () => {
     setIsModalVisible(false);
   };
 
-  const handleEnablebutton = async (id, enableQuantity, disabledQuantity) => {
+  const handleEnablebutton = async (
+    id: any,
+    enableQuantity: number,
+    disabledQuantity: number,
+  ) => {
     console.log('item id', id);
     try {
       if (enableQuantity <= disabledQuantity) {
