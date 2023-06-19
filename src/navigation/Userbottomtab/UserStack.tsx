@@ -1,11 +1,10 @@
+/* eslint-disable eslint-comments/no-unused-disable */
 /* eslint-disable curly */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
 import React, {useContext} from 'react';
 import Profile from '../../screens/Profile/Profile';
-// import Home from '../../screens/Home/Home';
 import Homescreen from '../../screens/Home/Homescreen';
-// import OwnerEditProfile from "../../screens/Ownereditprofile/Ownereditprofile";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import CategoryIcon from 'react-native-vector-icons/AntDesign';
 import HeartIcon from 'react-native-vector-icons/FontAwesome';
@@ -32,8 +31,6 @@ import EditAddress from '../../screens/EditAddress/EditAddress';
 import {useIsFocused} from '@react-navigation/native';
 import Colors from '../../constants/colors';
 import {View, useColorScheme} from 'react-native';
-import Styles from '../../constants/themeColors';
-import useCart from '../../screens/Cart/useCart';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -73,7 +70,6 @@ const CartStack = () => {
       screenOptions={{headerShown: false}}
       initialRouteName="Cart">
       <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
-      {/* <Stack.Screen name="Homescreen" component={Homescreen} /> */}
       <Stack.Screen
         name="PaymentSuccessScreen"
         component={PaymentSuccessScreen}
@@ -82,7 +78,6 @@ const CartStack = () => {
       <Stack.Screen name="EditAddress" component={EditAddress} />
       <Stack.Screen name="Owneraddaddress" component={Owneraddaddress} />
       <Stack.Screen name="PaymentFailScreen" component={PaymentFailScreen} />
-      {/* <Stack.Screen name="MyOrder" component={MyOrder} /> */}
       <Stack.Screen name="Cart" component={Cart} />
     </Stack.Navigator>
   );
@@ -119,10 +114,6 @@ const MyStack = () => {
           width: '100%',
           height: '8%',
           backgroundColor: Colors.black,
-          // marginLeft: -5,
-          // backgroundColor: '#ECF2FF',
-          // borderTopLeftRadius: 25,
-          // borderTopRightRadius: 25,
         },
         tabBarInactiveTintColor: Colors.black,
         tabBarActiveTintColor: Colors.white,
@@ -139,7 +130,6 @@ const MyStack = () => {
               colorScheme === 'dark' ? Colors.black : Colors.white,
           },
           tabBarLabel: 'Home',
-          // headerTintColor: '#ECF2FF',
           tabBarIcon: ({focused, color}) => {
             if (!isFocused) return null;
 
@@ -211,11 +201,8 @@ const MyStack = () => {
             display: getRouteName(route),
             width: '100%',
             height: '8%',
-            // marginLeft: -5,
             backgroundColor:
               colorScheme === 'dark' ? Colors.black : Colors.white,
-            // borderTopLeftRadius: 25,
-            // borderTopRightRadius: 25,
           },
           tabBarLabel: 'Category',
           tabBarIcon: ({focused, color}) => {
@@ -292,11 +279,8 @@ const MyStack = () => {
             display: getRouteName(route),
             width: '100%',
             height: '8%',
-            // marginLeft: -5,
             backgroundColor:
               colorScheme === 'dark' ? Colors.black : Colors.white,
-            // borderTopLeftRadius: 25,
-            // borderTopRightRadius: 25,
           },
           tabBarIcon: ({focused, color}) => {
             if (!isFocused) return null;
@@ -370,11 +354,8 @@ const MyStack = () => {
             display: getRouteName(route),
             width: '100%',
             height: '8%',
-            // marginLeft: -5,
             backgroundColor:
               colorScheme === 'dark' ? Colors.black : Colors.white,
-            // borderTopLeftRadius: 25,
-            // borderTopRightRadius: 25,
           },
           tabBarLabel: 'Cart',
           tabBarIcon: ({focused, color}) => {
@@ -450,11 +431,8 @@ const MyStack = () => {
             display: getRouteName(route),
             width: '100%',
             height: '8%',
-            // marginLeft: -5,
             backgroundColor:
               colorScheme === 'dark' ? Colors.black : Colors.white,
-            // borderTopLeftRadius: 25,
-            // borderTopRightRadius: 25,
           },
           tabBarIcon: ({focused, color}) => {
             if (!isFocused) return null;

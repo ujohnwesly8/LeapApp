@@ -10,7 +10,6 @@ import {
   Dimensions,
   StatusBar,
 } from 'react-native';
-// import {format} from 'date-fns';
 import {
   VictoryChart,
   VictoryBar,
@@ -28,7 +27,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import AnalyticsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ForwardIcon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/core';
-// import AnalyticsDropdown from '../../components/atoms/AnalyticsDropdown/AnalyticsDropdown';
+
 const monthNames = [
   'Jan',
   'Feb',
@@ -81,7 +80,7 @@ const DashboardDetails = () => {
 
   const handleTotalOrdersClick = () => {
     setTimeout(() => {
-      setShowModel(true); // Update the state variable to show the modal
+      setShowModel(true);
     }, 800);
   };
   const filterOrderData = () => {
@@ -137,7 +136,7 @@ const DashboardDetails = () => {
     Object.entries(DashboardYearly[selectedYear]).forEach(([month, data]) => {
       const monthIndex = parseInt(month.split('-')[1]) - 1;
       rentalData[monthIndex] = {
-        month: month.split('-')[0], // Extract the month name from the format "YYYY-MM"
+        month: month.split('-')[0],
         totalEarnings: data.totalEarnings,
         totalNumberOfItems: data.totalNumberOfItems,
         monthIndex: monthIndex,
@@ -180,8 +179,6 @@ const DashboardDetails = () => {
     return '#eadaff'; // Color for other bars
   };
 
-  // const pieChartData =
-  //   piechart && piechart[selectedMonth] ? piechart[selectedMonth] : {};
   const pieChartData =
     piechart && piechart[selectedMonth] ? piechart[selectedMonth] : {};
 
@@ -197,14 +194,11 @@ const DashboardDetails = () => {
     '#E8DAEF',
     '#D2B4DE',
   ];
-
-  // Transform the data for the pie chart
   const transformedData = Object.entries(pieChartData).map(
     ([subcategory, {totalOrders}], index) => ({
       name: subcategory,
       value: totalOrders,
       color: chartColors[index % chartColors.length],
-      // Generate a random color for each data point
     }),
   );
   return (
@@ -352,17 +346,14 @@ const DashboardDetails = () => {
                     fontSize: 17,
                     marginTop: 23,
                     marginLeft: 50,
-                    // alignSelf: 'center',
                   }}>
                   {monthtitle}
                 </Text>
                 <View style={{flexDirection: 'row'}}>
-                  {/* <AnalyticsDropdown onSelect={handleDataSelect} /> */}
                   <Picker
                     style={{
                       marginTop: 10,
                       width: 130,
-                      // backgroundColor: '#ebebeb',
                       borderRadius: 30,
                       borderWidth: 1,
                       borderColor: '#ccc',
@@ -386,7 +377,6 @@ const DashboardDetails = () => {
                   width: '95%',
                   marginLeft: 10,
                   borderRadius: 30,
-                  // backgroundColor: '#C4B0FF',
                 }}>
                 <View
                   style={{
@@ -403,7 +393,6 @@ const DashboardDetails = () => {
                     name="google-analytics"
                     color={Colors.white}
                     size={30}
-                    // style={{marginLeft: 30, marginTop: 10}}
                   />
                 </View>
                 <VictoryChart
@@ -452,7 +441,6 @@ const DashboardDetails = () => {
                   />
 
                   <VictoryBar
-                    // animate={{duration: 3000}}
                     data={Object.entries(rentalData).map(
                       ([month, data], index) => ({
                         month,
@@ -464,8 +452,6 @@ const DashboardDetails = () => {
                     y="rentalPrice"
                     barWidth={23}
                     cornerRadius={{
-                      // bottomLeft: 4,
-                      // bottomRight: 4,
                       topLeft: 4,
                       topRight: 4,
                     }}
@@ -497,13 +483,7 @@ const DashboardDetails = () => {
               {selectedBarIndex !== null && (
                 <>
                   <View style={{alignItems: 'center'}}>
-                    <View
-                      style={
-                        {
-                          // width: '100%',
-                          // backgroundColor: Colors.buttonColor,
-                        }
-                      }>
+                    <View style={{}}>
                       <Text
                         style={{
                           color: Colors.black,
@@ -523,31 +503,12 @@ const DashboardDetails = () => {
                         shadowOpacity: 0.2,
                         shadowRadius: 4,
                       }}>
-                      {/* <View
-                        style={{
-                          backgroundColor: Colors.buttonColor,
-                          borderRadius: 30,
-                          width: 40,
-                          height: 40,
-                          marginLeft: 75,
-                          marginTop: 10,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}>
-                        <PieIcon
-                          name="pie-chart"
-                          color={Colors.white}
-                          size={25}
-                          // style={{marginLeft: 30, marginTop: 10}}
-                        />
-                      </View> */}
                       <PieChart
                         data={transformedData}
                         width={Dimensions.get('window').width}
                         height={230}
                         chartConfig={{
                           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                          // Decrease the font size here
                         }}
                         style={{marginLeft: 50}}
                         accessor="value"
@@ -567,7 +528,6 @@ const DashboardDetails = () => {
                     </Text>
                     <LineChart
                       data={{
-                        // labels: rentalData.map(data => data.month),
                         datasets: [
                           {
                             data: rentalData.map(data => data.totalEarnings),
@@ -604,7 +564,6 @@ const DashboardDetails = () => {
                       />
                     </TouchableOpacity>
                   </View>
-                  {/* </View> */}
                   <View
                     style={{
                       marginTop: 20,
@@ -712,16 +671,13 @@ const DashboardDetails = () => {
                                       marginTop: 0,
                                       width: 200,
                                       height: 40,
-                                      // backgroundColor: Colors.white,
                                     }}>
                                     <Text style={style.Order}>
                                       Order ID: {order.borrowerId}
                                     </Text>
-                                    {/* <Text>Rented by</Text> */}
                                     <Text style={style.borrowerName}>
                                       {order.borrowerName}
                                     </Text>
-                                    {/* <Text style={style.Product}></Text> */}
                                     <Text style={style.price}>
                                       ₹ {order.rentalCost}
                                     </Text>

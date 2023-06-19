@@ -7,10 +7,10 @@ const styles = StyleSheet.create({
     borderColor: '#3E54AC',
     borderRadius: 10,
     backgroundColor: Colors.iconscolor,
-    width: 50, // set a width that works for your layout
-    height: 30, // set a height that works for your layout
-    justifyContent: 'center', // vertically center the text
-    alignItems: 'center', // horizontally center the text
+    width: 50,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   disabledButton: {
     opacity: 0.5,
@@ -20,14 +20,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 10,
     fontSize: 15,
-    // fontWeight: '400',
     fontFamily: 'Poppins-Regular',
     color: Colors.black,
   },
   size: {
     height: 50,
     width: '100%',
-    // backgroundColor: Colors.buttonColor,
     flexDirection: 'row',
     borderRadius: 50,
   },
@@ -35,13 +33,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 10,
     fontSize: 16,
-    // fontWeight: '700',
     fontFamily: 'Poppins-SemiBold',
     color: Colors.buttonColor,
   },
   detailsaddPrice: {
-    // marginTop: 20,
-    // marginLeft: 20,
     justifyContent: 'center',
     alignSelf: 'center',
     fontSize: 15,
@@ -49,15 +44,12 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   detailsSize: {
-    // marginTop: 20,
-    // alignSelf: 'center',
     marginLeft: 10,
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 14,
     width: '100%',
     fontFamily: 'Poppins-Medium',
-    // fontWeight: 'bold',
     color: Colors.black,
   },
   buttonQuantity: {
@@ -69,8 +61,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: '#3E54AC',
     borderWidth: 1,
-    // top: 55,
-    // left: -190,
   },
   paginationContainer: {
     marginTop: -24,
@@ -108,11 +98,8 @@ const styles = StyleSheet.create({
   quantityText: {
     fontSize: 14,
     marginHorizontal: 10,
-    // fontWeight: 'bold',
     fontFamily: 'Poppins-SemiBold',
     color: Colors.black,
-    // top: 55,
-    // left: -190,
   },
   input: {
     height: 40,
@@ -129,9 +116,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: '100%',
     backgroundColor: 'rgba(255, 255, 255, 0.13)',
-    // borderWidth: 1,
     borderRadius: 50,
-    // borderColor: 'gray',
     paddingHorizontal: 10,
     height: 50,
   },
@@ -146,7 +131,6 @@ const styles = StyleSheet.create({
   plusquantityButton: {
     backgroundColor: Colors.buttonColor,
     borderRadius: 15,
-    // marginLeft: '30%',
     padding: 5,
     height: 30,
     width: 30,
@@ -159,15 +143,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   container: {
-    // zIndex: 0,
-    // backgroundColor: '#ECF2FF',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    // marginTop: 50,
-    // backgroundColor: 'white',
     width: '100%',
     height: '100%',
-    // height: 800,
   },
   btnfield: {
     position: 'relative',
@@ -210,8 +189,6 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     zIndex: 1,
-    // borderTopLeftRadius: 30,
-    // borderTopRightRadius: 30,
     paddingVertical: 20,
     paddingHorizontal: 20,
     backgroundColor: Colors.white,
@@ -248,18 +225,13 @@ const styles = StyleSheet.create({
   headingtext: {
     fontSize: 16,
     marginLeft: 10,
-    // fontWeight: '400',
     fontFamily: 'Poppins-Redular',
     color: Colors.black,
-    // width: '80%',
   },
   Quatitytext: {
     fontSize: 16,
-    // marginLeft: 10,
-    // fontWeight: '400',
     fontFamily: 'Poppins-Regular',
     color: Colors.black,
-    // width: '80%',
   },
   gradient: {
     flex: 1,
@@ -273,9 +245,7 @@ const styles = StyleSheet.create({
   },
   descriptionContainer: {
     marginTop: 3,
-    // backgroundColor: Colors.buttonColor,
     width: 40,
-    // height: 25,
     borderRadius: 5,
     marginLeft: '60%',
     justifyContent: 'center',
@@ -291,11 +261,7 @@ const styles = StyleSheet.create({
     marginTop: -125,
     color: Colors.white,
     fontFamily: 'Poppins-Bold',
-    // backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    // shadowRadius: 90,
-    // shadowOpacity: 0.9,
     marginLeft: 10,
-    // fontWeight: '700',
     zIndex: 1,
     fontSize: 35,
     textShadowColor: 'rgba(0, 0, 0, 0.75)', // Shadow color
@@ -312,7 +278,6 @@ const styles = StyleSheet.create({
   },
 
   sizelabel: {
-    // marginTop: 10,
     alignSelf: 'center',
     marginLeft: 10,
     fontSize: 16,
@@ -428,7 +393,6 @@ const styles = StyleSheet.create({
   },
 
   touchableText: {
-    // margin:15,
     color: 'white',
     fontSize: 15,
     fontWeight: '700',
@@ -440,8 +404,6 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: Colors.buttonColor,
     flexDirection: 'row',
-    // margin: 15,
-    // marginTop: 20,
     borderRadius: 50,
     color: '#FFFFFF',
     justifyContent: 'center',
@@ -452,7 +414,6 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 20,
     marginBottom: 20,
-    // alignItems:"center",
   },
 
   scrollContainer: {

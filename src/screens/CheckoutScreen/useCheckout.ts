@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {fetchCartProducts} from '../../redux/slice/cartSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,7 +9,6 @@ import {Alert} from 'react-native';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import RazorpayCheckout from 'react-native-razorpay';
 import axios from 'axios';
-import React from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 type RootStackParamList = {
@@ -113,7 +112,7 @@ const useChectout = () => {
         body: JSON.stringify(items),
       });
       const data = await response.json();
-      console.log('Update response:', data); // log the API response for debugging
+      console.log('Update response:', data);
     } catch (error) {
       console.error('Update error:', error);
     }
@@ -121,7 +120,6 @@ const useChectout = () => {
   const handleCheckout = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
-      // Map the cart items to the required format
       const items = cartData?.cartItems?.map(
         (item: {product: {price: any; id: any; name: any; quantity: any}}) => ({
           price: item.product.price,
@@ -130,7 +128,6 @@ const useChectout = () => {
           quantity: item.product.quantity,
         }),
       );
-      // Make the API call to create the checkout session
       const response = await fetch(checkoutApi, {
         method: 'POST',
         headers: {
@@ -139,7 +136,6 @@ const useChectout = () => {
         },
         body: JSON.stringify(items),
       });
-      // Handle the response
       const data = await response.json();
       navigation.navigate('CheckoutScreen');
       console.log('Checkout Session created:', data);
@@ -156,9 +152,7 @@ const useChectout = () => {
         Authorization: `Bearer ${token}`,
       },
     })
-      // .then(response => response.json())
       .then(_data => {
-        // console.log('Item removed from cart:', data);
         dispatch(removeFromCart(productId));
         Alert.alert('Item Removed from cart');
       })
@@ -214,14 +208,11 @@ const useChectout = () => {
     };
     RazorpayCheckout.open(options)
       .then((paymentData: any) => {
-        // handle success
         console.log(paymentData);
         navigation.navigate('PaymentSuccessScreen');
         dispatch(ADDORDER(paymentData.razorpay_payment_id) as any);
       })
       .catch(_error => {
-        // handle failure
-
         Alert.alert('Try Again');
         navigation.navigate('PaymentFailScreen');
       });
@@ -237,12 +228,9 @@ const useChectout = () => {
     handleUpdate,
     rentalStartDate,
     rentalEndDate,
-    // selectedAddress,
-    // setSelectedAddress,
     setRentalStartDate,
     setRentalEndDate,
     handleCheckboxChange,
-    // setIsCheckedArray,
     addressList,
     selectedAddressIndex,
     isCheckedArray,
