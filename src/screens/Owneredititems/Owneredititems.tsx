@@ -29,6 +29,7 @@ import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
+
 import styles from '../OwnerHomepage/OwnerHomestyle';
 
 const App = () => {
@@ -67,7 +68,7 @@ const App = () => {
     isLoading,
     productQuantity,
     isModalVisible,
-    // recentyAdded,
+
     selectedProductId,
     setSelectedProductId,
     handleEnablebutton,
@@ -98,12 +99,7 @@ const App = () => {
 
   console.log('Refreshhhhhh:', refreshData);
 
-  // const handleManageModal = () => {
-  //   console.log('refreshData is ', refreshData);
-  //   setIsModalVisible(!isModalVisible);
-  //   setRefreshData(true);
-  // };
-
+  const navigation = useNavigation();
   const {colorScheme} = useContext(ColorSchemeContext);
 
   return (
@@ -118,7 +114,6 @@ const App = () => {
               {width: '100%', height: '100%'},
               colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
             ]}>
-            {/* <HeadingText message="Edit product" /> */}
             <TouchableOpacity onPressIn={() => setViisble(!visible)}>
               <Text style={OwnerEditItemstyles.closetxt}>Close</Text>
             </TouchableOpacity>
@@ -300,7 +295,7 @@ const App = () => {
           <RefreshControl
             refreshing={refreshData}
             onRefresh={handleRefresh}
-            colors={['#0000ff']} // Customize the color of the refresh indicator
+            colors={['#0000ff']}
           />
         }>
         <View>
@@ -365,8 +360,7 @@ const App = () => {
                         <View
                           style={{
                             flexDirection: 'row',
-                            // width: '50%',
-                            // backgroundColor: 'white',
+
                             justifyContent: 'space-between',
                           }}>
                           <Text style={Style.txt_item}>₹ {item.price}</Text>
@@ -395,8 +389,6 @@ const App = () => {
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => {
-                          // FetchData(item.id);
-                          // setEditProductId(item.id);
                           setSelectedProductId(item.id);
                           handleDisableProduct(item);
                         }}>
@@ -459,7 +451,7 @@ const App = () => {
                           width: '80%',
                           justifyContent: 'space-between',
                           alignItems: 'center',
-                          // backgroundColor: 'white',
+
                           marginLeft: 25,
                         }}>
                         <Text style={OwnerEditItemstyles.modalQuantityText}>
@@ -504,7 +496,6 @@ const App = () => {
                           flexDirection: 'row',
                           width: '80%',
                           marginLeft: 40,
-                          // marginTop: 20,
                         }}>
                         <TouchableOpacity
                           onPress={() =>
@@ -523,7 +514,6 @@ const App = () => {
                             }}>
                             Disable
                           </Text>
-                          {/* Render disable button content */}
                         </TouchableOpacity>
                         <TouchableOpacity
                           onPress={() =>
@@ -562,7 +552,6 @@ export default App;
 const Style = StyleSheet.create({
   form: {
     backgroundColor: Colors.main,
-    // marginLeft: -10,
   },
   titleText: {fontFamily: 'Poppins-SemiBold', fontSize: 24, color: 'white'},
 
@@ -586,8 +575,6 @@ const Style = StyleSheet.create({
     marginTop: 10,
   },
   header_container: {
-    // padding: 15,
-    // backgroundColor: '#000',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -597,21 +584,20 @@ const Style = StyleSheet.create({
   },
   item_course: {
     marginLeft: 30,
-    // marginTop: 15,
+
     flexDirection: 'row',
   },
   txt_name: {
     fontSize: 12,
     width: 120,
     height: 22,
-    // fontWeight: '700',
+
     fontFamily: 'Poppins-SemiBold',
     color: Colors.black,
-    // backgroundColor: 'white',
   },
   txt_item: {
     fontSize: 13,
-    // fontWeight: '700',
+
     fontFamily: 'Poppins-SemiBold',
     color: Colors.buttonColor,
   },
@@ -630,13 +616,13 @@ const Style = StyleSheet.create({
   txt_del: {
     fontSize: 15,
     color: Colors.white,
-    // fontWeight: '500',
+
     fontFamily: 'Poppins-SemiBold',
   },
   txt_edit: {
     fontSize: 15,
     color: Colors.white,
-    // fontWeight: '500',
+
     fontFamily: 'Poppins-SemiBold',
   },
   btnContainer: {

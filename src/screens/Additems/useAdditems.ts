@@ -70,7 +70,6 @@ const useAdditems = () => {
 
     const fetchSubCategoryData = async () => {
       try {
-        // const token = await AsyncStorage.getItem('token');
         const response = await ApiService.get(
           `${url}/subcategory/listbyid/${genderData}`,
         );
@@ -86,7 +85,7 @@ const useAdditems = () => {
         console.log(error);
         setIsLoading(true);
       } finally {
-        setIsLoading(false); // Set isLoading to false after the API call completes
+        setIsLoading(false);
       }
     };
 
@@ -94,13 +93,12 @@ const useAdditems = () => {
   }, [gender, genderData]);
 
   useEffect(() => {
-    // console.log(gender);
     const fetchEventCategoryData = async () => {
       try {
         const response = await ApiService.get(
           `${url}/subcategory/listbyid/${3}`,
         );
-        // console.log(response);
+
         const subEventCategoriesArray = response.map(
           (category: {id: any; subcategoryName: any}) => ({
             value: category.id,
@@ -111,19 +109,14 @@ const useAdditems = () => {
         console.log(subEventCategoriesArray);
       } catch (error) {
         console.log(error);
-        // setIsLoading(true);
       } finally {
-        // setIsLoading(false); // Set isLoading to false after the API call completes
       }
     };
     fetchEventCategoryData();
   }, []);
   useEffect(() => {
-    // console.log(gender);
     const OutfitCategoriesData = async () => {
       try {
-        // setIsLoading(true);
-        // const token = await AsyncStorage.getItem('token');
         const response = await ApiService.get(
           `${url}/subcategory/listbyid/${4}`,
         );
@@ -137,18 +130,15 @@ const useAdditems = () => {
         console.log(subOutfitCategoriesArray);
       } catch (error) {
         console.log(error);
-        // setIsLoading(true);
       } finally {
-        // setIsLoading(false); // Set isLoading to false after the API call completes
       }
     };
     OutfitCategoriesData();
   }, []);
-  // 2nd api call here
+
   useEffect(() => {
     const fetchCategoryData = async () => {
       try {
-        // setIsLoading(true);
         const response = await ApiService.get(OwnerCategoryUrl);
         const categoriesArray = response.map(
           (category: {id: any; categoryName: any}) => ({
@@ -161,7 +151,7 @@ const useAdditems = () => {
       } catch (error) {
         console.log(error);
       } finally {
-        setIsLoading(false); // Set isLoading to false after the API call completes
+        setIsLoading(false);
       }
     };
     fetchCategoryData();

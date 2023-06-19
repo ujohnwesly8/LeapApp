@@ -58,7 +58,7 @@ const CardDatePiker = ({
         flexDirection: 'row',
         width: 170,
         marginLeft: 4,
-        // marginTop: 5,
+
         justifyContent: 'space-between',
       }}>
       <TouchableOpacity
@@ -161,8 +161,6 @@ const CardDatePiker = ({
           </View>
         </View>
       </Modal>
-
-      {/* {renderRentalDates()} */}
     </View>
   );
 };

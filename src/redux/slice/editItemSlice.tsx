@@ -17,7 +17,6 @@ export const editItemSlice = createSlice({
     fetchDataSuccess: (state, action) => {
       state.status = 'succeeded';
       state.data = action.payload;
-      // state.id = action.payload.id;
     },
     fetchDataFailure: (state, action) => {
       state.status = 'failed';

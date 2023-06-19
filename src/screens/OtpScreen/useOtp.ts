@@ -20,7 +20,6 @@ type UseotpReturnType = {
   setPasswordError: (value: string) => void;
 };
 
-// const Useotp = () => {
 const Useotp = (): UseotpReturnType => {
   const [phoneNo, setphoneNo] = useState<string>('');
   const [otp, setotp] = useState<string>('');

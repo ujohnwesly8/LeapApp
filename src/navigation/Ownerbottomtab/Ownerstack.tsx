@@ -18,7 +18,7 @@ import {
   useIsFocused,
 } from '@react-navigation/native';
 import OwnerImage from '../../screens/OwnerImage/AddImages';
-// import Imagepicker from '../../components/atoms/Imagepicker';
+
 import OproductDetails from '../../screens/OwnerProductdetailsPage/OproductDetails';
 import Owneredititems from '../../screens/Owneredititems/Owneredititems';
 import Colors from '../../constants/colors';
@@ -27,7 +27,7 @@ import {View} from 'react-native';
 import DashboardDetails from '../../screens/OwnerHomepage/DashboardDetails';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import FilteredAnalytics from '../../screens/FilteredAnalytics/FilteredAnalytics';
-// import Init from './src/redux/actions/actions';
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const OwnerProfilestack = () => {
@@ -46,19 +46,6 @@ const OwnerProfilestack = () => {
     </Stack.Navigator>
   );
 };
-// const OwnerHomestack = () => {
-//   return (
-//     <Stack.Navigator
-//       screenOptions={{headerShown: false}}
-//       initialRouteName="OwnerHome">
-//       <Stack.Screen name="OwnerHome" component={OwnerHome} />
-//       <Stack.Screen name="Oproduct" component={OwnerHome} />
-//       <Stack.Screen name="Additems" component={Additems} />
-//       <Stack.Screen name="MyRentals" component={MyRentals} />
-//       <Stack.Screen name="OproductDetails" component={OproductDetails} />
-//     </Stack.Navigator>
-//   );
-// };
 
 const OwnerHomestack = () => {
   return (
@@ -66,10 +53,10 @@ const OwnerHomestack = () => {
       screenOptions={{headerShown: false}}
       initialRouteName="OwnerHome">
       <Stack.Screen name="OwnerHome" component={OwnerHome} />
-      {/* <Stack.Screen name="Oproduct" component={OwnerHome} /> */}
+
       <Stack.Screen name="Additems" component={Additems} />
       <Stack.Screen name="MyRentals" component={MyRentals} />
-      {/* <Stack.Screen name="AnalyticScreen" component={DashboardDetails} /> */}
+
       <Stack.Screen name="DashboardDetails" component={DashboardDetails} />
       <Stack.Screen name="FilteredAnalytics" component={FilteredAnalytics} />
 
@@ -85,7 +72,7 @@ const Owneradditemsstack = () => {
       initialRouteName="Additems">
       <Stack.Screen name="Additems" component={Additems} />
       <Stack.Screen name="OwnerImage" component={OwnerImage} />
-      {/* <Stack.Screen name="Imagepicker" component={Imagepicker} /> */}
+
       <Stack.Screen name="OwnerHome" component={OwnerHome} />
     </Stack.Navigator>
   );
@@ -101,8 +88,7 @@ const Ownerstack = () => {
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
           backgroundColor: Colors.main,
-          // borderTopLeftRadius: 25,
-          // borderTopRightRadius: 25,
+
           height: '7%',
           elevation: 30,
           borderColor: Colors.iconscolor,
@@ -187,8 +173,7 @@ const Ownerstack = () => {
             display: getRouteName(route),
             backgroundColor:
               colorScheme === 'dark' ? Colors.black : Colors.white,
-            // borderTopLeftRadius: 25,
-            // borderTopRightRadius: 25,
+
             height: '7%',
           },
           tabBarIcon: ({focused, color}) => {
@@ -256,8 +241,7 @@ const Ownerstack = () => {
             display: getRouteName(route),
             backgroundColor:
               colorScheme === 'dark' ? Colors.black : Colors.white,
-            // borderTopLeftRadius: 25,
-            // borderTopRightRadius: 25,
+
             height: '7%',
           },
           tabBarIcon: ({focused, color}) => {
