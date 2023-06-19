@@ -205,7 +205,7 @@ export const SignupAndLogin = (
       })
       .then((response: {data: any}) => {
         console.log('signup success');
-        payload: response.data;
+        console.log(response);
       })
       .catch(error => {
         console.log('signup error', error);
