@@ -208,7 +208,6 @@ const OwnerEditItemstyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.buttonColor,
-    backgroundColor: Colors.buttonColor,
   },
   Sizecontainer: {
     marginTop: 20,
