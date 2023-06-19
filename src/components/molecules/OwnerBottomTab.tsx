@@ -1,6 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import Colors from '../../constants/Colors';
+import Colors from '../../constants/colors';
 import Icons, {icons} from '../atoms/Icons';
 
 const tabIcons = [
