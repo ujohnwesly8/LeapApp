@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {fetchCartProducts} from '../../redux/slice/cartSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,7 +9,6 @@ import {Alert} from 'react-native';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import RazorpayCheckout from 'react-native-razorpay';
 import axios from 'axios';
-import React from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 type RootStackParamList = {

@@ -1,4 +1,4 @@
-import {useState, useEffect, SetStateAction} from 'react';
+import React, {useState, useEffect, SetStateAction} from 'react';
 import {setRole} from '../../redux/actions/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {StyleSheet, Text, TouchableOpacity, View, Animated} from 'react-native'; // Import Animated from react-native
@@ -7,7 +7,6 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {url} from '../../constants/Apis';
-import React from 'react';
 const SwitchAccountButton = () => {
   const [showOptions, setShowOptions] = useState(false);
   const dispatch = useDispatch();

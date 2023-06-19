@@ -20,7 +20,6 @@ const DropdownComponent: React.FC<OutfitDropdownProps> = ({
 }) => {
   const {subOutfitCategoriesData} = Useadditems();
   const {colorScheme} = useContext(ColorSchemeContext);
-  // const [categoriesData, setCategoriesData] = useState([]);
   const [isFocus, setIsFocus] = useState(false);
 
   return (
