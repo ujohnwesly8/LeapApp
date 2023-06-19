@@ -110,6 +110,7 @@ const useAdditems = () => {
       } catch (error) {
         console.log(error);
       } finally {
+        console.log('finally');
       }
     };
     fetchEventCategoryData();
@@ -131,6 +132,7 @@ const useAdditems = () => {
       } catch (error) {
         console.log(error);
       } finally {
+        console.log('finally');
       }
     };
     OutfitCategoriesData();

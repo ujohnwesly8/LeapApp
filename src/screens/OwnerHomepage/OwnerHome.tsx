@@ -9,7 +9,6 @@ import {
   View,
   Text,
   ScrollView,
-  Text,
 } from 'react-native';
 import styles from './OwnerHomestyle';
 

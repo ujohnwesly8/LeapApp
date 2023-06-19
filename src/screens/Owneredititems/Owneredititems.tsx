@@ -98,8 +98,6 @@ const App = () => {
   }, [isModalVisible]);
 
   console.log('Refreshhhhhh:', refreshData);
-
-  const navigation = useNavigation();
   const {colorScheme} = useContext(ColorSchemeContext);
 
   return (
