@@ -3,15 +3,14 @@ const initialState = {
 };
 
 const GenderReducer = (state = initialState, action: any) => {
-  switch (action.type) {
-    case 'ADD_GENDER_DATA':
-      return {
-        ...state,
-        genderData: action.payload,
-      };
-    default:
-      return state;
+  if (action.type === 'ADD_GENDER_DATA') {
+    return {
+      ...state,
+      genderData: action.payload,
+    };
   }
+
+  return state;
 };
 
 export default GenderReducer;
