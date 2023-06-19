@@ -1,4 +1,4 @@
-export const url = 'https://95f1-103-186-40-251.ngrok-free.app/api/v1';
+export const url = 'https://7088-106-51-70-135.ngrok-free.app/api/v1';
 export const OwnerProductsUrl = `${url}/product/listOwnerProducts`;
 export const UserProductsUrl = `${url}/product/list`;
 export const AddAddressUrl = `${url}/address/add`;

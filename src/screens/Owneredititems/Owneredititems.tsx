@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
+
 /* eslint-disable react-native/no-inline-styles */
 import React, {useContext, useState, useEffect} from 'react';
 import {
@@ -22,14 +22,13 @@ import EventsDropdown from '../../components/atoms/EventsDropdown';
 import OutfitDropdown from '../../components/atoms/OutfitDropdown';
 import Sizeselection from '../../components/atoms/Sizeselect';
 import OwnerEditItemstyles from './Owneredititemsstyles';
-import {useNavigation} from '@react-navigation/native';
+
 import Colors from '../../constants/colors';
 import Lottie from 'lottie-react-native';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
-import Useownerhome from '../OwnerHomepage/useOwnerHome';
 import styles from '../OwnerHomepage/OwnerHomestyle';
 
 const App = () => {
@@ -85,7 +84,7 @@ const App = () => {
     handleRefresh,
   } = Useowneredititems();
 
-  const [hideId, setHideId] = useState(null);
+  const [_hideId, setHideId] = useState(null);
 
   const handleVisibleModal = () => {
     setViisble(!visible);
@@ -104,7 +103,7 @@ const App = () => {
   //   setIsModalVisible(!isModalVisible);
   //   setRefreshData(true);
   // };
-  const navigation = useNavigation();
+
   const {colorScheme} = useContext(ColorSchemeContext);
 
   return (
@@ -209,7 +208,7 @@ const App = () => {
                               <Image
                                 style={OwnerEditItemstyles.image}
                                 source={{uri: image}}
-                                key={index}
+                                key={`image_${index}`} // Update the key to include a prefix and index
                               />
                             ))}
                           </ScrollView>
@@ -230,15 +229,13 @@ const App = () => {
                             colorScheme === 'dark'
                               ? Styles.cardColor
                               : Styles.main,
-                            colorScheme === 'dark'
-                              ? Styles.cardColor
-                              : Styles.main,
-                          ]}>
+                          ]}
+                          key="addImage" // Add a unique key for the View component
+                        >
                           <Text
                             onPress={pickImg}
                             style={[
                               OwnerEditItemstyles.imagesText,
-
                               colorScheme === 'dark'
                                 ? Styles.whitetext
                                 : Styles.blackText,
@@ -333,7 +330,7 @@ const App = () => {
                       ? Styles.blacktheme
                       : Styles.whiteTheme,
                   ]}
-                  key={item.id}>
+                  key={`item_${item.id}`}>
                   <View style={[Style.item_course]}>
                     <View style={[OwnerEditItemstyles.imagePriceContainer]}>
                       <View style={[OwnerEditItemstyles.cardImageContainer]}>
