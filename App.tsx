@@ -11,7 +11,6 @@ import OtpScreen from './src/screens/OtpScreen/OtpScreen';
 import OwnerNavigation from './src/navigation/OwnerNavigation';
 import SplashScreen from './src/screens/Splashscreen/Splashscreen';
 import {ColorSchemeProvider} from './ColorSchemeContext';
-
 import Lottie from 'lottie-react-native';
 import SignupScreen from './src/screens/SignUp/SignupScreen';
 
