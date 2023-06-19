@@ -7,6 +7,7 @@ import {
   RefreshControl,
   TouchableOpacity,
   View,
+  Text,
   ScrollView,
   Text,
 } from 'react-native';

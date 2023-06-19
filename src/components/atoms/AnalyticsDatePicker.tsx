@@ -4,8 +4,6 @@ import {View, Text, TouchableOpacity, Modal} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import Colors from '../../constants/colors';
 import moment from 'moment';
-import useCart from '../../screens/Cart/useCart';
-import Styles from '../../constants/themeColors';
 
 const AnalyticsDatePicker = ({
   startDate,
@@ -20,7 +18,6 @@ const AnalyticsDatePicker = ({
   const initialDate = `${currentYear}-${currentMonth}-${currentDay}`;
   const [selectedStartDate, setSelectedStartDate] = useState(startDate);
   const [selectedEndDate, setSelectedEndDate] = useState(endDate);
-  const {colorScheme} = useCart();
   const [showPicker, setShowPicker] = useState(false);
   const [showPickerClone, setShowPickerClone] = useState(false);
   const [pickerType, setPickerType] = useState('');
@@ -132,7 +129,6 @@ const AnalyticsDatePicker = ({
             selectedEndDate={selectedEndDate}
             onDateChange={onDateChange}
             selectedDayColor={Colors.buttonColor}
-            // minDate={initialDate}
           />
           <View
             style={{
@@ -240,168 +236,7 @@ const AnalyticsDatePicker = ({
           </View>
         </View>
       </Modal>
-
-      {/* {renderRentalDates()} */}
     </View>
   );
 };
 export default AnalyticsDatePicker;
-
-// import React, {useState} from 'react';
-// import {
-//   View,
-//   Text,
-//   TouchableOpacity,
-//   Modal,
-//   TimePickerAndroid,
-// } from 'react-native';
-// import CalendarPicker from 'react-native-calendar-picker';
-// import Colors from '../../constants/Colors';
-// import moment from 'moment';
-// import useCart from '../../screens/Cart/useCart';
-// import Styles from '../../constants/themeColors';
-
-// const AnalyticsDatePicker = ({
-//   startDate,
-//   endDate,
-//   onStartDateChange,
-//   onEndDateChange,
-// }) => {
-//   const currentDate = new Date();
-//   const currentYear = currentDate.getFullYear();
-//   const currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0');
-//   const currentDay = String(currentDate.getDate()).padStart(2, '0');
-//   const initialDate = `${currentYear}-${currentMonth}-${currentDay}`;
-//   const [selectedStartDate, setSelectedStartDate] = useState(startDate);
-//   const [selectedEndDate, setSelectedEndDate] = useState(endDate);
-//   const {colorScheme} = useCart();
-//   const [showPicker, setShowPicker] = useState(false);
-//   const [pickerType, setPickerType] = useState('');
-
-//   const onDateChange = async (date, type) => {
-//     try {
-//       const {action, hour, minute} = await TimePickerAndroid.open();
-//       if (action === TimePickerAndroid.timeSetAction) {
-//         const selectedTime = moment({hour, minute}).format('HH:mm:ss');
-//         const selectedDateTime = moment(date).set({
-//           hour: hour,
-//           minute: minute,
-//           second: 0,
-//         });
-//         const formattedDateTime = selectedDateTime.format(
-//           'YYYY-MM-DDTHH:mm:ss',
-//         );
-//         if (type === 'END_DATE') {
-//           setSelectedEndDate(formattedDateTime);
-//           onEndDateChange(formattedDateTime);
-//         } else {
-//           setSelectedStartDate(formattedDateTime);
-//           setSelectedEndDate(null);
-//           onStartDateChange(formattedDateTime);
-//         }
-//       }
-//     } catch (error) {
-//       console.warn('TimePicker error:', error);
-//     }
-//   };
-
-//   const onClearDates = () => {
-//     setSelectedStartDate(null);
-//     setSelectedEndDate(null);
-//   };
-
-//   const onTogglePicker = type => {
-//     setPickerType(type);
-//     setShowPicker(true);
-//   };
-
-//   const renderRentalDates = () => {
-//     if (selectedStartDate && selectedEndDate) {
-//       const startDateString = moment(selectedStartDate).format(
-//         'MMM D, YYYY HH:mm:ss',
-//       );
-//       const endDateString = moment(selectedEndDate).format(
-//         'MMM D, YYYY HH:mm:ss',
-//       );
-//       return (
-//         <Text>
-//           Rental Dates: {startDateString} - {endDateString}
-//         </Text>
-//       );
-//     } else {
-//       return null;
-//     }
-//   };
-
-//   return (
-//     <View
-//       style={{
-//         flexDirection: 'row',
-//         width: 270,
-//         marginLeft: 40,
-//         justifyContent: 'space-between',
-//       }}>
-//       <TouchableOpacity
-//         style={{
-//           backgroundColor: Colors.buttonColor,
-//           width: 120,
-//           height: 40,
-//           borderRadius: 60,
-//           alignItems: 'center',
-//           justifyContent: 'center',
-//         }}
-//         onPress={() => onTogglePicker('START_DATE')}>
-//         <Text style={{color: Colors.white}}>
-//           {selectedStartDate
-//             ? moment(selectedStartDate).format('YYYY-MM-DDTHH:mm:ss')
-//             : 'Select Start Date'}
-//         </Text>
-//       </TouchableOpacity>
-//       <Text
-//         style={{
-//           fontFamily: 'Poppins-Regular',
-//           fontSize: 16,
-//           color: Colors.black,
-//           marginTop: 10,
-//         }}>
-//         To
-//       </Text>
-//       <TouchableOpacity
-//         style={{
-//           backgroundColor: Colors.buttonColor,
-//           width: 120,
-//           height: 40,
-//           borderRadius: 60,
-//           alignItems: 'center',
-//           justifyContent: 'center',
-//         }}
-//         onPress={() => onTogglePicker('END_DATE')}>
-//         <Text style={{color: Colors.white}}>
-//           {selectedEndDate
-//             ? moment(selectedEndDate).format('YYYY-MM-DD')
-//             : 'Select End Date'}
-//         </Text>
-//       </TouchableOpacity>
-//       <Modal visible={showPicker} animationType="slide">
-//         <View>
-//           <TouchableOpacity onPress={() => setShowPicker(false)}>
-//             <Text>Close</Text>
-//           </TouchableOpacity>
-//           {pickerType === 'START_DATE' ? (
-//             <CalendarPicker
-//               selectedStartDate={selectedStartDate}
-//               onDateChange={date => onDateChange(date, 'START_DATE')}
-//             />
-//           ) : (
-//             <CalendarPicker
-//               selectedStartDate={selectedEndDate}
-//               onDateChange={date => onDateChange(date, 'END_DATE')}
-//             />
-//           )}
-//         </View>
-//       </Modal>
-//     </View>
-//   );
-// };
-
-// export default AnalyticsDatePicker;

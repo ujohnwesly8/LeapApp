@@ -5,7 +5,6 @@ import {
 } from 'redux';
 import ProductSlice from './slice/productSlice';
 import Reducers from './reducers/reducers';
-import authReducer from './reducers/reducers';
 import {AddressReducers} from './reducers/AddressReducers';
 import {ItemsReducer} from './reducers/Additemsreducers';
 import SizeReducer from './reducers/sizeReducer';
@@ -23,7 +22,6 @@ import thunk from 'redux-thunk';
 const RootReducers = combineReducers({
   Reducers,
   products: ProductSlice,
-  auth: authReducer,
   AddressReducers,
   ItemsReducer,
   SizeReducer,

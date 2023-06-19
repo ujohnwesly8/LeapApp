@@ -1,9 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {ReactNode} from 'react';
 import Lottie from 'lottie-react-native';
-import {ReactNode} from 'react';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 

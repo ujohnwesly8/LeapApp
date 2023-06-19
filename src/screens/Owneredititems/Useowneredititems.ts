@@ -6,9 +6,8 @@ import {
   EditItemsUrl,
   OwnerCategoryUrl,
   ProductsById,
-  url,
+  url as baseUrl,
 } from '../../constants/Apis';
-import {url as baseUrl} from '../../constants/Apis';
 import {
   addGenderData,
   addsize,
@@ -438,6 +437,7 @@ const Useowneredititems = () => {
       setPrefill(response.data);
       return response.data;
     } catch (error) {
+      console.log('error in edititems', error);
       throw error; // throw the error to be caught by the reject handler
     }
   };
@@ -484,7 +484,7 @@ const Useowneredititems = () => {
     try {
       if (disableQuantity <= productQuantity) {
         const response = await ApiService.get(
-          `${url}/product/disableProduct?productId=${id}&quantity=${disableQuantity}`,
+          `${baseUrl}/product/disableProduct?productId=${id}&quantity=${disableQuantity}`,
         );
         console.log('product disable', response);
         setOutofstock(true);
@@ -510,7 +510,7 @@ const Useowneredititems = () => {
     try {
       if (enableQuantity <= disabledQuantity) {
         const response = await ApiService.get(
-          `${url}/product/enableProduct?productId=${id}&quantity=${enableQuantity}`,
+          `${baseUrl}/product/enableProduct?productId=${id}&quantity=${enableQuantity}`,
         );
         console.log('product Enable', response);
         setOutofstock(true);

@@ -168,7 +168,8 @@ const OwnerEditItemstyles = StyleSheet.create({
     width: 200,
     justifyContent: 'center',
     // marginTop: 20,
-    marginLeft: 25,
+    alignItems: 'center',
+    marginLeft: 35,
   },
   Addimage: {
     height: 163,
@@ -203,6 +204,7 @@ const OwnerEditItemstyles = StyleSheet.create({
     height: 40,
     width: 100,
     borderRadius: 10,
+    marginLeft: 20,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.buttonColor,
