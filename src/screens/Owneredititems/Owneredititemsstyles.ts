@@ -208,6 +208,7 @@ const OwnerEditItemstyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.buttonColor,
+    backgroundColor: Colors.buttonColor,
   },
   Sizecontainer: {
     marginTop: 20,
@@ -217,6 +218,7 @@ const OwnerEditItemstyles = StyleSheet.create({
   removeText: {
     color: Colors.white,
     alignItems: 'center',
+    fontFamily: 'Poppins-Medium',
   },
   Sizetext: {
     fontSize: 18,
@@ -234,11 +236,12 @@ const OwnerEditItemstyles = StyleSheet.create({
   },
   removeContainer: {
     alignItems: 'center',
+    marginTop: 15,
+    marginLeft: 10,
   },
   imagehorizontal: {
     width: 300,
     marginLeft: 35,
-    marginBottom: 10,
   },
   Pricetext: {
     fontSize: 18,

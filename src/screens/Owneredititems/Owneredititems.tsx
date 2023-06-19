@@ -315,13 +315,16 @@ const App = () => {
           </View>
         ) : (
           data.map(
-            (item: {
-              id: number;
-              name: string;
-              price: number;
-              availableQuantities: number;
-              image: string;
-            }) => (
+            (
+              item: {
+                id: number;
+                name: string;
+                price: number;
+                availableQuantities: number;
+                image: string;
+              },
+              index: any,
+            ) => (
               <>
                 <View
                   style={[
@@ -330,7 +333,7 @@ const App = () => {
                       ? Styles.blacktheme
                       : Styles.whiteTheme,
                   ]}
-                  key={`item_${item.id}`}>
+                  key={`${`item_${item.id.toString()}-${index}`}`}>
                   <View style={[Style.item_course]}>
                     <View style={[OwnerEditItemstyles.imagePriceContainer]}>
                       <View style={[OwnerEditItemstyles.cardImageContainer]}>
