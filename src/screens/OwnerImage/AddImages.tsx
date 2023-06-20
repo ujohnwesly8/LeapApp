@@ -67,7 +67,7 @@ const AddImages = () => {
                       : styles.whiteTheme,
                   ]}>
                   {imageUrls.map((image, index) => (
-                    <View key={index} style={[OwnerImagestyles.ImageContainer]}>
+                    <View key={image} style={[OwnerImagestyles.ImageContainer]}>
                       <Image
                         style={[
                           OwnerImagestyles.image,
