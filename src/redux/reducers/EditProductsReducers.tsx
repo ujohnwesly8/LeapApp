@@ -10,5 +10,5 @@ const CartReducer = (state = [], action: {type: string; payload: number}) => {
 
   return state;
 };
-
+//resolved a switch clause bug
 export default CartReducer;
