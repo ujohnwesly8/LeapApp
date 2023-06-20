@@ -89,9 +89,9 @@ const PriceRangeDropdown = ({
         />
       </TouchableOpacity>
       <Animated.View style={[styles.dropdown, {height: dropdownHeight}]}>
-        {options.map((option, index) => (
+        {options.map(option => (
           <TouchableOpacity
-            key={index}
+            key={option.label}
             style={styles.option}
             onPress={() => handleSelectOption(option)}>
             <Text style={styles.optionText}>{option.label}</Text>

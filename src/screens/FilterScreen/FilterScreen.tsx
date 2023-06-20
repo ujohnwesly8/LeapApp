@@ -49,10 +49,8 @@ const FilterScreen = () => {
       </View>
       <View style={{width: '50%', height: 200}}>
         {filteredProducts && filteredProducts.length > 0 ? (
-          filteredProducts.map((product: Product, index: number) => (
-            <View
-              style={styles.productsContainer}
-              key={`${product.id}-${index}`}>
+          filteredProducts.map((product: Product) => (
+            <View style={styles.productsContainer} key={product.id}>
               {product.imageUrl && product.imageUrl.length > 0 && (
                 <Image
                   source={{uri: product.imageUrl[0]}}

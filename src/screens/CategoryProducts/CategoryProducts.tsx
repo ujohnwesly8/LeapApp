@@ -48,18 +48,15 @@ const CategoryProducts = ({route}: any) => {
           <View style={style.outerView}>
             <View style={style.viewS}>
               {subcategories.map(
-                (
-                  item: {
-                    id: number;
-                    imageUrl: string[];
-                    name: string;
-                    price: number;
-                  },
-                  index: number,
-                ) => (
+                (item: {
+                  id: number;
+                  imageUrl: string[];
+                  name: string;
+                  price: number;
+                }) => (
                   <TouchableOpacity
                     style={style.size}
-                    key={`${item.id.toString()}-${index}`}
+                    key={`${item.id.toString()}`}
                     onPress={() =>
                       navigation.navigate('CategoryProducts', {
                         subcategoryId: item.id,
