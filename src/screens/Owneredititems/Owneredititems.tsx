@@ -207,11 +207,11 @@ const App = () => {
                           <ScrollView
                             horizontal
                             style={[OwnerEditItemstyles.imagehorizontal]}>
-                            {imageUrls.map((image, index) => (
+                            {imageUrls.map(image => (
                               <Image
                                 style={OwnerEditItemstyles.image}
                                 source={{uri: image}}
-                                key={`image_${index}`} // Update the key to include a prefix and index
+                                key={image} // Update the key to include a prefix and index
                               />
                             ))}
                           </ScrollView>
