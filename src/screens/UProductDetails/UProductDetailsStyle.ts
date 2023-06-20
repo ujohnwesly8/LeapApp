@@ -420,6 +420,16 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingBottom: 20,
   },
+  datePickerstyles: {
+    backgroundColor: Colors.buttonColor,
+    width: 120,
+    height: 40,
+    borderRadius: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 20,
+  },
+  datepickerTextcolor: {color: Colors.white},
 });
 
 export default styles;

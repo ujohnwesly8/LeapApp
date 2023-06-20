@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import DateRangePicker from '../../components/atoms/CalanderPicker';
 import {Pagination} from 'react-native-snap-carousel';
 
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
@@ -20,6 +19,7 @@ import useProductdetails from './useProductdetails';
 import Styles from '../../constants/themeColors';
 import Colors from '../../constants/colors';
 import styles from './UProductDetailsStyle';
+import DatePickerComponent from '../../components/atoms/DatePickerComponent/DatepickerComponent';
 type Props = {
   route: {params: {product: any}};
   navigation: any;
@@ -131,11 +131,13 @@ export default function UDetailScreen({route, navigation}: Props) {
               ]}>
               Rent
             </Text>
-            <DateRangePicker
+            <DatePickerComponent
               startDate={rentalStartDate}
               endDate={rentalEndDate}
               onStartDateChange={setRentalStartDate}
               onEndDateChange={setRentalEndDate}
+              buttonStyle={styles.datePickerstyles}
+              buttonTextColor={styles.datepickerTextcolor}
             />
           </View>
           <View
