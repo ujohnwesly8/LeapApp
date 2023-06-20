@@ -54,6 +54,20 @@ const Profile = ({navigation}: Props) => {
   const handleLogout = () => {
     dispatch(Logout() as any);
   };
+  const renderProfileImage = () => {
+    if (isloading) {
+      return <ActivityIndicator size="large" color="gray" />;
+    } else if (profilePic) {
+      return <Avatar.Image size={100} source={{uri: profilePic}} />;
+    } else {
+      return (
+        <Avatar.Image
+          size={100}
+          source={require('../../../assets/profile.jpg')}
+        />
+      );
+    }
+  };
 
   return (
     <View
@@ -79,16 +93,7 @@ const Profile = ({navigation}: Props) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              {isloading ? (
-                <ActivityIndicator size="large" color="gray" />
-              ) : profilePic ? (
-                <Avatar.Image size={100} source={{uri: profilePic}} />
-              ) : (
-                <Avatar.Image
-                  size={100}
-                  source={require('../../../assets/profile.jpg')}
-                />
-              )}
+              {renderProfileImage()}
             </View>
           </View>
         </View>
