@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import GenderDropdown from '../../components/atoms/GenderDropdown';
-import EventsDropdown from '../../components/atoms/EventsDropdown';
+
 import OutfitDropdown from '../../components/atoms/OutfitDropdown';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import useAddItems from './useAdditems';
@@ -42,6 +42,7 @@ const Additems = () => {
     itemType,
     outfitType,
     subCategoriesData,
+    subEventCategoriesData,
   } = useAddItems();
   const {colorScheme, getContainerStyle, getTextColor, getTextInputStyle} =
     useContext(ColorSchemeContext);
@@ -125,10 +126,12 @@ const Additems = () => {
                 />
               </View>
               <View style={{flexDirection: 'column', marginTop: -29}}>
-                <EventsDropdown
-                  onSelectEvent={setEventType}
+                <DropdownComponent
+                  onSelect={setEventType}
                   onChange={handleEventTypeChange}
                   value={eventType}
+                  placeholder="Select Event"
+                  data={subEventCategoriesData}
                 />
                 {formik.touched.eventType && formik.errors.eventType && (
                   <Text style={Styles.errorText}>
