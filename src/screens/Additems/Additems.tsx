@@ -10,7 +10,6 @@ import {
 
 import GenderDropdown from '../../components/atoms/GenderDropdown';
 import EventsDropdown from '../../components/atoms/EventsDropdown';
-import TypeDropdown from '../../components/atoms/TypeDropdown';
 import OutfitDropdown from '../../components/atoms/OutfitDropdown';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import useAddItems from './useAdditems';
@@ -19,6 +18,7 @@ import Colors from '../../constants/colors';
 import Ownerstyles from './Additemsstyle';
 import Styles from '../LoginScreen/loginStyle';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import DropdownComponent from '../../components/atoms/DropDownComponent/DropDown';
 
 const Additems = () => {
   const {
@@ -41,6 +41,7 @@ const Additems = () => {
     eventType,
     itemType,
     outfitType,
+    subCategoriesData,
   } = useAddItems();
   const {colorScheme, getContainerStyle, getTextColor, getTextInputStyle} =
     useContext(ColorSchemeContext);
@@ -115,10 +116,12 @@ const Additems = () => {
               )}
 
               <View style={{flexDirection: 'column', marginTop: -20}}>
-                <TypeDropdown
-                  onSelectType={setItemType}
+                <DropdownComponent
+                  onSelect={setItemType}
                   onChange={handleItemTypeChange}
                   value={itemType}
+                  placeholder="Select Type"
+                  data={subCategoriesData}
                 />
               </View>
               <View style={{flexDirection: 'column', marginTop: -29}}>
