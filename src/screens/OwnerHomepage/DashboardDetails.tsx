@@ -156,9 +156,6 @@ const DashboardDetails = () => {
     setSelectedMonth(formattedMonth);
     setSelectedBarIndex(barData.index);
 
-    const selectedData = rentalData.find(
-      data => data.month === monthNames[selectedMonth],
-    );
     const selectedMonthData =
       DashboardYearly[selectedYearFormatted]?.[formattedMonth];
 

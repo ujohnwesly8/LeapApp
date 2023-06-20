@@ -20,7 +20,7 @@ const AnalyticsDatePicker = ({
   const [selectedEndDate, setSelectedEndDate] = useState(endDate);
   const [showPicker, setShowPicker] = useState(false);
   const [showPickerClone, setShowPickerClone] = useState(false);
-  const [pickerType, setPickerType] = useState('');
+  const [, setPickerType] = useState('');
 
   const onDateChange = (date, type) => {
     if (type === 'END_DATE') {
@@ -45,20 +45,6 @@ const AnalyticsDatePicker = ({
     } else {
       setShowPicker(true);
       setShowPickerClone(false);
-    }
-  };
-
-  const renderRentalDates = () => {
-    if (selectedStartDate && selectedEndDate) {
-      const startDateString = selectedStartDate.toString();
-      const endDateString = selectedEndDate.toString();
-      return (
-        <Text>
-          Rental Dates: {startDateString} - {endDateString}
-        </Text>
-      );
-    } else {
-      return null;
     }
   };
 

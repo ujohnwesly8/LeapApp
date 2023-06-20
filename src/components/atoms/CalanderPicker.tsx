@@ -24,7 +24,7 @@ const DateRangePicker = ({
   const [selectedEndDate, setSelectedEndDate] = useState(endDate);
   const {colorScheme} = useCart();
   const [showPicker, setShowPicker] = useState(false);
-  const [pickerType, setPickerType] = useState('');
+  const [, setPickerType] = useState('');
 
   const onDateChange = (date, type) => {
     if (type === 'END_DATE') {
@@ -45,20 +45,6 @@ const DateRangePicker = ({
   const onTogglePicker = type => {
     setPickerType(type);
     setShowPicker(true);
-  };
-
-  const renderRentalDates = () => {
-    if (selectedStartDate && selectedEndDate) {
-      const startDateString = selectedStartDate.toString();
-      const endDateString = selectedEndDate.toString();
-      return (
-        <Text>
-          Rental Dates: {startDateString} - {endDateString}
-        </Text>
-      );
-    } else {
-      return null;
-    }
   };
 
   return (
