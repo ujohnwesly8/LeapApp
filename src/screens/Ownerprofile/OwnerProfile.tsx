@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   Text,
@@ -42,6 +43,20 @@ const OwnerProfile = ({navigation}: Props) => {
   const handleLogout = () => {
     dispatch(Logout() as any);
   };
+  const renderProfileImage = () => {
+    if (isloading) {
+      return <ActivityIndicator size="large" color="gray" />;
+    } else if (profilePic) {
+      return <Avatar.Image size={100} source={{uri: profilePic}} />;
+    } else {
+      return (
+        <Avatar.Image
+          size={100}
+          source={require('../../../assets/profile.jpg')}
+        />
+      );
+    }
+  };
   return (
     <View
       style={[
@@ -53,18 +68,7 @@ const OwnerProfile = ({navigation}: Props) => {
           <SwitchAccountButton />
         </View>
         <View style={style.imageContainer}>
-          <View style={style.viewS}>
-            {isloading ? (
-              <ActivityIndicator size="large" color="gray" />
-            ) : profilePic ? (
-              <Avatar.Image size={100} source={{uri: profilePic}} />
-            ) : (
-              <Avatar.Image
-                size={100}
-                source={require('../../../assets/profile.jpg')}
-              />
-            )}
-          </View>
+          <View style={style.viewS}>{renderProfileImage()}</View>
         </View>
         <View style={style.uploadButtoncontainer}>
           <TouchableOpacity style={style.uploadButton} onPress={pickImage}>
