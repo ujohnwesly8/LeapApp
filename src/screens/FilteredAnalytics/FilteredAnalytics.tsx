@@ -123,7 +123,7 @@ const FilteredAnalytics = () => {
             Object.entries(data).map(([month, items]) => (
               <View key={month}>
                 {items.map((item: any, index: any) => (
-                  <View key={index}>
+                  <View key={`${item.id}-${index}`}>
                     <View style={style.dashcard}>
                       <View style={style.dashcardContainer}>
                         <Image
