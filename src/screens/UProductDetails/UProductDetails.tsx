@@ -84,19 +84,17 @@ export default function UDetailScreen({route, navigation}: Props) {
               startScrollTimer();
             }}
             onScroll={handleScroll}>
-            {product.imageUrl.map(
-              (item: any, index: React.Key | null | undefined) => (
-                <ImageBackground
-                  key={index}
-                  style={{
-                    height: 500,
-                    width: 405,
-                    backgroundColor: '#3E54AC1A',
-                  }}
-                  source={{uri: item}}
-                />
-              ),
-            )}
+            {product.imageUrl.map((item: any) => (
+              <ImageBackground
+                key={item}
+                style={{
+                  height: 500,
+                  width: 405,
+                  backgroundColor: '#3E54AC1A',
+                }}
+                source={{uri: item}}
+              />
+            ))}
           </ScrollView>
           <Text style={styles.startext}>{product.name}</Text>
           <Pagination
