@@ -130,9 +130,9 @@ const Wishlist = ({navigation}: Props) => {
             <View style={style.wishlistViewContaner}>
               <View style={style.whishlistView}>
                 {allWishlistProducts &&
-                  allWishlistProducts.map((item, index) => {
+                  allWishlistProducts.map(item => {
                     return (
-                      <View style={style.wishlistConatinerwrap} key={index}>
+                      <View style={style.wishlistConatinerwrap} key={item.id}>
                         <View
                           style={[
                             style.container,

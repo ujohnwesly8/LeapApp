@@ -201,6 +201,57 @@ const DashboardDetails = () => {
       color: chartColors[index % chartColors.length],
     }),
   );
+  type OrderItem = {
+    id: {
+      toString: () => any;
+    };
+    imageUrl: any;
+    borrowerId:
+      | string
+      | number
+      | boolean
+      | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+      | React.ReactFragment
+      | React.ReactPortal
+      | null
+      | undefined;
+    borrowerName:
+      | string
+      | number
+      | boolean
+      | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+      | React.ReactFragment
+      | React.ReactPortal
+      | null
+      | undefined;
+    rentalCost:
+      | string
+      | number
+      | boolean
+      | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+      | React.ReactFragment
+      | React.ReactPortal
+      | null
+      | undefined;
+    name:
+      | string
+      | number
+      | boolean
+      | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+      | React.ReactFragment
+      | React.ReactPortal
+      | null
+      | undefined;
+    borrowerPhoneNumber:
+      | string
+      | number
+      | boolean
+      | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+      | React.ReactFragment
+      | React.ReactPortal
+      | null
+      | undefined;
+  };
   return (
     <View style={{flex: 1, backgroundColor: Colors.white}}>
       {loading ? (
@@ -590,73 +641,7 @@ const DashboardDetails = () => {
                             <Text style={style.txtClose}>Close</Text>
                           </TouchableOpacity>
                           {orderData[selectedMonth].map(
-                            (
-                              order: {
-                                id: {toString: () => any};
-                                imageUrl: any;
-                                borrowerId:
-                                  | string
-                                  | number
-                                  | boolean
-                                  | React.ReactElement<
-                                      any,
-                                      string | React.JSXElementConstructor<any>
-                                    >
-                                  | React.ReactFragment
-                                  | React.ReactPortal
-                                  | null
-                                  | undefined;
-                                borrowerName:
-                                  | string
-                                  | number
-                                  | boolean
-                                  | React.ReactElement<
-                                      any,
-                                      string | React.JSXElementConstructor<any>
-                                    >
-                                  | React.ReactFragment
-                                  | React.ReactPortal
-                                  | null
-                                  | undefined;
-                                rentalCost:
-                                  | string
-                                  | number
-                                  | boolean
-                                  | React.ReactElement<
-                                      any,
-                                      string | React.JSXElementConstructor<any>
-                                    >
-                                  | React.ReactFragment
-                                  | React.ReactPortal
-                                  | null
-                                  | undefined;
-                                name:
-                                  | string
-                                  | number
-                                  | boolean
-                                  | React.ReactElement<
-                                      any,
-                                      string | React.JSXElementConstructor<any>
-                                    >
-                                  | React.ReactFragment
-                                  | React.ReactPortal
-                                  | null
-                                  | undefined;
-                                borrowerPhoneNumber:
-                                  | string
-                                  | number
-                                  | boolean
-                                  | React.ReactElement<
-                                      any,
-                                      string | React.JSXElementConstructor<any>
-                                    >
-                                  | React.ReactFragment
-                                  | React.ReactPortal
-                                  | null
-                                  | undefined;
-                              },
-                              index: any,
-                            ) => (
+                            (order: OrderItem, index: any) => (
                               <View
                                 key={`${order.id}-${index}`}
                                 style={style.dashcard}>
