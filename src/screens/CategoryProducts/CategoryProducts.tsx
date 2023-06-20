@@ -55,11 +55,11 @@ const CategoryProducts = ({route}: any) => {
                     name: string;
                     price: number;
                   },
-                  index: number,
+                  // index: number,
                 ) => (
                   <TouchableOpacity
                     style={style.size}
-                    key={`${item.id.toString()}-${index}`}
+                    key={item.id.toString()}
                     onPress={() =>
                       navigation.navigate('CategoryProducts', {
                         subcategoryId: item.id,
