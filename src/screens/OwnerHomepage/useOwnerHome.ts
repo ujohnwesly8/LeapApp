@@ -99,6 +99,7 @@ const useOwnerHome = () => {
           const profileData = await response.json();
           setName(profileData.firstName);
         } else {
+          console.log('data not fetched');
         }
       } catch (error) {
         console.error(error);
