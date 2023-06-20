@@ -7,12 +7,12 @@ import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import useCart from './useCart';
-import CardDatePiker from '../../components/atoms/DatePicker';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 
 import Styles from '../../constants/themeColors';
 import style from './CartItemStyles';
 import Colors from '../../constants/colors';
+import DatePickerComponent from '../../components/atoms/DatePickerComponent/DatepickerComponent';
 
 const Cart = () => {
   const {
@@ -209,11 +209,13 @@ const Cart = () => {
                             ]}>
                             {item.product.size}
                           </Text>
-                          <CardDatePiker
+                          <DatePickerComponent
                             startDate={item.rentalStartDate?.toLocaleString()}
                             endDate={item.rentalEndDate?.toLocaleString()}
                             onStartDateChange={setRentalStartDate}
                             onEndDateChange={setRentalEndDate}
+                            buttonStyle={style.datepickerStyle}
+                            buttonTextColor={style.datepickerTextstyle}
                           />
                         </View>
                         <View style={style.removeAndQuantity}>
