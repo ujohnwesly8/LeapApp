@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useMemo} from 'react';
 import Styles from './src/constants/themeColors';
 import Colors from './src/constants/colors';
 
@@ -40,14 +41,16 @@ export const ColorSchemeProvider = ({children}) => {
     return colorScheme === 'dark' ? Colors.Textinput : Colors.black;
   };
 
-  const contextValue = {
-    colorScheme,
-    toggleColorScheme,
-    getContainerStyle,
-    getTextInputStyle,
-    getTextColor,
-    getPlaceholderTextColor,
-  };
+  const contextValue = useMemo(() => {
+    return {
+      colorScheme,
+      toggleColorScheme,
+      getContainerStyle,
+      getTextInputStyle,
+      getTextColor,
+      getPlaceholderTextColor,
+    };
+  }, [colorScheme]);
 
   return (
     <ColorSchemeContext.Provider value={contextValue}>

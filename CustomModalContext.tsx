@@ -1,4 +1,5 @@
-import React, {createContext, ReactNode, useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {createContext, ReactNode, useMemo, useState} from 'react';
 
 type CustomModalContextType = {
   showModal: boolean;
@@ -32,12 +33,14 @@ export const CustomModalProvider: React.FC<CustomModalProviderProps> = ({
     setShowModal(false);
   };
 
-  const contextValue = {
-    showModal,
-    openModal,
-    closeModal,
-    modalMessage,
-  };
+  const contextValue = useMemo(() => {
+    return {
+      showModal,
+      openModal,
+      closeModal,
+      modalMessage,
+    };
+  }, []);
 
   return (
     <CustomModalContext.Provider value={contextValue}>
