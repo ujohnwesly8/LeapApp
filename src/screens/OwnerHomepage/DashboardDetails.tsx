@@ -202,6 +202,7 @@ const DashboardDetails = () => {
     id: {
       toString: () => any;
     };
+    num: any;
     imageUrl: any;
     borrowerId:
       | string
@@ -648,7 +649,6 @@ const DashboardDetails = () => {
                                     style={style.dashboardimage}
                                   />
                                   <View
-                                    key={`${order.id}-${index}`}
                                     style={{
                                       marginTop: 0,
                                       width: 200,
