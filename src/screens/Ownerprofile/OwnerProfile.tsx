@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Text,
   View,
@@ -18,8 +18,9 @@ import {Avatar} from 'react-native-paper';
 import style from './ownerProfileStyle';
 import ProfileData from '../Profile/useProfile';
 import SwitchAccountButton from '../../components/atoms/SwtichAccountButton';
-import useCart from '../Cart/useCart';
+
 import Styles from '../../constants/themeColors';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 type Props = {
   navigation: any;
@@ -31,14 +32,16 @@ const OwnerProfile = ({navigation}: Props) => {
     phonenumber,
     isLoading,
     pickImage,
-
     profilePic,
-
     handleRemoveProfilePic,
-
     isloading,
   } = ProfileData();
-  const {colorScheme} = useCart();
+  const {
+    colorScheme,
+    getContainerStyle,
+    getTextInputStyle,
+    getPlaceholderTextColor,
+  } = useContext(ColorSchemeContext);
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(Logout() as any);
@@ -58,11 +61,7 @@ const OwnerProfile = ({navigation}: Props) => {
     }
   };
   return (
-    <View
-      style={[
-        style.profileStyle,
-        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-      ]}>
+    <View style={[style.profileStyle, getContainerStyle()]}>
       <ScrollView style={{width: '100%', height: '100%'}}>
         <View style={style.buttonContainer}>
           <SwitchAccountButton />
@@ -96,25 +95,13 @@ const OwnerProfile = ({navigation}: Props) => {
               style.card,
               colorScheme === 'dark' ? Styles.cardColor : Styles.main,
             ]}>
-            <Text
-              style={[
-                style.profileText,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
+            <Text style={[style.profileText, getPlaceholderTextColor()]}>
               {name}
             </Text>
-            <Text
-              style={[
-                style.profileText1,
-                colorScheme === 'dark' ? Styles.InputText : Styles.main,
-              ]}>
+            <Text style={[style.profileText1, getPlaceholderTextColor()]}>
               {email}
             </Text>
-            <Text
-              style={[
-                style.profileText1,
-                colorScheme === 'dark' ? Styles.InputText : Styles.main,
-              ]}>
+            <Text style={[style.profileText1, getPlaceholderTextColor()]}>
               {phonenumber}
             </Text>
           </View>
@@ -122,33 +109,20 @@ const OwnerProfile = ({navigation}: Props) => {
 
         <View style={style.profileFields}>
           <TouchableOpacity
-            style={[
-              style.whiteBtn,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-            ]}
+            style={[style.whiteBtn, getTextInputStyle()]}
             onPress={() => navigation.navigate('OwnerEditProfile')}>
             <Icons
               name="account"
               size={30}
-              style={[
-                style.editprofileicon,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}
+              style={[style.editprofileicon, getPlaceholderTextColor()]}
             />
-            <Text
-              style={[
-                style.btnPText,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}>
+            <Text style={[style.btnPText, getPlaceholderTextColor()]}>
               Edit Profile
             </Text>
             <Icon
               name="arrow-forward-ios"
               size={20}
-              style={[
-                style.forwardios,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}
+              style={[style.forwardios, getPlaceholderTextColor()]}
             />
           </TouchableOpacity>
           <TouchableOpacity
