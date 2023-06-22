@@ -38,7 +38,9 @@ export const ColorSchemeProvider = ({children}) => {
   };
 
   const getPlaceholderTextColor = () => {
-    return colorScheme === 'dark' ? Colors.Textinput : Colors.black;
+    return colorScheme === 'dark'
+      ? {color: Colors.Inputtext}
+      : {color: Colors.black};
   };
 
   const contextValue = useMemo(() => {

@@ -17,8 +17,30 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import Styles from '../../constants/themeColors';
+
 import styles from './editAddressStyles';
+const SkeletonLoader = () => {
+  const {colorScheme} = useContext(ColorSchemeContext);
+  return (
+    <SkeletonPlaceholder
+      highlightColor="#e0e0e0"
+      backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
+      <View style={style.subContainer}>
+        <View>
+          <TextInput style={style.inputAddress} />
+          <TextInput style={style.inputAddress} />
+          <TextInput style={style.inputAddress} />
+          <TextInput style={style.inputAddress} />
+          <TextInput style={style.inputAddress} />
+          <TextInput style={style.inputAddress} />
+        </View>
+        <View style={style.btnfieldupdateAddress}>
+          <Text style={styles.btntextAddress}></Text>
+        </View>
+      </View>
+    </SkeletonPlaceholder>
+  );
+};
 const EditAddress = () => {
   const {
     handleUpdateAddress,
@@ -40,43 +62,25 @@ const EditAddress = () => {
     state,
     setCity,
   } = useEditaddress();
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {
+    colorScheme,
+    getContainerStyle,
+    getTextColor,
+    getTextInputStyle,
+    getPlaceholderTextColor,
+  } = useContext(ColorSchemeContext);
   const {isLoading} = useAddAddress();
   return (
-    <ScrollView
-      style={[
-        style.headercontainer,
-        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-      ]}>
+    <ScrollView style={[style.headercontainer, getContainerStyle()]}>
       {isLoading ? (
         <>
-          <SkeletonPlaceholder
-            highlightColor="#e0e0e0"
-            backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
-            <View style={style.subContainer}>
-              <View>
-                <TextInput style={style.inputAddress} />
-                <TextInput style={style.inputAddress} />
-                <TextInput style={style.inputAddress} />
-                <TextInput style={style.inputAddress} />
-                <TextInput style={style.inputAddress} />
-                <TextInput style={style.inputAddress} />
-              </View>
-              <View style={style.btnfieldupdateAddress}>
-                <Text style={styles.btntextAddress}></Text>
-              </View>
-            </View>
-          </SkeletonPlaceholder>
+          <SkeletonLoader />
         </>
       ) : (
         <>
           <HeadingText message="Edit address" />
           <View style={styles.subContainer}>
-            <Text
-              style={[
-                styles.textField,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
+            <Text style={[styles.textField, getTextColor()]}>
               Flat no / Building
             </Text>
             <View>
@@ -85,15 +89,11 @@ const EditAddress = () => {
                 onChangeText={text => setAddressLine1(text)}
                 style={[
                   styles.inputAddress,
-                  colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                  colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
+                  getTextInputStyle(),
+                  getPlaceholderTextColor(),
                 ]}
               />
-              <Text
-                style={[
-                  styles.textField,
-                  colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-                ]}>
+              <Text style={[styles.textField, getTextColor()]}>
                 Street / Area{' '}
               </Text>
               <TextInput
@@ -101,44 +101,24 @@ const EditAddress = () => {
                 onChangeText={text => setAddressLine2(text)}
                 style={[
                   styles.inputAddress,
-                  colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                  colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
+                  getTextInputStyle(),
+                  getPlaceholderTextColor(),
                 ]}
               />
-              <Text
-                style={[
-                  styles.textField,
-                  colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-                ]}>
-                State
-              </Text>
+              <Text style={[styles.textField, getTextColor()]}>State</Text>
               <TextInput
                 value={state}
                 style={[
                   styles.inputAddress,
-                  colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                  colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
+                  getTextInputStyle(),
+                  getPlaceholderTextColor(),
                 ]}
                 onChangeText={text => setStateName(text)}
               />
               <View style={style.textContainer}>
-                <Text
-                  style={[
-                    styles.textField,
-                    colorScheme === 'dark'
-                      ? Styles.whitetext
-                      : Styles.blackText,
-                  ]}>
-                  City
-                </Text>
-                <Text
-                  style={[
-                    style.textFieldpincode,
-                    colorScheme === 'dark'
-                      ? Styles.whitetext
-                      : Styles.blackText,
-                  ]}>
-                  Pincode{' '}
+                <Text style={[styles.textField, getTextColor()]}>City</Text>
+                <Text style={[style.textFieldpincode, getTextColor()]}>
+                  Pincode
                 </Text>
               </View>
               <View style={style.cityContainer}>
@@ -149,10 +129,8 @@ const EditAddress = () => {
                   }
                   style={[
                     styles.smalltextInputs,
-                    colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                    colorScheme === 'dark'
-                      ? Styles.InputText
-                      : Styles.blackText,
+                    getTextInputStyle(),
+                    getPlaceholderTextColor(),
                   ]}
                   onChangeText={text => {
                     setCity(text);
@@ -161,10 +139,8 @@ const EditAddress = () => {
                 <TextInput
                   style={[
                     styles.smalltextInputs,
-                    colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                    colorScheme === 'dark'
-                      ? Styles.InputText
-                      : Styles.blackText,
+                    getTextInputStyle(),
+                    getPlaceholderTextColor(),
                   ]}
                   placeholder={
                     colorScheme === 'dark' ? Colors.InputText : Colors.black
@@ -173,11 +149,7 @@ const EditAddress = () => {
                   onChangeText={setPostalCode}
                 />
               </View>
-              <Text
-                style={[
-                  styles.texttypeField,
-                  colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-                ]}>
+              <Text style={[styles.texttypeField, getTextColor()]}>
                 Type Of Address
               </Text>
               <View style={style.containerRadio}>
@@ -188,15 +160,7 @@ const EditAddress = () => {
                     onPress={() => handleOptionChange('HOME')}
                     color={colorScheme === 'dark' ? Colors.white : Colors.black}
                   />
-                  <Text
-                    style={[
-                      style.textRadio,
-                      colorScheme === 'dark'
-                        ? Styles.whitetext
-                        : Styles.blackText,
-                    ]}>
-                    Home
-                  </Text>
+                  <Text style={[style.textRadio, getTextColor()]}>Home</Text>
                 </View>
                 <View style={style.optionRadio}>
                   <RadioButton
@@ -207,25 +171,11 @@ const EditAddress = () => {
                     onPress={() => handleOptionChange('OFFICE')}
                     color={colorScheme === 'dark' ? Colors.white : Colors.black}
                   />
-                  <Text
-                    style={[
-                      style.textRadio,
-                      colorScheme === 'dark'
-                        ? Styles.whitetext
-                        : Styles.blackText,
-                    ]}>
-                    Office
-                  </Text>
+                  <Text style={[style.textRadio, getTextColor()]}>Office</Text>
                 </View>
               </View>
               <View style={style.containerCheckbox}>
-                <Text
-                  style={[
-                    styles.textCheckbox,
-                    colorScheme === 'dark'
-                      ? Styles.whitetext
-                      : Styles.blackText,
-                  ]}>
+                <Text style={[styles.textCheckbox, getTextColor()]}>
                   Make Default Address
                 </Text>
                 <CheckBox
