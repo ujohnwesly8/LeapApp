@@ -23,6 +23,81 @@ const FilteredAnalytics = () => {
 
   const addPrefixToYLabel = (value: any) => `₹ ${value}`;
 
+  let content;
+  if (isLoading) {
+    content = (
+      <Spinner
+        visible={isLoading}
+        textContent={'Loading...'}
+        textStyle={style.spinnerS}
+      />
+    );
+  } else if (chartData.length > 0) {
+    content = (
+      <>
+        <View style={style.chartView}>
+          <View style={style.filterView}>
+            <LineChart
+              data={{
+                labels: chartData.map(dataPoint => {
+                  const date = new Date(dataPoint.month);
+                  return date.toLocaleString('en-US', {month: 'short'});
+                }),
+
+                datasets: [
+                  {
+                    data: chartData.map(dataPoint => dataPoint.rentalCost),
+                  },
+                ],
+              }}
+              width={Dimensions.get('window').width - 20}
+              height={220}
+              chartConfig={{
+                backgroundColor: '#ffffff',
+                backgroundGradientFrom: '#ffffff',
+                backgroundGradientTo: '#ffffff',
+                decimalPlaces: 0,
+                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                style: {
+                  borderRadius: 16,
+                },
+                propsForDots: {
+                  r: '3',
+                  strokeWidth: '2',
+                  stroke: 'purple',
+                },
+              }}
+              bezier
+              formatYLabel={addPrefixToYLabel}
+            />
+          </View>
+        </View>
+
+        <View style={style.xAxisS}>
+          <Text style={style.axisLabel}>Month</Text>
+        </View>
+      </>
+    );
+  } else {
+    content = (
+      <View>
+        <View style={style.animationS}>
+          <Lottie
+            source={require('../../../assets/business-analytics.json')}
+            autoPlay
+          />
+        </View>
+        <View style={style.textContainer1}>
+          <Text style={[style.noAddressText1]}>
+            There is no data available in the
+          </Text>
+          <Text style={[style.noAddressText2]}>selected date range!</Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <ScrollView style={style.scrollDirection}>
       <View>
@@ -45,122 +120,52 @@ const FilteredAnalytics = () => {
             />
           </View>
 
+          <View>{content}</View>
+
           <View>
-            {isLoading ? (
-              <Spinner
-                visible={isLoading}
-                textContent={'Loading...'}
-                textStyle={style.spinnerS}
-              />
-            ) : chartData.length > 0 ? (
-              <>
-                <View style={style.chartView}>
-                  <View style={style.filterView}>
-                    <LineChart
-                      data={{
-                        labels: chartData.map(dataPoint => {
-                          const date = new Date(dataPoint.month);
-                          return date.toLocaleString('en-US', {month: 'short'});
-                        }),
+            {Object.keys(data).length > 0 ? (
+              Object.entries(data).map(([month, items]) => (
+                <View key={month}>
+                  {items.map((item: any, index: number) => (
+                    <View key={`${month}-${item.id}-${index}`}>
+                      <View style={style.dashcard}>
+                        <View style={style.dashcardContainer}>
+                          <Image
+                            source={{uri: item.imageUrl}}
+                            style={style.dashboardimage}
+                          />
 
-                        datasets: [
-                          {
-                            data: chartData.map(
-                              dataPoint => dataPoint.rentalCost,
-                            ),
-                          },
-                        ],
-                      }}
-                      width={Dimensions.get('window').width - 20}
-                      height={220}
-                      chartConfig={{
-                        backgroundColor: '#ffffff',
-                        backgroundGradientFrom: '#ffffff',
-                        backgroundGradientTo: '#ffffff',
-                        decimalPlaces: 0,
-                        color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                        labelColor: (opacity = 1) =>
-                          `rgba(0, 0, 0, ${opacity})`,
-                        style: {
-                          borderRadius: 16,
-                        },
-                        propsForDots: {
-                          r: '3',
-                          strokeWidth: '2',
-                          stroke: 'purple',
-                        },
-                      }}
-                      bezier
-                      formatYLabel={addPrefixToYLabel}
-                    />
-                  </View>
-                </View>
+                          <View style={style.textDirection}>
+                            <Text style={style.cardStyle}>
+                              Order ID: {item.borrowerId}
+                            </Text>
 
-                <View style={style.xAxisS}>
-                  <Text style={style.axisLabel}>Month</Text>
-                </View>
-              </>
-            ) : (
-              <View>
-                <View style={style.animationS}>
-                  <Lottie
-                    source={require('../../../assets/business-analytics.json')}
-                    autoPlay
-                  />
-                </View>
-                <View style={style.textContainer1}>
-                  <Text style={[style.noAddressText1]}>
-                    There is no data available in the
-                  </Text>
-                  <Text style={[style.noAddressText2]}>
-                    selected date range!
-                  </Text>
-                </View>
-              </View>
-            )}
-          </View>
-          {Object.keys(data).length > 0 ? (
-            Object.entries(data).map(([month, items]) => (
-              <View key={month}>
-                {items.map((item: any, index: any) => (
-                  <View key={`${item.id}-${index}`}>
-                    <View style={style.dashcard}>
-                      <View style={style.dashcardContainer}>
-                        <Image
-                          source={{uri: item.imageUrl}}
-                          style={style.dashboardimage}
-                        />
+                            <Text style={style.cardStyle}>
+                              {item.borrowerName}
+                            </Text>
+                            <Text style={style.cardStyle}>
+                              ₹ {item.rentalCost}
+                            </Text>
+                            <Text style={style.cardStyle}> {item.name}</Text>
 
-                        <View style={style.textDirection}>
-                          <Text style={style.cardStyle}>
-                            Order ID: {item.borrowerId}
-                          </Text>
+                            <Text style={style.cardStyle}>
+                              Quantity: {item.quantity}
+                            </Text>
 
-                          <Text style={style.cardStyle}>
-                            {item.borrowerName}
-                          </Text>
-                          <Text style={style.cardStyle}>
-                            ₹ {item.rentalCost}
-                          </Text>
-                          <Text style={style.cardStyle}> {item.name}</Text>
-
-                          <Text style={style.cardStyle}>
-                            Quantity: {item.quantity}
-                          </Text>
-
-                          <Text style={style.cardStyle}>
-                            Phone number: {item.borrowerPhoneNumber}
-                          </Text>
+                            <Text style={style.cardStyle}>
+                              Phone number: {item.borrowerPhoneNumber}
+                            </Text>
+                          </View>
                         </View>
                       </View>
                     </View>
-                  </View>
-                ))}
-              </View>
-            ))
-          ) : (
-            <></>
-          )}
+                  ))}
+                </View>
+              ))
+            ) : (
+              <></>
+            )}
+          </View>
         </View>
       </View>
     </ScrollView>
