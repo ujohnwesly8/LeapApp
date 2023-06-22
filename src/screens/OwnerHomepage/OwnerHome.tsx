@@ -38,7 +38,6 @@ const OwnerHome = ({navigation}: Props) => {
     products,
     name,
     isLoading,
-
     refreshing,
     onRefresh,
     handleAnalatyics,
@@ -86,59 +85,6 @@ const OwnerHome = ({navigation}: Props) => {
     </TouchableOpacity>
   );
 
-  const renderRecentlyAdded = () => {
-    if (isLoading) {
-      return (
-        <SkeletonPlaceholder
-          backgroundColor={colorScheme === 'dark' ? '#373737' : Colors.white}>
-          <>
-            <ScrollView style={styles.mainContainer}>
-              <TouchableOpacity style={styles.recentlyaddedcard}>
-                <View style={styles.cardContainer}>
-                  <Text style={styles.recentlyaddedimage}></Text>
-                </View>
-                <View style={styles.cardTextContainer}>
-                  <Text style={styles.cardTextPrice}></Text>
-                  <Text style={styles.cardTextPrice}></Text>
-                </View>
-              </TouchableOpacity>
-              <View>
-                <View style={styles.cardSt}>
-                  <TouchableOpacity style={styles.recentlyaddedcard}>
-                    <View style={styles.cardContainer}>
-                      <Text style={styles.recentlyaddedimage}></Text>
-                    </View>
-                    <View style={styles.cardTextContainer}>
-                      <Text style={styles.cardTextPrice}></Text>
-                      <Text style={styles.cardTextPrice}></Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </ScrollView>
-          </>
-        </SkeletonPlaceholder>
-      );
-    } else if (recentyAdded && recentyAdded.length === 0) {
-      return (
-        <View style={styles.lottieS}>
-          <Lottie source={require('../../../assets/ownerHome.json')} autoPlay />
-        </View>
-      );
-    } else {
-      return (
-        <View>
-          <FlatList
-            data={recentyAdded as Product[]}
-            keyExtractor={item => item.id.toString()}
-            horizontal={true}
-            renderItem={renderRecentlyAddedItem}
-          />
-        </View>
-      );
-    }
-  };
-
   const renderRentalHistoryItem = ({
     item,
     index,
@@ -171,6 +117,50 @@ const OwnerHome = ({navigation}: Props) => {
         <Text style={styles.cardTextPrice}>₹ {item.price}</Text>
       </View>
     </TouchableOpacity>
+  );
+
+  const renderRecentlyAdded = () => {
+    if (isLoading) {
+      return (
+        <SkeletonPlaceholder
+          backgroundColor={colorScheme === 'dark' ? '#373737' : Colors.white}>
+          <ScrollView style={styles.mainContainer}>
+            {renderRecentlyAddedSkeleton()}
+          </ScrollView>
+        </SkeletonPlaceholder>
+      );
+    } else if (recentyAdded && recentyAdded.length === 0) {
+      return (
+        <View style={styles.lottieS}>
+          <Lottie source={require('../../../assets/ownerHome.json')} autoPlay />
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <FlatList
+            data={recentyAdded as Product[]}
+            keyExtractor={item => item.id.toString()}
+            horizontal={true}
+            renderItem={renderRecentlyAddedItem}
+          />
+        </View>
+      );
+    }
+  };
+
+  const renderRecentlyAddedSkeleton = () => (
+    <View>
+      <TouchableOpacity style={styles.recentlyaddedcard}>
+        <View style={styles.cardContainer}>
+          <Text style={styles.recentlyaddedimage}></Text>
+        </View>
+        <View style={styles.cardTextContainer}>
+          <Text style={styles.cardTextPrice}></Text>
+          <Text style={styles.cardTextPrice}></Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 
   const renderRentalHistory = () => {
@@ -273,33 +263,7 @@ const OwnerHome = ({navigation}: Props) => {
       {isLoading ? (
         <SkeletonPlaceholder
           backgroundColor={colorScheme === 'dark' ? '#373737' : Colors.white}>
-          <>
-            <ScrollView style={styles.mainContainer}>
-              <View></View>
-              <TouchableOpacity style={styles.recentlyaddedcard}>
-                <View style={styles.cardContainer}>
-                  <Text style={styles.recentlyaddedimage}></Text>
-                </View>
-                <View style={styles.cardTextContainer}>
-                  <Text style={styles.cardTextPrice}></Text>
-                  <Text style={styles.cardTextPrice}></Text>
-                </View>
-              </TouchableOpacity>
-              <View>
-                <View style={styles.cardSt}>
-                  <TouchableOpacity style={styles.recentlyaddedcard}>
-                    <View style={styles.cardContainer}>
-                      <Text style={styles.recentlyaddedimage}></Text>
-                    </View>
-                    <View style={styles.cardTextContainer}>
-                      <Text style={styles.cardTextPrice}></Text>
-                      <Text style={styles.cardTextPrice}></Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </ScrollView>
-          </>
+          {renderRecentlyAddedSkeleton()}
         </SkeletonPlaceholder>
       ) : (
         <>
