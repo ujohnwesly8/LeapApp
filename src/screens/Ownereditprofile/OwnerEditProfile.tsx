@@ -28,7 +28,7 @@ function SkeletonLoader() {
   );
 }
 
-export default function OwnerEditProfile() {
+const OwnerEditProfile = () => {
   const {
     firstName,
     setFirstName,
@@ -44,6 +44,8 @@ export default function OwnerEditProfile() {
     isLoading,
   } = useOwnerProfile();
   const {colorScheme} = useCart();
+  const {getContainerStyle, getTextColor, getTextInputStyle} =
+    useContext(ColorSchemeContext);
   const [isFormValid, setIsFormValid] = useState(false);
   useEffect(() => {
     setIsFormValid(
@@ -54,11 +56,7 @@ export default function OwnerEditProfile() {
     );
   }, [firstName, lastName, email, phoneNumber]);
   return (
-    <View
-      style={[
-        style.container,
-        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-      ]}>
+    <View style={[style.container, getContainerStyle()]}>
       <View style={style.addAddressHeader}>
         <HeadingText message="Edit profile" />
       </View>
@@ -67,19 +65,9 @@ export default function OwnerEditProfile() {
           <SkeletonLoader />
         ) : (
           <View>
-            <Text
-              style={[
-                style.text,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
-              First name
-            </Text>
+            <Text style={[style.text, getTextColor()]}>First name</Text>
             <TextInput
-              style={[
-                style.input,
-                colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}
+              style={[style.input, getTextInputStyle()]}
               placeholderTextColor={Colors.white}
               value={firstName}
               onChangeText={text => setFirstName(text)}
@@ -110,7 +98,7 @@ export default function OwnerEditProfile() {
             <TextInput
               style={[
                 style.emailinput,
-                colorScheme === 'dark' ? Styles.cardColor : Styles.InputText,
+                getTextInputStyle(),
                 colorScheme === 'dark' ? Styles.InputText : Styles.placeholder,
               ]}
               value={email}
@@ -118,17 +106,11 @@ export default function OwnerEditProfile() {
               selectTextOnFocus={false}
               editable={false}
             />
-            <Text
-              style={[
-                style.text,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
-              Phone number
-            </Text>
+            <Text style={[style.text, getTextColor()]}>Phone number</Text>
             <TextInput
               style={[
                 style.emailinput,
-                colorScheme === 'dark' ? Styles.cardColor : Styles.InputText,
+                getTextInputStyle(),
                 colorScheme === 'dark' ? Styles.InputText : Styles.placeholder,
               ]}
               value={phoneNumber}
@@ -172,4 +154,5 @@ export default function OwnerEditProfile() {
       />
     </View>
   );
-}
+};
+export default OwnerEditProfile;
