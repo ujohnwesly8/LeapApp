@@ -13,14 +13,14 @@ const options = [
 ];
 type PriceRange = {
   label: string;
-  min: number;
-  max: number;
+  min: string;
+  max: string;
 };
 
 type PriceRangeProps = {
-  minPrice: number;
-  maxPrice: number;
-  onSelectPriceRange: (min: number, max: number) => void;
+  minPrice: string;
+  maxPrice: string;
+  onSelectPriceRange: (min: string, max: string) => void;
 };
 
 const PriceRangeDropdown = ({

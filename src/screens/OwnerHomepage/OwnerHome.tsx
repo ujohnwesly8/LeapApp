@@ -38,7 +38,6 @@ const OwnerHome = ({navigation}: Props) => {
     products,
     name,
     isLoading,
-
     refreshing,
     onRefresh,
     handleAnalatyics,
@@ -50,41 +49,57 @@ const OwnerHome = ({navigation}: Props) => {
   const {handleOrders, CategoriePieData, Dashboardyeardata} = useAnalytics();
   const {colorScheme} = useContext(ColorSchemeContext);
 
-  const renderRecentlyAddedItem = ({item}: {item: Product}) => (
-    <TouchableOpacity
-      key={item.id}
-      style={styles.recentlyaddedcard}
-      onPress={() => navigation.navigate('OproductDetails', {product: item})}>
-      <View
-        style={[
-          styles.cardContainer,
-          colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-        ]}>
-        <Image
-          source={{uri: item.imageUrl[0]}}
-          style={styles.recentlyaddedimage}
-        />
-      </View>
-      <View
-        style={[
-          styles.cardTextContainer,
-          colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-        ]}>
-        <View style={styles.textViewS}>
-          <Text
-            style={[
-              styles.cardText,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
-            {item.name}
-          </Text>
+  const renderRecentlyAddedItem = ({item}: {item: Product}) => {
+    return (
+      <TouchableOpacity
+        key={item.id}
+        style={styles.recentlyaddedcard}
+        onPress={() => navigation.navigate('OproductDetails', {product: item})}>
+        <View
+          style={[
+            styles.cardContainer,
+            colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+          ]}>
+          <Image
+            source={{uri: item.imageUrl[0]}}
+            style={styles.recentlyaddedimage}
+          />
         </View>
-        <View style={styles.cardS}>
-          <Text style={styles.cardTextPrice}>₹ {item.price}</Text>
+        <View
+          style={[
+            styles.cardTextContainer,
+            colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+          ]}>
+          <View style={styles.textViewS}>
+            <Text
+              style={[
+                styles.cardText,
+                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+              ]}>
+              {item.name}
+            </Text>
+          </View>
+          <View style={styles.cardS}>
+            <Text style={styles.cardTextPrice}>₹ {item.price}</Text>
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
-  );
+      </TouchableOpacity>
+    );
+  };
+
+  const renderTouchableOpacity = () => {
+    return (
+      <TouchableOpacity style={styles.recentlyaddedcard}>
+        <View style={styles.cardContainer}>
+          <Text style={styles.recentlyaddedimage}></Text>
+        </View>
+        <View style={styles.cardTextContainer}>
+          <Text style={styles.cardTextPrice}></Text>
+          <Text style={styles.cardTextPrice}></Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   const renderRecentlyAdded = () => {
     if (isLoading) {
@@ -93,27 +108,9 @@ const OwnerHome = ({navigation}: Props) => {
           backgroundColor={colorScheme === 'dark' ? '#373737' : Colors.white}>
           <>
             <ScrollView style={styles.mainContainer}>
-              <TouchableOpacity style={styles.recentlyaddedcard}>
-                <View style={styles.cardContainer}>
-                  <Text style={styles.recentlyaddedimage}></Text>
-                </View>
-                <View style={styles.cardTextContainer}>
-                  <Text style={styles.cardTextPrice}></Text>
-                  <Text style={styles.cardTextPrice}></Text>
-                </View>
-              </TouchableOpacity>
+              {renderTouchableOpacity()}
               <View>
-                <View style={styles.cardSt}>
-                  <TouchableOpacity style={styles.recentlyaddedcard}>
-                    <View style={styles.cardContainer}>
-                      <Text style={styles.recentlyaddedimage}></Text>
-                    </View>
-                    <View style={styles.cardTextContainer}>
-                      <Text style={styles.cardTextPrice}></Text>
-                      <Text style={styles.cardTextPrice}></Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
+                <View style={styles.cardSt}>{renderTouchableOpacity()}</View>
               </View>
             </ScrollView>
           </>
@@ -145,33 +142,35 @@ const OwnerHome = ({navigation}: Props) => {
   }: {
     item: Product;
     index: number;
-  }) => (
-    <TouchableOpacity
-      key={`${item.id.toString()}-${index}`}
-      style={styles.recentlyaddedcard}
-      onPress={() => navigation.navigate('OproductDetails', {product: item})}>
-      <View style={styles.cardContainer}>
-        <Image
-          source={{uri: item.imageUrl[0]}}
-          style={styles.recentlyaddedimage}
-        />
-      </View>
-      <View
-        style={[
-          styles.cardTextContainer,
-          colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-        ]}>
-        <Text
+  }) => {
+    return (
+      <TouchableOpacity
+        key={`${item.id.toString()}-${index}`}
+        style={styles.recentlyaddedcard}
+        onPress={() => navigation.navigate('OproductDetails', {product: item})}>
+        <View style={styles.cardContainer}>
+          <Image
+            source={{uri: item.imageUrl[0]}}
+            style={styles.recentlyaddedimage}
+          />
+        </View>
+        <View
           style={[
-            styles.cardText,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+            styles.cardTextContainer,
+            colorScheme === 'dark' ? Styles.cardColor : Styles.main,
           ]}>
-          {item.name}
-        </Text>
-        <Text style={styles.cardTextPrice}>₹ {item.price}</Text>
-      </View>
-    </TouchableOpacity>
-  );
+          <Text
+            style={[
+              styles.cardText,
+              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+            ]}>
+            {item.name}
+          </Text>
+          <Text style={styles.cardTextPrice}>₹ {item.price}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   const renderRentalHistory = () => {
     if (products && products.length === 0) {
@@ -271,36 +270,7 @@ const OwnerHome = ({navigation}: Props) => {
         </Text>
       </View>
       {isLoading ? (
-        <SkeletonPlaceholder
-          backgroundColor={colorScheme === 'dark' ? '#373737' : Colors.white}>
-          <>
-            <ScrollView style={styles.mainContainer}>
-              <View></View>
-              <TouchableOpacity style={styles.recentlyaddedcard}>
-                <View style={styles.cardContainer}>
-                  <Text style={styles.recentlyaddedimage}></Text>
-                </View>
-                <View style={styles.cardTextContainer}>
-                  <Text style={styles.cardTextPrice}></Text>
-                  <Text style={styles.cardTextPrice}></Text>
-                </View>
-              </TouchableOpacity>
-              <View>
-                <View style={styles.cardSt}>
-                  <TouchableOpacity style={styles.recentlyaddedcard}>
-                    <View style={styles.cardContainer}>
-                      <Text style={styles.recentlyaddedimage}></Text>
-                    </View>
-                    <View style={styles.cardTextContainer}>
-                      <Text style={styles.cardTextPrice}></Text>
-                      <Text style={styles.cardTextPrice}></Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </ScrollView>
-          </>
-        </SkeletonPlaceholder>
+        renderRecentlyAdded()
       ) : (
         <>
           {renderRecentlyAdded()}
