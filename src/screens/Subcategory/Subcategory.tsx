@@ -20,7 +20,7 @@ export type RootStackParamList = {
   CategoryProducts: {categoryId: string};
 };
 
-const SubcategoryList = ({
+const Subcategory = ({
   route,
 }: {
   route: RouteProp<RootStackParamList, 'CategoryProducts'>;
@@ -108,4 +108,4 @@ const SubcategoryList = ({
   );
 };
 
-export default SubcategoryList;
+export default Subcategory;
