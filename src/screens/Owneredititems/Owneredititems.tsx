@@ -326,7 +326,7 @@ const App = () => {
                 availableQuantities: number;
                 image: string;
               },
-              index: any,
+              // index: any,
             ) => (
               <>
                 <View
@@ -336,7 +336,8 @@ const App = () => {
                       ? Styles.blacktheme
                       : Styles.whiteTheme,
                   ]}
-                  key={`${item.id.toString()}-${index}`}>
+                  // key={`${item.id.toString()}-${index}`}>
+                  key={item.id.toString()}>
                   <View style={[Style.item_course]}>
                     <View style={[OwnerEditItemstyles.imagePriceContainer]}>
                       <View style={[OwnerEditItemstyles.cardImageContainer]}>
