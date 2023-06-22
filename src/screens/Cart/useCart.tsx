@@ -1,21 +1,22 @@
+/* eslint-disable quotes */
 /* eslint-disable react-hooks/exhaustive-deps */
-import {useContext, useEffect, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {fetchCartProducts} from '../../redux/slice/cartSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {removeFromCart} from '../../redux/actions/actions';
-import {QuantityApi, checkoutApi, url} from '../../constants/Apis';
-import {Alert} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useContext, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCartProducts } from "../../redux/slice/cartSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { removeFromCart } from "../../redux/actions/actions";
+import { QuantityApi, checkoutApi, url } from "../../constants/Apis";
+import { Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-import ApiService from '../../network/network';
-import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import {StackNavigationProp} from '@react-navigation/stack';
+import ApiService from "../../network/network";
+import { ColorSchemeContext } from "../../../ColorSchemeContext";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 type RootStackParamList = {
   CheckoutScreen: undefined;
-  UserHomescreen: {screen: any};
-  ProfileScreen: {screen: any};
+  UserHomescreen: { screen: any };
+  ProfileScreen: { screen: any };
 };
 const useCart = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -25,7 +26,7 @@ const useCart = () => {
   const [showModal, setShowModal] = useState(false);
   const [isplusDisable, setisButtondisable] = useState(false); // Added loading state
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const { colorScheme } = useContext(ColorSchemeContext);
   const dispatch = useDispatch();
 
   const openModal = () => {
@@ -36,21 +37,22 @@ const useCart = () => {
     setShowModal(false);
   };
   const isLoading = useSelector(
-    (state: {CartProducts: {isLoader: boolean}}) => state.CartProducts.isLoader,
+    (state: { CartProducts: { isLoader: boolean } }) =>
+      state.CartProducts.isLoader
   );
   const cartData = useSelector(
-    (state: {CartProducts: {data: any}}) => state.CartProducts.data,
+    (state: { CartProducts: { data: any } }) => state.CartProducts.data
   ) || {
     cartItems: [],
   };
   const CartProducts = useSelector(
-    (state: {CartProducts: {data: any}}) => state.CartProducts.data,
+    (state: { CartProducts: { data: any } }) => state.CartProducts.data
   ) || {
     cartItems: [],
   };
   useEffect(() => {
     if (refreshing) {
-      console.log('what the heck bro ');
+      console.log("what the heck bro ");
       dispatch(fetchCartProducts() as any);
       setRefreshing(false);
     }
@@ -61,7 +63,7 @@ const useCart = () => {
     }
   }, [showModal]);
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener("focus", () => {
       dispatch(fetchCartProducts() as any);
     });
     return unsubscribe;
@@ -73,54 +75,56 @@ const useCart = () => {
         productId: productId,
         quantity: newQuantity,
       };
-      console.log('Important data is:', newQuantity, productId);
+      console.log("Important data is:", newQuantity, productId);
       const response = await ApiService.put(QuantityApi, data);
-      console.log('Update response:', response);
+      console.log("Update response:", response);
       setRefreshing(true);
     } catch (error) {
-      console.error('Update error:', error);
+      console.error("Update error:", error);
     }
   };
 
   const handleCheckout = async () => {
     try {
-      const token = await AsyncStorage.getItem('token');
+      const token = await AsyncStorage.getItem("token");
       const items = cartData?.cartItems?.map(
-        (item: {product: {price: any; id: any; name: any; quantity: any}}) => ({
+        (item: {
+          product: { price: any; id: any; name: any; quantity: any };
+        }) => ({
           price: item.product.price,
           productId: item.product.id,
           productName: item.product.name,
           quantity: item.product.quantity,
-        }),
+        })
       );
       const response = await fetch(checkoutApi, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(items),
       });
       const data = await response.json();
-      navigation.navigate('CheckoutScreen');
-      console.log('Checkout Session created:', data);
+      navigation.navigate("CheckoutScreen");
+      console.log("Checkout Session created:", data);
     } catch (error) {}
   };
   const handleRemove = async (productId: any) => {
-    const token = await AsyncStorage.getItem('token');
-    console.log('chiranjeevi', productId);
+    const token = await AsyncStorage.getItem("token");
+    console.log("chiranjeevi", productId);
     fetch(`${url}/cart/delete/${productId}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(_data => {
+      .then((_data) => {
         dispatch(removeFromCart(productId));
         dispatch(fetchCartProducts as any);
         openModal();
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
         const errorMessage = `Error removing item from cart: ${error.message}`;
 
@@ -130,9 +134,9 @@ const useCart = () => {
 
   const handleIncrement = (item: any) => {
     const productId = item.product.id;
-    console.log('itemID', productId);
+    console.log("itemID", productId);
     const productQuantity = item.product.availableQuantities;
-    console.log('Validation of product Quantity is ', productQuantity);
+    console.log("Validation of product Quantity is ", productQuantity);
     if (item.quantity === productQuantity) {
       setisButtondisable(true);
     } else {
@@ -140,15 +144,15 @@ const useCart = () => {
       console.log(Quantity);
       handleUpdate(Quantity, productId);
     }
-    setRefreshing(prevRefreshing => !prevRefreshing);
-    console.log('refreshing :', refreshing); // Toggle the value of refreshing
+    setRefreshing((prevRefreshing) => !prevRefreshing);
+    console.log("refreshing :", refreshing); // Toggle the value of refreshing
   };
 
   const handleDecrement = (item: any) => {
     console.log(item.quantity);
     const productId = item.product.id;
     const newQuantity = item.quantity - 1;
-    console.log('itemID', productId);
+    console.log("itemID", productId);
     handleUpdate(newQuantity, productId);
     setisButtondisable(false);
   };

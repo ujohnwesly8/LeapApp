@@ -1,40 +1,42 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import {AnyAction, Dispatch} from 'redux';
-import {url} from '../../constants/Apis';
-import {Alert} from 'react-native';
-import {ThunkDispatch} from 'redux-thunk';
-import {SetStateAction} from 'react';
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
-export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
-export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
-export const OTP_REQUEST = 'OTP_REQUEST';
-export const OTP_SUCCESS = 'OTP_SUCCESS';
-export const OTP_FAILURE = 'OTP_FAILURE';
-export const VERIFY_OTP_REQUEST = 'VERIFY_OTP_REQUEST';
-export const VERIFY_OTP_SUCCESS = 'VERIFY_OTP_SUCCESS';
-export const VERIFY_OTP_FAILURE = 'VERIFY_OTP_FAILURE';
-export const ADD_ADDRESS = 'ADD_ADDRESS';
-export const DELETE_ADDRESS = 'DELETE_ADDRESS';
-export const REMOVE_ADDRESS = 'REMOVE_ADDRESS';
-export const ADD_NAME = 'ADD_NAME';
-export const ADD_DESCRIPTION = 'ADD_DESCRIPTION';
-export const ADD_GENDER = 'ADD_GENDER';
-export const ADD_EVENT = 'ADD_EVENT';
-export const ADD_SIZE = 'ADD_SIZE';
-export const ADD_TYPE = 'ADD_TYPE';
-export const ADD_OUTFIT = 'ADD_OUTFIT';
-export const SET_ROLE = 'SET_ROLE';
-export const ADD_ORDER = 'ADD_ORDER';
+/* eslint-disable quotes */
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { AnyAction, Dispatch } from "redux";
+import { url } from "../../constants/Apis";
+import { Alert } from "react-native";
+import { ThunkDispatch } from "redux-thunk";
+import { SetStateAction } from "react";
+import { Orderreducer } from "../reducers/Orderreducer";
+export const LOGIN_REQUEST = "LOGIN_REQUEST";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILURE = "LOGIN_FAILURE";
+export const SIGNUP_REQUEST = "SIGNUP_REQUEST";
+export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+export const SIGNUP_FAILURE = "SIGNUP_FAILURE";
+export const OTP_REQUEST = "OTP_REQUEST";
+export const OTP_SUCCESS = "OTP_SUCCESS";
+export const OTP_FAILURE = "OTP_FAILURE";
+export const VERIFY_OTP_REQUEST = "VERIFY_OTP_REQUEST";
+export const VERIFY_OTP_SUCCESS = "VERIFY_OTP_SUCCESS";
+export const VERIFY_OTP_FAILURE = "VERIFY_OTP_FAILURE";
+export const ADD_ADDRESS = "ADD_ADDRESS";
+export const DELETE_ADDRESS = "DELETE_ADDRESS";
+export const REMOVE_ADDRESS = "REMOVE_ADDRESS";
+export const ADD_NAME = "ADD_NAME";
+export const ADD_DESCRIPTION = "ADD_DESCRIPTION";
+export const ADD_GENDER = "ADD_GENDER";
+export const ADD_EVENT = "ADD_EVENT";
+export const ADD_SIZE = "ADD_SIZE";
+export const ADD_TYPE = "ADD_TYPE";
+export const ADD_OUTFIT = "ADD_OUTFIT";
+export const SET_ROLE = "SET_ROLE";
+export const ADD_ORDER = "ADD_ORDER";
 //-------------------------------------------changes for wishlist and cart
-export const ADD_TO_CART = 'ADD_TO_CART';
-export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
-export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
-export const ADD_TO_WISHLIST = 'ADD_TO_WISHLIST';
-export const REMOVE_FROM_WISHLIST = 'REMOVE_FROM_WISHLIST';
+export const ADD_TO_CART = "ADD_TO_CART";
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+export const REMOVE_PRODUCT = "REMOVE_PRODUCT";
+export const ADD_TO_WISHLIST = "ADD_TO_WISHLIST";
+export const REMOVE_FROM_WISHLIST = "REMOVE_FROM_WISHLIST";
 
 export const addname = (Name: any) => ({
   type: ADD_NAME,
@@ -67,15 +69,15 @@ export const addsize = (selected: any) => ({
 export const removeAddress = (id: any) => {
   return async (dispatch: Dispatch) => {
     try {
-      const token = await AsyncStorage.getItem('token');
+      const token = await AsyncStorage.getItem("token");
       await axios.delete(`${url}/address/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      dispatch({type: REMOVE_ADDRESS, payload: id});
+      dispatch({ type: REMOVE_ADDRESS, payload: id });
     } catch (error) {
-      console.log('remove address error', error);
+      console.log("remove address error", error);
     }
   };
 };
@@ -93,29 +95,29 @@ export const addAddress = (data: {
   return async (dispatch: Dispatch) => {
     try {
       const response = await axios.post(
-        'https://64267853556bad2a5b505aec.mockapi.io/login',
-        data,
+        "https://64267853556bad2a5b505aec.mockapi.io/login",
+        data
       );
-      console.log('address added', response.data);
+      console.log("address added", response.data);
       dispatch({
         type: ADD_ADDRESS,
         payload: response.data,
       });
     } catch (error) {
-      console.log('address add error', error);
+      console.log("address add error", error);
     }
   };
 };
 
 export const deleteAddress = (index: any) => ({
-  type: 'DELETE_ADDRESS',
+  type: "DELETE_ADDRESS",
   payload: index,
 });
 export const Init = () => {
   return async (dispatch: Dispatch) => {
-    let token = await AsyncStorage.getItem('token');
+    let token = await AsyncStorage.getItem("token");
     if (token !== null) {
-      console.log('token fetched');
+      console.log("token fetched");
       dispatch({
         type: LOGIN_SUCCESS,
         payload: token,
@@ -126,35 +128,35 @@ export const Init = () => {
 
 export const getOTP = (phoneNo: string) => {
   return async (dispatch: Dispatch) => {
-    dispatch({type: VERIFY_OTP_REQUEST});
+    dispatch({ type: VERIFY_OTP_REQUEST });
     try {
       const response = await axios.post(`${url}/phoneNo`, {
         phoneNo,
       });
       // Alert.alert('OTP'), console.log('otp send');
-      dispatch({type: VERIFY_OTP_SUCCESS, payload: response.data});
+      dispatch({ type: VERIFY_OTP_SUCCESS, payload: response.data });
     } catch (error) {
-      dispatch({type: VERIFY_OTP_FAILURE, payload: error});
+      dispatch({ type: VERIFY_OTP_FAILURE, payload: error });
     }
   };
 };
 export const submitOTP = (phoneNo: string, otp: number) => {
   return async (dispatch: Dispatch) => {
-    dispatch({type: LOGIN_REQUEST});
+    dispatch({ type: LOGIN_REQUEST });
     try {
       const response = await axios.post(
         `${url}/otp`,
         {
           phoneNo: phoneNo,
           otp: otp,
-        },
+        }
         // console.log('Phone no', phoneNo, otp),
       );
       const token = response.headers.access_token;
-      await AsyncStorage.setItem('token', token);
-      dispatch({type: LOGIN_SUCCESS, payload: token});
+      await AsyncStorage.setItem("token", token);
+      dispatch({ type: LOGIN_SUCCESS, payload: token });
     } catch (error) {
-      dispatch({type: LOGIN_FAILURE, payload: error});
+      dispatch({ type: LOGIN_FAILURE, payload: error });
     }
   };
 };
@@ -170,15 +172,15 @@ export const Login = (email: string, password: string) => {
         password: password,
       });
       const token = response.headers.access_token;
-      await AsyncStorage.setItem('token', token);
-      console.log('token stored');
-      console.log('this is token', token);
+      await AsyncStorage.setItem("token", token);
+      console.log("token stored");
+      console.log("this is token", token);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: token,
       });
     } catch (error) {
-      console.log('login error', error);
+      console.log("login error", error);
       dispatch({
         type: LOGIN_FAILURE,
         payload: error,
@@ -191,7 +193,7 @@ export const SignupAndLogin = (
   lastName: string,
   email: string,
   phoneNumber: string,
-  password: string,
+  password: string
 ) => {
   return async (dispatch: Dispatch) => {
     axios
@@ -202,12 +204,12 @@ export const SignupAndLogin = (
         phoneNumber,
         password,
       })
-      .then((response: {data: any}) => {
-        console.log('signup success');
+      .then((response: { data: any }) => {
+        console.log("signup success");
         console.log(response);
       })
-      .catch(error => {
-        console.log('signup error', error);
+      .catch((error) => {
+        console.log("signup error", error);
         dispatch({
           type: LOGIN_FAILURE,
           payload: error.message,
@@ -220,14 +222,14 @@ export const Logout = () => {
   return async (dispatch: Dispatch) => {
     await AsyncStorage.clear();
     dispatch({
-      type: 'LOGOUT',
+      type: "LOGOUT",
     });
   };
 };
 
 export const addGenderData = (genderData: SetStateAction<string>) => {
   return {
-    type: 'ADD_GENDER_DATA',
+    type: "ADD_GENDER_DATA",
     payload: genderData,
   };
 };
@@ -270,18 +272,18 @@ export const removeFromWishlist = (productId: any) => ({
 
 // action creator
 
-export const postProductToAPI = (item: {id: any}) => {
-  console.log('hello', item);
+export const postProductToAPI = (item: { id: any }) => {
+  console.log("hello", item);
   return async (dispatch: ThunkDispatch<any, any, AnyAction>) => {
     try {
-      const token = await AsyncStorage.getItem('token');
+      const token = await AsyncStorage.getItem("token");
       const id = item.id;
       console.log(token);
       // make API call
       const response = await fetch(`${url}/wishlist/add?productId=${id}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(item.id),
@@ -289,10 +291,10 @@ export const postProductToAPI = (item: {id: any}) => {
       const data = await response.json();
       // update the Redux store with the response data
       dispatch(addProductToStore(data));
-      console.log('====================================');
+      console.log("====================================");
       console.log(data);
-      console.log('====================================');
-      console.log('success');
+      console.log("====================================");
+      console.log("success");
     } catch (error) {
       console.log(error);
     }
@@ -300,7 +302,7 @@ export const postProductToAPI = (item: {id: any}) => {
 };
 
 // action type
-export const ADD_PRODUCT_TO_STORE = 'ADD_PRODUCT_TO_STORE';
+export const ADD_PRODUCT_TO_STORE = "ADD_PRODUCT_TO_STORE";
 
 // action creator
 export const addProductToStore = (product: any) => {
@@ -312,13 +314,13 @@ export const addProductToStore = (product: any) => {
 
 export const incrementCartItemQuantity = (item: any) => {
   return async (dispatch: any) => {
-    const token = await AsyncStorage.getItem('token');
+    const token = await AsyncStorage.getItem("token");
 
     fetch(`${url}/cart/update`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         productId: item.id,
@@ -327,27 +329,27 @@ export const incrementCartItemQuantity = (item: any) => {
         rentalStartDate: item.rentalStartDate,
       }),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         // update the Redux store with the response data
         dispatch({
           type: ADD_TO_CART,
-          payload: {...item, quantity: data.quantity},
+          payload: { ...item, quantity: data.quantity },
         });
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   };
 };
 
 export const decrementCartItemQuantity = (item: any) => {
   return async (dispatch: any) => {
-    const token = await AsyncStorage.getItem('token');
+    const token = await AsyncStorage.getItem("token");
 
     fetch(`${url}/cart/update`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         productId: item.id,
@@ -356,15 +358,15 @@ export const decrementCartItemQuantity = (item: any) => {
         rentalStartDate: item.rentalStartDate,
       }),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         // update the Redux store with the response data
         dispatch({
           type: ADD_TO_CART,
-          payload: {...item, quantity: data.quantity},
+          payload: { ...item, quantity: data.quantity },
         });
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   };
 };
 
@@ -375,39 +377,63 @@ export const postProductToCartAPI = (item: any, action: string) => {
     rentalEndDate: item.rentalEndDate,
     rentalStartDate: item.rentalStartDate,
   };
-  console.log('hello john', item);
+  console.log("hello john", item);
   return async (dispatch: any) => {
-    if (action === '+') {
+    if (action === "+") {
       dispatch(incrementCartItemQuantity(modifiedItem));
-    } else if (action === '-') {
+    } else if (action === "-") {
       dispatch(decrementCartItemQuantity(modifiedItem));
     } else {
-      const token = await AsyncStorage.getItem('token');
+      const token = await AsyncStorage.getItem("token");
 
       fetch(`${url}/cart/add`, {
-        method: 'POST',
+        method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(modifiedItem),
       })
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           // update the Redux store with the response data
           dispatch({
             type: ADD_TO_CART,
-            payload: {...modifiedItem, quantity: data.quantity},
+            payload: { ...modifiedItem, quantity: data.quantity },
           });
-          Alert.alert('item Added Successfully');
+          Alert.alert("item Added Successfully");
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
+    }
+  };
+};
+
+export const ADDORDER = (razorpayId: string) => {
+  return async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      const data = razorpayId;
+      console.log("john razarpay", data); // create an object with razorpayId property
+      const response = await fetch(
+        `${url}/order/add/?razorpayId=${razorpayId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch(Orderreducer(razorpayId));
+      console.log("success", response);
+    } catch (error) {
+      console.log(error);
     }
   };
 };
 
 // action type
-export const ADD_PRODUCT_TO_CART_STORE = 'ADD_PRODUCT_TO_CART_STORE';
+export const ADD_PRODUCT_TO_CART_STORE = "ADD_PRODUCT_TO_CART_STORE";
 
 // action creator
 export const addProductToCartStore = (product: any) => {
