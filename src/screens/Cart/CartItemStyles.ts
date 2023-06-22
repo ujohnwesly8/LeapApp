@@ -525,5 +525,15 @@ const styles = StyleSheet.create({
   Disabled: {
     backgroundColor: 'grey',
   },
+  datepickerStyle: {
+    backgroundColor: '#D9D9D9',
+    width: 75,
+    height: 25,
+    borderRadius: 8,
+    marginLeft: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  datepickerTextstyle: {color: Colors.black, fontSize: 10},
 });
 export default styles;

@@ -28,9 +28,9 @@ const OproductDetails = ({route, navigation}: Props) => {
       </View>
       <ScrollView horizontal={true}>
         <View style={styles.productImagecon}>
-          {product.imageUrl.map((item: any, index: number) => (
+          {product.imageUrl.map((item: any) => (
             <ImageBackground
-              key={index}
+              key={item}
               style={styles.imgBack}
               source={{uri: item}}></ImageBackground>
           ))}
