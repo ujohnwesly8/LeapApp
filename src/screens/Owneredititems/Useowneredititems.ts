@@ -252,65 +252,72 @@ const Useowneredititems = () => {
     };
     getImageUrls();
   }, [imageUris]);
-  const pickImg = () => {
-    launchImageLibrary(
-      {
+  const pickImg = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      console.log(token);
+
+      const response = await launchImageLibrary({
         mediaType: 'photo',
         selectionLimit: 10,
-      },
-      async (response: any) => {
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-        } else {
-          if (response.assets) {
-            const images = response.assets.map((imagePath: any) => ({
-              uri: imagePath.uri,
-              type: 'image/png',
-              name: 'image.png',
-            }));
-            const formData = new FormData();
-            images.forEach((file: {uri: any}) => {
-              formData.append('file', {
-                uri: file.uri,
-                type: 'image/png',
-                name: 'image.png',
-              });
-            });
-            try {
-              const token = await AsyncStorage.getItem('token');
-              console.log(token);
-              const result = await fetch(`${baseUrl}/file/upload`, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                  'Content-Type': 'multipart/form-data',
-                  Authorization: `Bearer ${token}`,
-                },
-              });
-              if (result.ok) {
-                const res = await result.json();
-                console.log(res);
-                setImageUrls(res.urls);
-                setSelectedImage(res.urls);
-                console.log(imageUrls); // Update this line
-              } else {
-                const res = await result.json();
-                console.log('Upload failed');
-                console.log(res);
-                console.log(token);
-              }
-            } catch (error) {
-              console.error(error);
-            }
-          } else {
-            console.log('Response assets not found');
-          }
-        }
-      },
-    );
+      });
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+        return;
+      }
+
+      if (!response) {
+        console.log('ImagePicker Error: ');
+        return;
+      }
+
+      if (!response.assets) {
+        console.log('Response assets not found');
+        return;
+      }
+
+      const images = response.assets.map((imagePath: any) => ({
+        uri: imagePath.uri,
+        type: 'image/png',
+        name: 'image.png',
+      }));
+
+      const formData = new FormData();
+      images.forEach((file: {uri: any}) => {
+        formData.append('file', {
+          uri: file.uri,
+          type: 'image/png',
+          name: 'image.png',
+        });
+      });
+
+      const result = await fetch(`${baseUrl}/file/upload`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (result.ok) {
+        const res = await result.json();
+        console.log(res);
+        setImageUrls(res.urls);
+        setSelectedImage(res.urls);
+        console.log(imageUrls); // Update this line
+      } else {
+        const res = await result.json();
+        console.log('Upload failed');
+        console.log(res);
+        console.log(token);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   const handleEventTypeChange = (
     selectedEventType: React.SetStateAction<string>,
   ) => {
