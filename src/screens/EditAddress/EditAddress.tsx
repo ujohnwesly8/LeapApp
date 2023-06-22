@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 /* eslint-disable react/self-closing-comp */
 import {
   Text,
@@ -5,26 +6,27 @@ import {
   View,
   TextInput,
   ScrollView,
-} from 'react-native';
-import React, {useContext} from 'react';
-import style from '../Owneraddaddress/AddressStyles';
-import useAddAddress from '../Owneraddaddress/useAddAddress';
-import {CheckBox} from 'react-native-elements';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {RadioButton} from 'react-native-paper';
-import useEditaddress from './useEditAddress';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
-import {ColorSchemeContext} from '../../../ColorSchemeContext';
+} from "react-native";
+import React, { useContext } from "react";
+import style from "../Owneraddaddress/AddressStyles";
+import useAddAddress from "../Owneraddaddress/useAddAddress";
+import { CheckBox } from "react-native-elements";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+import { RadioButton } from "react-native-paper";
+import useEditaddress from "./useEditAddress";
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import CustomModal from "../../components/atoms/CustomModel/CustomModel";
+import HeadingText from "../../components/atoms/HeadingText/HeadingTest";
+import { ColorSchemeContext } from "../../../ColorSchemeContext";
 
-import styles from './editAddressStyles';
+import styles from "./editAddressStyles";
 const SkeletonLoader = () => {
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const { colorScheme } = useContext(ColorSchemeContext);
   return (
     <SkeletonPlaceholder
       highlightColor="#e0e0e0"
-      backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
+      backgroundColor={colorScheme === "dark" ? "#373737" : "#f2f2f2"}
+    >
       <View style={style.subContainer}>
         <View>
           <TextInput style={style.inputAddress} />
@@ -69,7 +71,7 @@ const EditAddress = () => {
     getTextInputStyle,
     getPlaceholderTextColor,
   } = useContext(ColorSchemeContext);
-  const {isLoading} = useAddAddress();
+  const { isLoading } = useAddAddress();
   return (
     <ScrollView style={[style.headercontainer, getContainerStyle()]}>
       {isLoading ? (
@@ -86,7 +88,7 @@ const EditAddress = () => {
             <View>
               <TextInput
                 value={addressLine1}
-                onChangeText={text => setAddressLine1(text)}
+                onChangeText={(text) => setAddressLine1(text)}
                 style={[
                   styles.inputAddress,
                   getTextInputStyle(),
@@ -94,11 +96,11 @@ const EditAddress = () => {
                 ]}
               />
               <Text style={[styles.textField, getTextColor()]}>
-                Street / Area{' '}
+                Street / Area{" "}
               </Text>
               <TextInput
                 value={addressLine2}
-                onChangeText={text => setAddressLine2(text)}
+                onChangeText={(text) => setAddressLine2(text)}
                 style={[
                   styles.inputAddress,
                   getTextInputStyle(),
@@ -113,7 +115,7 @@ const EditAddress = () => {
                   getTextInputStyle(),
                   getPlaceholderTextColor(),
                 ]}
-                onChangeText={text => setStateName(text)}
+                onChangeText={(text) => setStateName(text)}
               />
               <View style={style.textContainer}>
                 <Text style={[styles.textField, getTextColor()]}>City</Text>
@@ -125,14 +127,14 @@ const EditAddress = () => {
                 <TextInput
                   value={city}
                   placeholder={
-                    colorScheme === 'dark' ? Colors.InputText : Colors.black
+                    colorScheme === "dark" ? Colors.InputText : Colors.black
                   }
                   style={[
                     styles.smalltextInputs,
                     getTextInputStyle(),
                     getPlaceholderTextColor(),
                   ]}
-                  onChangeText={text => {
+                  onChangeText={(text) => {
                     setCity(text);
                   }}
                 />
@@ -143,7 +145,7 @@ const EditAddress = () => {
                     getPlaceholderTextColor(),
                   ]}
                   placeholder={
-                    colorScheme === 'dark' ? Colors.InputText : Colors.black
+                    colorScheme === "dark" ? Colors.InputText : Colors.black
                   }
                   value={postalCode}
                   onChangeText={setPostalCode}
@@ -156,9 +158,9 @@ const EditAddress = () => {
                 <View style={[style.optionRadio]}>
                   <RadioButton
                     value="HOME"
-                    status={selectedOption === 'HOME' ? 'checked' : 'unchecked'}
-                    onPress={() => handleOptionChange('HOME')}
-                    color={colorScheme === 'dark' ? Colors.white : Colors.black}
+                    status={selectedOption === "HOME" ? "checked" : "unchecked"}
+                    onPress={() => handleOptionChange("HOME")}
+                    color={colorScheme === "dark" ? Colors.white : Colors.black}
                   />
                   <Text style={[style.textRadio, getTextColor()]}>Home</Text>
                 </View>
@@ -166,10 +168,10 @@ const EditAddress = () => {
                   <RadioButton
                     value="OFFICE"
                     status={
-                      selectedOption === 'OFFICE' ? 'checked' : 'unchecked'
+                      selectedOption === "OFFICE" ? "checked" : "unchecked"
                     }
-                    onPress={() => handleOptionChange('OFFICE')}
-                    color={colorScheme === 'dark' ? Colors.white : Colors.black}
+                    onPress={() => handleOptionChange("OFFICE")}
+                    color={colorScheme === "dark" ? Colors.white : Colors.black}
                   />
                   <Text style={[style.textRadio, getTextColor()]}>Office</Text>
                 </View>
@@ -189,7 +191,8 @@ const EditAddress = () => {
             </View>
             <TouchableOpacity
               style={styles.btnfieldupdateAddress}
-              onPress={handleUpdateAddress}>
+              onPress={handleUpdateAddress}
+            >
               <Text style={[styles.btntextAddress]}>Update Address </Text>
             </TouchableOpacity>
             <CustomModal
