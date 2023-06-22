@@ -1,11 +1,10 @@
-/* eslint-disable quotes */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo } from "react";
-import Styles from "./src/constants/themeColors";
-import Colors from "./src/constants/colors";
+import React, {useMemo} from 'react';
+import Styles from './src/constants/themeColors';
+import Colors from './src/constants/colors';
 
 export const ColorSchemeContext = React.createContext({
-  colorScheme: "dark",
+  colorScheme: 'dark',
   toggleColorScheme: () => {},
   getContainerStyle: () => ({}),
   getTextInputStyle: () => ({}),
@@ -13,17 +12,17 @@ export const ColorSchemeContext = React.createContext({
   getPlaceholderTextColor: () => ({}),
 });
 
-export const ColorSchemeProvider = ({ children }) => {
-  const [colorScheme, setColorScheme] = React.useState("dark");
+export const ColorSchemeProvider = ({children}) => {
+  const [colorScheme, setColorScheme] = React.useState('dark');
 
   const toggleColorScheme = () => {
-    setColorScheme((prevScheme) => (prevScheme === "light" ? "dark" : "light"));
+    setColorScheme(prevScheme => (prevScheme === 'light' ? 'dark' : 'light'));
   };
 
   const getContainerStyle = () => {
-    if (colorScheme === "dark") {
+    if (colorScheme === 'dark') {
       return Styles.blacktheme;
-    } else if (colorScheme === "light") {
+    } else if (colorScheme === 'light') {
       return Styles.whiteTheme;
     } else {
       return {}; // Return an empty object as a fallback
@@ -31,17 +30,17 @@ export const ColorSchemeProvider = ({ children }) => {
   };
 
   const getTextInputStyle = () => {
-    return colorScheme === "dark" ? Styles.cardColor : Styles.main;
+    return colorScheme === 'dark' ? Styles.cardColor : Styles.main;
   };
 
   const getTextColor = () => {
-    return colorScheme === "dark" ? { color: "white" } : { color: "black" };
+    return colorScheme === 'dark' ? {color: 'white'} : {color: 'black'};
   };
 
   const getPlaceholderTextColor = () => {
-    return colorScheme === "dark"
-      ? { color: Colors.Inputtext }
-      : { color: Colors.black };
+    return colorScheme === 'dark'
+      ? {color: Colors.Inputtext}
+      : {color: Colors.black};
   };
 
   const contextValue = useMemo(() => {

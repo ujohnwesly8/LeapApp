@@ -1,4 +1,3 @@
-/* eslint-disable quotes */
 /* eslint-disable react-native/no-inline-styles */
 import {
   Image,
@@ -7,25 +6,25 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
-import React, { ReactNode } from "react";
-import { CheckBox } from "react-native-elements";
-import { useSelector } from "react-redux";
+} from 'react-native';
+import React, {ReactNode} from 'react';
+import {CheckBox} from 'react-native-elements';
+import {useSelector} from 'react-redux';
 
-import useCheckout from "./useCheckout";
-import useCart from "../Cart/useCart";
+import useCheckout from './useCheckout';
+import useCart from '../Cart/useCart';
 
-import HeadingText from "../../components/atoms/HeadingText/HeadingTest";
-import Colors from "../../constants/colors";
-import Styles from "../../constants/themeColors";
-import style from "./CheckoutScreenStyle";
+import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
+import Colors from '../../constants/colors';
+import Styles from '../../constants/themeColors';
+import style from './CheckoutScreenStyle';
 
 type Props = {
-  route: { name: string };
+  route: {name: string};
   navigation: any;
 };
 
-const CheckoutScreen = ({ navigation }: Props) => {
+const CheckoutScreen = ({navigation}: Props) => {
   const {
     selectedAddressIndex,
     handlePayment,
@@ -35,23 +34,21 @@ const CheckoutScreen = ({ navigation }: Props) => {
     addressList,
     isChecked,
   } = useCheckout();
-  const { colorScheme } = useCart();
+  const {colorScheme} = useCart();
   const cartData = useSelector(
-    (state: { CartProducts: { data: any } }) => state.CartProducts.data
+    (state: {CartProducts: {data: any}}) => state.CartProducts.data,
   ) || {
     cartItems: [],
   };
-  console.log("johnwesly", addressList);
+  console.log('johnwesly', addressList);
   if (!cartData) {
     return (
       <View style={style.checkoutcontainer}>
         <Image
-          source={require("../../../assets/LoginImage.png")}
+          source={require('../../../assets/LoginImage.png')}
           style={style.checkoutimage}
         />
-        <Text style={{ color: Colors.iconscolor }}>
-          The Items are Loading...
-        </Text>
+        <Text style={{color: Colors.iconscolor}}>The Items are Loading...</Text>
       </View>
     );
   }
@@ -60,9 +57,8 @@ const CheckoutScreen = ({ navigation }: Props) => {
       <View
         style={[
           style.Fullcontainer,
-          colorScheme === "dark" ? Styles.blacktheme : Styles.whiteTheme,
-        ]}
-      >
+          colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
+        ]}>
         <HeadingText message="Checkout" />
 
         <ScrollView>
@@ -71,8 +67,7 @@ const CheckoutScreen = ({ navigation }: Props) => {
               style={style.mainContainer}
               refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }
-            >
+              }>
               {cartData?.cartItems?.map(
                 (item: {
                   id: any;
@@ -113,18 +108,16 @@ const CheckoutScreen = ({ navigation }: Props) => {
                     key={item.id}
                     style={[
                       style.cardContainer,
-                      colorScheme === "dark" ? Styles.cardColor : Styles.main,
-                    ]}
-                  >
+                      colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+                    ]}>
                     <View
                       style={{
-                        flexDirection: "row",
-                        width: "100%",
-                      }}
-                    >
+                        flexDirection: 'row',
+                        width: '100%',
+                      }}>
                       <View style={style.imageContainer}>
                         <Image
-                          source={{ uri: item.imageUrl }}
+                          source={{uri: item.imageUrl}}
                           style={style.image}
                         />
                       </View>
@@ -133,11 +126,10 @@ const CheckoutScreen = ({ navigation }: Props) => {
                           <Text
                             style={[
                               style.productname,
-                              colorScheme === "dark"
+                              colorScheme === 'dark'
                                 ? Styles.whitetext
                                 : Styles.blackText,
-                            ]}
-                          >
+                            ]}>
                             {item.product.name}
                           </Text>
                           <Text style={style.priceText}>
@@ -148,22 +140,20 @@ const CheckoutScreen = ({ navigation }: Props) => {
                           <Text
                             style={[
                               style.sizeText,
-                              colorScheme === "dark"
+                              colorScheme === 'dark'
                                 ? Styles.whitetext
                                 : Styles.blackText,
-                            ]}
-                          >
-                            {" "}
+                            ]}>
+                            {' '}
                             Size-{item.product.size}
                           </Text>
                           <Text
                             style={[
                               style.name,
-                              colorScheme === "dark"
+                              colorScheme === 'dark'
                                 ? Styles.whitetext
                                 : Styles.blackText,
-                            ]}
-                          >
+                            ]}>
                             Rent From
                           </Text>
                         </View>
@@ -172,27 +162,23 @@ const CheckoutScreen = ({ navigation }: Props) => {
                             <Text
                               style={[
                                 style.quantityText,
-                                colorScheme === "dark"
+                                colorScheme === 'dark'
                                   ? Styles.whitetext
                                   : Styles.blackText,
-                              ]}
-                            >
+                              ]}>
                               Quantity :
                             </Text>
                             <Text
                               style={[
                                 style.quantityText,
-                                colorScheme === "dark"
+                                colorScheme === 'dark'
                                   ? Styles.whitetext
                                   : Styles.blackText,
-                              ]}
-                            >
+                              ]}>
                               {item.quantity}
                             </Text>
                           </View>
-                          <View
-                            style={{ flexDirection: "row", marginLeft: 10 }}
-                          >
+                          <View style={{flexDirection: 'row', marginLeft: 10}}>
                             <View style={style.DateContainer}>
                               <Text style={style.DateTxt}>
                                 {item.rentalStartDate?.toLocaleString()}
@@ -208,25 +194,23 @@ const CheckoutScreen = ({ navigation }: Props) => {
                       </View>
                     </View>
                   </View>
-                )
+                ),
               )}
             </ScrollView>
             <View style={[style.addresscard]}>
               <Text
                 style={[
                   style.addressText,
-                  colorScheme === "dark" ? Styles.whitetext : Styles.blackText,
-                ]}
-              >
+                  colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+                ]}>
                 Select Address
               </Text>
               <View style={[style.addressButton]}>
                 <Text
                   style={[style.addresschangeText]}
                   onPress={() => {
-                    navigation.navigate("Owneraddresspage");
-                  }}
-                >
+                    navigation.navigate('Owneraddresspage');
+                  }}>
                   Add Address
                 </Text>
               </View>
@@ -242,35 +226,32 @@ const CheckoutScreen = ({ navigation }: Props) => {
                     city: string;
                     country: string;
                   },
-                  index
+                  index,
                 ) => (
                   <View
                     key={item.id}
                     style={[
                       style.card,
-                      colorScheme === "dark" ? Styles.cardColor : Styles.main,
-                    ]}
-                  >
+                      colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+                    ]}>
                     <View style={[style.addressContainer]}>
                       <View>
                         <Text
                           style={[
                             style.addresstext,
-                            colorScheme === "dark"
+                            colorScheme === 'dark'
                               ? Styles.whitetext
                               : Styles.blackText,
-                          ]}
-                        >
+                          ]}>
                           Address:
                         </Text>
                         <Text
                           style={[
                             style.city,
-                            colorScheme === "dark"
+                            colorScheme === 'dark'
                               ? Styles.whitetext
                               : Styles.blackText,
-                          ]}
-                        >
+                          ]}>
                           <Text>{item.addressLine1},</Text>
                           {item.addressLine2},{item.postalCode},{item.city},
                           {item.country},
@@ -280,11 +261,10 @@ const CheckoutScreen = ({ navigation }: Props) => {
                         <Text
                           style={[
                             style.textCheckbox,
-                            colorScheme === "dark"
+                            colorScheme === 'dark'
                               ? Styles.whitetext
                               : Styles.blackText,
-                          ]}
-                        >
+                          ]}>
                           Delivery Address
                         </Text>
 
@@ -298,7 +278,7 @@ const CheckoutScreen = ({ navigation }: Props) => {
                       </View>
                     </View>
                   </View>
-                )
+                ),
               )}
           </View>
         </ScrollView>
@@ -306,18 +286,16 @@ const CheckoutScreen = ({ navigation }: Props) => {
           <Text
             style={[
               style.GrandtotalText,
-              colorScheme === "dark" ? Styles.whitetext : Styles.blackText,
-            ]}
-          >
+              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+            ]}>
             Shipping Cost
           </Text>
           <Text
             style={[
               style.priceTotalText,
-              colorScheme === "dark" ? Styles.whitetext : Styles.blackText,
-            ]}
-          >
-            {" "}
+              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+            ]}>
+            {' '}
             ₹ {cartData.shippingCost}
           </Text>
         </View>
@@ -325,18 +303,16 @@ const CheckoutScreen = ({ navigation }: Props) => {
           <Text
             style={[
               style.GrandtotalText,
-              colorScheme === "dark" ? Styles.whitetext : Styles.blackText,
-            ]}
-          >
+              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+            ]}>
             Tax
           </Text>
           <Text
             style={[
               style.priceTotalText,
-              colorScheme === "dark" ? Styles.whitetext : Styles.blackText,
-            ]}
-          >
-            {" "}
+              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+            ]}>
+            {' '}
             ₹ {cartData.tax}
           </Text>
         </View>
@@ -344,18 +320,16 @@ const CheckoutScreen = ({ navigation }: Props) => {
           <Text
             style={[
               style.GrandtotalText,
-              colorScheme === "dark" ? Styles.whitetext : Styles.blackText,
-            ]}
-          >
+              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+            ]}>
             Grand Total
           </Text>
           <Text
             style={[
               style.priceTotalText,
-              colorScheme === "dark" ? Styles.whitetext : Styles.blackText,
-            ]}
-          >
-            {" "}
+              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+            ]}>
+            {' '}
             ₹ {cartData.totalCost}
           </Text>
         </View>
@@ -363,27 +337,24 @@ const CheckoutScreen = ({ navigation }: Props) => {
           <Text
             style={[
               style.GrandtotalText,
-              colorScheme === "dark" ? Styles.whitetext : Styles.blackText,
-            ]}
-          >
+              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+            ]}>
             final Price
           </Text>
           <Text
             style={[
               style.priceTotalText,
-              colorScheme === "dark" ? Styles.whitetext : Styles.blackText,
-            ]}
-          >
-            {" "}
+              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+            ]}>
+            {' '}
             ₹ {cartData.finalPrice}
           </Text>
         </View>
-        <View style={{ alignItems: "center" }}>
+        <View style={{alignItems: 'center'}}>
           <TouchableOpacity
-            style={[style.PaymentButton, isChecked && { opacity: 0.5 }]}
+            style={[style.PaymentButton, isChecked && {opacity: 0.5}]}
             onPress={isChecked ? undefined : handlePayment}
-            disabled={isChecked}
-          >
+            disabled={isChecked}>
             <Text style={style.priceTotal}> ₹ {cartData.finalPrice}</Text>
             <Text style={style.PaymentButtonText}>Place order</Text>
           </TouchableOpacity>
