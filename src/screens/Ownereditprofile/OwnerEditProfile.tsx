@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Text, TextInput, View, TouchableOpacity} from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import style from './ownerEditProfileStyle';
 import Colors from '../../constants/colors';
 
@@ -10,7 +10,25 @@ import useCart from '../Cart/useCart';
 import Styles from '../../constants/themeColors';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-export default function OwnerEditProfileCustomHook() {
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
+
+function SkeletonLoader() {
+  const {colorScheme} = useContext(ColorSchemeContext);
+  return (
+    <SkeletonPlaceholder
+      highlightColor="#e0e0e0"
+      backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
+      <View>
+        <TextInput style={style.input} placeholderTextColor="#999" />
+        <TextInput style={style.input} />
+        <TextInput style={style.input} />
+        <TextInput style={style.input} />
+      </View>
+    </SkeletonPlaceholder>
+  );
+}
+
+export default function OwnerEditProfile() {
   const {
     firstName,
     setFirstName,
@@ -46,16 +64,7 @@ export default function OwnerEditProfileCustomHook() {
       </View>
       <View>
         {isLoading ? (
-          <SkeletonPlaceholder
-            highlightColor="#e0e0e0"
-            backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
-            <View>
-              <TextInput style={style.input} placeholderTextColor="#999" />
-              <TextInput style={style.input} />
-              <TextInput style={style.input} />
-              <TextInput style={style.input} />
-            </View>
-          </SkeletonPlaceholder>
+          <SkeletonLoader />
         ) : (
           <View>
             <Text
