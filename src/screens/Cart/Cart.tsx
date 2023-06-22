@@ -115,45 +115,43 @@ const Cart = () => {
             ) : (
               <View>
                 {cartData?.cartItems?.map(
-                  (
-                    item: {
-                      rentalEndDate: ReactNode;
-                      rentalStartDate: ReactNode;
-                      imageUrl: string;
-                      quantity: number;
-                      product: {
-                        name:
-                          | string
-                          | number
-                          | boolean
-                          | React.ReactElement<
-                              any,
-                              string | React.JSXElementConstructor<any>
-                            >
-                          | React.ReactFragment
-                          | React.ReactPortal
-                          | null
-                          | undefined;
-                        id: any;
-                        size:
-                          | string
-                          | number
-                          | boolean
-                          | React.ReactElement<
-                              any,
-                              string | React.JSXElementConstructor<any>
-                            >
-                          | React.ReactFragment
-                          | React.ReactPortal
-                          | null
-                          | undefined;
-                        price: string;
-                      };
-                    },
-                    index: React.Key | null | undefined,
-                  ) => (
+                  (item: {
+                    id: Key | null | undefined;
+                    rentalEndDate: ReactNode;
+                    rentalStartDate: ReactNode;
+                    imageUrl: string;
+                    quantity: number;
+                    product: {
+                      name:
+                        | string
+                        | number
+                        | boolean
+                        | React.ReactElement<
+                            any,
+                            string | React.JSXElementConstructor<any>
+                          >
+                        | React.ReactFragment
+                        | React.ReactPortal
+                        | null
+                        | undefined;
+                      id: any;
+                      size:
+                        | string
+                        | number
+                        | boolean
+                        | React.ReactElement<
+                            any,
+                            string | React.JSXElementConstructor<any>
+                          >
+                        | React.ReactFragment
+                        | React.ReactPortal
+                        | null
+                        | undefined;
+                      price: string;
+                    };
+                  }) => (
                     <View
-                      key={index}
+                      key={item.id}
                       style={[
                         style.cardContainer,
                         colorScheme === 'dark' ? Styles.cardColor : Styles.main,
