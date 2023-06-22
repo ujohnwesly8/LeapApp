@@ -18,9 +18,8 @@ import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import {addImages} from '../../constants/languages/en';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-
-import Styles from '../LoginScreen/loginStyle';
 import styles from '../../constants/themeColors';
+import Styles from '../LoginScreen/loginStyle';
 import OwnerImagestyles from './OwnerImagestyles';
 import Colors from '../../constants/colors';
 
@@ -41,18 +40,15 @@ const AddImages = () => {
     isLoading,
   } = Useownerimage();
   const areImagesUploaded = imageUrls && imageUrls.length > 0;
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {colorScheme, getContainerStyle, getTextColor, getTextInputStyle} =
+    useContext(ColorSchemeContext);
   return (
     <ScrollView
       style={[
         {height: '100%', backgroundColor: Colors.black},
-        colorScheme === 'dark' ? styles.blacktheme : styles.whiteTheme,
+        getContainerStyle(),
       ]}>
-      <View
-        style={[
-          OwnerImagestyles.Scroll,
-          colorScheme === 'dark' ? styles.blacktheme : styles.whiteTheme,
-        ]}>
+      <View style={[OwnerImagestyles.Scroll, getContainerStyle()]}>
         <HeadingText message="Add products" />
         <View style={[OwnerImagestyles.form]}>
           <View style={[OwnerImagestyles.ImageBox]}>
@@ -62,9 +58,7 @@ const AddImages = () => {
                   horizontal
                   style={[
                     OwnerImagestyles.imagehorizontal,
-                    colorScheme === 'dark'
-                      ? styles.blacktheme
-                      : styles.whiteTheme,
+                    getContainerStyle(),
                   ]}>
                   {imageUrls.map((image, index) => (
                     <View key={image} style={[OwnerImagestyles.ImageContainer]}>
@@ -72,7 +66,7 @@ const AddImages = () => {
                         style={[
                           OwnerImagestyles.image,
                           colorScheme === 'dark'
-                            ? styles.cardColor
+                            ? styles.blacktheme
                             : styles.whiteTheme,
                         ]}
                         source={{uri: image}}
@@ -107,10 +101,7 @@ const AddImages = () => {
                   </View>
                 ) : (
                   <TouchableOpacity
-                    style={[
-                      OwnerImagestyles.Addimage,
-                      colorScheme === 'dark' ? styles.cardColor : styles.main,
-                    ]}
+                    style={[OwnerImagestyles.Addimage, getTextInputStyle()]}
                     onPress={pickImages}>
                     <Lottie
                       source={require('../../../assets/addimageol.json')}
@@ -118,13 +109,7 @@ const AddImages = () => {
                       autoPlay
                     />
                     {!isLoading && (
-                      <Text
-                        style={[
-                          OwnerImagestyles.imagetxt,
-                          colorScheme === 'dark'
-                            ? styles.whitetext
-                            : styles.blackText,
-                        ]}>
+                      <Text style={[OwnerImagestyles.imagetxt, getTextColor()]}>
                         {addImages}
                       </Text>
                     )}
@@ -147,8 +132,8 @@ const AddImages = () => {
               style={[
                 OwnerImagestyles.Price,
                 {paddingLeft: 25},
-                colorScheme === 'dark' ? styles.cardColor : styles.whiteTheme,
-                colorScheme === 'dark' ? styles.placeholder : styles.blackText,
+                getContainerStyle(),
+                getTextInputStyle(),
               ]}
               placeholder="Select price"
               placeholderTextColor="gray"
@@ -166,8 +151,8 @@ const AddImages = () => {
               style={[
                 OwnerImagestyles.quantity,
                 {paddingLeft: 25},
-                colorScheme === 'dark' ? styles.cardColor : styles.whiteTheme,
-                colorScheme === 'dark' ? styles.placeholder : styles.blackText,
+                getContainerStyle(),
+                getTextInputStyle(),
               ]}
               onChangeText={handleQuantityChange}
               onBlur={() => handleBlur('quantity')}
