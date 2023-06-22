@@ -66,7 +66,6 @@ const App = () => {
     isLoading,
     productQuantity,
     isModalVisible,
-
     selectedProductId,
     setSelectedProductId,
     handleEnablebutton,
@@ -102,7 +101,8 @@ const App = () => {
   }, [isModalVisible]);
 
   console.log('Refreshhhhhh:', refreshData);
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {colorScheme, getContainerStyle, getTextColor, getTextInputStyle} =
+    useContext(ColorSchemeContext);
 
   return (
     <SafeAreaView>
@@ -112,24 +112,12 @@ const App = () => {
         onRequestClose={handleVisibleModal}>
         <SafeAreaView>
           <ScrollView
-            style={[
-              {width: '100%', height: '100%'},
-              colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-            ]}>
+            style={[{width: '100%', height: '100%'}, getContainerStyle()]}>
             <TouchableOpacity onPressIn={() => setViisble(!visible)}>
               <Text style={OwnerEditItemstyles.closetxt}>Close</Text>
             </TouchableOpacity>
-            <View
-              style={[
-                colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-              ]}>
-              <View
-                style={[
-                  Ownerstyles.Scrollcontainer,
-                  colorScheme === 'dark'
-                    ? Styles.blacktheme
-                    : Styles.whiteTheme,
-                ]}>
+            <View style={[getContainerStyle()]}>
+              <View style={[Ownerstyles.Scrollcontainer, getContainerStyle()]}>
                 <View style={Ownerstyles.scrolledit}>
                   <TextInput
                     placeholderTextColor={Colors.white}
@@ -137,10 +125,8 @@ const App = () => {
                     style={[
                       Ownerstyles.Namefield,
                       {paddingLeft: 22},
-                      colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                      colorScheme === 'dark'
-                        ? Styles.whitetext
-                        : Styles.blackText,
+                      getTextInputStyle(),
+                      getTextColor(),
                     ]}
                     onChangeText={setName}
                     value={name}
@@ -254,10 +240,8 @@ const App = () => {
                       style={[
                         OwnerEditItemstyles.Price,
                         {paddingLeft: 15},
-                        colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                        colorScheme === 'dark'
-                          ? Styles.whitetext
-                          : Styles.blackText,
+                        getTextInputStyle(),
+                        getTextColor(),
                       ]}
                       placeholder="Set price"
                       placeholderTextColor={Colors.black}
@@ -272,10 +256,8 @@ const App = () => {
                       style={[
                         OwnerEditItemstyles.Price,
                         {paddingLeft: 15},
-                        colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                        colorScheme === 'dark'
-                          ? Styles.whitetext
-                          : Styles.blackText,
+                        getTextInputStyle(),
+                        getTextColor(),
                       ]}
                       value={quantity.toString()}
                       onChangeText={setQuantity}
