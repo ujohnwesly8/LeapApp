@@ -1,5 +1,5 @@
+/* eslint-disable curly */
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/no-unstable-nested-components */
 import React, {useContext} from 'react';
 import OwnerEditProfile from '../../screens/Ownereditprofile/OwnerEditProfile';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -80,6 +80,12 @@ const Owneradditemsstack = () => {
 const Ownerstack = () => {
   const {colorScheme} = useContext(ColorSchemeContext);
   const isFocused = useIsFocused();
+  let tabBarBackgroundColor: string;
+  if (colorScheme === 'dark') {
+    tabBarBackgroundColor = Colors.black;
+  } else {
+    tabBarBackgroundColor = Colors.white;
+  }
   return (
     <Tab.Navigator
       screenOptions={{
@@ -103,8 +109,7 @@ const Ownerstack = () => {
         options={({route}) => ({
           tabBarStyle: {
             display: getRouteName(route),
-            backgroundColor:
-              colorScheme === 'dark' ? Colors.black : Colors.white,
+            backgroundColor: tabBarBackgroundColor,
             height: '7%',
           },
           tabBarIcon: ({focused, color}) => {
@@ -127,9 +132,7 @@ const Ownerstack = () => {
                     {
                       backgroundColor: focused
                         ? Colors.buttonColor
-                        : colorScheme === 'dark'
-                        ? Colors.black
-                        : Colors.white,
+                        : tabBarBackgroundColor,
                     },
                   ]}>
                   <MaterialIcon
@@ -171,8 +174,7 @@ const Ownerstack = () => {
         options={({route}) => ({
           tabBarStyle: {
             display: getRouteName(route),
-            backgroundColor:
-              colorScheme === 'dark' ? Colors.black : Colors.white,
+            backgroundColor: tabBarBackgroundColor,
 
             height: '7%',
           },
@@ -196,9 +198,7 @@ const Ownerstack = () => {
                     {
                       backgroundColor: focused
                         ? Colors.buttonColor
-                        : colorScheme === 'dark'
-                        ? Colors.black
-                        : Colors.white,
+                        : tabBarBackgroundColor,
                     },
                   ]}>
                   <MaterialCommunityIcons
@@ -239,8 +239,7 @@ const Ownerstack = () => {
         options={({route}) => ({
           tabBarStyle: {
             display: getRouteName(route),
-            backgroundColor:
-              colorScheme === 'dark' ? Colors.black : Colors.white,
+            backgroundColor: tabBarBackgroundColor,
 
             height: '7%',
           },
@@ -264,9 +263,7 @@ const Ownerstack = () => {
                     {
                       backgroundColor: focused
                         ? Colors.buttonColor
-                        : colorScheme === 'dark'
-                        ? Colors.black
-                        : Colors.white,
+                        : tabBarBackgroundColor,
                     },
                   ]}>
                   <MaterialCommunityIcons
