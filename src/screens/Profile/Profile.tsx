@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch} from 'react-redux';
@@ -16,12 +16,13 @@ import {TextInput} from 'react-native-gesture-handler';
 import {Avatar} from 'react-native-paper';
 import {Logout} from '../../redux/actions/actions';
 
-import style from '../Ownerprofile/ownerProfileStyle';
 import useProfile from './useProfile';
-import useCart from '../Cart/useCart';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import SwitchAccountButton from '../../components/atoms/SwtichAccountButton';
 import Togglebutton from '../../components/atoms/Colorscheme/Togglebutton';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
+
+import style from '../Ownerprofile/ownerProfileStyle';
 import Styles from '../../constants/themeColors';
 
 type Props = {
@@ -35,21 +36,22 @@ const Profile = ({navigation}: Props) => {
     phonenumber,
     isLoading,
     pickImage,
-
     profilePic,
-
     showModall,
     closeModal,
     showModal1,
     closeModal1,
     isloading,
     handleRemoveProfilePic,
-
     refreshData,
     refreshState,
   } = useProfile();
-  const {colorScheme} = useCart();
-
+  const {
+    colorScheme,
+    getContainerStyle,
+    getTextInputStyle,
+    getPlaceholderTextColor,
+  } = useContext(ColorSchemeContext);
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(Logout() as any);
@@ -70,11 +72,7 @@ const Profile = ({navigation}: Props) => {
   };
 
   return (
-    <View
-      style={[
-        style.profileStyle,
-        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-      ]}>
+    <View style={[style.profileStyle, getContainerStyle()]}>
       <ScrollView
         style={{width: '100%', height: '100%'}}
         refreshControl={
@@ -119,30 +117,14 @@ const Profile = ({navigation}: Props) => {
             </View>
           </SkeletonPlaceholder>
         ) : (
-          <View
-            style={[
-              style.card,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-            ]}>
-            <Text
-              style={[
-                style.profileText,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
+          <View style={[style.card, getTextInputStyle()]}>
+            <Text style={[style.profileText, getPlaceholderTextColor()]}>
               {name}
             </Text>
-            <Text
-              style={[
-                style.profileText1,
-                colorScheme === 'dark' ? Styles.InputText : Styles.main,
-              ]}>
+            <Text style={[style.profileText1, getPlaceholderTextColor()]}>
               {email}
             </Text>
-            <Text
-              style={[
-                style.profileText1,
-                colorScheme === 'dark' ? Styles.InputText : Styles.main,
-              ]}>
+            <Text style={[style.profileText1, getPlaceholderTextColor()]}>
               {phonenumber}
             </Text>
           </View>
@@ -158,25 +140,15 @@ const Profile = ({navigation}: Props) => {
             <Icons
               name="account"
               size={30}
-              style={[
-                style.editprofileicon,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}
+              style={[style.editprofileicon, getPlaceholderTextColor()]}
             />
-            <Text
-              style={[
-                style.btnPText,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}>
+            <Text style={[style.btnPText, getPlaceholderTextColor()]}>
               Edit Profile
             </Text>
             <Icon
               name="arrow-forward-ios"
               size={20}
-              style={[
-                style.forwardios,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}
+              style={[style.forwardios, getPlaceholderTextColor()]}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -210,10 +182,7 @@ const Profile = ({navigation}: Props) => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={[
-              style.whiteBtn,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-            ]}
+            style={[style.whiteBtn, getTextInputStyle()]}
             onPress={() => navigation.navigate('MyOrder')}>
             <Icons
               name="basket-check"
@@ -223,11 +192,7 @@ const Profile = ({navigation}: Props) => {
                 colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
               ]}
             />
-            <Text
-              style={[
-                style.btnPText,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}>
+            <Text style={[style.btnPText, getPlaceholderTextColor()]}>
               My orders
             </Text>
             <Icon
