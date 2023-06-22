@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {url} from '../../constants/Apis';
-import ApiService from '../../network/network';
+/* eslint-disable quotes */
+import React, { useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { url } from "../../constants/Apis";
+import ApiService from "../../network/network";
 const useEditAddress = () => {
   const navigation = useNavigation();
   const route = useRoute();
@@ -13,7 +14,7 @@ const useEditAddress = () => {
   const [addressLine2, setAddressLine2] = useState(address.addressLine2);
   const [postalCode, setPostalCode] = useState(address.postalCode);
   const [country, _setCountry] = useState(address.country);
-  const [selectedOption, setSelectedOption] = useState('Home');
+  const [selectedOption, setSelectedOption] = useState("Home");
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const openModal = () => {
@@ -48,7 +49,7 @@ const useEditAddress = () => {
       };
       const response = await ApiService.put(
         `${url}/address/update/${addressid}`,
-        updateaddress,
+        updateaddress
       );
       console.log(response);
       if (response) {
@@ -56,7 +57,7 @@ const useEditAddress = () => {
         openModal();
       }
     } catch (error) {
-      console.log('Failed to update address');
+      console.log("Failed to update address");
       console.error(error);
     } finally {
       setIsLoading(false);
