@@ -51,11 +51,9 @@ const useFilteredAnalytics = () => {
     }
   };
   console.log('data is :', data);
-  const CryptoJS = require('crypto-js');
 
   const generateKey = () => {
-    const randomBytes = CryptoJS.lib.WordArray.random(16);
-    return randomBytes.toString();
+    return Math.random().toString(36);
   };
 
   return {
