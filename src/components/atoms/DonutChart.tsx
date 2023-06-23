@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useRef, useState} from 'react';
 import {View, Animated, TextInput, StyleSheet} from 'react-native';
 import Svg, {G, Circle} from 'react-native-svg';
@@ -11,6 +13,16 @@ const Donut = ({
   delay = 500,
   max = 1000,
   textcolor,
+}: {
+  refreshTrigger: any;
+  percentage?: number;
+  radius?: number;
+  strokeWidth?: number;
+  duration?: number;
+  color?: string;
+  delay?: number;
+  max?: number;
+  textcolor?: string;
 }) => {
   const AnimatedCircle = Animated.createAnimatedComponent(Circle);
   const AnimatedInput = Animated.createAnimatedComponent(TextInput);
