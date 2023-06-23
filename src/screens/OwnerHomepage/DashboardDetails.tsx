@@ -27,6 +27,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import AnalyticsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ForwardIcon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/core';
+import useFilteredAnalytics from '../FilteredAnalytics/useFilteredAnalytics';
 
 const monthNames = [
   'Jan',
@@ -55,6 +56,7 @@ const DashboardDetails = () => {
     DashboardYearly,
     Dashboardyeardata,
   } = useAnalytics();
+  const {generateKey} = useFilteredAnalytics();
   const navigation = useNavigation();
   const [showModel, setShowModel] = useState(false);
   const [selectedBarIndex, setSelectedBarIndex] = useState(null);
@@ -91,9 +93,6 @@ const DashboardDetails = () => {
       }
     });
     handleOrders(filteredOrderData);
-  };
-  const generateKey = () => {
-    return Math.random().toString(36);
   };
 
   useEffect(() => {
