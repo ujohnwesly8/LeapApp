@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -8,6 +8,7 @@ import style from './categoryStyles';
 import useCategoryProducts from './useCategoryProducts';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import Styles from '../../constants/themeColors';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 type RootStackParamList = {
   CategoryProducts: {subcategoryId: number};
@@ -20,7 +21,7 @@ const CategoryProducts = ({route}: any) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const {subcategories, wishlistList, colorScheme, toggleWishlist} =
     useCategoryProducts(subcategoryId);
-
+  const {getTextColor, getTextInputStyle} = useContext(ColorSchemeContext);
   return (
     <ScrollView
       style={[
@@ -36,11 +37,7 @@ const CategoryProducts = ({route}: any) => {
               source={require('../../../assets/productsEmpty.json')}
               autoPlay
             />
-            <Text
-              style={[
-                style.loadtextStyle,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
+            <Text style={[style.loadtextStyle, getTextColor()]}>
               Products are not Available Right Now
             </Text>
           </View>
@@ -62,11 +59,7 @@ const CategoryProducts = ({route}: any) => {
                         subcategoryId: item.id,
                       })
                     }>
-                    <View
-                      style={[
-                        style.container,
-                        colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                      ]}>
+                    <View style={[style.container, getTextInputStyle()]}>
                       <TouchableOpacity
                         key={item.id}
                         onPress={() =>
@@ -83,22 +76,14 @@ const CategoryProducts = ({route}: any) => {
                       </TouchableOpacity>
                       <View style={style.cardTextContainer}>
                         <View style={style.Cartcontents}>
-                          <Text
-                            style={[
-                              style.name,
-                              colorScheme === 'dark'
-                                ? Styles.whitetext
-                                : Styles.blackText,
-                            ]}>
+                          <Text style={[style.name, getTextColor()]}>
                             {item.name}
                           </Text>
                         </View>
-
                         <View style={style.textContainer}>
                           <Text style={style.price}>{'₹' + item.price}</Text>
                         </View>
                       </View>
-
                       <TouchableOpacity
                         style={style.wishlistButton}
                         onPress={() => toggleWishlist(item.id)}>
