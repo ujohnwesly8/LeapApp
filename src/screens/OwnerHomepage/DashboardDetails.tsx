@@ -92,6 +92,9 @@ const DashboardDetails = () => {
     });
     handleOrders(filteredOrderData);
   };
+  const generateKey = () => {
+    return Math.random().toString(36);
+  };
 
   useEffect(() => {
     handleAnalytics();
@@ -638,44 +641,37 @@ const DashboardDetails = () => {
                           <TouchableOpacity onPress={handleVisibleModal}>
                             <Text style={style.txtClose}>Close</Text>
                           </TouchableOpacity>
-                          {orderData[selectedMonth].map(
-                            (order: OrderItem, index: any) => (
-                              <View
-                                key={`${order.id}-${index}`}
-                                style={style.dashcard}>
-                                <View style={style.dashcardContainer}>
-                                  <Image
-                                    source={{uri: order.imageUrl}}
-                                    style={style.dashboardimage}
-                                  />
-                                  <View
-                                    style={{
-                                      marginTop: 0,
-                                      width: 200,
-                                      height: 40,
-                                    }}>
-                                    <Text style={style.Order}>
-                                      Order ID: {order.borrowerId}
-                                    </Text>
-                                    <Text style={style.borrowerName}>
-                                      {order.borrowerName}
-                                    </Text>
-                                    <Text style={style.price}>
-                                      ₹ {order.rentalCost}
-                                    </Text>
-                                    <Text style={style.order}>
-                                      {' '}
-                                      {order.name}
-                                    </Text>
-                                    <Text style={style.order}>
-                                      {' '}
-                                      {order.borrowerPhoneNumber}
-                                    </Text>
-                                  </View>
+                          {orderData[selectedMonth].map((order: OrderItem) => (
+                            <View key={generateKey()} style={style.dashcard}>
+                              <View style={style.dashcardContainer}>
+                                <Image
+                                  source={{uri: order.imageUrl}}
+                                  style={style.dashboardimage}
+                                />
+                                <View
+                                  style={{
+                                    marginTop: 0,
+                                    width: 200,
+                                    height: 40,
+                                  }}>
+                                  <Text style={style.Order}>
+                                    Order ID: {order.borrowerId}
+                                  </Text>
+                                  <Text style={style.borrowerName}>
+                                    {order.borrowerName}
+                                  </Text>
+                                  <Text style={style.price}>
+                                    ₹ {order.rentalCost}
+                                  </Text>
+                                  <Text style={style.order}> {order.name}</Text>
+                                  <Text style={style.order}>
+                                    {' '}
+                                    {order.borrowerPhoneNumber}
+                                  </Text>
                                 </View>
                               </View>
-                            ),
-                          )}
+                            </View>
+                          ))}
                         </ScrollView>
                       </Modal>
                     ) : (
