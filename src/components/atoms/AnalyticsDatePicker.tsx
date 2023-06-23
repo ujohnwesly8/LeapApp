@@ -10,6 +10,11 @@ const AnalyticsDatePicker = ({
   endDate,
   onStartDateChange,
   onEndDateChange,
+}: {
+  startDate: Date;
+  endDate: any;
+  onStartDateChange: (date: Date) => void;
+  onEndDateChange: (date: any) => void;
 }) => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
@@ -22,7 +27,7 @@ const AnalyticsDatePicker = ({
   const [showPickerClone, setShowPickerClone] = useState(false);
   const [, setPickerType] = useState('');
 
-  const onDateChange = (date, type) => {
+  const onDateChange = (date: any, type: string) => {
     if (type === 'END_DATE') {
       setSelectedEndDate(date);
       onEndDateChange(date);
@@ -38,7 +43,7 @@ const AnalyticsDatePicker = ({
     setSelectedEndDate(null);
   };
 
-  const onTogglePicker = type => {
+  const onTogglePicker = (type: string) => {
     setPickerType(type);
     if (type === 'END_DATE') {
       setShowPickerClone(true);
