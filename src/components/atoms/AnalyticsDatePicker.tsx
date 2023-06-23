@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, Modal} from 'react-native';
+import {View, Text, TouchableOpacity, Modal, StyleSheet} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import Colors from '../../constants/colors';
 import moment from 'moment';
@@ -54,22 +54,9 @@ const AnalyticsDatePicker = ({
   };
 
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        width: '60%',
-        marginLeft: 10,
-        justifyContent: 'space-between',
-      }}>
+    <View style={styles.outerVieww}>
       <TouchableOpacity
-        style={{
-          backgroundColor: Colors.buttonColor,
-          width: '50%',
-          height: 40,
-          borderRadius: 60,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+        style={styles.touchStyle}
         onPress={() => onTogglePicker('START_DATE')}>
         <Text
           style={{
@@ -80,26 +67,9 @@ const AnalyticsDatePicker = ({
             : 'Select Start Date'}
         </Text>
       </TouchableOpacity>
-      <Text
-        style={{
-          fontFamily: 'Poppins-Regular',
-          fontSize: 16,
-          marginLeft: 5,
-          marginRight: 5,
-          color: Colors.black,
-          marginTop: 10,
-        }}>
-        To
-      </Text>
+      <Text style={styles.textToStyle}>To</Text>
       <TouchableOpacity
-        style={{
-          backgroundColor: Colors.buttonColor,
-          width: '50%',
-          height: 40,
-          borderRadius: 60,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+        style={styles.newStyle}
         onPress={() => onTogglePicker('END_DATE')}>
         <Text
           style={{
@@ -121,49 +91,14 @@ const AnalyticsDatePicker = ({
             onDateChange={onDateChange}
             selectedDayColor={Colors.buttonColor}
           />
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: '90%',
-              marginLeft: 20,
-              marginTop: 200,
-            }}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: Colors.buttonColor,
-                width: 140,
-                height: 40,
-                borderRadius: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={onClearDates}>
-              <Text
-                style={{
-                  color: Colors.white,
-                  fontFamily: 'Poppins-Medium',
-                }}>
-                Clear Dates
-              </Text>
+          <View style={styles.outerView}>
+            <TouchableOpacity style={styles.btnStyle} onPress={onClearDates}>
+              <Text style={styles.textStyle}>Clear Dates</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{
-                backgroundColor: Colors.buttonColor,
-                width: 140,
-                height: 40,
-                borderRadius: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+              style={styles.btnStyle}
               onPress={() => setShowPicker(false)}>
-              <Text
-                style={{
-                  color: Colors.white,
-                  fontFamily: 'Poppins-Medium',
-                }}>
-                Done
-              </Text>
+              <Text style={styles.textStyle}>Done</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -180,49 +115,15 @@ const AnalyticsDatePicker = ({
             selectedDayColor={Colors.buttonColor}
             minDate={initialDate}
           />
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: '90%',
-              marginLeft: 20,
-              marginTop: 200,
-            }}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: Colors.buttonColor,
-                width: 140,
-                height: 40,
-                borderRadius: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={onClearDates}>
-              <Text
-                style={{
-                  color: Colors.white,
-                  fontFamily: 'Poppins-Medium',
-                }}>
-                Clear Dates
-              </Text>
+          <View style={styles.outerView}>
+            <TouchableOpacity style={styles.btnStyle} onPress={onClearDates}>
+              <Text style={styles.textStyle}>Clear Dates</Text>
             </TouchableOpacity>
+
             <TouchableOpacity
-              style={{
-                backgroundColor: Colors.buttonColor,
-                width: 140,
-                height: 40,
-                borderRadius: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+              style={styles.btnStyle}
               onPress={() => setShowPickerClone(false)}>
-              <Text
-                style={{
-                  color: Colors.white,
-                  fontFamily: 'Poppins-Medium',
-                }}>
-                Done
-              </Text>
+              <Text style={styles.textStyle}>Done</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -231,3 +132,55 @@ const AnalyticsDatePicker = ({
   );
 };
 export default AnalyticsDatePicker;
+
+const styles = StyleSheet.create({
+  outerView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '90%',
+    marginLeft: 20,
+    marginTop: 200,
+  },
+  btnStyle: {
+    backgroundColor: Colors.buttonColor,
+    width: 140,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textStyle: {
+    color: Colors.white,
+    fontFamily: 'Poppins-Medium',
+  },
+  textToStyle: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 16,
+    marginLeft: 5,
+    marginRight: 5,
+    color: Colors.black,
+    marginTop: 10,
+  },
+  newStyle: {
+    backgroundColor: Colors.buttonColor,
+    width: '50%',
+    height: 40,
+    borderRadius: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  outerVieww: {
+    flexDirection: 'row',
+    width: '60%',
+    marginLeft: 10,
+    justifyContent: 'space-between',
+  },
+  touchStyle: {
+    backgroundColor: Colors.buttonColor,
+    width: '50%',
+    height: 40,
+    borderRadius: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
