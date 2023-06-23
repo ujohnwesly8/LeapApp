@@ -25,7 +25,25 @@ import {ColorSchemeContext} from '../../../ColorSchemeContext';
 type Props = {
   navigation: any;
 };
+const SkeletonLoader = () => {
+  const {colorScheme} = useContext(ColorSchemeContext);
+  return (
+    <SkeletonPlaceholder
+      highlightColor="#e0e0e0"
+      backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
+      <View>
+        <TextInput style={style.card} placeholderTextColor="#999" />
+      </View>
+    </SkeletonPlaceholder>
+  );
+};
 const OwnerProfile = ({navigation}: Props) => {
+  const {
+    colorScheme,
+    getContainerStyle,
+    getTextInputStyle,
+    getPlaceholderTextColor,
+  } = useContext(ColorSchemeContext);
   const {
     name,
     email,
@@ -36,16 +54,6 @@ const OwnerProfile = ({navigation}: Props) => {
     handleRemoveProfilePic,
     isloading,
   } = ProfileData();
-  const {
-    colorScheme,
-    getContainerStyle,
-    getTextInputStyle,
-    getPlaceholderTextColor,
-  } = useContext(ColorSchemeContext);
-  const dispatch = useDispatch();
-  const handleLogout = () => {
-    dispatch(Logout() as any);
-  };
   const renderProfileImage = () => {
     if (isloading) {
       return <ActivityIndicator size="large" color="gray" />;
@@ -59,6 +67,10 @@ const OwnerProfile = ({navigation}: Props) => {
         />
       );
     }
+  };
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(Logout() as any);
   };
   return (
     <View style={[style.profileStyle, getContainerStyle()]}>
@@ -82,13 +94,7 @@ const OwnerProfile = ({navigation}: Props) => {
           </TouchableOpacity>
         </View>
         {isLoading ? (
-          <SkeletonPlaceholder
-            highlightColor="#e0e0e0"
-            backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
-            <View>
-              <TextInput style={style.card} placeholderTextColor="#999" />
-            </View>
-          </SkeletonPlaceholder>
+          <SkeletonLoader />
         ) : (
           <View
             style={[
@@ -126,10 +132,7 @@ const OwnerProfile = ({navigation}: Props) => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={[
-              style.whiteBtn,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-            ]}
+            style={[style.whiteBtn, getTextInputStyle()]}
             onPress={() => navigation.navigate('Owneraddresspage')}>
             <Icon
               name="location-pin"
@@ -139,11 +142,7 @@ const OwnerProfile = ({navigation}: Props) => {
                 colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
               ]}
             />
-            <Text
-              style={[
-                style.AddressbtnPText,
-                colorScheme === 'dark' ? Styles.InputText : Styles.main,
-              ]}>
+            <Text style={[style.AddressbtnPText, getPlaceholderTextColor()]}>
               Address
             </Text>
             <Icon
