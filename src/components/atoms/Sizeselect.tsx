@@ -6,6 +6,7 @@ import Colors from '../../constants/colors';
 
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
+
 const data = [
   {label: 'XS', value: '1'},
   {label: 'S', value: '2'},
@@ -13,7 +14,8 @@ const data = [
   {label: 'XL', value: '4'},
   {label: 'XXL', value: '5'},
 ];
-const Sizeselection = ({onSelectSize, onChange}) => {
+
+const Sizeselection = ({onChange}: {onChange: (value: string) => void}) => {
   const [value, _setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const {colorScheme} = useContext(ColorSchemeContext);
@@ -57,6 +59,7 @@ const Sizeselection = ({onSelectSize, onChange}) => {
     </View>
   );
 };
+
 export default Sizeselection;
 const styles = StyleSheet.create({
   dropdownContainer: {
@@ -79,14 +82,12 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
-    // fontWeight: '400',
     fontFamily: 'Poppins-SemiBold',
     color: 'gray',
     marginLeft: 15,
   },
   selectedTextStyle: {
     fontSize: 18,
-    // fontWeight: '600',
     fontFamily: 'Poppins-SemiBold',
     color: '#000000',
     justifyContent: 'center',
@@ -97,12 +98,10 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     marginRight: 15,
-    // color: '#FFFFFF',
   },
   inputSearchStyle: {
     height: 40,
     fontSize: 18,
-    // backgroundColor: Colors.white,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     color: 'black',
   },
@@ -122,7 +121,7 @@ const styles = StyleSheet.create({
   },
   itemContainerStyle: {
     backgroundColor: Colors.white,
-    borderRadius: 10, // Add this line
+    borderRadius: 10,
   },
   selectedItemContainerStyle: {
     backgroundColor: '#3E54AC',
