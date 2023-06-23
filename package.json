@@ -23,6 +23,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "base-64": "^1.0.0",
+    "crypto-js": "^4.1.1",
     "date-fns": "^2.30.0",
     "date-pickers-modern": "^2.2.1",
     "formik": "^2.4.0",

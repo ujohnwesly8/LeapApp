@@ -4,10 +4,12 @@ import {useState, useEffect} from 'react';
 import ApiService from '../../network/network';
 import {url} from './../../constants/Apis';
 
-const useFilteredAnalytics = (startDate: any, endDate: any) => {
+const useFilteredAnalytics = () => {
   const [chartData, setChartData] = useState<
     {month: string; rentalCost: number}[]
   >([]);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   const [data, setData] = useState<{[key: string]: any[]}>({});
 
@@ -49,8 +51,24 @@ const useFilteredAnalytics = (startDate: any, endDate: any) => {
     }
   };
   console.log('data is :', data);
+  const CryptoJS = require('crypto-js');
 
-  return {chartData, data, isLoading, fetchData};
+  const generateKey = () => {
+    const randomBytes = CryptoJS.lib.WordArray.random(16);
+    return randomBytes.toString();
+  };
+
+  return {
+    chartData,
+    data,
+    isLoading,
+    fetchData,
+    generateKey,
+    startDate,
+    endDate,
+    setStartDate,
+    setEndDate,
+  };
 };
 
 export default useFilteredAnalytics;

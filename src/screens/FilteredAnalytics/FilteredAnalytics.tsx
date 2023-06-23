@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, ScrollView, Image, Dimensions} from 'react-native';
 import {LineChart} from 'react-native-chart-kit';
 import Lottie from 'lottie-react-native';
@@ -9,19 +9,20 @@ import AnalyticsDatePicker from '../../components/atoms/AnalyticsDatePicker';
 import BackButton from '../../components/atoms/BackButton/BackButton';
 
 const FilteredAnalytics = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-
-  const {chartData, data, isLoading, fetchData} = useFilteredAnalytics(
+  const {
+    chartData,
+    data,
+    isLoading,
+    fetchData,
+    generateKey,
     startDate,
+    setStartDate,
     endDate,
-  );
+    setEndDate,
+  } = useFilteredAnalytics();
   const handleEndDateChange = (date: any) => {
     setEndDate(date);
     fetchData();
-  };
-  const generateKey = () => {
-    return Math.random().toString(36);
   };
 
   const addPrefixToYLabel = (value: any) => `₹ ${value}`;
