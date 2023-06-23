@@ -166,6 +166,7 @@ const useChectout = () => {
   const totalPrice = cartData.finalPrice;
   const handlePayment = () => {
     const options = {
+      order_id: '',
       description: 'Payment for food items',
       image: 'https://i.imgur.com/3g7nmJC.png',
       currency: 'INR',
