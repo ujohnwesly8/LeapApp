@@ -5,10 +5,18 @@ import useSearchresults from '../../../screens/SearchResultScreen/useSearchResul
 import Colors from '../../../constants/colors';
 import {ColorSchemeContext} from '../../../../ColorSchemeContext';
 import Styles from '../../../constants/themeColors';
-const SubCategoryDropdown = ({value, onChange}) => {
+
+const SubCategoryDropdown = ({
+  value,
+  onChange,
+}: {
+  value: any;
+  onChange: (value: any) => void;
+}) => {
   const {subcategoriesData} = useSearchresults();
   const [isFocus, setIsFocus] = useState(false);
   const {colorScheme} = useContext(ColorSchemeContext);
+
   return (
     <View
       style={[
@@ -50,13 +58,13 @@ const SubCategoryDropdown = ({value, onChange}) => {
     </View>
   );
 };
+
 export default SubCategoryDropdown;
+
 const styles = StyleSheet.create({
   container: {
     width: '95%',
     height: 50,
-    // marginBottom: 20,
-    // marginTop: 10,
     backgroundColor: Colors.buttonColor,
     borderRadius: 30,
   },
@@ -84,7 +92,6 @@ const styles = StyleSheet.create({
     width: 20,
     height: 28,
     marginRight: 17,
-    // backgroundColor: Colors.white,
   },
   inputSearch: {
     fontSize: 16,

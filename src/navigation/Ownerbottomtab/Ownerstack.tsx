@@ -78,7 +78,7 @@ const Owneradditemsstack = () => {
   );
 };
 const Ownerstack = () => {
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {colorScheme, tabColor} = useContext(ColorSchemeContext);
   const isFocused = useIsFocused();
   let tabBarBackgroundColor: string;
   if (colorScheme === 'dark') {
@@ -175,14 +175,11 @@ const Ownerstack = () => {
           tabBarStyle: {
             display: getRouteName(route),
             backgroundColor: tabBarBackgroundColor,
-
             height: '7%',
           },
           tabBarIcon: ({focused, color}) => {
             if (!isFocused) return null;
-
             let iconComponent;
-
             if (route.name === 'Additem') {
               iconComponent = (
                 <View
@@ -204,10 +201,7 @@ const Ownerstack = () => {
                   <MaterialCommunityIcons
                     name="plus-box"
                     color={color}
-                    style={{
-                      color:
-                        colorScheme === 'dark' ? Colors.white : Colors.black,
-                    }}
+                    style={tabColor()}
                     size={35}
                   />
                 </View>
