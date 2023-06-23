@@ -64,6 +64,22 @@ const OwnerHomestack = () => {
     </Stack.Navigator>
   );
 };
+const getRouteName = (route: Partial<Route<string>>) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+  if (
+    routeName?.includes('OwnerEditProfile') ||
+    routeName?.includes('Owneraddresspage') ||
+    routeName?.includes('Owneraddaddress') ||
+    routeName?.includes('Owneredititems') ||
+    routeName?.includes('OwnerImage') ||
+    routeName?.includes('OproductDetails') ||
+    routeName?.includes('DashboardDetails') ||
+    routeName?.includes('FilteredAnalytics')
+  ) {
+    return 'none';
+  }
+  return 'flex';
+};
 
 const Owneradditemsstack = () => {
   return (
@@ -291,21 +307,5 @@ const Ownerstack = () => {
       />
     </Tab.Navigator>
   );
-};
-const getRouteName = (route: Partial<Route<string>>) => {
-  const routeName = getFocusedRouteNameFromRoute(route);
-  if (
-    routeName?.includes('OwnerEditProfile') ||
-    routeName?.includes('Owneraddresspage') ||
-    routeName?.includes('Owneraddaddress') ||
-    routeName?.includes('Owneredititems') ||
-    routeName?.includes('OwnerImage') ||
-    routeName?.includes('OproductDetails') ||
-    routeName?.includes('DashboardDetails') ||
-    routeName?.includes('FilteredAnalytics')
-  ) {
-    return 'none';
-  }
-  return 'flex';
 };
 export default Ownerstack;
