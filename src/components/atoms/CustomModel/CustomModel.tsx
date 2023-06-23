@@ -3,7 +3,18 @@ import {Modal, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import style from './CustomModelStyles';
 import Colors from '../../../constants/colors';
-const CustomModal = ({showModal, onClose, message}) => {
+
+interface CustomModalProps {
+  showModal: boolean;
+  onClose: () => void;
+  message: string;
+}
+
+const CustomModal: React.FC<CustomModalProps> = ({
+  showModal,
+  onClose,
+  message,
+}) => {
   return (
     <Modal visible={showModal} animationType="slide" transparent>
       <View style={style.modalContainer}>
@@ -35,4 +46,5 @@ const CustomModal = ({showModal, onClose, message}) => {
     </Modal>
   );
 };
+
 export default CustomModal;
