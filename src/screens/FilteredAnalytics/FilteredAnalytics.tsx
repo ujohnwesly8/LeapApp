@@ -20,6 +20,9 @@ const FilteredAnalytics = () => {
     setEndDate(date);
     fetchData();
   };
+  const generateKey = () => {
+    return Math.random().toString(36);
+  };
 
   const addPrefixToYLabel = (value: any) => `₹ ${value}`;
 
@@ -126,8 +129,8 @@ const FilteredAnalytics = () => {
             {Object.keys(data).length > 0 ? (
               Object.entries(data).map(([month, items]) => (
                 <View key={month}>
-                  {items.map((item: any, index: number) => (
-                    <View key={`${month}-${item.id}-${index}`}>
+                  {items.map((item: any) => (
+                    <View key={generateKey()}>
                       <View style={style.dashcard}>
                         <View style={style.dashcardContainer}>
                           <Image
