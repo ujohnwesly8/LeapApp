@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import moment from 'moment';
 import {View, Text, TouchableOpacity, Modal} from 'react-native';
@@ -5,7 +6,16 @@ import CalendarPicker from 'react-native-calendar-picker';
 import Colors from '../../../constants/colors';
 import styles from './datepickerStyles';
 
-const DatePickerComponent = ({
+interface DatePickerProps {
+  startDate: Date;
+  endDate: Date;
+  onStartDateChange: (date: Date) => void;
+  onEndDateChange: (date: Date) => void;
+  buttonStyle: any;
+  buttonTextColor: any;
+}
+
+const DatePickerComponent: React.FC<DatePickerProps> = ({
   startDate,
   endDate,
   onStartDateChange,
@@ -13,17 +23,17 @@ const DatePickerComponent = ({
   buttonStyle,
   buttonTextColor,
 }) => {
-  const [selectedStartDate, setSelectedStartDate] = useState(startDate);
-  const [selectedEndDate, setSelectedEndDate] = useState(endDate);
-  const [showPicker, setShowPicker] = useState(false);
+  const [selectedStartDate, setSelectedStartDate] = useState<Date>(startDate);
+  const [selectedEndDate, setSelectedEndDate] = useState<Date>(endDate);
+  const [showPicker, setShowPicker] = useState<boolean>(false);
 
-  const onDateChange = (date, type) => {
+  const onDateChange = (date: Date, type: string) => {
     if (type === 'END_DATE') {
       setSelectedEndDate(date);
       onEndDateChange(date);
     } else {
       setSelectedStartDate(date);
-      setSelectedEndDate(null);
+      setSelectedEndDate(date);
       onStartDateChange(date);
     }
   };
@@ -39,18 +49,14 @@ const DatePickerComponent = ({
 
   return (
     <View style={styles.mainContainer}>
-      <TouchableOpacity
-        style={buttonStyle}
-        onPress={() => onTogglePicker('START_DATE')}>
+      <TouchableOpacity style={buttonStyle} onPress={() => onTogglePicker()}>
         <Text style={buttonTextColor}>
           {selectedStartDate
             ? moment(selectedStartDate).format('MMM D, YYYY')
             : 'Select Start Date'}
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={[buttonStyle]}
-        onPress={() => onTogglePicker('END_DATE')}>
+      <TouchableOpacity style={[buttonStyle]} onPress={() => onTogglePicker()}>
         <Text style={buttonTextColor}>
           {selectedEndDate
             ? moment(selectedEndDate).format('MMM D, YYYY')
