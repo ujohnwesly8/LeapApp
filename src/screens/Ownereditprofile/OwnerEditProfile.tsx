@@ -67,7 +67,11 @@ const OwnerEditProfile = () => {
           <View>
             <Text style={[style.text, getTextColor()]}>First name</Text>
             <TextInput
-              style={[style.input, getTextInputStyle()]}
+              style={[
+                style.input,
+                colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+              ]}
               placeholderTextColor={Colors.white}
               value={firstName}
               onChangeText={text => setFirstName(text)}
