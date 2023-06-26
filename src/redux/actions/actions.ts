@@ -125,13 +125,16 @@ export const Init = () => {
   };
 };
 
-export const getOTP = (phoneNo: string) => {
+export const getOTP = (phoneNumber: string) => {
   return async (dispatch: Dispatch) => {
     dispatch({type: VERIFY_OTP_REQUEST});
     try {
-      const response = await axios.post(`${url}/phoneNo`, {
-        phoneNo,
-      });
+      const response = await axios.post(
+        `${url}/phoneNo?phoneNumber=${phoneNumber}`,
+        {
+          phoneNumber,
+        },
+      );
       // Alert.alert('OTP'), console.log('otp send');
       dispatch({type: VERIFY_OTP_SUCCESS, payload: response.data});
     } catch (error) {
@@ -139,14 +142,14 @@ export const getOTP = (phoneNo: string) => {
     }
   };
 };
-export const submitOTP = (phoneNo: string, otp: number) => {
+export const submitOTP = (phoneNumber: string, otp: number) => {
   return async (dispatch: Dispatch) => {
     dispatch({type: LOGIN_REQUEST});
     try {
       const response = await axios.post(
-        `${url}/otp`,
+        `${url}/otp?phoneNumber=${phoneNumber}&otp=${otp}`,
         {
-          phoneNo: phoneNo,
+          phoneNumber: phoneNumber,
           otp: otp,
         },
         // console.log('Phone no', phoneNo, otp),
