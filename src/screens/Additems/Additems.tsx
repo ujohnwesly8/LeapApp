@@ -51,7 +51,7 @@ const Additems = () => {
       {isLoading ? (
         <>
           <SkeletonPlaceholder
-            backgroundColor={colorScheme === 'dark' ? '#373737' : Colors.gray}>
+            backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
             <View style={Ownerstyles.scroll}>
               <TextInput style={Ownerstyles.Namefield} />
               <TextInput style={Ownerstyles.Descriptionfield} />
