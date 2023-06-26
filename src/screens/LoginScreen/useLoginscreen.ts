@@ -9,12 +9,10 @@ import {AnyAction} from 'redux';
 import {passwordValidation} from '../../constants/Regex';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import {StackNavigationProp} from '@react-navigation/stack';
-
 type RootStackParamList = {
   OtpScreen: undefined;
   SignupScreen: undefined;
 };
-
 const useLoginscreen = () => {
   const [showModal, setShowModal] = useState(false);
   const [passwordError, setPasswordError] = useState<string>('');
@@ -31,11 +29,18 @@ const useLoginscreen = () => {
         'Must contain * characters and uppercase letters',
       ),
   });
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+  };
   const handleLogin = async () => {
     try {
       await dispatch(Login(formik.values.email, formik.values.password));
-    } catch (error) {
       openModal();
+    } catch (error) {
+      console.log('error is ', error);
     }
   };
   const handleOtpScreen = () => {
@@ -44,13 +49,6 @@ const useLoginscreen = () => {
   const handleSignUp = () => {
     navigation.navigate('SignupScreen');
   };
-  const openModal = () => {
-    setShowModal(true);
-  };
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
   const formik = useFormik({
     initialValues: {
       email: '',
