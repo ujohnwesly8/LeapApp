@@ -101,7 +101,10 @@ const AddImages = () => {
                   </View>
                 ) : (
                   <TouchableOpacity
-                    style={[OwnerImagestyles.Addimage, getTextInputStyle()]}
+                    style={[
+                      OwnerImagestyles.Addimage,
+                      colorScheme === 'dark' ? styles.cardColor : styles.main,
+                    ]}
                     onPress={pickImages}>
                     <Lottie
                       source={require('../../../assets/addimageol.json')}

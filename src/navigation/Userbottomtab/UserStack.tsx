@@ -1,7 +1,5 @@
-/* eslint-disable eslint-comments/no-unused-disable */
 /* eslint-disable curly */
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/no-unstable-nested-components */
 import React, {useContext} from 'react';
 import Profile from '../../screens/Profile/Profile';
 import Homescreen from '../../screens/Home/Homescreen';

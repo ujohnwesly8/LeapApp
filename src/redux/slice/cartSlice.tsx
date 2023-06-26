@@ -10,7 +10,7 @@ export const fetchCartProducts = createAsyncThunk(
       console.log('john anna', response);
       return response;
     } catch (error) {
-      console.log('error is is is is is is is', error);
+      console.log('error ', error);
     }
   },
 );

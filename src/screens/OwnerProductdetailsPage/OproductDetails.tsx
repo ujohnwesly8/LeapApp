@@ -10,7 +10,7 @@ type Props = {
   navigation: any;
 };
 
-const OproductDetails = ({route, navigation}: Props) => {
+const OproductDetails: React.FC<Props> = ({route, navigation}: Props) => {
   const {product, colorScheme, goBack} = useOProductDetails({
     route,
     navigation,
