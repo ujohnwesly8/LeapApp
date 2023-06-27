@@ -18,8 +18,9 @@ import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import {addImages} from '../../constants/languages/en';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import styles from '../../constants/themeColors';
+
 import Styles from '../LoginScreen/loginStyle';
+import styles from '../../constants/themeColors';
 import OwnerImagestyles from './OwnerImagestyles';
 import Colors from '../../constants/colors';
 
@@ -40,15 +41,18 @@ const AddImages = () => {
     isLoading,
   } = Useownerimage();
   const areImagesUploaded = imageUrls && imageUrls.length > 0;
-  const {colorScheme, getContainerStyle, getTextColor, getTextInputStyle} =
-    useContext(ColorSchemeContext);
+  const {colorScheme} = useContext(ColorSchemeContext);
   return (
     <ScrollView
       style={[
         {height: '100%', backgroundColor: Colors.black},
-        getContainerStyle(),
+        colorScheme === 'dark' ? styles.blacktheme : styles.whiteTheme,
       ]}>
-      <View style={[OwnerImagestyles.Scroll, getContainerStyle()]}>
+      <View
+        style={[
+          OwnerImagestyles.Scroll,
+          colorScheme === 'dark' ? styles.blacktheme : styles.whiteTheme,
+        ]}>
         <HeadingText message="Add products" />
         <View style={[OwnerImagestyles.form]}>
           <View style={[OwnerImagestyles.ImageBox]}>
@@ -58,15 +62,17 @@ const AddImages = () => {
                   horizontal
                   style={[
                     OwnerImagestyles.imagehorizontal,
-                    getContainerStyle(),
+                    colorScheme === 'dark'
+                      ? styles.blacktheme
+                      : styles.whiteTheme,
                   ]}>
                   {imageUrls.map((image, index) => (
-                    <View key={image} style={[OwnerImagestyles.ImageContainer]}>
+                    <View key={index} style={[OwnerImagestyles.ImageContainer]}>
                       <Image
                         style={[
                           OwnerImagestyles.image,
                           colorScheme === 'dark'
-                            ? styles.blacktheme
+                            ? styles.cardColor
                             : styles.whiteTheme,
                         ]}
                         source={{uri: image}}
@@ -112,7 +118,13 @@ const AddImages = () => {
                       autoPlay
                     />
                     {!isLoading && (
-                      <Text style={[OwnerImagestyles.imagetxt, getTextColor()]}>
+                      <Text
+                        style={[
+                          OwnerImagestyles.imagetxt,
+                          colorScheme === 'dark'
+                            ? styles.whitetext
+                            : styles.blackText,
+                        ]}>
                         {addImages}
                       </Text>
                     )}
@@ -135,8 +147,8 @@ const AddImages = () => {
               style={[
                 OwnerImagestyles.Price,
                 {paddingLeft: 25},
-                getContainerStyle(),
-                getTextInputStyle(),
+                colorScheme === 'dark' ? styles.cardColor : styles.whiteTheme,
+                colorScheme === 'dark' ? styles.placeholder : styles.blackText,
               ]}
               placeholder="Select price"
               placeholderTextColor="gray"
@@ -154,8 +166,8 @@ const AddImages = () => {
               style={[
                 OwnerImagestyles.quantity,
                 {paddingLeft: 25},
-                getContainerStyle(),
-                getTextInputStyle(),
+                colorScheme === 'dark' ? styles.cardColor : styles.whiteTheme,
+                colorScheme === 'dark' ? styles.placeholder : styles.blackText,
               ]}
               onChangeText={handleQuantityChange}
               onBlur={() => handleBlur('quantity')}
