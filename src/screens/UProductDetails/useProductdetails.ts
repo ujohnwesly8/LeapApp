@@ -23,17 +23,21 @@ const useProductdetails = (product: {id: any; imageUrl: string | any[]}) => {
   const scrollTimerRef = useRef<number | null>(null);
 
   const handleDecrement = () => {
-    setQuantity(quantity - 1);
-    setIsMinusDisabled(true);
-    setIsPlusDisabled(false);
+    if (quantity === 1) {
+      setIsMinusDisabled(true);
+    } else {
+      setQuantity(quantity - 1);
+      setIsPlusDisabled(false);
+    }
   };
 
   const handleIncrement = () => {
+    if (product.availableQuantities === quantity) {
+      setIsPlusDisabled(true);
+    }
     setQuantity(quantity + 1);
     setIsMinusDisabled(false);
-    setIsPlusDisabled(true);
   };
-
   const handleSubmit = async () => {
     const item = {
       productId: product.id,

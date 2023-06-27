@@ -55,8 +55,8 @@ const CategoryProducts = ({route}: any) => {
                     style={style.size}
                     key={item.id.toString()}
                     onPress={() =>
-                      navigation.navigate('CategoryProducts', {
-                        subcategoryId: item.id,
+                      navigation.navigate('UProductDetails', {
+                        product: item,
                       })
                     }>
                     <View style={[style.container, getTextInputStyle()]}>

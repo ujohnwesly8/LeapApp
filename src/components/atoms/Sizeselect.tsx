@@ -15,12 +15,7 @@ const data = [
   {label: 'XXL', value: '5'},
 ];
 
-type SizeSelectionProps = {
-  onSelectSize: (selectedSize: string) => void;
-  onChange: (selectedSize: string) => void;
-};
-
-const Sizeselection = ({onSelectSize}: SizeSelectionProps) => {
+const Sizeselection = ({onChange}: {onChange: (value: string) => void}) => {
   const [value, _setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const {colorScheme} = useContext(ColorSchemeContext);
@@ -56,7 +51,7 @@ const Sizeselection = ({onSelectSize}: SizeSelectionProps) => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            onSelectSize(item.label);
+            onChange(item.label);
             setIsFocus(false);
           }}
         />
