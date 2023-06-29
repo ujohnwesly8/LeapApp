@@ -224,7 +224,7 @@ const DashboardDetails = () => {
           <>
             <StatusBar translucent backgroundColor={'rgba(0,0,0,0)'} />
             <View style={{flexDirection: 'row', marginTop: 50, marginLeft: 10}}>
-              <BackButton />
+              <BackButton navigation={navigation} />
               <Text
                 style={{
                   color: 'black',

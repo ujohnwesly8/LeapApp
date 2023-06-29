@@ -4,27 +4,28 @@ import React, {useContext} from 'react';
 import BackButton from '../BackButton/BackButton';
 import Styles from '../../../constants/themeColors';
 import {ColorSchemeContext} from '../../../../ColorSchemeContext';
+import {useNavigation} from '@react-navigation/native';
 
-interface HeadingTextProps {
+type HeadingTextProps = {
   message: string;
-}
+  navigation: any; // Assuming navigation is available as a prop
+};
 
 const HeadingText = ({message}: HeadingTextProps) => {
   const {colorScheme} = useContext(ColorSchemeContext);
+  const navigation = useNavigation();
   return (
     <>
       <View style={{position: 'absolute', zIndex: 1}}>
-        <BackButton />
+        <BackButton navigation={navigation} />
       </View>
       <View
-        style={[
-          {
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: 90,
-            width: '100%',
-          },
-        ]}>
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: 90,
+          width: '100%',
+        }}>
         <Text
           style={[
             styles.textStyle,
