@@ -57,7 +57,7 @@ const PriceRangeDropdown = ({
   };
   const handleSelectOption = (option: any) => {
     setSelectedOption(option);
-    onSelectPriceRange(option.min, option.max);
+    onSelectPriceRange(option.min.toString(), option.max.toString());
     setOpen(false); // Adjust the delay as needed to allow time for the selection animation
     closeDropdown();
   };
@@ -72,7 +72,8 @@ const PriceRangeDropdown = ({
           styles.button,
           colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
         ]}
-        onPress={handleDropdownToggle}>
+        onPress={handleDropdownToggle}
+        testID="dropdown-button">
         <Text
           style={[
             styles.buttonText,
@@ -88,7 +89,9 @@ const PriceRangeDropdown = ({
           color={Colors.white}
         />
       </TouchableOpacity>
-      <Animated.View style={[styles.dropdown, {height: dropdownHeight}]}>
+      <Animated.View
+        style={[styles.dropdown, {height: dropdownHeight}]}
+        testID="dropdown-content">
         {options.map(option => (
           <TouchableOpacity
             key={option.label}
