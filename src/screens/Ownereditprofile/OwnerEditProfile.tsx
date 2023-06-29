@@ -76,13 +76,7 @@ const OwnerEditProfile = () => {
               value={firstName}
               onChangeText={text => setFirstName(text)}
             />
-            <Text
-              style={[
-                style.text,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
-              Last name
-            </Text>
+            <Text style={[style.text, getTextColor()]}>Last name</Text>
             <TextInput
               style={[
                 style.input,
@@ -92,13 +86,7 @@ const OwnerEditProfile = () => {
               value={lastName}
               onChangeText={text => setLastName(text)}
             />
-            <Text
-              style={[
-                style.text,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
-              Email
-            </Text>
+            <Text style={[style.text, getTextColor()]}>Email</Text>
             <TextInput
               style={[
                 style.emailinput,
