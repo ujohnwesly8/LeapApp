@@ -9,7 +9,7 @@ import Styles from '../../../constants/themeColors';
 import styles from './filterstyles';
 
 type FilterSelectSizeProps = {
-  sizes: string[]; // Specify that sizes is an array of strings
+  sizes: string[];
   selectedSize: string;
   onSelectSize: (size: string) => void;
 };
@@ -51,6 +51,7 @@ const FilterSelectSize = ({
   return (
     <View style={styles.container}>
       <TouchableOpacity
+        testID="button"
         style={[
           styles.button,
           colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
@@ -79,7 +80,8 @@ const FilterSelectSize = ({
         style={[
           styles.dropdown,
           {height: dropdownHeight, zIndex: open ? 9999 : -1}, // Set a higher zIndex when open
-        ]}>
+        ]}
+        testID="dropdown">
         {sizes.map(size => (
           <TouchableOpacity
             key={size}
