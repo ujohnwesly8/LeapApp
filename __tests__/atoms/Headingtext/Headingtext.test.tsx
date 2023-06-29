@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
 import {NavigationContainer} from '@react-navigation/native'; // Import NavigationContainer
-import HeadingText from '../src/components/atoms/HeadingText/HeadingTest';
+import HeadingText from '../../../src/components/atoms/HeadingText/HeadingTest';
 
 describe('HeadingText', () => {
   it('renders the message correctly', () => {
