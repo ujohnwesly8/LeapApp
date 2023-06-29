@@ -19,6 +19,7 @@ const FilteredAnalytics = () => {
     setStartDate,
     endDate,
     setEndDate,
+    navigation,
   } = useFilteredAnalytics();
   const handleEndDateChange = (date: any) => {
     setEndDate(date);
@@ -107,7 +108,7 @@ const FilteredAnalytics = () => {
       <View>
         <View>
           <View style={style.btnDirection}>
-            <BackButton />
+            <BackButton navigation={navigation} />
             <View style={style.titleView}>
               <Text style={style.titleStyle}>Rental Insights</Text>
             </View>

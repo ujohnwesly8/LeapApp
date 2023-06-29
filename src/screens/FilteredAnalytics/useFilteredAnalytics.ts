@@ -3,6 +3,7 @@
 import {useState, useEffect} from 'react';
 import ApiService from '../../network/network';
 import {url} from './../../constants/Apis';
+import {useNavigation} from '@react-navigation/native';
 
 const useFilteredAnalytics = () => {
   const [chartData, setChartData] = useState<
@@ -14,7 +15,7 @@ const useFilteredAnalytics = () => {
   const [data, setData] = useState<{[key: string]: any[]}>({});
 
   const [isLoading, setIsLoading] = useState(false);
-
+  const navigation = useNavigation();
   useEffect(() => {
     fetchData();
   }, [startDate, endDate]);
@@ -66,6 +67,7 @@ const useFilteredAnalytics = () => {
     endDate,
     setStartDate,
     setEndDate,
+    navigation,
   };
 };
 
