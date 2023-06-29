@@ -17,9 +17,6 @@ import {
 import Useowneredititems from './Useowneredititems';
 import GenderDropdown from '../../components/atoms/GenderDropdown';
 import Ownerstyles from '../Additems/Additemsstyle';
-import TypeDropdown from '../../components/atoms/TypeDropdown';
-import EventsDropdown from '../../components/atoms/EventsDropdown';
-import OutfitDropdown from '../../components/atoms/OutfitDropdown';
 import Sizeselection from '../../components/atoms/Sizeselect';
 import OwnerEditItemstyles from './Owneredititemsstyles';
 
@@ -31,6 +28,9 @@ import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
 
 import styles from '../OwnerHomepage/OwnerHomestyle';
+import {useNavigation} from '@react-navigation/native';
+import DropdownComponent from '../../components/atoms/DropDownComponent/CustomDropDown';
+import useAdditems from '../Additems/useAdditems';
 
 const App = () => {
   const {
@@ -68,7 +68,6 @@ const App = () => {
     isLoading,
     productQuantity,
     isModalVisible,
-
     selectedProductId,
     setSelectedProductId,
     handleEnablebutton,
@@ -84,7 +83,12 @@ const App = () => {
     setRefreshData,
     handleRefresh,
   } = Useowneredititems();
-
+  const {
+    subEventCategoriesData,
+    subOutfitCategoriesData,
+    subCategoriesData,
+    itemType,
+  } = useAdditems();
   const [_hideId, setHideId] = useState(null);
 
   const handleVisibleModal = () => {
@@ -164,24 +168,30 @@ const App = () => {
                     value={undefined}
                   />
                   <View style={{marginTop: -18}}>
-                    <TypeDropdown
-                      onSelectType={setItemType}
+                    <DropdownComponent
+                      onSelect={setItemType}
                       onChange={handleItemTypeChange}
-                      value={undefined}
+                      value={itemType}
+                      placeholder="Select Type"
+                      data={subCategoriesData}
                     />
                   </View>
                   <View style={{marginTop: -26}}>
-                    <EventsDropdown
-                      onSelectEvent={setEventType}
+                    <DropdownComponent
+                      onSelect={setEventType}
                       onChange={handleEventTypeChange}
                       value={undefined}
+                      placeholder="Select Event"
+                      data={subEventCategoriesData}
                     />
                   </View>
                   <View style={{marginTop: -12}}>
-                    <OutfitDropdown
-                      onSelectOutfit={setOutfitType}
+                    <DropdownComponent
+                      onSelect={setOutfitType}
                       onChange={handleOutfitChange}
                       value={undefined}
+                      placeholder="Select Outfit"
+                      data={subOutfitCategoriesData}
                     />
                   </View>
                   <View style={OwnerEditItemstyles.Sizecontainer}>

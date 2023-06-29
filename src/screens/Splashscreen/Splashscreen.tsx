@@ -70,6 +70,7 @@ export default function SplashScreen() {
               {item.id === walkthroughTitleList.length && (
                 <TouchableOpacity
                   style={style.touchablebtn}
+                  testID="get-started-button"
                   onPress={handleLoginPress}>
                   <Text style={style.touchableText}>Get Started</Text>
                   <Icons name="arrow-forward-ios" size={15} color={'white'} />

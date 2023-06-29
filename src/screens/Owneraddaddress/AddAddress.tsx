@@ -54,6 +54,7 @@ const AddAddress = () => {
 
   return (
     <ScrollView
+      testID="address-component"
       style={{
         backgroundColor: colorScheme === 'dark' ? colors.black : colors.main,
         height: '100%',

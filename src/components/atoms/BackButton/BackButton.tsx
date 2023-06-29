@@ -2,10 +2,10 @@ import {View} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import style from './backButtonstyles';
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
 
-const BackButton = () => {
-  const navigation = useNavigation();
+const BackButton = ({navigation}) => {
+  // const navigation = useNavigation();
   return (
     <View style={style.headerS}>
       <View style={style.backButtonContainer}>
@@ -16,6 +16,7 @@ const BackButton = () => {
             size={16}
             color="#000000"
             onPress={() => navigation.goBack()}
+            testID="back-button"
           />
         </View>
       </View>

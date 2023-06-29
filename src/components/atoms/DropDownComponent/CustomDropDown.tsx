@@ -1,24 +1,32 @@
 import React, {useContext, useState} from 'react';
 import {View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
+import {ColorSchemeContext} from '../../../../ColorSchemeContext';
+import Ownerstyles from '../../../screens/Additems/Additemsstyle';
+import Styles from '../../../constants/themeColors';
+import styles from './Dropdownstyles';
 
-import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import Styles from '../../constants/themeColors';
-import styles from '../atoms/DropDownComponent/Dropdownstyles';
-const data = [
-  {label: 'XS', value: '1'},
-  {label: 'S', value: '2'},
-  {label: 'L', value: '3'},
-  {label: 'XL', value: '4'},
-  {label: 'XXL', value: '5'},
-];
-const Sizeselection = ({onSelectSize, onChange}) => {
-  const [value, _setValue] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
+type DropdownComponentProps = {
+  onSelect: (selectedValue: string) => void;
+  onChange: (selectedValue: string) => void;
+  value: any;
+  placeholder: string;
+  data: any[];
+};
+
+const DropdownComponent: React.FC<DropdownComponentProps> = ({
+  onSelect,
+  onChange,
+  value,
+  placeholder,
+  data,
+}) => {
   const {colorScheme} = useContext(ColorSchemeContext);
+  const [isFocus, setIsFocus] = useState(false);
+  console.log('data is ', data);
 
   return (
-    <View>
+    <View style={Ownerstyles.scrollView}>
       <View
         style={[
           styles.dropdownContainer,
@@ -26,7 +34,10 @@ const Sizeselection = ({onSelectSize, onChange}) => {
         ]}>
         <Dropdown
           style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
+          placeholderStyle={[
+            styles.placeholderStyle,
+            colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
+          ]}
           selectedTextStyle={[
             styles.selectedTextStyle,
             colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
@@ -42,13 +53,13 @@ const Sizeselection = ({onSelectSize, onChange}) => {
           maxHeight={200}
           labelField="label"
           valueField="value"
-          placeholder={!isFocus ? 'Select size' : '...'}
+          placeholder={!isFocus ? placeholder : '...'}
           searchPlaceholder="Search..."
           value={value}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            onChange(item.label);
+            onChange(item.value);
             setIsFocus(false);
           }}
         />
@@ -56,4 +67,5 @@ const Sizeselection = ({onSelectSize, onChange}) => {
     </View>
   );
 };
-export default Sizeselection;
+
+export default DropdownComponent;

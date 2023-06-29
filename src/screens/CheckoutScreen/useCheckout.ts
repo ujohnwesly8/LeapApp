@@ -117,32 +117,7 @@ const useChectout = () => {
       console.error('Update error:', error);
     }
   };
-  const handleCheckout = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token');
-      const items = cartData?.cartItems?.map(
-        (item: {product: {price: any; id: any; name: any; quantity: any}}) => ({
-          price: item.product.price,
-          productId: item.product.id,
-          productName: item.product.name,
-          quantity: item.product.quantity,
-        }),
-      );
-      const response = await fetch(checkoutApi, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(items),
-      });
-      const data = await response.json();
-      navigation.navigate('CheckoutScreen');
-      console.log('Checkout Session created:', data);
-    } catch (error) {
-      console.error('Error creating Checkout Session:', error);
-    }
-  };
+
   const handleRemove = async (productId: any) => {
     const token = await AsyncStorage.getItem('token');
     console.log('chiranjeevi', productId);
@@ -219,7 +194,6 @@ const useChectout = () => {
   };
 
   return {
-    handleCheckout,
     handleRemove,
     refreshing,
     setRefreshing,
