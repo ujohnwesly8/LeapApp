@@ -24,6 +24,7 @@ const SubCategoryDropdown = ({
         colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
       ]}>
       <Dropdown
+        testID="sub-category-dropdown"
         style={[
           styles.dropdown,
           colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
