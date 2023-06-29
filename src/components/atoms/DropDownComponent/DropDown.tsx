@@ -33,6 +33,7 @@ const DropdownComponent: React.FC<DropdownComponentProps> = ({
           colorScheme === 'dark' ? Styles.cardColor : Styles.main,
         ]}>
         <Dropdown
+          testID="dropdown-component"
           style={styles.dropdown}
           placeholderStyle={[
             styles.placeholderStyle,
