@@ -41,6 +41,9 @@ const AnalyticsDatePicker = ({
   const onClearDates = () => {
     setSelectedStartDate(null);
     setSelectedEndDate(null);
+    //newcode
+    onStartDateChange(null); // Call the onStartDateChange callback with null
+    onEndDateChange(null); // Call the onEndDateChange callback with null
   };
 
   const onTogglePicker = (type: string) => {
@@ -61,7 +64,9 @@ const AnalyticsDatePicker = ({
         <Text
           style={{
             color: Colors.white,
-          }}>
+          }}
+          //newly added
+          testID="start-date-text">
           {selectedStartDate
             ? moment(selectedStartDate).format('MMM D, YYYY')
             : 'Select Start Date'}
@@ -74,7 +79,9 @@ const AnalyticsDatePicker = ({
         <Text
           style={{
             color: Colors.white,
-          }}>
+          }}
+          testID="end-date-button" // Add testID here
+        >
           {selectedEndDate
             ? moment(selectedEndDate).format('MMM D, YYYY')
             : 'Select End Date'}
@@ -92,12 +99,17 @@ const AnalyticsDatePicker = ({
             selectedDayColor={Colors.buttonColor}
           />
           <View style={styles.outerView}>
-            <TouchableOpacity style={styles.btnStyle} onPress={onClearDates}>
+            <TouchableOpacity
+              style={styles.btnStyle}
+              onPress={onClearDates}
+              accessibilityLabel="Clear Dates"
+              testID="clear-dates-button">
               <Text style={styles.textStyle}>Clear Dates</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.btnStyle}
-              onPress={() => setShowPicker(false)}>
+              onPress={() => setShowPicker(false)}
+              testID="done-button">
               <Text style={styles.textStyle}>Done</Text>
             </TouchableOpacity>
           </View>
@@ -122,7 +134,8 @@ const AnalyticsDatePicker = ({
 
             <TouchableOpacity
               style={styles.btnStyle}
-              onPress={() => setShowPickerClone(false)}>
+              onPress={() => setShowPickerClone(false)}
+              testID="done-button">
               <Text style={styles.textStyle}>Done</Text>
             </TouchableOpacity>
           </View>
