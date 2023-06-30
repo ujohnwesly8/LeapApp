@@ -11,12 +11,6 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 }));
 
 describe('SubCategoryDropdown', () => {
-  const subcategoriesData = [
-    {label: 'Category 1', value: 'category1'},
-    {label: 'Category 2', value: 'category2'},
-    {label: 'Category 3', value: 'category3'},
-  ];
-
   test('renders correctly', () => {
     const {getByTestId} = render(
       <SubCategoryDropdown value="" onChange={() => {}} />,
