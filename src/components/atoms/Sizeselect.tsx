@@ -8,11 +8,11 @@ import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
 
 const data = [
-  {label: 'XS', value: '1'},
-  {label: 'S', value: '2'},
-  {label: 'L', value: '3'},
-  {label: 'XL', value: '4'},
-  {label: 'XXL', value: '5'},
+  {label: 'XS', value: '1', accessibilityLabel: 'XS'},
+  {label: 'S', value: '2', accessibilityLabel: 'S'},
+  {label: 'L', value: '3', accessibilityLabel: 'L'},
+  {label: 'XL', value: '4', accessibilityLabel: 'XL'},
+  {label: 'XXL', value: '5', accessibilityLabel: 'XXL'},
 ];
 
 const Sizeselection = ({onChange}: {onChange: (value: string) => void}) => {
@@ -28,6 +28,7 @@ const Sizeselection = ({onChange}: {onChange: (value: string) => void}) => {
           colorScheme === 'dark' ? Styles.cardColor : Styles.main,
         ]}>
         <Dropdown
+          testID="dropdown"
           style={styles.dropdown}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={[
