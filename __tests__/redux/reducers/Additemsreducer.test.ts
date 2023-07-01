@@ -9,6 +9,19 @@ import {
 } from '../../../src/redux/reducers/Additemsreducers';
 
 describe('ItemsReducer', () => {
+  it('should return the initial state', () => {
+    const initialState = {
+      CategoryId: null,
+      Name: null,
+      Description: null,
+      subcategoryIds: null,
+    };
+    const action = {type: 'UNKNOWN_ACTION', payload: null};
+
+    const newState = ItemsReducer(undefined, action);
+
+    expect(newState).toEqual(initialState);
+  });
   it('should handle ADD_NAME action', () => {
     const initialState = {
       CategoryId: null,
