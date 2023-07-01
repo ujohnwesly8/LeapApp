@@ -49,21 +49,30 @@ const DatePickerComponent: React.FC<DatePickerProps> = ({
 
   return (
     <View style={styles.mainContainer}>
-      <TouchableOpacity style={buttonStyle} onPress={() => onTogglePicker()}>
+      <TouchableOpacity
+        style={buttonStyle}
+        testID="start-date-button"
+        onPress={() => onTogglePicker()}>
         <Text style={buttonTextColor}>
           {selectedStartDate
             ? moment(selectedStartDate).format('MMM D, YYYY')
             : 'Select Start Date'}
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[buttonStyle]} onPress={() => onTogglePicker()}>
-        <Text style={buttonTextColor}>
+      <TouchableOpacity
+        style={[buttonStyle]}
+        testID="end-date-button"
+        onPress={() => onTogglePicker()}>
+        <Text testID="selected-date" style={buttonTextColor}>
           {selectedEndDate
             ? moment(selectedEndDate).format('MMM D, YYYY')
             : 'Select End Date'}
         </Text>
       </TouchableOpacity>
-      <Modal visible={showPicker} animationType="slide">
+      <Modal
+        visible={showPicker}
+        animationType="slide"
+        testID="date-picker-modal">
         <View style={{flex: 1}}>
           <CalendarPicker
             startFromMonday={true}
@@ -73,9 +82,11 @@ const DatePickerComponent: React.FC<DatePickerProps> = ({
             selectedEndDate={selectedEndDate}
             onDateChange={onDateChange}
             minDate={startDate}
+            testID="calendar-picker-start-date"
           />
           <View style={styles.clearButtonview}>
             <TouchableOpacity
+              testID="clear-dates"
               style={styles.calanderButtonStyle}
               onPress={onClearDates}>
               <Text style={styles.buttonText}>Clear Dates</Text>
