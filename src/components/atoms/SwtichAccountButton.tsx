@@ -70,6 +70,7 @@ const SwitchAccountButton = () => {
     <View>
       <TouchableOpacity
         onPress={handlePress}
+        testID="switch-account-button"
         style={[styles.button, {opacity: 0.9}]}
         accessibilityLabel={`Switch account type to ${
           accountType === 'BORROWER' ? 'OWNER' : 'BORROWER'
@@ -86,6 +87,7 @@ const SwitchAccountButton = () => {
             {opacity: optionsAnimation, transform: [{scale: optionsAnimation}]},
           ]}>
           <TouchableOpacity
+            testID="account-type-borrower"
             onPress={() => handleOptionPress('BORROWER')}
             accessibilityLabel="BORROWER">
             <View
