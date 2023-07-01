@@ -22,21 +22,24 @@ const Togglebutton = () => {
   });
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="toggle-container">
       {colorScheme === 'dark' ? (
         <Animated.Image
           source={require('../../../../assets/darkmoon.jpeg')}
+          testID="switch-dark"
           style={[styles.icon, {transform: [{translateX: iconTranslateX}]}]}
         />
       ) : (
         <Animated.Image
+          testID="switch-light"
           source={require('../../../../assets/sun.png')}
           style={[styles.Wicon, {transform: [{translateX: iconTranslateX}]}]}
         />
       )}
       <Switch
         value={colorScheme === 'dark'}
-        onValueChange={handleToggle}
+        onValueChange={() => handleToggle()}
+        testID="toggle-switch"
         trackColor={{false: '#81b0ff', true: '#141E27'}}
         thumbColor={colorScheme === 'dark' ? '#141E27' : '#f5dd4b'}
         ios_backgroundColor="#3e3e3e"
