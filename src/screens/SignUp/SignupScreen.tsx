@@ -53,6 +53,7 @@ const SignUpScreen = () => {
             <TextInput
               style={[Styles.textinput, getTextInputStyle(), getTextColor()]}
               placeholder="Enter First name"
+              testID="first-name"
               placeholderTextColor={
                 isDarkMode ? Colors.Textinput : Colors.black
               }
@@ -72,6 +73,7 @@ const SignUpScreen = () => {
               placeholderTextColor={
                 isDarkMode ? Colors.Textinput : Colors.black
               }
+              testID="last-name"
               value={formik.values.lastName}
               autoCapitalize="words"
               onChangeText={formik.handleChange('lastName')}
@@ -88,6 +90,7 @@ const SignUpScreen = () => {
               placeholderTextColor={
                 isDarkMode ? Colors.Textinput : Colors.black
               }
+              testID="Email"
               value={formik.values.email}
               autoCapitalize="none"
               onChangeText={formik.handleChange('email')}
@@ -104,6 +107,7 @@ const SignUpScreen = () => {
               placeholderTextColor={
                 isDarkMode ? Colors.Textinput : Colors.black
               }
+              testID="Phone-number"
               value={formik.values.phoneNumber}
               onChangeText={formik.handleChange('phoneNumber')}
               onBlur={formik.handleBlur('phoneNumber')}
@@ -117,6 +121,7 @@ const SignUpScreen = () => {
             placeholder="Enter password"
             placeholderTextColor={isDarkMode ? Colors.Textinput : Colors.black}
             value={formik.values.password}
+            testID="Password"
             secureTextEntry={true}
             onChangeText={formik.handleChange('password')}
             onBlur={formik.handleBlur('password')}
@@ -130,6 +135,7 @@ const SignUpScreen = () => {
               <RadioButton
                 value="BORROWER"
                 status={role === 'BORROWER' ? 'checked' : 'unchecked'}
+                testID="radio-borrower"
                 onPress={() => handleRole('BORROWER')}
               />
               <Text style={[style.textRadio, getTextColor()]}>{borrower}</Text>
@@ -138,6 +144,7 @@ const SignUpScreen = () => {
               <RadioButton
                 value="OWNER"
                 status={role === 'OWNER' ? 'checked' : 'unchecked'}
+                testID="radio-owner"
                 onPress={() => handleRole('OWNER')}
               />
               <Text style={[style.textRadio, getTextColor()]}>{owner}</Text>
@@ -147,6 +154,7 @@ const SignUpScreen = () => {
         <View style={Styles.signText}>
           <TouchableOpacity
             disabled={!formik.isValid}
+            testID="signup-button"
             style={[
               Styles.touchablebtn,
               {
@@ -162,7 +170,7 @@ const SignUpScreen = () => {
             <Text style={[Styles.signuptext, getTextColor()]}>
               {alreadyExistingtext}
             </Text>
-            <TouchableOpacity onPress={handleLogin}>
+            <TouchableOpacity testID="login-button" onPress={handleLogin}>
               <Text style={Styles.LoginText}>{login}</Text>
             </TouchableOpacity>
           </View>

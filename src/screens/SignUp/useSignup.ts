@@ -52,7 +52,6 @@ const useSignup = () => {
       navigation.navigate('Login');
     } catch (error) {
       openModal();
-      console.log(error);
     }
   };
 
