@@ -76,6 +76,7 @@ const LoginScreen = () => {
       </View>
       <View style={styles.touchablebtnContainer}>
         <TouchableOpacity
+          testID="signin-button"
           disabled={!formik.isValid || !formik.dirty}
           style={[
             styles.touchablebtn,
