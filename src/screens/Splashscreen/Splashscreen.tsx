@@ -6,7 +6,7 @@ import Icons from 'react-native-vector-icons/MaterialIcons';
 import style from './splashScreenStyles';
 import {useSplashScreen} from './useSplashScreen';
 import Colors from '../../constants/colors';
-import Styles from '../../constants/themeColors';
+
 const walkthroughTitleList = [
   {
     id: 1,
@@ -29,14 +29,10 @@ const walkthroughTitleList = [
 ];
 
 export default function SplashScreen() {
-  const {colorScheme, handleLoginPress} = useSplashScreen();
+  const {handleLoginPress, getContainerStyle, getTextColor} = useSplashScreen();
 
   return (
-    <View
-      style={[
-        style.container,
-        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-      ]}>
+    <View style={[style.container, getContainerStyle()]}>
       <Swiper
         showsButtons={false}
         loop={false}
@@ -46,29 +42,13 @@ export default function SplashScreen() {
         paginationStyle={[style.paginationstyle]}>
         {walkthroughTitleList.map(item => {
           return (
-            <View
-              key={item.id}
-              style={[
-                style.slide,
-                colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-              ]}>
+            <View key={item.id} style={[style.slide, getContainerStyle()]}>
               {item.icon}
-              <Text
-                style={[
-                  style.title,
-                  colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-                ]}>
-                {item.title}
-              </Text>
-              <Text
-                style={[
-                  style.desc,
-                  colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-                ]}>
-                {item.desc}
-              </Text>
+              <Text style={[style.title, getTextColor()]}>{item.title}</Text>
+              <Text style={[style.desc, getTextColor()]}>{item.desc}</Text>
               {item.id === walkthroughTitleList.length && (
                 <TouchableOpacity
+                  testID="get-started-button"
                   style={style.touchablebtn}
                   onPress={handleLoginPress}>
                   <Text style={style.touchableText}>Get Started</Text>
