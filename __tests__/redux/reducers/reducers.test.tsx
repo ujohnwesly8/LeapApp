@@ -12,7 +12,7 @@ import {
   VERIFY_OTP_REQUEST,
   VERIFY_OTP_SUCCESS,
   VERIFY_OTP_FAILURE,
-} from '../../../../LeapApp/src/redux/actions/actions';
+} from '../../../src/redux/actions/actions';
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(),

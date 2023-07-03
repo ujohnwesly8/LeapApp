@@ -2,7 +2,7 @@ import WishlistReducer from '../../../src/redux/reducers/wishlistReducer';
 import {
   ADD_TO_WISHLIST,
   REMOVE_FROM_WISHLIST,
-} from '../../../../LeapApp/src/redux/actions/actions';
+} from '../../../src/redux/actions/actions';
 
 // Mock AsyncStorage module
 jest.mock('@react-native-async-storage/async-storage', () => ({

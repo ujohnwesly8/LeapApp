@@ -44,67 +44,68 @@ const CategoryProducts = ({route}: any) => {
         ) : (
           <View style={style.outerView}>
             <View style={style.viewS}>
-              {subcategories.map(
-                (item: {
-                  id: number;
-                  imageUrl: string[];
-                  name: string;
-                  price: number;
-                }) => (
-                  <TouchableOpacity
-                    style={style.size}
-                    key={item.id.toString()}
-                    onPress={() =>
-                      navigation.navigate('UProductDetails', {
-                        product: item,
-                      })
-                    }>
-                    <View style={[style.container, getTextInputStyle()]}>
-                      <TouchableOpacity
-                        key={item.id}
-                        onPress={() =>
-                          navigation.navigate('UProductDetails', {
-                            product: item,
-                          })
-                        }>
-                        <View style={style.imageContainer}>
-                          <Image
-                            source={{uri: item.imageUrl[0]}}
-                            style={style.image}
-                          />
+              {subcategories &&
+                subcategories.map(
+                  (item: {
+                    id: number;
+                    imageUrl: string[];
+                    name: string;
+                    price: number;
+                  }) => (
+                    <TouchableOpacity
+                      style={style.size}
+                      key={item.id.toString()}
+                      onPress={() =>
+                        navigation.navigate('UProductDetails', {
+                          product: item,
+                        })
+                      }>
+                      <View style={[style.container, getTextInputStyle()]}>
+                        <TouchableOpacity
+                          key={item.id}
+                          onPress={() =>
+                            navigation.navigate('UProductDetails', {
+                              product: item,
+                            })
+                          }>
+                          <View style={style.imageContainer}>
+                            <Image
+                              source={{uri: item.imageUrl[0]}}
+                              style={style.image}
+                            />
+                          </View>
+                        </TouchableOpacity>
+                        <View style={style.cardTextContainer}>
+                          <View style={style.Cartcontents}>
+                            <Text style={[style.name, getTextColor()]}>
+                              {item.name}
+                            </Text>
+                          </View>
+                          <View style={style.textContainer}>
+                            <Text style={style.price}>{'₹' + item.price}</Text>
+                          </View>
                         </View>
-                      </TouchableOpacity>
-                      <View style={style.cardTextContainer}>
-                        <View style={style.Cartcontents}>
-                          <Text style={[style.name, getTextColor()]}>
-                            {item.name}
-                          </Text>
-                        </View>
-                        <View style={style.textContainer}>
-                          <Text style={style.price}>{'₹' + item.price}</Text>
-                        </View>
+                        <TouchableOpacity
+                          style={style.wishlistButton}
+                          onPress={() => toggleWishlist(item.id)}>
+                          {wishlistList.includes(item.id) ? (
+                            <MaterialIcons
+                              size={20}
+                              color={'red'}
+                              name="cards-heart"
+                            />
+                          ) : (
+                            <MaterialIcons
+                              size={20}
+                              color={'white'}
+                              name="cards-heart"
+                            />
+                          )}
+                        </TouchableOpacity>
                       </View>
-                      <TouchableOpacity
-                        style={style.wishlistButton}
-                        onPress={() => toggleWishlist(item.id)}>
-                        {wishlistList.includes(item.id) ? (
-                          <MaterialIcons
-                            size={20}
-                            color={'red'}
-                            name="cards-heart"
-                          />
-                        ) : (
-                          <MaterialIcons
-                            size={20}
-                            color={'white'}
-                            name="cards-heart"
-                          />
-                        )}
-                      </TouchableOpacity>
-                    </View>
-                  </TouchableOpacity>
-                ),
-              )}
+                    </TouchableOpacity>
+                  ),
+                )}
             </View>
           </View>
         )}
