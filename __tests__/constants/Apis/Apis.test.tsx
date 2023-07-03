@@ -27,7 +27,7 @@ import {
 
 describe('APIs', () => {
   it('should have the correct value for "url"', () => {
-    expect(url).toEqual('https://e230-106-51-70-135.ngrok-free.app/api/v1');
+    expect(url).toEqual('https://66b6-106-51-70-135.ngrok-free.app/api/v1');
   });
 
   it('should have the correct value for "OwnerProductsUrl"', () => {
