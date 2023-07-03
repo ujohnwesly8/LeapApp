@@ -7,16 +7,14 @@ export const fetchOrderProducts = createAsyncThunk(
   async () => {
     try {
       const response = await ApiService.get(`${url}/order/list`);
-      const data = await response;
-      console.log('order of cladc', data);
-      return data;
+      return response;
     } catch (error) {
       console.log(error);
     }
   },
 );
 
-const orderSlice = createSlice({
+export const orderSlice = createSlice({
   name: 'orderproducts',
   initialState: {
     data: null,
