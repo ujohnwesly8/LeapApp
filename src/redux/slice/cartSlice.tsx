@@ -7,7 +7,6 @@ export const fetchCartProducts = createAsyncThunk(
   async () => {
     try {
       const response = await ApiService.get(CartGetApi);
-      console.log('john anna', response);
       return response;
     } catch (error) {
       console.log('error ', error);
