@@ -24,15 +24,14 @@ interface CategoryItem {
 const Category = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {colorScheme, getContainerStyle, getTextColor} =
+    useContext(ColorSchemeContext);
   const {categories, loading} = useCategory();
 
   const renderItem = ({item}: {item: CategoryItem}) => (
     <TouchableOpacity
-      style={[
-        style.MainView,
-        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-      ]}
+      testID={`category-${item.id}`}
+      style={[style.MainView, getContainerStyle()]}
       onPress={() => navigation.navigate('Subcategory', {categoryId: item.id})}>
       <View
         style={[
@@ -40,14 +39,16 @@ const Category = () => {
           colorScheme === 'dark' ? Styles.cardColor : Styles.main,
         ]}>
         <View style={style.imageContainer}>
-          <Image source={{uri: item.imageUrl}} style={style.categoryImage} />
+          <Image
+            testID={`category-image-${item.id}`}
+            source={{uri: item.imageUrl}}
+            style={style.categoryImage}
+          />
         </View>
         <View>
           <Text
-            style={[
-              style.categoryText,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
+            testID="category-text-1"
+            style={[style.categoryText, getTextColor()]}>
             {item.categoryName}
           </Text>
         </View>
@@ -55,10 +56,7 @@ const Category = () => {
           <Icon
             name="arrow-forward-ios"
             size={20}
-            style={[
-              style.productforwardios,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}
+            style={[style.productforwardios, getTextColor()]}
           />
         </View>
       </View>
@@ -66,21 +64,11 @@ const Category = () => {
   );
 
   return (
-    <View
-      style={[
-        style.maincontainer,
-        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-      ]}>
-      <Text
-        style={[
-          style.CategoryText,
-          colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-        ]}>
-        Categories
-      </Text>
+    <View testID="main-view" style={[style.maincontainer, getContainerStyle()]}>
+      <Text style={[style.CategoryText, getTextColor()]}>Categories</Text>
 
       {loading ? (
-        <View style={style.loaderContainer}>
+        <View style={style.loaderContainer} testID="loading-animation">
           <LottieAnimation
             source={require('../../../assets/loading2.json')}
             style={{}}
@@ -91,6 +79,7 @@ const Category = () => {
           data={categories}
           renderItem={renderItem}
           keyExtractor={item => item.id.toString()}
+          testID="category-flatlist"
         />
       )}
     </View>
