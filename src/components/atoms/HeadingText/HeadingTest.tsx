@@ -2,7 +2,6 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useContext} from 'react';
 import BackButton from '../BackButton/BackButton';
-import Styles from '../../../constants/themeColors';
 import {ColorSchemeContext} from '../../../../ColorSchemeContext';
 import {useNavigation} from '@react-navigation/native';
 
@@ -12,7 +11,7 @@ type HeadingTextProps = {
 };
 
 const HeadingText = ({message}: HeadingTextProps) => {
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {getTextColor} = useContext(ColorSchemeContext);
   const navigation = useNavigation();
   return (
     <>
@@ -26,13 +25,7 @@ const HeadingText = ({message}: HeadingTextProps) => {
           height: 90,
           width: '100%',
         }}>
-        <Text
-          style={[
-            styles.textStyle,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}>
-          {message}
-        </Text>
+        <Text style={[styles.textStyle, getTextColor()]}>{message}</Text>
       </View>
     </>
   );
