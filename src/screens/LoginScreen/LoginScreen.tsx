@@ -19,7 +19,6 @@ import {ColorSchemeContext} from '../../../ColorSchemeContext';
 // Styles and assets
 import styles from './loginStyle';
 import Colors from '../../constants/colors';
-import Styles from '../../constants/themeColors';
 
 const LoginScreen = () => {
   const {
@@ -27,10 +26,12 @@ const LoginScreen = () => {
     closeModal,
     showModal,
     handleLogin,
+    placeholadercolor,
     handleOtpScreen,
+    Textcolor,
     handleSignUp,
   } = useLoginscreen();
-  const {colorScheme, getContainerStyle, getTextInputStyle, getTextColor} =
+  const {getContainerStyle, getTextInputStyle, getTextColor} =
     useContext(ColorSchemeContext);
   return (
     <View style={[styles.mainContainer, getContainerStyle()]}>
@@ -46,9 +47,7 @@ const LoginScreen = () => {
         <TextInput
           style={[styles.textinput, getTextInputStyle(), getTextColor()]}
           placeholder="Email Address"
-          placeholderTextColor={
-            colorScheme === 'dark' ? Colors.Textinput : Colors.black
-          }
+          placeholderTextColor={placeholadercolor()}
           value={formik.values.email}
           autoCapitalize="none"
           onChangeText={formik.handleChange('email')}
@@ -61,9 +60,7 @@ const LoginScreen = () => {
           <TextInput
             style={[styles.textinput, getTextInputStyle(), getTextColor()]}
             placeholder="Enter password"
-            placeholderTextColor={
-              colorScheme === 'dark' ? Colors.Textinput : Colors.black
-            }
+            placeholderTextColor={placeholadercolor()}
             value={formik.values.password}
             secureTextEntry={true}
             onChangeText={formik.handleChange('password')}
@@ -90,19 +87,13 @@ const LoginScreen = () => {
       </View>
       <View style={styles.otp}>
         <Text style={[styles.otptext, getTextColor()]}>{continueText}</Text>
-        <TouchableOpacity onPress={handleOtpScreen}>
+        <TouchableOpacity onPress={handleOtpScreen} testID="Otpscreen-button">
           <Text style={styles.Otptext}>{otp}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.sign}>
-        <Text
-          style={[
-            styles.signuptext,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}>
-          {Donthavetext}
-        </Text>
-        <TouchableOpacity onPress={handleSignUp}>
+        <Text style={[styles.signuptext, Textcolor()]}>{Donthavetext}</Text>
+        <TouchableOpacity onPress={handleSignUp} testID="Signup-Button">
           <Text style={styles.Signuptext}>{signup}</Text>
         </TouchableOpacity>
       </View>
