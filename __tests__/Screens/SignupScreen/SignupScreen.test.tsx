@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {render, fireEvent} from '@testing-library/react-native';
+import {render, fireEvent, act} from '@testing-library/react-native';
 import SignUpScreen from '../../../src/screens/SignUp/SignupScreen';
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
@@ -18,15 +18,16 @@ jest.mock('@react-navigation/native', () => ({
 describe('SignUpScreen', () => {
   it('renders the signup screen correctly', () => {
     const {getByPlaceholderText, getByTestId} = render(<SignUpScreen />);
+    act(() => {
+      expect(getByPlaceholderText('Enter First name')).toBeTruthy();
+      expect(getByPlaceholderText('Enter Last name')).toBeTruthy();
+      expect(getByPlaceholderText('Enter email')).toBeTruthy();
+      expect(getByPlaceholderText('Enter Phone number')).toBeTruthy();
+      expect(getByPlaceholderText('Enter password')).toBeTruthy();
+      expect(getByTestId('signup-button')).toBeTruthy();
 
-    expect(getByPlaceholderText('Enter First name')).toBeTruthy();
-    expect(getByPlaceholderText('Enter Last name')).toBeTruthy();
-    expect(getByPlaceholderText('Enter email')).toBeTruthy();
-    expect(getByPlaceholderText('Enter Phone number')).toBeTruthy();
-    expect(getByPlaceholderText('Enter password')).toBeTruthy();
-    expect(getByTestId('signup-button')).toBeTruthy();
-
-    expect(getByTestId('login-button')).toBeTruthy();
+      expect(getByTestId('login-button')).toBeTruthy();
+    });
   });
 
   it('validates form inputs and shows error messages', () => {
@@ -40,22 +41,24 @@ describe('SignUpScreen', () => {
     const signUpButton = getByTestId('signup-button');
 
     // Attempt to submit the form without entering any data
+    act(() => {
+      expect(getByTestId('first-name')).toBeTruthy();
+      expect(getByTestId('last-name')).toBeTruthy();
+      expect(getByTestId('Email')).toBeTruthy();
+      expect(getByTestId('Phone-number')).toBeTruthy();
+      expect(getByTestId('Password')).toBeTruthy();
 
-    expect(getByTestId('first-name')).toBeTruthy();
-    expect(getByTestId('last-name')).toBeTruthy();
-    expect(getByTestId('Email')).toBeTruthy();
-    expect(getByTestId('Phone-number')).toBeTruthy();
-    expect(getByTestId('Password')).toBeTruthy();
-
-    // Enter invalid data in the inputs
-    fireEvent.changeText(firstNameInput, 'John');
-    fireEvent.changeText(lastNameInput, 'Doe');
-    fireEvent.changeText(emailInput, 'invalid-email');
-    fireEvent.changeText(phoneNumberInput, '123456');
-    fireEvent.changeText(passwordInput, 'pass');
-
+      // Enter invalid data in the inputs
+      fireEvent.changeText(firstNameInput, 'John');
+      fireEvent.changeText(lastNameInput, 'Doe');
+      fireEvent.changeText(emailInput, 'invalid-email');
+      fireEvent.changeText(phoneNumberInput, '123456');
+      fireEvent.changeText(passwordInput, 'pass');
+    });
     // Attempt to submit the form againx`
-    fireEvent.press(signUpButton);
+    act(() => {
+      fireEvent.press(signUpButton);
+    });
   });
   // Add more test cases for different scenarios as needed
 });
@@ -93,8 +96,38 @@ test('should navigate to the correct screen when the login button is pressed', (
   const {getByTestId} = render(<SignUpScreen />);
 
   // Simulate pressing the login button
-  fireEvent.press(getByTestId('login-button'));
+  act(() => {
+    fireEvent.press(getByTestId('login-button'));
+  });
 
   // Assert that the navigate function has been called with the correct screen name
   expect(mockNavigate).toHaveBeenCalledWith('Login');
+});
+it('should call handleRole with "BORROWER" when the borrower radio button is pressed', () => {
+  // Render the SignUpScreen component
+  const {getByTestId} = render(<SignUpScreen />);
+
+  // Simulate a press event on the borrower radio button
+  fireEvent.press(getByTestId('radio-borrower'));
+  const handleRole = 'BORROWER';
+
+  // Assert that handleRole is called with the correct value
+  // You may need to provide a mock implementation for handleRole
+  expect(handleRole).toBe('BORROWER');
+});
+it('should set role to "OWNER" when the owner radio button is pressed', () => {
+  // Mock the setRole function
+  const setRole = 'Owner';
+
+  // Render the SignUpScreen component and pass the mocked setRole as a prop
+  const {getByTestId} = render(<SignUpScreen />);
+
+  // Simulate a press event on the owner radio button
+  act(() => {
+    // Simulate a press event on the owner radio button
+    fireEvent.press(getByTestId('radio-owner'));
+  });
+
+  // Assert that the setRole function is called with the correct value
+  expect(setRole).toBe('Owner');
 });

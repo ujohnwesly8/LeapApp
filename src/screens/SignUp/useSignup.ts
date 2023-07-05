@@ -2,11 +2,12 @@ import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useContext, useState} from 'react';
 import {url} from '../../constants/Apis';
 import {passwordValidation, phonenumberValidation} from '../../constants/Regex';
 import ApiService from '../../network/network';
-
+import Colors from '../../constants/colors';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 type RootStackParamList = {
   Login: undefined;
 };
@@ -14,6 +15,7 @@ const useSignup = () => {
   const [showModal, setShowModal] = useState(false);
   const [role, setRole] = useState<string>('');
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const {colorScheme} = useContext(ColorSchemeContext);
   const SignUpSchema = Yup.object().shape({
     firstName: Yup.string().required('Enter First Name'),
     lastName: Yup.string().required('Enter LastName'),
@@ -72,6 +74,24 @@ const useSignup = () => {
   const handleLogin = () => {
     navigation.navigate('Login');
   };
+  const PlaceholderColor = () => {
+    return colorScheme === 'dark' ? Colors.Textinput : Colors.black;
+  };
+  const BorrowerRole = () => {
+    if (role === 'BORROWER') {
+      return 'checked';
+    } else {
+      return 'unchecked';
+    }
+  };
+  const OwnerRole = () => {
+    if (role === 'OWNER') {
+      return 'checked';
+    } else {
+      return 'unchecked';
+    }
+  };
+
   return {
     formik,
     role,
@@ -81,6 +101,9 @@ const useSignup = () => {
     handleSignupfun,
     handleRole,
     handleLogin,
+    PlaceholderColor,
+    BorrowerRole,
+    OwnerRole,
   };
 };
 export default useSignup;
