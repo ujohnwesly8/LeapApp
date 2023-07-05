@@ -4,7 +4,6 @@ import {StatusBar, Text, View, ImageBackground, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../OwnerProductdetailsPage/oProductDetailsStyle';
 import useOProductDetails from './useOProductDetails';
-import Styles from '../../constants/themeColors';
 type Props = {
   route: {params: {product: any}};
   navigation: any;
@@ -13,7 +12,6 @@ type Props = {
 const OproductDetails: React.FC<Props> = ({route, navigation}: Props) => {
   const {
     product,
-    colorScheme,
     goBack,
     getContainerStyle,
 
