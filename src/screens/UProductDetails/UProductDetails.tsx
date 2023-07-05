@@ -15,18 +15,17 @@ import {Pagination} from 'react-native-snap-carousel';
 
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import useProductdetails from './useProductdetails';
-
-import Styles from '../../constants/themeColors';
-import Colors from '../../constants/colors';
-import styles from './UProductDetailsStyle';
 import DatePickerComponent from '../../components/atoms/DatePickerComponent/DatepickerComponent';
+
+import styles from './UProductDetailsStyle';
 type Props = {
   route: {params: {product: any}};
   navigation: any;
 };
-export default function UDetailScreen({route, navigation}: Props) {
+const UDetailScreen = ({route, navigation}: Props) => {
   const {product} = route.params;
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {getContainerStyle, getTextInputStyle, getTextColor} =
+    useContext(ColorSchemeContext);
   const {
     rentalStartDate,
     setRentalStartDate,
@@ -51,21 +50,20 @@ export default function UDetailScreen({route, navigation}: Props) {
   const Quantity = product.quantity;
   return (
     <ScrollView
-      style={{
-        width: '100%',
-        backgroundColor: colorScheme === 'dark' ? Colors.black : Colors.white,
-      }}>
-      <View
-        style={[
-          styles.container,
-          colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-        ]}>
+      style={[
+        {
+          width: '100%',
+        },
+        getContainerStyle(),
+      ]}>
+      <View style={[styles.container, getContainerStyle()]}>
         <StatusBar translucent backgroundColor={'rgba(0,0,0,0)'} />
         <View style={styles.dheader}>
           <Icon
             name="arrow-back-ios"
             size={28}
             color="black"
+            testID="back-button"
             onPress={() => navigation.goBack()}
           />
         </View>
@@ -74,6 +72,7 @@ export default function UDetailScreen({route, navigation}: Props) {
             nestedScrollEnabled
             ref={scrollViewRef}
             horizontal
+            testID="scroll-view"
             pagingEnabled
             showsHorizontalScrollIndicator={false}
             scrollEventThrottle={16}
@@ -107,26 +106,13 @@ export default function UDetailScreen({route, navigation}: Props) {
             inactiveDotScale={0.6}
           />
         </View>
-        <View
-          style={[
-            styles.detailsContainer,
-            colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-          ]}>
+        <View style={[styles.detailsContainer, getTextColor()]}>
           <Text style={[styles.detailsPrice]}>₹{product.price}</Text>
-          <Text
-            style={[
-              styles.detailsdescription,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
+          <Text style={[styles.detailsdescription, getTextColor()]}>
             {product.description}
           </Text>
           <View style={{marginTop: 10, marginBottom: 20, flexDirection: 'row'}}>
-            <Text
-              style={[
-                styles.headingtext,
-                {marginTop: 10},
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
+            <Text style={[styles.headingtext, {marginTop: 10}, getTextColor()]}>
               Rent
             </Text>
             <DatePickerComponent
@@ -138,41 +124,17 @@ export default function UDetailScreen({route, navigation}: Props) {
               buttonTextColor={styles.datepickerTextcolor}
             />
           </View>
-          <View
-            style={[
-              styles.size,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-            ]}>
-            <Text
-              style={[
-                styles.sizelabel,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
-              Size
-            </Text>
+          <View style={[styles.size, getTextInputStyle()]}>
+            <Text style={[styles.sizelabel, getTextInputStyle()]}>Size</Text>
             <View style={styles.descriptionContainer}>
-              <Text
-                style={[
-                  styles.detailsSize,
-                  colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-                ]}>
+              <Text style={[styles.detailsSize, getTextColor()]}>
                 {product.size}
               </Text>
             </View>
           </View>
-          <View
-            style={[
-              styles.quantityContainer,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-            ]}>
+          <View style={[styles.quantityContainer, getTextInputStyle()]}>
             <View>
-              <Text
-                style={[
-                  styles.Quatitytext,
-                  colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-                ]}>
-                Quantity
-              </Text>
+              <Text style={[styles.Quatitytext, getTextColor()]}>Quantity</Text>
             </View>
             <TouchableOpacity
               style={[
@@ -183,11 +145,7 @@ export default function UDetailScreen({route, navigation}: Props) {
               disabled={quantity === 1 || isMinusDisabled}>
               <Text style={styles.quantityButtonText}>-</Text>
             </TouchableOpacity>
-            <Text
-              style={[
-                styles.quantityText,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
+            <Text style={[styles.quantityText, getTextColor()]}>
               {quantity}
             </Text>
             <TouchableOpacity
@@ -224,4 +182,5 @@ export default function UDetailScreen({route, navigation}: Props) {
       />
     </ScrollView>
   );
-}
+};
+export default UDetailScreen;
