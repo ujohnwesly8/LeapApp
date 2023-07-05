@@ -18,22 +18,22 @@ const data = [
 const Sizeselection = ({onChange}: {onChange: (value: string) => void}) => {
   const [value, _setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {getTextInputStyle, getPlaceholderTextColor} =
+    useContext(ColorSchemeContext);
 
   return (
     <View>
-      <View
-        style={[
-          styles.dropdownContainer,
-          colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-        ]}>
+      <View style={[styles.dropdownContainer, getTextInputStyle()]}>
         <Dropdown
           testID="dropdown"
           style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
+          placeholderStyle={[
+            styles.placeholderStyle,
+            getPlaceholderTextColor(),
+          ]}
           selectedTextStyle={[
             styles.selectedTextStyle,
-            colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
+            getPlaceholderTextColor(),
           ]}
           inputSearchStyle={styles.inputSearchStyle}
           itemTextStyle={styles.itemTextStyle}

@@ -3,7 +3,6 @@ import {View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {ColorSchemeContext} from '../../../../ColorSchemeContext';
 import Ownerstyles from '../../../screens/Additems/Additemsstyle';
-import Styles from '../../../constants/themeColors';
 import styles from './dropdownStyles';
 
 type DropdownComponentProps = {
@@ -15,33 +14,29 @@ type DropdownComponentProps = {
 };
 
 const DropdownComponent: React.FC<DropdownComponentProps> = ({
-  onSelect,
   onChange,
   value,
   placeholder,
   data,
 }) => {
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {getTextInputStyle, getPlaceholderTextColor} =
+    useContext(ColorSchemeContext);
   const [isFocus, setIsFocus] = useState(false);
   console.log('data is ', data);
 
   return (
     <View style={Ownerstyles.scrollView}>
-      <View
-        style={[
-          styles.dropdownContainer,
-          colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-        ]}>
+      <View style={[styles.dropdownContainer, getTextInputStyle()]}>
         <Dropdown
           testID="dropdown-component"
           style={styles.dropdown}
           placeholderStyle={[
             styles.placeholderStyle,
-            colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
+            getPlaceholderTextColor(),
           ]}
           selectedTextStyle={[
             styles.selectedTextStyle,
-            colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
+            getPlaceholderTextColor(),
           ]}
           inputSearchStyle={styles.inputSearchStyle}
           itemTextStyle={styles.itemTextStyle}
