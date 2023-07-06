@@ -8,8 +8,8 @@ import {
   getByText,
 } from '@testing-library/react-native';
 import 'jest-styled-components';
-import Category from '../../src/screens/Category/Category';
-import {ColorSchemeContext} from '../../ColorSchemeContext';
+import Category from '../../../src/screens/Category/Category';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(),
@@ -43,7 +43,7 @@ describe('Category', () => {
 
   // const mockLoading = false;
 
-  jest.mock('../../src/screens/Category/useCategory', () => ({
+  jest.mock('../../../src/screens/Category/useCategory', () => ({
     useCategory: jest.fn(() => ({
       categories: mockCategories,
       loading: mockLoading,
