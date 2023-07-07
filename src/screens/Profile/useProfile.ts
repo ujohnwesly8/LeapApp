@@ -173,10 +173,12 @@ const useProfile = () => {
     closeModal,
     showModall,
     closeModal1,
+
     openModal1,
     showModal1,
     refreshData,
     refreshState,
+    fetchProfileData, // Expose the fetchProfileData function
   };
 };
 
