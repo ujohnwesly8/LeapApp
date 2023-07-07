@@ -70,4 +70,26 @@ describe('Subcategory', () => {
 
     expect(handleSubcategoryPress).toHaveBeenCalledWith('1');
   });
+  //Testcase 3
+  test('renders loading animation when loading is true', async () => {
+    const {queryByTestId} = render(
+      <NavigationContainer>
+        <Subcategory route={{params: {categoryId: '123'}}} loading={true} />
+      </NavigationContainer>,
+    );
+
+    const loadingAnimation = queryByTestId('loading-animation');
+    expect(loadingAnimation).toBeTruthy();
+  });
+
+  //Testcase 4
+  test('does not render loading animation when loading is false', () => {
+    const {queryByTestId} = render(
+      <NavigationContainer>
+        <Subcategory route={{params: {categoryId: '123'}}} loading={false} />
+      </NavigationContainer>,
+    );
+    const loadingAnimation = queryByTestId('loading-animation');
+    expect(loadingAnimation).toBeNull();
+  });
 });
