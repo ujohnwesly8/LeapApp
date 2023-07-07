@@ -3,23 +3,20 @@ import {useDispatch} from 'react-redux';
 import {postProductToAPI} from '../../redux/actions/actions';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import ApiService from '../../network/network';
-import {url} from '../../constants/Apis';
 
 const useCategoryProducts = (subcategoryId: number) => {
   const dispatch = useDispatch();
   const [subcategories, setSubcategories] = useState([]);
   const [wishlistList, setWishlistList] = useState<number[]>([]);
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {colorScheme, getContainerStyle} = useContext(ColorSchemeContext);
 
   useEffect(() => {
     const fetchSubcategories = async () => {
       const response = await ApiService.get(
-        `${url}/product/listBySubcategoryId/${subcategoryId}`,
+        `/product/listBySubcategoryId/${subcategoryId}`,
       );
-      const subcategoriesData = response;
-      setSubcategories(subcategoriesData);
+      setSubcategories(response);
     };
-
     fetchSubcategories();
   }, [subcategoryId]);
 
@@ -42,6 +39,7 @@ const useCategoryProducts = (subcategoryId: number) => {
     wishlistList,
     colorScheme,
     toggleWishlist,
+    getContainerStyle,
   };
 };
 
