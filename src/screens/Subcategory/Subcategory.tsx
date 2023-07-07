@@ -37,7 +37,8 @@ const Subcategory = ({
         style={[
           styles.lottieView,
           colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-        ]}>
+        ]}
+        testID="loading-animation">
         <Lottie
           source={require('../../../assets/loading2.json')}
           autoPlay
