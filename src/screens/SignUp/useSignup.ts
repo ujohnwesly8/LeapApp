@@ -6,8 +6,9 @@ import {SetStateAction, useContext, useState} from 'react';
 import {url} from '../../constants/Apis';
 import {passwordValidation, phonenumberValidation} from '../../constants/Regex';
 import ApiService from '../../network/network';
-import Colors from '../../constants/colors';
+import colors from '../../constants/colors';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
+
 type RootStackParamList = {
   Login: undefined;
 };
@@ -75,11 +76,7 @@ const useSignup = () => {
     navigation.navigate('Login');
   };
   const PlaceholderColor = () => {
-    if (colorScheme === 'dark') {
-      return Colors.Textinput;
-    } else {
-      return Colors.black;
-    }
+    return colorScheme === 'dark' ? colors.Textinput : colors.black;
   };
   const BorrowerRole = () => {
     if (role === 'BORROWER') {
