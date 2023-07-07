@@ -4,9 +4,7 @@ import useOProductDetails from '../../../src/screens/OwnerProductdetailsPage/use
 import React from 'react';
 
 describe('useOProductDetails', () => {
-  const product = {
-    /* mock product data */
-  };
+  const product = {};
   const route = {params: {product}};
   const navigation = {goBack: jest.fn()};
   const colorScheme = 'light';

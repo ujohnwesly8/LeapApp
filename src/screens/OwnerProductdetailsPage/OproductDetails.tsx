@@ -1,6 +1,13 @@
 /* eslint-disable react/self-closing-comp */
 import React from 'react';
-import {StatusBar, Text, View, ImageBackground, ScrollView} from 'react-native';
+import {
+  StatusBar,
+  Text,
+  View,
+  ImageBackground,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../OwnerProductdetailsPage/oProductDetailsStyle';
 import useOProductDetails from './useOProductDetails';
@@ -25,12 +32,22 @@ const OproductDetails: React.FC<Props> = ({route, navigation}: Props) => {
     <View style={[styles.container, getContainerStyle()]}>
       <StatusBar translucent backgroundColor={'rgba(0,0,0,0)'} />
       <View style={styles.dheader}>
-        <Icon name="arrow-back-ios" size={28} color="black" onPress={goBack} />
+        <TouchableOpacity
+          testID="back-button" // Add the testID prop here
+          onPress={goBack}>
+          <Icon
+            name="arrow-back-ios"
+            size={28}
+            color="black"
+            onPress={goBack}
+          />
+        </TouchableOpacity>
       </View>
       <ScrollView horizontal={true}>
         <View style={styles.productImagecon}>
           {product.imageUrl.map((item: any) => (
             <ImageBackground
+              testID="product-image"
               key={item}
               style={styles.imgBack}
               source={{uri: item}}></ImageBackground>
