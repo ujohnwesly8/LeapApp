@@ -10,7 +10,6 @@ import {passwordValidation} from '../../constants/Regex';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import {StackNavigationProp} from '@react-navigation/stack';
 import colors from '../../constants/colors';
-import Styles from '../../constants/themeColors';
 type RootStackParamList = {
   OtpScreen: undefined;
   SignupScreen: undefined;
@@ -35,8 +34,8 @@ const useLoginscreen = () => {
   const handleLogin = async () => {
     try {
       await dispatch(Login(formik.values.email, formik.values.password));
-    } catch (error) {
       openModal();
+    } catch (error) {
       console.log('error in login');
     }
   };
@@ -56,10 +55,6 @@ const useLoginscreen = () => {
   const placeholadercolor = () => {
     return colorScheme === 'dark' ? colors.Textinput : colors.black;
   };
-  const Textcolor = () => {
-    return colorScheme === 'dark' ? Styles.whitetext : Styles.blackText;
-  };
-
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -71,7 +66,6 @@ const useLoginscreen = () => {
   return {
     openModal,
     placeholadercolor,
-    Textcolor,
     closeModal,
     showModal,
     formik,
