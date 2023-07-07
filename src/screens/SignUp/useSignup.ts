@@ -75,7 +75,11 @@ const useSignup = () => {
     navigation.navigate('Login');
   };
   const PlaceholderColor = () => {
-    return colorScheme === 'dark' ? Colors.Textinput : Colors.black;
+    if (colorScheme === 'dark') {
+      return Colors.Textinput;
+    } else {
+      return Colors.black;
+    }
   };
   const BorrowerRole = () => {
     if (role === 'BORROWER') {
