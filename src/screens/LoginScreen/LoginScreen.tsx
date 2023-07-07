@@ -28,7 +28,6 @@ const LoginScreen = () => {
     handleLogin,
     placeholadercolor,
     handleOtpScreen,
-    Textcolor,
     handleSignUp,
   } = useLoginscreen();
   const {getContainerStyle, getTextInputStyle, getTextColor} =
@@ -92,7 +91,7 @@ const LoginScreen = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.sign}>
-        <Text style={[styles.signuptext, Textcolor()]}>{Donthavetext}</Text>
+        <Text style={[styles.signuptext, getTextColor()]}>{Donthavetext}</Text>
         <TouchableOpacity onPress={handleSignUp} testID="Signup-Button">
           <Text style={styles.Signuptext}>{signup}</Text>
         </TouchableOpacity>
