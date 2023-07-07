@@ -84,7 +84,7 @@ const SignUpScreen = () => {
               style={[Styles.textinput, getTextInputStyle(), getTextColor()]}
               placeholder="Enter email"
               placeholderTextColor={PlaceholderColor()}
-              testID="Email"
+              testID="email"
               value={formik.values.email}
               autoCapitalize="none"
               onChangeText={formik.handleChange('email')}

@@ -29,7 +29,8 @@ const Subcategory = ({
 
   const {subcategories, loading, handleSubcategoryPress} =
     useSubcategory<Subcategory>(categoryId);
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {colorScheme, getContainerStyle, getTextColor, getTextInputStyle} =
+    useContext(ColorSchemeContext);
 
   if (loading) {
     return (
@@ -37,7 +38,8 @@ const Subcategory = ({
         style={[
           styles.lottieView,
           colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-        ]}>
+        ]}
+        testID="loading-animation">
         <Lottie
           source={require('../../../assets/loading2.json')}
           autoPlay
@@ -55,55 +57,37 @@ const Subcategory = ({
   }
 
   return (
-    <ScrollView
-      style={colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme}>
+    <ScrollView style={getContainerStyle()}>
       <HeadingText message="Subcategories" />
-
-      {loading ? (
-        <View style={styles.loaderContainer}>
-          <Lottie source={require('../../../assets/loading2.json')} autoPlay />
-        </View>
-      ) : (
-        <View>
-          {subcategories &&
-            subcategories.map(item => (
-              <TouchableOpacity
-                key={item.id}
-                onPress={() => handleSubcategoryPress(item.id)}>
-                <View
-                  style={[
-                    styles.categoryBox,
-                    colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                  ]}>
-                  <View style={styles.imageContainer}>
-                    <Image
-                      source={{uri: item.imageUrl}}
-                      style={styles.categoryImage}
-                    />
-                  </View>
-                  <View>
-                    <Text
-                      style={[
-                        styles.categoryText,
-                        colorScheme === 'dark'
-                          ? Styles.whitetext
-                          : Styles.blackText,
-                      ]}>
-                      {item.subcategoryName}
-                    </Text>
-                  </View>
-                  <View style={styles.iconS}>
-                    <Icon
-                      name="arrow-forward-ios"
-                      size={20}
-                      style={styles.productforwardios}
-                    />
-                  </View>
+      <View>
+        {subcategories &&
+          subcategories.map(item => (
+            <TouchableOpacity
+              key={item.id}
+              onPress={() => handleSubcategoryPress(item.id)}>
+              <View style={[styles.categoryBox, getTextInputStyle()]}>
+                <View style={styles.imageContainer}>
+                  <Image
+                    source={{uri: item.imageUrl}}
+                    style={styles.categoryImage}
+                  />
                 </View>
-              </TouchableOpacity>
-            ))}
-        </View>
-      )}
+                <View>
+                  <Text style={[styles.categoryText, getTextColor()]}>
+                    {item.subcategoryName}
+                  </Text>
+                </View>
+                <View style={styles.iconS}>
+                  <Icon
+                    name="arrow-forward-ios"
+                    size={20}
+                    style={styles.productforwardios}
+                  />
+                </View>
+              </View>
+            </TouchableOpacity>
+          ))}
+      </View>
     </ScrollView>
   );
 };
