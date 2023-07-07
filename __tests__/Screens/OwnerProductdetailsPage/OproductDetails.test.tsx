@@ -16,13 +16,13 @@ describe('OproductDetails', () => {
       <OproductDetails route={mockRoute} navigation={mockNavigation} />,
     );
 
-    // Assert that the product name is rendered
+    // Assert that product name is rendered
     expect(getByText('Test Product')).toBeTruthy();
 
-    // Assert that the product price is rendered
+    // Assert that product price is rendered
     expect(getByText('₹ 10')).toBeTruthy();
 
-    // Assert that the product description is rendered
+    // Assert that product description is rendered
     expect(getByText('Test Description')).toBeTruthy();
   });
 });

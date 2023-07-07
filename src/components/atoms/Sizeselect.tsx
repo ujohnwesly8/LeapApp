@@ -5,7 +5,6 @@ import {Dropdown} from 'react-native-element-dropdown';
 import Colors from '../../constants/colors';
 
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import Styles from '../../constants/themeColors';
 
 const data = [
   {label: 'XS', value: '1', accessibilityLabel: 'XS'},
