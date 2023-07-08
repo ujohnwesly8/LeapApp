@@ -1,52 +1,50 @@
 import React from 'react';
-import {render, fireEvent} from '@testing-library/react-native';
-import {Provider, useDispatch} from 'react-redux';
-import OtpScreen from '../../../src/screens/OtpScreen/OtpScreen';
+import {render} from '@testing-library/react-native';
+import OTPScreen from '../../../src/screens/OtpScreen/OtpScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Provider} from 'react-redux';
 import {store} from '../../../src/redux/store';
+import {NavigationContainer} from '@react-navigation/native';
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
-  setItem: jest.fn(),
   getItem: jest.fn(),
+  setItem: jest.fn(),
   removeItem: jest.fn(),
+  clear: jest.fn(),
+}));
+jest.mock('../../../src/screens/OtpScreen/useOtp', () => ({
+  __esModule: true,
+  default: () => ({
+    phoneNo: '',
+    otp: '',
+    handlephoneNumberChange: jest.fn(),
+    handlePasswordChange: jest.fn(),
+    GETOTP: jest.fn(),
+    handleLogin: jest.fn(),
+    passwordError: '',
+    closeModal: jest.fn(),
+    showModal: false,
+  }),
 }));
 
-jest.mock('react-redux', () => ({
-  useDispatch: jest.fn(),
-}));
-
-describe('OtpScreen', () => {
-  it('should update phone number state when entering a phone number', () => {
-    const dispatchMock = jest.fn();
-    useDispatch.mockReturnValue(dispatchMock);
+describe('OTPScreen', () => {
+  beforeEach(() => {
+    AsyncStorage.clear();
   });
+  it('should render the OTPScreen correctly', () => {
+    const {getByText, getByPlaceholderText, getAllByText} = render(
+      <Provider store={store}>
+        <NavigationContainer>
+          <OTPScreen />
+        </NavigationContainer>
+      </Provider>,
+    );
 
-  it('should update OTP state when entering an OTP', () => {
-    const dispatchMock = jest.fn();
-    useDispatch.mockReturnValue(dispatchMock);
-  });
-
-  it('should call getOTP action and show modal when clicking "Get" button', () => {
-    const dispatchMock = jest.fn();
-    useDispatch.mockReturnValue(dispatchMock);
-
-    // Mock the necessary dependencies and actions, then assert the expected behavior
-  });
-
-  it('should call submitOTP action when clicking "Sign In" button', () => {
-    const dispatchMock = jest.fn();
-    useDispatch.mockReturnValue(dispatchMock);
-
-    // Mock the necessary dependencies and actions, then assert the expected behavior
-  });
-
-  it('should show the modal when showModal state is true', () => {
-    const dispatchMock = jest.fn();
-    useDispatch.mockReturnValue(dispatchMock);
-
-    const showModalText = 'OTP Sent!!';
-
-    expect(() => getByText(showModalText)).toThrow();
-
-    // Trigger the state update to show the modal
+    expect(getByText('Phone number')).toBeTruthy();
+    expect(getByPlaceholderText('Enter phone number')).toBeTruthy();
+    expect(getAllByText('Otp')).toBeTruthy(); // Use getAllByText instead
+    expect(getByPlaceholderText('Enter Otp')).toBeTruthy();
+    expect(getByText('Get')).toBeTruthy();
+    expect(getByText('Sign In')).toBeTruthy();
   });
 });
