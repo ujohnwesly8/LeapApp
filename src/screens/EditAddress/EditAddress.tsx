@@ -19,7 +19,8 @@ import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 import styles from './editAddressStyles';
-const SkeletonLoader = () => {
+
+export const SkeletonLoader = () => {
   const {colorScheme} = useContext(ColorSchemeContext);
   return (
     <SkeletonPlaceholder
@@ -61,7 +62,9 @@ const EditAddress = () => {
     postalCode,
     state,
     setCity,
+    PlaceholderColor,
   } = useEditaddress();
+
   const {
     colorScheme,
     getContainerStyle,
@@ -78,7 +81,7 @@ const EditAddress = () => {
         </>
       ) : (
         <>
-          <HeadingText message="Edit address" />
+          <HeadingText message="Edit address" navigation={undefined} />
           <View style={styles.subContainer}>
             <Text style={[styles.textField, getTextColor()]}>
               Flat no / Building
@@ -86,6 +89,7 @@ const EditAddress = () => {
             <View>
               <TextInput
                 value={addressLine1}
+                testID="Flat"
                 onChangeText={text => setAddressLine1(text)}
                 style={[
                   styles.inputAddress,
@@ -99,6 +103,7 @@ const EditAddress = () => {
               <TextInput
                 value={addressLine2}
                 onChangeText={text => setAddressLine2(text)}
+                testID="Street"
                 style={[
                   styles.inputAddress,
                   getTextInputStyle(),
@@ -108,12 +113,14 @@ const EditAddress = () => {
               <Text style={[styles.textField, getTextColor()]}>State</Text>
               <TextInput
                 value={state}
+                testID="State"
                 style={[
                   styles.inputAddress,
                   getTextInputStyle(),
                   getPlaceholderTextColor(),
                 ]}
                 onChangeText={text => setStateName(text)}
+                placeholderTextColor={PlaceholderColor()}
               />
               <View style={style.textContainer}>
                 <Text style={[styles.textField, getTextColor()]}>City</Text>
@@ -124,9 +131,8 @@ const EditAddress = () => {
               <View style={style.cityContainer}>
                 <TextInput
                   value={city}
-                  placeholder={
-                    colorScheme === 'dark' ? Colors.InputText : Colors.black
-                  }
+                  testID="City"
+                  placeholderTextColor={PlaceholderColor()}
                   style={[
                     styles.smalltextInputs,
                     getTextInputStyle(),
@@ -142,9 +148,8 @@ const EditAddress = () => {
                     getTextInputStyle(),
                     getPlaceholderTextColor(),
                   ]}
-                  placeholder={
-                    colorScheme === 'dark' ? Colors.InputText : Colors.black
-                  }
+                  testID="Pincode"
+                  placeholderTextColor={PlaceholderColor()}
                   value={postalCode}
                   onChangeText={setPostalCode}
                 />
@@ -156,6 +161,7 @@ const EditAddress = () => {
                 <View style={[style.optionRadio]}>
                   <RadioButton
                     value="HOME"
+                    testID="Radio-Home"
                     status={selectedOption === 'HOME' ? 'checked' : 'unchecked'}
                     onPress={() => handleOptionChange('HOME')}
                     color={colorScheme === 'dark' ? Colors.white : Colors.black}
@@ -164,6 +170,7 @@ const EditAddress = () => {
                 </View>
                 <View style={style.optionRadio}>
                   <RadioButton
+                    testID="Radio-Office"
                     value="OFFICE"
                     status={
                       selectedOption === 'OFFICE' ? 'checked' : 'unchecked'
