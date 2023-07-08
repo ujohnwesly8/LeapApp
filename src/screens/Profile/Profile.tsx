@@ -64,19 +64,32 @@ const Profile = ({navigation}: Props) => {
         </View>
       );
     } else if (profilePic) {
-      return <Avatar.Image size={100} source={{uri: profilePic}} />;
+      return (
+        <View testID="avatar-container">
+          <Avatar.Image
+            size={100}
+            source={{uri: profilePic}}
+            testID="avatar-image"
+          />
+        </View>
+      );
     } else {
       return (
-        <Avatar.Image
-          size={100}
-          source={require('../../../assets/profile.jpg')}
-        />
+        <View testID="avatar-container">
+          <Avatar.Image
+            size={100}
+            source={require('../../../assets/profile.jpg')}
+            testID="avatar-image"
+          />
+        </View>
       );
     }
   };
 
   return (
-    <View style={[style.profileStyle, getContainerStyle()]}>
+    <View
+      style={[style.profileStyle, getContainerStyle()]}
+      testID="profile-container">
       <ScrollView
         style={{width: '100%', height: '100%'}}
         refreshControl={
