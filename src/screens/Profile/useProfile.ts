@@ -73,7 +73,7 @@ const useProfile = () => {
     return unsubscribe;
   }, [navigation]);
 
-  const pickImage = () => {
+  const pickImage = async () => {
     launchImageLibrary(
       {
         mediaType: 'photo',
@@ -91,17 +91,12 @@ const useProfile = () => {
             name: 'image.png',
           }));
           const formData = new FormData();
-          images.forEach((file, _index) => {
-            formData.append('file', {
-              uri: file.uri,
-              type: 'image/png',
-              name: 'image.png',
-            });
+          images.forEach(file => {
+            formData.append('file', file);
           });
           try {
             setIsloading(true);
             const token = await AsyncStorage.getItem('token');
-            console.log(token);
             const result = await fetch(`${url}/file/uploadProfileImage`, {
               method: 'POST',
               body: formData,
@@ -115,8 +110,7 @@ const useProfile = () => {
               setIsloading(false);
               console.log('res is ', res);
               setSelectedImage(res.url);
-              console.log('selectedImage is ', res.url);
-              console.log('selectedImage is ', res.url);
+              setProfileImage(res.url); // Update the profilePic state with the uploaded image URL
               uploadImage(res.url);
               fetchProfileData();
               openModal();
@@ -144,6 +138,7 @@ const useProfile = () => {
 
     console.log('Upload response', response);
   };
+
   const handleRemoveProfilePic = async () => {
     const response = await ApiService.post(`${profileUpload}=${null}`, {});
     console.log('Upload response', response);
