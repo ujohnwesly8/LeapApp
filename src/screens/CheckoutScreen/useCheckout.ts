@@ -3,8 +3,8 @@ import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {fetchCartProducts} from '../../redux/slice/cartSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {ADDORDER, removeFromCart} from '../../redux/actions/actions';
-import {cartUpdate, checkoutApi, url} from '../../constants/Apis';
+import {ADDORDER} from '../../redux/actions/actions';
+import {url} from '../../constants/Apis';
 import {Alert} from 'react-native';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import RazorpayCheckout from 'react-native-razorpay';
@@ -84,85 +84,7 @@ const useChectout = () => {
     await dispatch(fetchCartProducts() as any);
     setRefreshing(false);
   };
-  const handleUpdate = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token');
-      const cartItems = cartData?.cartItems;
-      if (!cartItems || cartItems.length === 0) {
-        console.log('Cart is empty, cannot update');
-        return;
-      }
-      const items = {
-        cartItems: cartItems.map(
-          (item: {product: {id: any; quantity: any}}) => ({
-            id: 0,
-            productId: item.product.id,
-            quantity: item.product.quantity,
-            rentalEndDate: rentalEndDate.toISOString(),
-            rentalStartDate: rentalStartDate.toISOString(),
-          }),
-        ),
-      };
-      const response = await fetch(cartUpdate, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(items),
-      });
-      const data = await response.json();
-      console.log('Update response:', data);
-    } catch (error) {
-      console.error('Update error:', error);
-    }
-  };
-  const handleCheckout = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token');
-      const items = cartData?.cartItems?.map(
-        (item: {product: {price: any; id: any; name: any; quantity: any}}) => ({
-          price: item.product.price,
-          productId: item.product.id,
-          productName: item.product.name,
-          quantity: item.product.quantity,
-        }),
-      );
-      const response = await fetch(checkoutApi, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(items),
-      });
-      const data = await response.json();
-      navigation.navigate('CheckoutScreen');
-      console.log('Checkout Session created:', data);
-    } catch (error) {
-      console.error('Error creating Checkout Session:', error);
-    }
-  };
-  const handleRemove = async (productId: any) => {
-    const token = await AsyncStorage.getItem('token');
-    console.log('chiranjeevi', productId);
-    fetch(`${url}/cart/delete/${productId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(_data => {
-        dispatch(removeFromCart(productId));
-        Alert.alert('Item Removed from cart');
-      })
-      .catch(error => {
-        console.error(error);
-        const errorMessage = `Error removing item from cart: ${error.message}`;
 
-        Alert.alert(errorMessage);
-      });
-  };
   const totalPrice = cartData.finalPrice;
   const handlePayment = () => {
     const options = {
@@ -220,13 +142,11 @@ const useChectout = () => {
   };
 
   return {
-    handleCheckout,
-    handleRemove,
     refreshing,
     setRefreshing,
     onRefresh,
     handlePayment,
-    handleUpdate,
+
     rentalStartDate,
     rentalEndDate,
     setRentalStartDate,
