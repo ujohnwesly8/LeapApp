@@ -52,13 +52,10 @@ const useLoginscreen = () => {
   const handleSignUp = () => {
     navigation.navigate('SignupScreen');
   };
-  const openModal = () => {
-    setShowModal(true);
-  };
-  const closeModal = () => {
-    setShowModal(false);
-  };
 
+  const placeholadercolor = () => {
+    return colorScheme === 'dark' ? colors.Textinput : colors.black;
+  };
   const formik = useFormik({
     initialValues: {
       email: '',
