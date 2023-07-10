@@ -14,7 +14,7 @@ import Icons from 'react-native-vector-icons/MaterialIcons';
 import Lottie from 'lottie-react-native';
 import style from './myOrderStyles';
 import useMyOrder from './useMyOrder';
-import Styles from '../../constants/themeColors';
+
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Colors from '../../constants/colors';
 
@@ -158,7 +158,6 @@ export const OrderDetailsModal = ({
   visible,
 }: OrderDetailsModalProps) => {
   const {
-    colorScheme,
     getContainerStyle,
     getPlaceholderTextColor,
     getTextColor,
