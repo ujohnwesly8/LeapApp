@@ -19,31 +19,30 @@ import style from './ownerProfileStyle';
 import ProfileData from '../Profile/useProfile';
 import SwitchAccountButton from '../../components/atoms/SwtichAccountButton';
 
-import Styles from '../../constants/themeColors';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 type Props = {
   navigation: any;
 };
-const SkeletonLoader = () => {
+export const SkeletonLoader = () => {
   const {colorScheme} = useContext(ColorSchemeContext);
   return (
-    <SkeletonPlaceholder
-      highlightColor="#e0e0e0"
-      backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
-      <View>
-        <TextInput style={style.card} placeholderTextColor="#999" />
-      </View>
-    </SkeletonPlaceholder>
+    <View testID="skeleton-loader">
+      <SkeletonPlaceholder
+        highlightColor="#e0e0e0"
+        backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
+        <View
+        //  testID="skeleton-loader"
+        >
+          <TextInput style={style.card} placeholderTextColor="#999" />
+        </View>
+      </SkeletonPlaceholder>
+    </View>
   );
 };
 const OwnerProfile = ({navigation}: Props) => {
-  const {
-    colorScheme,
-    getContainerStyle,
-    getTextInputStyle,
-    getPlaceholderTextColor,
-  } = useContext(ColorSchemeContext);
+  const {getContainerStyle, getTextInputStyle, getPlaceholderTextColor} =
+    useContext(ColorSchemeContext);
   const {
     name,
     email,
@@ -56,15 +55,22 @@ const OwnerProfile = ({navigation}: Props) => {
   } = ProfileData();
   const renderProfileImage = () => {
     if (isloading) {
-      return <ActivityIndicator size="large" color="gray" />;
+      return (
+        <View testID="activity-indicator">
+          <ActivityIndicator size="large" color="gray" />
+        </View>
+      );
     } else if (profilePic) {
       return <Avatar.Image size={100} source={{uri: profilePic}} />;
     } else {
       return (
-        <Avatar.Image
-          size={100}
-          source={require('../../../assets/profile.jpg')}
-        />
+        <View testID="avatar-container">
+          <Avatar.Image
+            testID="profile-image"
+            size={100}
+            source={require('../../../assets/profile.jpg')}
+          />
+        </View>
       );
     }
   };
@@ -96,11 +102,7 @@ const OwnerProfile = ({navigation}: Props) => {
         {isLoading ? (
           <SkeletonLoader />
         ) : (
-          <View
-            style={[
-              style.card,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-            ]}>
+          <View style={[style.card, getTextInputStyle()]}>
             <Text style={[style.profileText, getPlaceholderTextColor()]}>
               {name}
             </Text>
@@ -137,10 +139,7 @@ const OwnerProfile = ({navigation}: Props) => {
             <Icon
               name="location-pin"
               size={30}
-              style={[
-                style.addressicon,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}
+              style={[style.addressicon, getPlaceholderTextColor()]}
             />
             <Text style={[style.AddressbtnPText, getPlaceholderTextColor()]}>
               Address
@@ -148,45 +147,29 @@ const OwnerProfile = ({navigation}: Props) => {
             <Icon
               name="arrow-forward-ios"
               size={20}
-              style={[
-                style.addressforwardios,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}
+              style={[style.addressforwardios, getPlaceholderTextColor()]}
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={[
-              style.whiteBtn,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-            ]}
+            style={[style.whiteBtn, getTextInputStyle()]}
             onPress={() => navigation.navigate('Owneredititems')}>
             <Icons
               name="basket-check"
               size={30}
-              style={[
-                style.producticon,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}
+              style={[style.producticon, getPlaceholderTextColor()]}
             />
-            <Text
-              style={[
-                style.btnPText,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}>
+            <Text style={[style.btnPText, getPlaceholderTextColor()]}>
               My Products
             </Text>
             <Icon
               name="arrow-forward-ios"
               size={20}
-              style={[
-                style.productforwardios,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}
+              style={[style.productforwardios, getPlaceholderTextColor()]}
             />
           </TouchableOpacity>
         </View>
         <View>
-          <TouchableOpacity onPress={handleLogout}>
+          <TouchableOpacity onPress={handleLogout} testID="logout-button">
             <Text style={style.btntext}>Sign out </Text>
           </TouchableOpacity>
         </View>
