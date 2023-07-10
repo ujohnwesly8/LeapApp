@@ -162,6 +162,7 @@ export const OrderDetailsModal = ({
     getContainerStyle,
     getPlaceholderTextColor,
     getTextColor,
+    getButtonColor,
   } = useContext(ColorSchemeContext);
   if (!visible) {
     return null;
@@ -196,13 +197,7 @@ export const OrderDetailsModal = ({
                   key={item.id}>
                   <Image source={{uri: item.imageUrl}} style={style.image} />
                   <View style={style.marginM}>
-                    <Text
-                      style={[
-                        style.productname,
-                        colorScheme === 'dark'
-                          ? Styles.priceTect
-                          : Styles.blackText,
-                      ]}>
+                    <Text style={[style.productname, getButtonColor()]}>
                       {item.name}
                     </Text>
                     <Text style={[style.QuantityText, getTextColor()]}>
