@@ -5,12 +5,14 @@ import {
   renderHook,
 } from '@testing-library/react-native';
 import React from 'react';
+import Colors from '../../../src/constants/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useSearchresults from '../../../src/screens/SearchResultScreen/useSearchResults';
 import ApiService from '../../../src/network/network';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import SearchResultsScreen from '../../../src/screens/SearchResultScreen/SearchResultScreen';
 import {useNavigation} from '@react-navigation/native';
+import SearchResultScreen from '../../../src/screens/SearchResultScreen/SearchResultScreen';
 jest.mock('../../../src/network/network', () => ({
   get: jest.fn(),
 }));
