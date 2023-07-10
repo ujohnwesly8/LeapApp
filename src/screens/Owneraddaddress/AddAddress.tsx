@@ -63,7 +63,7 @@ const AddAddress = () => {
         getContainerStyle(),
       ]}>
       <View>
-        <HeadingText message="Add Address" />
+        <HeadingText message="Add Address" navigation={undefined} />
       </View>
 
       <View style={style.outerContainer}>

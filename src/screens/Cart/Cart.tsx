@@ -8,25 +8,27 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import useCart from './useCart';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
+import DatePickerComponent from '../../components/atoms/DatePickerComponent/DatepickerComponent';
 
-import Styles from '../../constants/themeColors';
 import style from './CartItemStyles';
 import Colors from '../../constants/colors';
-import DatePickerComponent from '../../components/atoms/DatePickerComponent/DatepickerComponent';
 
 const Cart = () => {
   const {
-    CartProducts,
     handleCheckout,
     handleRemove,
     setRentalStartDate,
     setRentalEndDate,
     closeModal,
     showModal,
-    colorScheme,
+
     handleDecrement,
     handleIncrement,
     isplusDisable,
+
+    getContainerStyle,
+    getTextColor,
+    getTextInputStyle,
   } = useCart();
 
   const cartData = useSelector(
@@ -35,24 +37,9 @@ const Cart = () => {
     cartItems: [],
   };
 
-  const productQuantities = cartData.cartItems.map(
-    (item: {quantity: any}) => item.quantity,
-  );
-
-  if (CartProducts && CartProducts.cartItems) {
-    console.log('Product Quantity:');
-    CartProducts.cartItems.forEach((item: {id: any; quantity: any}) => {
-      console.log(`- Quantity for item with ID ${item.id}: ${item.quantity}`);
-    });
-  } else {
-    console.log('CartProducts is null or undefined.');
-  }
-
-  console.log('Product Quantity is', productQuantities);
-
   if (!cartData) {
     return (
-      <View style={style.lottiecontainer}>
+      <View testID="loading-view'" style={style.lottiecontainer}>
         <Lottie
           source={require('../../../assets/loading2.json')}
           autoPlay
@@ -93,28 +80,10 @@ const Cart = () => {
   };
   return (
     <>
-      <View
-        style={[
-          style.mainContainer,
-          colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-        ]}>
-        <Text
-          style={[
-            style.MainTitleText,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}>
-          Cart
-        </Text>
-        <View
-          style={[
-            style.titleContainer,
-            colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-          ]}>
-          <Text
-            style={[
-              style.titleText,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
+      <View style={[style.mainContainer, getContainerStyle()]}>
+        <Text style={[style.MainTitleText, getTextColor()]}>Cart</Text>
+        <View style={[style.titleContainer, getContainerStyle()]}>
+          <Text style={[style.titleText, getTextColor()]}>
             Cart products ({cartData.cartItems.length}){' '}
           </Text>
         </View>
@@ -130,13 +99,7 @@ const Cart = () => {
                   />
                 </View>
                 <View style={style.textContainer1}>
-                  <Text
-                    style={[
-                      style.noAddressText1,
-                      colorScheme === 'dark'
-                        ? Styles.whitetext
-                        : Styles.blackText,
-                    ]}>
+                  <Text style={[style.noAddressText1, getTextColor()]}>
                     Hey,it feels so light!
                   </Text>
                 </View>
@@ -146,10 +109,7 @@ const Cart = () => {
                 {cartData?.cartItems?.map((item: items) => (
                   <View
                     key={item.id}
-                    style={[
-                      style.cardContainer,
-                      colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                    ]}>
+                    style={[style.cardContainer, getTextInputStyle()]}>
                     <View style={style.imageContainer}>
                       <Image
                         source={{uri: item.imageUrl}}
@@ -159,46 +119,21 @@ const Cart = () => {
                     <View style={style.subContainer}>
                       <View style={style.cardTextContainer}>
                         <View style={{width: 100, height: 20}}>
-                          <Text
-                            style={[
-                              style.productname,
-                              colorScheme === 'dark'
-                                ? Styles.whitetext
-                                : Styles.blackText,
-                            ]}>
+                          <Text style={[style.productname, getTextColor()]}>
                             {item.product.name}
                           </Text>
                         </View>
-                        <Text
-                          style={[
-                            style.name,
-                            colorScheme === 'dark'
-                              ? Styles.whitetext
-                              : Styles.blackText,
-                          ]}>
-                          Rent{' '}
-                        </Text>
+                        <Text style={[style.name, getTextColor()]}>Rent </Text>
                         <Text style={style.priceText}>
                           {'₹' + item.product.price}
                         </Text>
                       </View>
                       <View style={[style.sizeContainer]}>
-                        <Text
-                          style={[
-                            style.sizeText,
-                            colorScheme === 'dark'
-                              ? Styles.whitetext
-                              : Styles.blackText,
-                          ]}>
+                        <Text style={[style.sizeText, getTextColor()]}>
                           Size
                         </Text>
                         <Text
-                          style={[
-                            style.detailsdescription,
-                            colorScheme === 'dark'
-                              ? Styles.whitetext
-                              : Styles.blackText,
-                          ]}>
+                          style={[style.detailsdescription, getTextColor()]}>
                           {item.product.size}
                         </Text>
                         <DatePickerComponent
@@ -212,31 +147,28 @@ const Cart = () => {
                       </View>
                       <View style={style.removeAndQuantity}>
                         <TouchableOpacity
+                          testID={`product-button-${item.id}`}
                           style={style.RemoveButton}
                           onPress={() => handleRemove(item.product.id)}>
                           <Text style={style.RemoveButtonText}>Remove</Text>
                         </TouchableOpacity>
                         <View style={style.quantityContainer}>
                           <TouchableOpacity
+                            testID={`decrement-button-${item.id}`}
                             onPress={() => handleDecrement(item)}
                             style={style.quantityButton}>
                             <Icon name="minus" color={'white'} size={10} />
                           </TouchableOpacity>
 
                           <View>
-                            <Text
-                              style={[
-                                style.quantityTxt,
-                                colorScheme === 'dark'
-                                  ? Styles.whitetext
-                                  : Styles.blackText,
-                              ]}>
+                            <Text style={[style.quantityTxt, getTextColor()]}>
                               {item.quantity}
                             </Text>
                           </View>
                           {/* </View> */}
                           <TouchableOpacity
                             onPress={() => handleIncrement(item)}
+                            testID={`increment-button-${item.id}`}
                             disabled={isplusDisable}
                             style={[
                               style.quantityButton,
@@ -253,19 +185,11 @@ const Cart = () => {
             )}
           </ScrollView>
           <View style={style.GrandtotalContainer}>
-            <Text
-              style={[
-                style.GrandtotalText,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
+            <Text style={[style.GrandtotalText, getTextColor()]}>
               Grand Total
             </Text>
             <View style={{width: 100, height: 25}}>
-              <Text
-                style={[
-                  style.priceTotalText,
-                  colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-                ]}>
+              <Text style={[style.priceTotalText, getTextColor()]}>
                 ₹ {cartData.totalCost}
               </Text>
             </View>

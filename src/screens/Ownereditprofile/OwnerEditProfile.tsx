@@ -7,22 +7,25 @@ import Colors from '../../constants/colors';
 import useOwnerProfile from './useOwnerProfile';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import useCart from '../Cart/useCart';
-import Styles from '../../constants/themeColors';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
-function SkeletonLoader() {
+export function SkeletonLoader() {
   const {colorScheme} = useContext(ColorSchemeContext);
   return (
     <SkeletonPlaceholder
       highlightColor="#e0e0e0"
       backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
-      <View>
-        <TextInput style={style.input} placeholderTextColor="#999" />
-        <TextInput style={style.input} />
-        <TextInput style={style.input} />
-        <TextInput style={style.input} />
+      <View testID="skeleton-loader">
+        <TextInput
+          style={style.input}
+          placeholderTextColor="#999"
+          testID="input1"
+        />
+        <TextInput style={style.input} testID="input-2" />
+        <TextInput style={style.input} testID="input-3" />
+        <TextInput style={style.input} testID="input-4" />
       </View>
     </SkeletonPlaceholder>
   );
@@ -43,9 +46,12 @@ const OwnerEditProfile = () => {
     handleUpdate,
     isLoading,
   } = useOwnerProfile();
-  const {colorScheme} = useCart();
-  const {getContainerStyle, getTextColor, getTextInputStyle} =
-    useContext(ColorSchemeContext);
+  const {
+    getContainerStyle,
+    getTextColor,
+    getTextInputStyle,
+    getplaceholdercolor,
+  } = useContext(ColorSchemeContext);
   const [isFormValid, setIsFormValid] = useState(false);
   useEffect(() => {
     setIsFormValid(
@@ -67,31 +73,26 @@ const OwnerEditProfile = () => {
           <View>
             <Text style={[style.text, getTextColor()]}>First name</Text>
             <TextInput
-              style={[
-                style.input,
-                colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}
+              testID="firstname"
+              style={[style.input, getTextInputStyle(), getTextColor()]}
               placeholderTextColor={Colors.white}
               value={firstName}
               onChangeText={text => setFirstName(text)}
             />
             <Text style={[style.text, getTextColor()]}>Last name</Text>
             <TextInput
-              style={[
-                style.input,
-                colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}
+              testID="lastName"
+              style={[style.input, getTextInputStyle(), getTextColor()]}
               value={lastName}
               onChangeText={text => setLastName(text)}
             />
             <Text style={[style.text, getTextColor()]}>Email</Text>
             <TextInput
+              testID="email"
               style={[
                 style.emailinput,
                 getTextInputStyle(),
-                colorScheme === 'dark' ? Styles.InputText : Styles.placeholder,
+                getplaceholdercolor(),
               ]}
               value={email}
               onChangeText={text => setEmail(text)}
@@ -100,10 +101,11 @@ const OwnerEditProfile = () => {
             />
             <Text style={[style.text, getTextColor()]}>Phone number</Text>
             <TextInput
+              testID="phoneNumber"
               style={[
                 style.emailinput,
                 getTextInputStyle(),
-                colorScheme === 'dark' ? Styles.InputText : Styles.placeholder,
+                getplaceholdercolor(),
               ]}
               value={phoneNumber}
               onChangeText={text => setPhoneNumber(text)}
@@ -130,6 +132,7 @@ const OwnerEditProfile = () => {
             </SkeletonPlaceholder>
           ) : (
             <TouchableOpacity
+              testID="update-button"
               onPress={handleUpdate}
               disabled={!isFormValid}
               style={{flex: 1}}>

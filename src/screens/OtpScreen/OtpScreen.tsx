@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   TextInput,
@@ -11,8 +11,8 @@ import Styles from '../../screens/OtpScreen/otpStyles';
 import Useotp from './useOtp';
 import useCart from '../Cart/useCart';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
-import style from '../../constants/themeColors';
 import Colors from '../../constants/colors';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 const OTPScreen = (): React.JSX.Element => {
   const {
@@ -22,18 +22,14 @@ const OTPScreen = (): React.JSX.Element => {
     handlePasswordChange,
     GETOTP,
     handleLogin,
-    passwordError,
     closeModal,
     showModal,
   } = Useotp();
   const {colorScheme} = useCart();
-
+  const {getContainerStyle, getTextColor, getTextInputStyle} =
+    useContext(ColorSchemeContext);
   return (
-    <ScrollView
-      style={[
-        Styles.mainContainer,
-        colorScheme === 'dark' ? style.blacktheme : style.whiteTheme,
-      ]}>
+    <ScrollView style={[Styles.mainContainer, getContainerStyle()]}>
       <View style={Styles.container}>
         <View style={[Styles.titleTextContainer]}>
           <LottieAnimation
@@ -42,21 +38,13 @@ const OTPScreen = (): React.JSX.Element => {
           />
         </View>
         <View>
-          <Text
-            style={[
-              Styles.Textphonenumber,
-              colorScheme === 'dark' ? style.whitetext : style.blackText,
-            ]}>
+          <Text style={[Styles.Textphonenumber, getTextColor()]}>
             Phone number{' '}
           </Text>
         </View>
         <View>
           <TextInput
-            style={[
-              Styles.textinputphone,
-              colorScheme === 'dark' ? style.cardColor : style.main,
-              colorScheme === 'dark' ? style.whitetext : style.blackText,
-            ]}
+            style={[Styles.textinputphone, getTextInputStyle(), getTextColor()]}
             placeholder="Enter phone number"
             placeholderTextColor={
               colorScheme === 'dark' ? Colors.Textinput : Colors.black
@@ -68,19 +56,9 @@ const OTPScreen = (): React.JSX.Element => {
           />
         </View>
         <View>
-          <Text
-            style={[
-              Styles.TextOTP,
-              colorScheme === 'dark' ? style.whitetext : style.blackText,
-            ]}>
-            Otp
-          </Text>
+          <Text style={[Styles.TextOTP, getTextColor()]}>Otp</Text>
           <TextInput
-            style={[
-              Styles.textinputOTP,
-              colorScheme === 'dark' ? style.cardColor : style.main,
-              colorScheme === 'dark' ? style.whitetext : style.blackText,
-            ]}
+            style={[Styles.textinputOTP, getTextInputStyle(), getTextColor()]}
             placeholder="Enter Otp"
             placeholderTextColor={
               colorScheme === 'dark' ? Colors.Textinput : Colors.black
@@ -90,16 +68,9 @@ const OTPScreen = (): React.JSX.Element => {
             onChangeText={handlePasswordChange}
           />
         </View>
-        {passwordError.length > 0 && <Text>{passwordError}</Text>}
         <View style={Styles.touchablebtnContainer}>
           <TouchableOpacity onPress={GETOTP}>
-            <Text
-              style={[
-                Styles.Text,
-                colorScheme === 'dark' ? style.whitetext : style.blackText,
-              ]}>
-              Get
-            </Text>
+            <Text style={[Styles.Text, getTextColor()]}>Get</Text>
             <Text style={Styles.touchableTextOTP}>Otp</Text>
           </TouchableOpacity>
           <TouchableOpacity style={Styles.touchablebtn} onPress={handleLogin}>

@@ -23,7 +23,6 @@ import Togglebutton from '../../components/atoms/Colorscheme/Togglebutton';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 
 import style from '../Ownerprofile/ownerProfileStyle';
-import Styles from '../../constants/themeColors';
 
 type Props = {
   navigation: any;
@@ -50,6 +49,7 @@ const Profile = ({navigation}: Props) => {
     colorScheme,
     getContainerStyle,
     getTextInputStyle,
+    getTextColor,
     getPlaceholderTextColor,
   } = useContext(ColorSchemeContext);
   const dispatch = useDispatch();
@@ -58,21 +58,38 @@ const Profile = ({navigation}: Props) => {
   };
   const renderProfileImage = () => {
     if (isloading) {
-      return <ActivityIndicator size="large" color="gray" />;
+      return (
+        <View testID="activity-indicator">
+          <ActivityIndicator size="large" color="gray" />
+        </View>
+      );
     } else if (profilePic) {
-      return <Avatar.Image size={100} source={{uri: profilePic}} />;
+      return (
+        <View testID="avatar-container">
+          <Avatar.Image
+            size={100}
+            source={{uri: profilePic}}
+            testID="avatar-image"
+          />
+        </View>
+      );
     } else {
       return (
-        <Avatar.Image
-          size={100}
-          source={require('../../../assets/profile.jpg')}
-        />
+        <View testID="avatar-container">
+          <Avatar.Image
+            size={100}
+            source={require('../../../assets/profile.jpg')}
+            testID="avatar-image"
+          />
+        </View>
       );
     }
   };
 
   return (
-    <View style={[style.profileStyle, getContainerStyle()]}>
+    <View
+      style={[style.profileStyle, getContainerStyle()]}
+      testID="profile-container">
       <ScrollView
         style={{width: '100%', height: '100%'}}
         refreshControl={
@@ -132,11 +149,9 @@ const Profile = ({navigation}: Props) => {
 
         <View style={style.profileFields}>
           <TouchableOpacity
-            style={[
-              style.whiteBtn,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-            ]}
-            onPress={() => navigation.navigate('Ownereditprofile')}>
+            style={[style.whiteBtn, getTextInputStyle()]}
+            onPress={() => navigation.navigate('Ownereditprofile')}
+            testID="edit-profile-button">
             <Icons
               name="account"
               size={30}
@@ -152,33 +167,20 @@ const Profile = ({navigation}: Props) => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={[
-              style.whiteBtn,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-            ]}
+            style={[style.whiteBtn, getTextInputStyle()]}
             onPress={() => navigation.navigate('Owneraddresspage')}>
             <Icon
               name="location-pin"
               size={30}
-              style={[
-                style.addressicon,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}
+              style={[style.addressicon, getPlaceholderTextColor()]}
             />
-            <Text
-              style={[
-                style.AddressbtnPText,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}>
+            <Text style={[style.AddressbtnPText, getPlaceholderTextColor()]}>
               Address
             </Text>
             <Icon
               name="arrow-forward-ios"
               size={20}
-              style={[
-                style.addressforwardios,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}
+              style={[style.addressforwardios, getPlaceholderTextColor()]}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -187,10 +189,7 @@ const Profile = ({navigation}: Props) => {
             <Icons
               name="basket-check"
               size={30}
-              style={[
-                style.producticon,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}
+              style={[style.producticon, getPlaceholderTextColor()]}
             />
             <Text style={[style.btnPText, getPlaceholderTextColor()]}>
               My orders
@@ -198,10 +197,7 @@ const Profile = ({navigation}: Props) => {
             <Icon
               name="arrow-forward-ios"
               size={20}
-              style={[
-                style.productforwardios,
-                colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
-              ]}
+              style={[style.productforwardios, getPlaceholderTextColor()]}
             />
           </TouchableOpacity>
         </View>

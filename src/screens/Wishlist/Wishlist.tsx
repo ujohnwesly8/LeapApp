@@ -62,6 +62,7 @@ const Wishlist = ({navigation}: Props) => {
   if (!WishlistProducts) {
     return (
       <View
+        testID="loading-screen"
         style={{
           flex: 1,
           backgroundColor: colorScheme === 'dark' ? Colors.black : Colors.main,

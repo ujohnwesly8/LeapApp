@@ -8,7 +8,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import style from './categoryStyles';
 import {useCategory} from './useCategory';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import Styles from '../../constants/themeColors';
 import LottieAnimation from '../../components/molecules/LottieAnimation/LottieAnimation';
 
 type RootStackParamList = {
@@ -24,7 +23,7 @@ interface CategoryItem {
 const Category = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-  const {colorScheme, getContainerStyle, getTextColor} =
+  const {getContainerStyle, getTextColor, getTextInputStyle} =
     useContext(ColorSchemeContext);
   const {categories, loading} = useCategory();
 
@@ -33,11 +32,7 @@ const Category = () => {
       testID={`category-${item.id}`}
       style={[style.MainView, getContainerStyle()]}
       onPress={() => navigation.navigate('Subcategory', {categoryId: item.id})}>
-      <View
-        style={[
-          style.categoryBox,
-          colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-        ]}>
+      <View style={[style.categoryBox, getTextInputStyle()]}>
         <View style={style.imageContainer}>
           <Image
             testID={`category-image-${item.id}`}
