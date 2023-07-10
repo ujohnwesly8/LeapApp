@@ -14,7 +14,6 @@ type RootStackParamList = {
   OtpScreen: undefined;
   SignupScreen: undefined;
 };
-
 const useLoginscreen = () => {
   const [showModal, setShowModal] = useState(false);
   const [passwordError, setPasswordError] = useState<string>('');
@@ -31,11 +30,19 @@ const useLoginscreen = () => {
         'Must contain * characters and uppercase letters',
       ),
   });
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+  };
   const handleLogin = async () => {
     try {
       await dispatch(Login(formik.values.email, formik.values.password));
       openModal();
+      openModal();
     } catch (error) {
+      console.log('error is ', error);
       console.log('error in login');
     }
   };
@@ -52,9 +59,6 @@ const useLoginscreen = () => {
     setShowModal(false);
   };
 
-  const placeholadercolor = () => {
-    return colorScheme === 'dark' ? colors.Textinput : colors.black;
-  };
   const formik = useFormik({
     initialValues: {
       email: '',
