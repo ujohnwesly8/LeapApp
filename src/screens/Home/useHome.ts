@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -7,12 +7,18 @@ import {fetchUserProducts} from '../../redux/slice/userProductSlice';
 import {removeFromWishlist} from '../../redux/actions/actions';
 import ApiService from '../../network/network';
 import {url} from '../../constants/Apis';
-
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
+import Colors from '../../constants/colors';
 type RootStackParamList = {
   SearchResultsScreen: {searchResults: null[]};
 };
 const useHome = () => {
+  const {colorScheme} = useContext(ColorSchemeContext);
   const [refreshing, setRefreshing] = useState(false);
+  const [placeholderText, setPlaceholderText] = useState('Search');
+  const [placeholderTextColor, setPlaceholderTextColor] = useState(
+    colorScheme === 'dark' ? Colors.white : Colors.black,
+  );
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [Data, setData] = useState([]);
@@ -32,6 +38,22 @@ const useHome = () => {
       console.error(error);
     }
   };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderText(prevText =>
+        prevText === 'Search by Brands'
+          ? 'Search Products'
+          : 'Search by Brands',
+      );
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+  useEffect(() => {
+    setPlaceholderTextColor(
+      colorScheme === 'dark' ? Colors.white : Colors.black,
+    );
+  }, [colorScheme, placeholderText]);
 
   const openModal = () => {
     setShowModal(true);
@@ -78,6 +100,8 @@ const useHome = () => {
     setSearchResults,
     searchProducts,
     setSearchQuery,
+    placeholderText,
+    placeholderTextColor,
     loading,
     openModal,
     closeModal,

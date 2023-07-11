@@ -59,10 +59,10 @@ const SwitchAccountButton = () => {
         dispatch(setRole(option));
         setAccountType(option === 'OWNER' ? 'Owner' : 'Borrower');
       } else {
-        console.log(response.data.error);
+        console.log('Request failed');
       }
     } catch (error) {
-      console.log(error);
+      console.log('Request failed');
     }
   };
 
@@ -70,6 +70,7 @@ const SwitchAccountButton = () => {
     <View>
       <TouchableOpacity
         onPress={handlePress}
+        testID="switch-account-button"
         style={[styles.button, {opacity: 0.9}]}
         accessibilityLabel={`Switch account type to ${
           accountType === 'BORROWER' ? 'OWNER' : 'BORROWER'
@@ -86,6 +87,7 @@ const SwitchAccountButton = () => {
             {opacity: optionsAnimation, transform: [{scale: optionsAnimation}]},
           ]}>
           <TouchableOpacity
+            testID="account-type-borrower"
             onPress={() => handleOptionPress('BORROWER')}
             accessibilityLabel="BORROWER">
             <View
@@ -105,6 +107,7 @@ const SwitchAccountButton = () => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+            testID="account-type-owner"
             onPress={() => handleOptionPress('OWNER')}
             accessibilityLabel="OWNER">
             <View

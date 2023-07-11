@@ -40,6 +40,8 @@ const Homescreen = ({navigation}: Props) => {
     searchQuery,
     searchProducts,
     setSearchQuery,
+    placeholderText,
+    placeholderTextColor,
     loading,
     closeModal,
     showModal,
@@ -215,10 +217,8 @@ const Homescreen = ({navigation}: Props) => {
               }}
             />
             <TextInput
-              placeholder="Search"
-              placeholderTextColor={
-                colorScheme === 'dark' ? Colors.white : Colors.black
-              }
+              placeholder={placeholderText}
+              placeholderTextColor={placeholderTextColor}
               style={[
                 {
                   fontFamily: 'Poppins-Regular',

@@ -5,34 +5,34 @@ import {Dropdown} from 'react-native-element-dropdown';
 import Colors from '../../constants/colors';
 
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import Styles from '../../constants/themeColors';
 
 const data = [
-  {label: 'XS', value: '1'},
-  {label: 'S', value: '2'},
-  {label: 'L', value: '3'},
-  {label: 'XL', value: '4'},
-  {label: 'XXL', value: '5'},
+  {label: 'XS', value: '1', accessibilityLabel: 'XS'},
+  {label: 'S', value: '2', accessibilityLabel: 'S'},
+  {label: 'L', value: '3', accessibilityLabel: 'L'},
+  {label: 'XL', value: '4', accessibilityLabel: 'XL'},
+  {label: 'XXL', value: '5', accessibilityLabel: 'XXL'},
 ];
 
 const Sizeselection = ({onChange}: {onChange: (value: string) => void}) => {
   const [value, _setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {getTextInputStyle, getPlaceholderTextColor} =
+    useContext(ColorSchemeContext);
 
   return (
     <View>
-      <View
-        style={[
-          styles.dropdownContainer,
-          colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-        ]}>
+      <View style={[styles.dropdownContainer, getTextInputStyle()]}>
         <Dropdown
+          testID="dropdown"
           style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
+          placeholderStyle={[
+            styles.placeholderStyle,
+            getPlaceholderTextColor(),
+          ]}
           selectedTextStyle={[
             styles.selectedTextStyle,
-            colorScheme === 'dark' ? Styles.InputText : Styles.blackText,
+            getPlaceholderTextColor(),
           ]}
           inputSearchStyle={styles.inputSearchStyle}
           itemTextStyle={styles.itemTextStyle}

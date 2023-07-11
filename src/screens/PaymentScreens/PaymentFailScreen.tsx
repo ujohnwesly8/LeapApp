@@ -5,49 +5,28 @@ import {View, Text} from 'react-native';
 import Lottie from 'lottie-react-native';
 
 import usePayment from './usePayment';
-import Styles from '../../constants/themeColors';
 const PaymentFailScreen = () => {
-  const {colorScheme} = usePayment();
+  const {getContainerStyle, getTextColor} = usePayment();
   return (
     <View
-      style={[
-        styles.failcontainer,
-        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-      ]}>
+      style={[styles.failcontainer, getContainerStyle()]}
+      testID="fail-container">
       <View>
-        <Text
-          style={[
-            styles.failheaderText,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}>
-          Payment
-        </Text>
+        <Text style={[styles.failheaderText, getTextColor()]}>Payment</Text>
       </View>
       <View
-        style={[
-          styles.successContainer,
-          colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-        ]}>
+        style={[styles.successContainer, getContainerStyle()]}
+        testID="success-container">
         <Lottie
           source={require('../../../assets/payfailed.json')}
           autoPlay
-          style={[
-            {height: 200, marginRight: '35%'},
-            colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-          ]}
+          style={[{height: 200, marginRight: '35%'}, getContainerStyle()]}
+          testID="lottie-animation"
         />
-        <Text
-          style={[
-            styles.successText,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}>
+        <Text style={[styles.successText, getTextColor()]}>
           Payment Failed!
         </Text>
-        <Text
-          style={[
-            styles.successText1,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}>
+        <Text style={[styles.successText1, getTextColor()]}>
           Something went wrong. Try Again.
         </Text>
       </View>

@@ -10,7 +10,10 @@ export const ColorSchemeContext = React.createContext({
   getTextInputStyle: () => ({}),
   getTextColor: () => ({}),
   getPlaceholderTextColor: () => ({}),
+  getplaceholdercolor: () => ({}),
+  getButtonColor: () => ({}),
   tabColor: () => ({}),
+  PlaceholderColor: () => {},
 });
 
 export const ColorSchemeProvider = ({children}) => {
@@ -40,10 +43,23 @@ export const ColorSchemeProvider = ({children}) => {
   const tabColor = () => {
     return colorScheme === 'dark' ? {color: 'white'} : {color: 'black'};
   };
+  const PlaceholderColor = () => {
+    return colorScheme === 'dark' ? Colors.Inputtext : Colors.black;
+  };
 
   const getPlaceholderTextColor = () => {
     return colorScheme === 'dark'
       ? {color: Colors.Inputtext}
+      : {color: Colors.black};
+  };
+  const getplaceholdercolor = () => {
+    return colorScheme === 'dark'
+      ? {color: Colors.Inputtext}
+      : {color: Colors.gray};
+  };
+  const getButtonColor = () => {
+    return colorScheme === 'dark'
+      ? {color: Colors.buttonColor}
       : {color: Colors.black};
   };
 
@@ -56,6 +72,9 @@ export const ColorSchemeProvider = ({children}) => {
       getTextColor,
       getPlaceholderTextColor,
       tabColor,
+      PlaceholderColor,
+      getplaceholdercolor,
+      getButtonColor,
     };
   }, [colorScheme]);
 

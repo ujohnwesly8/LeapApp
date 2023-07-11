@@ -16,7 +16,7 @@ export const fetchUserProducts = createAsyncThunk(
   },
 );
 
-const UserProductSlice = createSlice({
+export const UserProductSlice = createSlice({
   name: 'products',
   initialState: {
     data: null,
