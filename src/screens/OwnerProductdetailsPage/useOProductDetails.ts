@@ -8,13 +8,27 @@ type Props = {
 
 const useOProductDetails = ({route, navigation}: Props) => {
   const {product} = route.params;
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {
+    colorScheme,
+    getContainerStyle,
+    getPlaceholderTextColor,
+    getTextInputStyle,
+    getTextColor,
+  } = useContext(ColorSchemeContext);
 
   const goBack = () => {
     navigation.goBack();
   };
 
-  return {product, colorScheme, goBack};
+  return {
+    product,
+    colorScheme,
+    goBack,
+    getContainerStyle,
+    getPlaceholderTextColor,
+    getTextInputStyle,
+    getTextColor,
+  };
 };
 
 export default useOProductDetails;

@@ -8,7 +8,8 @@ type RootStackParamList = {
 
 export const useSplashScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {colorScheme, getContainerStyle, getTextColor} =
+    useContext(ColorSchemeContext);
 
   const handleLoginPress = () => {
     navigation.navigate('Login');
@@ -17,5 +18,7 @@ export const useSplashScreen = () => {
   return {
     colorScheme,
     handleLoginPress,
+    getTextColor,
+    getContainerStyle,
   };
 };

@@ -4,8 +4,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import {fetchCartProducts} from '../../redux/slice/cartSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {removeFromCart} from '../../redux/actions/actions';
-import {QuantityApi, checkoutApi, url} from '../../constants/Apis';
-import {Alert} from 'react-native';
+import {QuantityApi, checkoutApi} from '../../constants/Apis';
+
 import {useNavigation} from '@react-navigation/native';
 
 import ApiService from '../../network/network';
@@ -25,7 +25,13 @@ const useCart = () => {
   const [showModal, setShowModal] = useState(false);
   const [isplusDisable, setisButtondisable] = useState(false); // Added loading state
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {
+    colorScheme,
+    getPlaceholderTextColor,
+    getContainerStyle,
+    getTextColor,
+    getTextInputStyle,
+  } = useContext(ColorSchemeContext);
   const dispatch = useDispatch();
 
   const openModal = () => {
@@ -106,26 +112,18 @@ const useCart = () => {
       console.log('Checkout Session created:', data);
     } catch (error) {}
   };
-  const handleRemove = async (productId: any) => {
-    const token = await AsyncStorage.getItem('token');
-    console.log('chiranjeevi', productId);
-    fetch(`${url}/cart/delete/${productId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(_data => {
-        dispatch(removeFromCart(productId));
-        dispatch(fetchCartProducts as any);
-        openModal();
-      })
-      .catch(error => {
-        console.error(error);
-        const errorMessage = `Error removing item from cart: ${error.message}`;
-
-        Alert.alert(errorMessage);
-      });
+  const handleRemove = async (productId: number) => {
+    try {
+      console.log('chiranjeevi', productId);
+      const response = await ApiService.delete(`/cart/delete/${productId}`);
+      dispatch(removeFromCart(productId));
+      dispatch(fetchCartProducts as any);
+      console.log(response);
+      openModal();
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   };
 
   const handleIncrement = (item: any) => {
@@ -174,6 +172,10 @@ const useCart = () => {
     handleIncrement,
     isplusDisable,
     isLoading,
+    getPlaceholderTextColor,
+    getContainerStyle,
+    getTextColor,
+    getTextInputStyle,
   };
 };
 export default useCart;

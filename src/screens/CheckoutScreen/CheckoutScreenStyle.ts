@@ -7,14 +7,7 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: Colors.main,
   },
-  backButtonContainer: {
-    height: 40,
-    width: 40,
-    backgroundColor: Colors.white,
-    borderRadius: 100,
-    marginTop: 30,
-    marginLeft: 20,
-  },
+
   mainContainer: {
     width: '100%',
     borderRadius: 10,
@@ -44,13 +37,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Medium',
     textDecorationLine: 'underline',
   },
-  backBtn: {
-    marginTop: 10,
-    marginLeft: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: 'black',
-  },
+
   addressText: {
     color: Colors.black,
     fontSize: 16,
@@ -104,25 +91,7 @@ const styles = StyleSheet.create({
     color: Colors.black,
     fontFamily: 'Poppins-SemiBold',
   },
-  textContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  addButton: {
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 5,
-    borderWidth: 1,
-    borderColor: '#3E54AC',
-  },
-  editButton: {
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 5,
-    borderWidth: 1,
-    borderColor: '#3E54AC',
-  },
+
   addresscard: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -139,12 +108,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     alignItems: 'center',
   },
-  rentButton: {
-    backgroundColor: '#3E54AC',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-  },
+
   quantityContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -167,9 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: Colors.white,
   },
-  quantityButton: {
-    borderRadius: 5,
-  },
+
   quantityText: {
     fontSize: 12,
     color: Colors.black,
@@ -182,68 +144,19 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 8,
   },
-  sizeButton: {
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 5,
-    borderWidth: 1,
-    borderColor: '#3E54AC',
-  },
+
   sizeText: {
     fontSize: 12,
     color: Colors.black,
     fontFamily: 'Poppins-Medium',
   },
-  errorContainer: {
-    backgroundColor: '#FDD',
-    padding: 10,
-    borderRadius: 5,
-  },
-  errorText: {
-    color: '#F00',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
+
   container: {
     backgroundColor: '#ECF2FF',
     paddingHorizontal: 20,
     paddingVertical: 30,
   },
-  TextTotal: {
-    fontWeight: 'semibold',
-    height: 29,
-    width: 130,
-    top: 5,
-    color: '#3E54AC',
-  },
-  TextGrand: {
-    height: 29,
-    width: '100%',
-    color: 'black',
-    fontSize: 16,
-    marginTop: 10,
-    fontFamily: 'Poppins-SemiBold',
-    marginLeft: 20,
-  },
-  RemoveButton: {
-    height: 20,
-    width: 40,
-    backgroundColor: '#3E54AC',
-    borderRadius: 3,
-    color: '#FFFFFF',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  UpdateButton: {
-    height: 20,
-    width: 40,
-    backgroundColor: 'white',
-    marginLeft: 30,
-    borderRadius: 3,
-    color: '#FFFFFF',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   PaymentButton: {
     flexDirection: 'row',
     height: 60,
@@ -261,78 +174,14 @@ const styles = StyleSheet.create({
     marginRight: 20,
     fontFamily: 'Poppins-Medium',
   },
-  RemoveButtonText: {
-    color: 'white',
-    fontSize: 9,
-    fontWeight: '500',
-    justifyContent: 'center',
-  },
-  UpdateButtonText: {
-    color: Colors.iconscolor,
-    fontSize: 9,
-    fontWeight: '900',
-    justifyContent: 'center',
-  },
-  titleContainer: {
-    width: '100%',
-    marginLeft: 20,
-    marginTop: 18,
-    borderRadius: 5,
-  },
-  titleText: {
-    fontSize: 24,
-    color: Colors.black,
-    fontFamily: 'Poppins-Bold',
-  },
-  productSizeBox: {
-    marginTop: 5,
-    borderWidth: 1,
-    borderRadius: 5,
-    marginLeft: 3,
-    borderColor: '#3E54AC',
-    backgroundColor: Colors.iconscolor,
-    width: 18,
-    height: 18,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  detailsdescription: {
-    fontSize: 8,
-    color: Colors.white,
-    fontWeight: 'bold',
-  },
-  cardContaineramount: {
-    borderWidth: 1,
-    borderColor: '#3E54AC1A',
-    backgroundColor: '#3E54AC1A',
-    borderRadius: 5,
-    padding: 10,
-    height: 48,
-    width: 355,
-    left: 20,
-    top: -10,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+
   priceText: {
     fontSize: 12,
     fontFamily: 'Poppins-SemiBold',
     color: Colors.buttonColor,
     marginLeft: 26,
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    left: -47,
-  },
-  input: {marginLeft: 15, color: Colors.iconscolor, fontWeight: '500'},
-  stateName: {
-    marginLeft: 15,
-    marginBottom: 10,
-    color: Colors.iconscolor,
-    fontWeight: '500',
-  },
+
   addressContainer: {
     width: '100%',
     justifyContent: 'space-between',
@@ -346,7 +195,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'Poppins-Regular',
   },
-  addAddressHeader: {flexDirection: 'row'},
+
   card: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: '90%',
@@ -360,13 +209,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 4,
   },
-  quantityTxt: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: 'white',
-    fontSize: 10,
-    marginLeft: 10,
-  },
+
   DateTxt: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -377,25 +220,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     fontFamily: 'Poppins-Medium',
   },
-  button: {
-    backgroundColor: '#fff',
-    paddingHorizontal: 60,
-    paddingVertical: 5,
-    borderRadius: 5,
-  },
-  buttonSize: {
-    backgroundColor: '#fff',
-    paddingHorizontal: 6,
-    paddingVertical: 5,
-    marginLeft: 5,
-    borderWidth: 1,
-    borderRadius: 5,
-    top: 29,
-    left: -310,
-    borderColor: '#3E54AC',
-    height: 19,
-    width: 19,
-  },
+
   GrandtotalContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -426,65 +251,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 16,
   },
-  buttonRentTo: {
-    backgroundColor: '#fff',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 5,
-    left: -75,
-    borderColor: '#3E54AC',
-    borderWidth: 1,
-    width: 57,
-    height: 18,
-    marginLeft: 25,
-    top: -12,
-  },
-  buttonRentFrom: {
-    backgroundColor: '#fff',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 5,
-    left: -15,
-    width: 57,
-    borderColor: '#3E54AC',
-    borderWidth: 1,
-    height: 18,
-    marginRight: 25,
-    top: -12,
-  },
-  buttonTextRentto: {
-    fontSize: 5,
-    fontWeight: 'bold',
-    alignContent: 'center',
-    left: 8,
-  },
-  buttonSizeText: {
-    fontSize: 6,
-    fontWeight: 'bold',
-    top: -1,
-  },
-  buttonTextIncrement: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    top: -3,
-    left: 3,
-  },
-  buttonTextDecrement: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    top: -3,
-    left: 3,
-  },
 
-  activeButtonText: {
-    color: '#fff',
-    backgroundColor: '#3E54AC',
-    height: 17,
-    width: 17,
-    borderRadius: 5,
-    top: -5,
-    left: -6,
-  },
   checkoutcontainer: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -505,17 +272,6 @@ const styles = StyleSheet.create({
     color: Colors.black,
     fontSize: 12,
     fontFamily: 'Poppins-Regular',
-  },
-  PlaceOrder: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-    width: 320,
-    backgroundColor: '#3E54AC1A',
-    height: 50,
-    borderRadius: 5,
-    alignItems: 'center',
-    padding: 10,
   },
 });
 export default styles;

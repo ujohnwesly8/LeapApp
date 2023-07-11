@@ -1,26 +1,28 @@
 import {useState, useEffect} from 'react';
-import axios from 'axios';
-import {url} from '../../constants/Apis';
+
+import ApiService from '../../network/network';
 
 export const useCategory = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const fetchCategoriesData = async () => {
+    try {
+      const response = await ApiService.get('/category/list');
+      setCategories(response);
+      setLoading(false);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   useEffect(() => {
-    axios
-      .get(`${url}/category/list`)
-      .then(response => {
-        setCategories(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.log(error);
-        setLoading(false);
-      });
+    fetchCategoriesData();
   }, []);
 
   return {
     categories,
     loading,
+    fetchCategoriesData,
   };
 };

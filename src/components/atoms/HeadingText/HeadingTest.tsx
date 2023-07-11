@@ -2,34 +2,30 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useContext} from 'react';
 import BackButton from '../BackButton/BackButton';
-import Styles from '../../../constants/themeColors';
 import {ColorSchemeContext} from '../../../../ColorSchemeContext';
+import {useNavigation} from '@react-navigation/native';
 
-const HeadingText = ({message}) => {
-  const {colorScheme} = useContext(ColorSchemeContext);
+type HeadingTextProps = {
+  message: string;
+  navigation: any; // Assuming navigation is available as a prop
+};
+
+const HeadingText = ({message}: HeadingTextProps) => {
+  const {getTextColor} = useContext(ColorSchemeContext);
+  const navigation = useNavigation();
   return (
     <>
       <View style={{position: 'absolute', zIndex: 1}}>
-        <BackButton />
+        <BackButton navigation={navigation} />
       </View>
       <View
-        style={[
-          {
-            alignItems: 'center',
-            justifyContent: 'center',
-            // backgroundColor: '#000',
-            height: 90,
-            width: '100%',
-          },
-          // colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-        ]}>
-        <Text
-          style={[
-            styles.textStyle,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}>
-          {message}
-        </Text>
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: 90,
+          width: '100%',
+        }}>
+        <Text style={[styles.textStyle, getTextColor()]}>{message}</Text>
       </View>
     </>
   );
@@ -39,13 +35,8 @@ export default HeadingText;
 
 const styles = StyleSheet.create({
   textStyle: {
-    // color: 'black',
     fontSize: 24,
-    // marginLeft: '27%',
-    // justifyContent: 'center',
     marginBottom: 10,
-    // marginTop: 20,
-    // fontWeight: 'bold',
     fontFamily: 'Poppins-Bold',
   },
 });

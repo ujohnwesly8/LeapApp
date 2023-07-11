@@ -18,7 +18,6 @@ import Lottie from 'lottie-react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import Colors from '../../constants/colors';
-import Styles from '../../constants/themeColors';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import style from './homeStyles';
 import Carousal from './Carousal';
@@ -41,6 +40,8 @@ const Homescreen = ({navigation}: Props) => {
     searchQuery,
     searchProducts,
     setSearchQuery,
+    placeholderText,
+    placeholderTextColor,
     loading,
     closeModal,
     showModal,
@@ -49,7 +50,13 @@ const Homescreen = ({navigation}: Props) => {
     (state: {UserProducts: {data: null[]}}) => state.UserProducts.data,
   );
   const [wishlistList, setWishlistList] = useState<string[]>([]);
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {
+    colorScheme,
+    getContainerStyle,
+    getTextColor,
+    getPlaceholderTextColor,
+    getTextInputStyle,
+  } = useContext(ColorSchemeContext);
   useEffect(() => {
     console.log(colorScheme);
   });
@@ -80,31 +87,32 @@ const Homescreen = ({navigation}: Props) => {
 
   return (
     <SafeAreaView
-      style={{
-        height: '100%',
-        width: '100%',
-        backgroundColor: colorScheme === 'dark' ? Colors.black : Colors.main,
-        overflow: 'scroll',
-      }}>
+      style={[
+        {
+          height: '100%',
+          width: '100%',
+          backgroundColor: Colors.main,
+          overflow: 'scroll',
+        },
+        getContainerStyle(),
+      ]}>
       {loading ? (
         <SkeletonPlaceholder
           highlightColor="#e0e0e0"
           backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
           <View>
             <Text
-              style={{
-                marginLeft: 26,
-                marginTop: 10,
-                width: 70,
-                fontFamily: 'Poppins-SemiBold',
-                fontSize: 15,
-                color: colorScheme === 'dark' ? Colors.white : Colors.black,
-              }}></Text>
-            <View
               style={[
-                style.searchInputContainer,
-                colorScheme === 'dark' ? style.cardColor : Styles.main,
-              ]}>
+                {
+                  marginLeft: 26,
+                  marginTop: 10,
+                  width: 70,
+                  fontFamily: 'Poppins-SemiBold',
+                  fontSize: 15,
+                },
+                getTextColor(),
+              ]}></Text>
+            <View style={[style.searchInputContainer, getTextColor()]}>
               <TextInput
                 placeholder="Search"
                 placeholderTextColor={
@@ -122,22 +130,20 @@ const Homescreen = ({navigation}: Props) => {
               />
             </View>
             <Text
-              style={{
-                marginLeft: 26,
-                marginTop: 30,
-                width: 300,
-                height: 25,
-                borderRadius: 50,
-                fontFamily: 'Poppins-SemiBold',
-                fontSize: 15,
-                color: colorScheme === 'dark' ? Colors.white : Colors.black,
-              }}></Text>
+              style={[
+                {
+                  marginLeft: 26,
+                  marginTop: 30,
+                  width: 300,
+                  height: 25,
+                  borderRadius: 50,
+                  fontFamily: 'Poppins-SemiBold',
+                  fontSize: 15,
+                },
+                getTextColor(),
+              ]}></Text>
             <View style={style.categoriesContainer}>
-              <Text
-                style={[
-                  style.CategoriesText,
-                  colorScheme === 'dark' ? style.whitetext : style.blackText,
-                ]}></Text>
+              <Text style={[style.CategoriesText, getTextColor()]}></Text>
               <TouchableOpacity>
                 <Text style={style.Seetext}></Text>
               </TouchableOpacity>
@@ -174,21 +180,19 @@ const Homescreen = ({navigation}: Props) => {
           </View>
         </SkeletonPlaceholder>
       ) : (
-        <View
-          style={[
-            style.mainContainer,
-            colorScheme === 'dark' ? style.blacktheme : style.whiteTheme,
-          ]}>
+        <View style={[style.mainContainer, getContainerStyle()]}>
           <View style={{flexDirection: 'row'}}>
             <Text
-              style={{
-                marginLeft: 26,
-                marginTop: 10,
-                // fontWeight: '900',
-                fontFamily: 'Poppins-SemiBold',
-                fontSize: 15,
-                color: colorScheme === 'dark' ? Colors.white : Colors.black,
-              }}>
+              style={[
+                {
+                  marginLeft: 26,
+                  marginTop: 10,
+                  // fontWeight: '900',
+                  fontFamily: 'Poppins-SemiBold',
+                  fontSize: 15,
+                },
+                getTextColor(),
+              ]}>
               Welcome {name}
             </Text>
             <Lottie
@@ -203,11 +207,7 @@ const Homescreen = ({navigation}: Props) => {
                 marginLeft: 20,
               }}></View>
           </View>
-          <View
-            style={[
-              style.searchInputContainer,
-              colorScheme === 'dark' ? style.cardColor : Styles.main,
-            ]}>
+          <View style={[style.searchInputContainer, getTextInputStyle()]}>
             <Icon
               name="search1"
               size={20}
@@ -217,10 +217,8 @@ const Homescreen = ({navigation}: Props) => {
               }}
             />
             <TextInput
-              placeholder="Search"
-              placeholderTextColor={
-                colorScheme === 'dark' ? Colors.white : Colors.black
-              }
+              placeholder={placeholderText}
+              placeholderTextColor={placeholderTextColor}
               style={[
                 {
                   fontFamily: 'Poppins-Regular',
@@ -231,7 +229,7 @@ const Homescreen = ({navigation}: Props) => {
                   paddingLeft: 10,
                   color: 'black',
                 },
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+                getPlaceholderTextColor(),
               ]}
               onChangeText={text => {
                 setSearchQuery(text);
@@ -240,11 +238,7 @@ const Homescreen = ({navigation}: Props) => {
             />
           </View>
           <View style={style.categoriesContainer}>
-            <Text
-              style={[
-                style.CategoriesText,
-                colorScheme === 'dark' ? style.whitetext : style.blackText,
-              ]}>
+            <Text style={[style.CategoriesText, getTextColor()]}>
               {' '}
               Categories for you
             </Text>
@@ -254,11 +248,7 @@ const Homescreen = ({navigation}: Props) => {
             </TouchableOpacity>
           </View>
           <Carousal />
-          <Text
-            style={[
-              style.Productstext,
-              colorScheme === 'dark' ? style.whitetext : style.blackText,
-            ]}>
+          <Text style={[style.Productstext, getTextColor()]}>
             Products for you
           </Text>
           <SafeAreaView style={{height: '100%', flex: 1}}>
@@ -278,11 +268,7 @@ const Homescreen = ({navigation}: Props) => {
                 showsHorizontalScrollIndicator={false}
                 renderItem={({item}: {item: any}) => {
                   return (
-                    <View
-                      style={[
-                        style.container,
-                        colorScheme === 'dark' ? style.cardColor : Styles.main,
-                      ]}>
+                    <View style={[style.container, getTextInputStyle()]}>
                       <TouchableOpacity
                         key={item.id}
                         onPress={() =>
@@ -325,13 +311,7 @@ const Homescreen = ({navigation}: Props) => {
                         </View>
                       </TouchableOpacity>
                       <View style={style.cardTextContainer}>
-                        <Text
-                          style={[
-                            style.name,
-                            colorScheme === 'dark'
-                              ? style.whitetext
-                              : style.blackText,
-                          ]}>
+                        <Text style={[style.name, getTextColor()]}>
                           {item.name}
                         </Text>
 

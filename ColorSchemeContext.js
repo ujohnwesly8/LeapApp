@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useMemo} from 'react';
 import Styles from './src/constants/themeColors';
 import Colors from './src/constants/colors';
 
@@ -9,6 +10,10 @@ export const ColorSchemeContext = React.createContext({
   getTextInputStyle: () => ({}),
   getTextColor: () => ({}),
   getPlaceholderTextColor: () => ({}),
+  getplaceholdercolor: () => ({}),
+  getButtonColor: () => ({}),
+  tabColor: () => ({}),
+  PlaceholderColor: () => {},
 });
 
 export const ColorSchemeProvider = ({children}) => {
@@ -35,19 +40,43 @@ export const ColorSchemeProvider = ({children}) => {
   const getTextColor = () => {
     return colorScheme === 'dark' ? {color: 'white'} : {color: 'black'};
   };
+  const tabColor = () => {
+    return colorScheme === 'dark' ? {color: 'white'} : {color: 'black'};
+  };
+  const PlaceholderColor = () => {
+    return colorScheme === 'dark' ? Colors.Inputtext : Colors.black;
+  };
 
   const getPlaceholderTextColor = () => {
-    return colorScheme === 'dark' ? Colors.Textinput : Colors.black;
+    return colorScheme === 'dark'
+      ? {color: Colors.Inputtext}
+      : {color: Colors.black};
+  };
+  const getplaceholdercolor = () => {
+    return colorScheme === 'dark'
+      ? {color: Colors.Inputtext}
+      : {color: Colors.gray};
+  };
+  const getButtonColor = () => {
+    return colorScheme === 'dark'
+      ? {color: Colors.buttonColor}
+      : {color: Colors.black};
   };
 
-  const contextValue = {
-    colorScheme,
-    toggleColorScheme,
-    getContainerStyle,
-    getTextInputStyle,
-    getTextColor,
-    getPlaceholderTextColor,
-  };
+  const contextValue = useMemo(() => {
+    return {
+      colorScheme,
+      toggleColorScheme,
+      getContainerStyle,
+      getTextInputStyle,
+      getTextColor,
+      getPlaceholderTextColor,
+      tabColor,
+      PlaceholderColor,
+      getplaceholdercolor,
+      getButtonColor,
+    };
+  }, [colorScheme]);
 
   return (
     <ColorSchemeContext.Provider value={contextValue}>

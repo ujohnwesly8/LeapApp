@@ -19,7 +19,6 @@ import PriceRangeDropdown from '../../components/atoms/PriceRange/PriceDropdown'
 import SubCategoryDropdown from '../../components/atoms/SubcategoryDropdown/SubcategoryDropdown';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Colors from '../../constants/colors';
-import Styles from '../../constants/themeColors';
 
 type RootStackParamList = {
   UProductDetails: {product: number};
@@ -50,28 +49,25 @@ const SearchResultsScreen = ({route}: {route: any}) => {
     setSelectedSubCategory,
     subcategoriesData,
   } = useSearchresults();
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {colorScheme, getContainerStyle, getTextColor, getTextInputStyle} =
+    useContext(ColorSchemeContext);
   const productsToShow =
     filteredProducts.length > 0 ? filteredProducts : searchResults;
   return (
-    <View
-      style={[
-        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-        style.outerStyle,
-      ]}>
+    <View style={[getContainerStyle(), style.outerStyle]}>
       <View style={style.addAddressHeader}>
-        <TouchableOpacity style={style.backBtn} onPress={goBackButton}>
+        <TouchableOpacity
+          style={style.backBtn}
+          onPress={goBackButton}
+          testID="back-button">
           <MaterialIcons color={Colors.black} size={20} name="arrow-back-ios" />
         </TouchableOpacity>
         <View style={style.viewStyle1}>
-          <Text
-            style={[
-              style.addAddressText,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
+          <Text style={[style.addAddressText, getTextColor()]}>
             Search results
           </Text>
           <MaterialIcons
+            testID="filter-apply-button"
             onPress={handleFilterButtonPress}
             style={style.filter}
             size={28}
@@ -82,24 +78,14 @@ const SearchResultsScreen = ({route}: {route: any}) => {
       </View>
       <Modal
         visible={modalVisible}
+        testID="modal"
         animationType="slide"
-        transparent={true}
-        onRequestClose={() => setModalVisible(false)}>
+        transparent={true}>
         <View style={[style.mainContainer]}>
-          <Text
-            style={[
-              style.headertext,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
-            Filters
-          </Text>
+          <Text style={[style.headertext, getTextColor()]}>Filters</Text>
           <View style={style.modalContainer}>
             <View style={style.sizeDropdown}>
-              <Text
-                style={[
-                  style.filterText,
-                  colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-                ]}>
+              <Text style={[style.filterText, getTextColor()]}>
                 Select size
               </Text>
               <FilterSelectSize
@@ -108,13 +94,7 @@ const SearchResultsScreen = ({route}: {route: any}) => {
                 onSelectSize={(size: any) => setSelectedSize(size)}
               />
             </View>
-            <Text
-              style={[
-                style.priceText,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
-              Select Price
-            </Text>
+            <Text style={[style.priceText, getTextColor()]}>Select Price</Text>
             <PriceRangeDropdown
               minPrice={minimumPrice}
               maxPrice={maximumPrice}
@@ -123,11 +103,7 @@ const SearchResultsScreen = ({route}: {route: any}) => {
                 setMaximumPrice(max);
               }}
             />
-            <Text
-              style={[
-                style.priceText,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
+            <Text style={[style.priceText, getTextColor()]}>
               Select Category
             </Text>
             <SubCategoryDropdown
@@ -143,22 +119,10 @@ const SearchResultsScreen = ({route}: {route: any}) => {
                 <Text style={style.closeText}>close</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[
-                  style.touchablecontainer,
-                  colorScheme === 'dark'
-                    ? Styles.blacktheme
-                    : Styles.whiteTheme,
-                ]}
+                testID="Apply"
+                style={[style.touchablecontainer, getContainerStyle()]}
                 onPress={handleFilterapply}>
-                <Text
-                  style={[
-                    style.applyText,
-                    colorScheme === 'dark'
-                      ? Styles.whitetext
-                      : Styles.blackText,
-                  ]}>
-                  Apply
-                </Text>
+                <Text style={[style.applyText, getTextColor()]}>Apply</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -166,18 +130,16 @@ const SearchResultsScreen = ({route}: {route: any}) => {
       </Modal>
       {productsToShow.length > 0 ? (
         <FlatList
+          testID="flat-list"
           data={productsToShow}
           keyExtractor={item => item.id.toString()}
           renderItem={({item}) => {
             return (
               <View style={style.cardView}>
                 <View style={style.innerCard}>
-                  <View
-                    style={[
-                      style.container,
-                      colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                    ]}>
+                  <View style={[style.container, getTextInputStyle()]}>
                     <TouchableOpacity
+                      testID="item-touchable"
                       key={item.id}
                       style={{width: '100%'}}
                       onPress={() =>
@@ -194,13 +156,7 @@ const SearchResultsScreen = ({route}: {route: any}) => {
                     </TouchableOpacity>
                     <View style={style.cardTextContainer}>
                       <View style={style.marginStyle}>
-                        <Text
-                          style={[
-                            style.name,
-                            colorScheme === 'dark'
-                              ? Styles.whitetext
-                              : Styles.blackText,
-                          ]}>
+                        <Text style={[style.name, getTextColor()]}>
                           {item.name}
                         </Text>
                       </View>
@@ -216,30 +172,15 @@ const SearchResultsScreen = ({route}: {route: any}) => {
           numColumns={2}
         />
       ) : (
-        <View
-          style={[
-            style.noResultsView,
-            colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-          ]}>
+        <View style={[style.noResultsView, getContainerStyle()]}>
           <View style={style.innerView2}>
-            <Text
-              style={[
-                style.titleText,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
+            <Text style={[style.titleText, getTextColor()]}>
               Umm...No results found
             </Text>
           </View>
-          <View
-            style={[
-              style.titleTextContainer,
-              colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-            ]}>
+          <View style={[style.titleTextContainer, getContainerStyle()]}>
             <Lottie
-              style={[
-                style.imageS,
-                colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-              ]}
+              style={[style.imageS, getContainerStyle()]}
               source={require('../../../assets/search.json')}
               autoPlay
             />

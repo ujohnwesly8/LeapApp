@@ -3,20 +3,14 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Lottie from 'lottie-react-native';
-
 import usePayment from './usePayment';
 import styles from './paymentstylesheet';
 import Colors from '../../constants/colors';
-import Styles from '../../constants/themeColors';
 
 const PaymentSuccessScreen = () => {
-  const {navigation, colorScheme} = usePayment();
+  const {navigation, getContainerStyle, getTextColor} = usePayment();
   return (
-    <View
-      style={[
-        styles.container,
-        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-      ]}>
+    <View style={[styles.container, getContainerStyle()]}>
       <Lottie
         style={{
           position: 'absolute',
@@ -34,13 +28,7 @@ const PaymentSuccessScreen = () => {
         speed={0.5}
       />
       <View>
-        <Text
-          style={[
-            styles.headerText,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}>
-          Payment
-        </Text>
+        <Text style={[styles.headerText, getTextColor()]}>Payment</Text>
       </View>
       <View style={styles.successContainer}>
         <Lottie
@@ -48,18 +36,10 @@ const PaymentSuccessScreen = () => {
           source={require('../../../assets/paysuccess2.json')}
           autoPlay
         />
-        <Text
-          style={[
-            styles.successText2,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}>
+        <Text style={[styles.successText2, getTextColor()]}>
           Payment successful!{' '}
         </Text>
-        <Text
-          style={[
-            styles.successText3,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}>
+        <Text style={[styles.successText3, getTextColor()]}>
           Your Order Has Been Placed.{' '}
         </Text>
         <TouchableOpacity
@@ -68,11 +48,7 @@ const PaymentSuccessScreen = () => {
             navigation.navigate('UserHomescreen', {screen: 'Homescreen'})
           }>
           <View style={{flexDirection: 'row'}}>
-            <Text
-              style={[
-                styles.btntext,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
+            <Text style={[styles.btntext, getTextColor()]}>
               Continue Shopping{' '}
             </Text>
             <Icon

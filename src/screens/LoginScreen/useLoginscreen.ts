@@ -9,12 +9,11 @@ import {AnyAction} from 'redux';
 import {passwordValidation} from '../../constants/Regex';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import {StackNavigationProp} from '@react-navigation/stack';
-
+import colors from '../../constants/colors';
 type RootStackParamList = {
   OtpScreen: undefined;
   SignupScreen: undefined;
 };
-
 const useLoginscreen = () => {
   const [showModal, setShowModal] = useState(false);
   const [passwordError, setPasswordError] = useState<string>('');
@@ -31,11 +30,20 @@ const useLoginscreen = () => {
         'Must contain * characters and uppercase letters',
       ),
   });
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+  };
   const handleLogin = async () => {
     try {
       await dispatch(Login(formik.values.email, formik.values.password));
-    } catch (error) {
       openModal();
+      openModal();
+    } catch (error) {
+      console.log('error is ', error);
+      console.log('error in login');
     }
   };
   const handleOtpScreen = () => {
@@ -44,13 +52,10 @@ const useLoginscreen = () => {
   const handleSignUp = () => {
     navigation.navigate('SignupScreen');
   };
-  const openModal = () => {
-    setShowModal(true);
-  };
-  const closeModal = () => {
-    setShowModal(false);
-  };
 
+  const placeholadercolor = () => {
+    return colorScheme === 'dark' ? colors.Textinput : colors.black;
+  };
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -61,6 +66,7 @@ const useLoginscreen = () => {
   });
   return {
     openModal,
+    placeholadercolor,
     closeModal,
     showModal,
     formik,

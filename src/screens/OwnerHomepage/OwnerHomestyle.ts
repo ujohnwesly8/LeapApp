@@ -375,5 +375,43 @@ const Styles = StyleSheet.create({
     height: 120,
     borderRadius: 8,
   },
+  viewS: {
+    marginTop: 20,
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: 100,
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  cardS: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  lottieS: {height: 200, width: 400},
+  textViewS: {
+    width: '100%',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  cardSt: {
+    marginTop: 20,
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: 100,
+    width: '100%',
+    flexWrap: 'wrap',
+    backgroundColor: Colors.Inputtext,
+    justifyContent: 'space-between',
+  },
+  textV: {
+    color: Colors.white,
+    fontSize: 10,
+
+    fontFamily: 'Poppins-Medium',
+    marginLeft: 20,
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  stylesM: {marginTop: 5},
 });
 export default Styles;

@@ -1,65 +1,202 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {
   FlatList,
   Image,
   RefreshControl,
   TouchableOpacity,
   View,
-  Text,
   ScrollView,
+  Text,
 } from 'react-native';
-import styles from './OwnerHomestyle';
-
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import Colors from '../../constants/colors';
-import Donut from '../../components/atoms/DonutChart';
 import Lottie from 'lottie-react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import styles from './OwnerHomestyle';
+import Donut from '../../components/atoms/DonutChart';
 import useAnalytics from '../AnalyticsPage/useAnalytics';
-import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import Styles from '../../constants/themeColors';
 import useOwnerHome from './useOwnerHome';
+import Styles from '../../constants/themeColors';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
+import Colors from '../../constants/colors';
+
 type Props = {
   route: {name: string};
   navigation: any;
 };
+
 interface Product {
   id: number;
   imageUrl: string[];
   name: string;
   price: number;
 }
+
 const OwnerHome = ({navigation}: Props) => {
   const {
     products,
     name,
     isLoading,
-    totalEarnings,
-    rentedItems,
     refreshing,
     onRefresh,
     handleAnalatyics,
     recentyAdded,
+    refreshTrigger,
+    rentedItemsPercentage,
+    totalEarningsPercentage,
   } = useOwnerHome();
   const {handleOrders, CategoriePieData, Dashboardyeardata} = useAnalytics();
   const {colorScheme} = useContext(ColorSchemeContext);
-  const [refreshTrigger, setRefreshTrigger] = useState(false);
-  const [rentedItemsPercentage, setRentedItemsPercentage] =
-    useState(rentedItems);
-  const [totalEarningsPercentage, setTotalEarningsPercentage] =
-    useState(totalEarnings);
-  useEffect(() => {
-    setRentedItemsPercentage(rentedItems);
-    setTotalEarningsPercentage(totalEarnings);
-  }, [rentedItems, totalEarnings]);
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      setRefreshTrigger(prev => !prev);
-    });
-    return unsubscribe;
-  }, [navigation]);
+
+  const renderRecentlyAddedItem = ({item}: {item: Product}) => {
+    return (
+      <TouchableOpacity
+        key={item.id}
+        style={styles.recentlyaddedcard}
+        onPress={() => navigation.navigate('OproductDetails', {product: item})}>
+        <View
+          style={[
+            styles.cardContainer,
+            colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+          ]}>
+          <Image
+            source={{uri: item.imageUrl[0]}}
+            style={styles.recentlyaddedimage}
+          />
+        </View>
+        <View
+          style={[
+            styles.cardTextContainer,
+            colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+          ]}>
+          <View style={styles.textViewS}>
+            <Text
+              style={[
+                styles.cardText,
+                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+              ]}>
+              {item.name}
+            </Text>
+          </View>
+          <View style={styles.cardS}>
+            <Text style={styles.cardTextPrice}>₹ {item.price}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderTouchableOpacity = () => {
+    return (
+      <TouchableOpacity style={styles.recentlyaddedcard}>
+        <View style={styles.cardContainer}>
+          <Text style={styles.recentlyaddedimage}></Text>
+        </View>
+        <View style={styles.cardTextContainer}>
+          <Text style={styles.cardTextPrice}></Text>
+          <Text style={styles.cardTextPrice}></Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderRecentlyAdded = () => {
+    if (isLoading) {
+      return (
+        <SkeletonPlaceholder
+          backgroundColor={colorScheme === 'dark' ? '#373737' : Colors.white}>
+          <>
+            <ScrollView style={styles.mainContainer}>
+              {renderTouchableOpacity()}
+              <View>
+                <View style={styles.cardSt}>{renderTouchableOpacity()}</View>
+              </View>
+            </ScrollView>
+          </>
+        </SkeletonPlaceholder>
+      );
+    } else if (recentyAdded && recentyAdded.length === 0) {
+      return (
+        <View style={styles.lottieS}>
+          <Lottie source={require('../../../assets/ownerHome.json')} autoPlay />
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <FlatList
+            data={recentyAdded as Product[]}
+            keyExtractor={item => item.id.toString()}
+            horizontal={true}
+            renderItem={renderRecentlyAddedItem}
+          />
+        </View>
+      );
+    }
+  };
+
+  const renderRentalHistoryItem = ({
+    item,
+    index,
+  }: {
+    item: Product;
+    index: number;
+  }) => {
+    return (
+      <TouchableOpacity
+        key={`${item.id.toString()}-${index}`}
+        style={styles.recentlyaddedcard}
+        onPress={() => navigation.navigate('OproductDetails', {product: item})}>
+        <View style={styles.cardContainer}>
+          <Image
+            source={{uri: item.imageUrl[0]}}
+            style={styles.recentlyaddedimage}
+          />
+        </View>
+        <View
+          style={[
+            styles.cardTextContainer,
+            colorScheme === 'dark' ? Styles.cardColor : Styles.main,
+          ]}>
+          <Text
+            style={[
+              styles.cardText,
+              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+            ]}>
+            {item.name}
+          </Text>
+          <Text style={styles.cardTextPrice}>₹ {item.price}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderRentalHistory = () => {
+    if (products && products.length === 0) {
+      return (
+        <View style={styles.lottieS}>
+          <Lottie source={require('../../../assets/ownerHome.json')} autoPlay />
+        </View>
+      );
+    } else {
+      return (
+        <View
+          style={[
+            {flex: 1, backgroundColor: Colors.main, flexWrap: 'wrap'},
+            colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
+          ]}>
+          <View style={styles.viewS}>
+            {products &&
+              products.map((item: Product, index: number) =>
+                renderRentalHistoryItem({item, index}),
+              )}
+          </View>
+        </View>
+      );
+    }
+  };
+
   return (
     <ScrollView
       style={[
@@ -114,23 +251,12 @@ const OwnerHome = ({navigation}: Props) => {
             Dashboardyeardata();
           }}
           style={styles.Viewmore}>
-          <Text
-            style={{
-              color: Colors.white,
-              fontSize: 10,
-
-              fontFamily: 'Poppins-Medium',
-              marginLeft: 20,
-              alignSelf: 'center',
-              justifyContent: 'center',
-            }}>
-            View More
-          </Text>
+          <Text style={styles.textV}>View More</Text>
           <Icon
             name="arrow-forward-ios"
             size={10}
             color="white"
-            style={{marginTop: 5}}
+            style={styles.stylesM}
           />
         </TouchableOpacity>
       </View>
@@ -144,112 +270,10 @@ const OwnerHome = ({navigation}: Props) => {
         </Text>
       </View>
       {isLoading ? (
-        <SkeletonPlaceholder
-          backgroundColor={colorScheme === 'dark' ? '#373737' : Colors.white}>
-          <>
-            <ScrollView style={styles.mainContainer}>
-              <View></View>
-              <TouchableOpacity style={styles.recentlyaddedcard}>
-                <View style={styles.cardContainer}>
-                  <Text style={styles.recentlyaddedimage}></Text>
-                </View>
-                <View style={styles.cardTextContainer}>
-                  <Text style={styles.cardTextPrice}></Text>
-                  <Text style={styles.cardTextPrice}></Text>
-                </View>
-              </TouchableOpacity>
-              <View>
-                <View
-                  style={{
-                    marginTop: 20,
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    marginBottom: 100,
-                    width: '100%',
-                    flexWrap: 'wrap',
-                    backgroundColor: Colors.Inputtext,
-                    justifyContent: 'space-between',
-                  }}>
-                  <TouchableOpacity style={styles.recentlyaddedcard}>
-                    <View style={styles.cardContainer}>
-                      <Text style={styles.recentlyaddedimage}></Text>
-                    </View>
-                    <View style={styles.cardTextContainer}>
-                      <Text style={styles.cardTextPrice}></Text>
-                      <Text style={styles.cardTextPrice}></Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </ScrollView>
-          </>
-        </SkeletonPlaceholder>
+        renderRecentlyAdded()
       ) : (
         <>
-          {recentyAdded && recentyAdded.length === 0 ? (
-            <View style={{height: 200, width: 400}}>
-              <Lottie
-                source={require('../../../assets/ownerHome.json')}
-                autoPlay
-              />
-            </View>
-          ) : (
-            <View>
-              <FlatList
-                data={recentyAdded as Product[]}
-                keyExtractor={item => item.id.toString()}
-                horizontal={true}
-                renderItem={({item}) => (
-                  <TouchableOpacity
-                    key={item.id}
-                    style={styles.recentlyaddedcard}
-                    onPress={() =>
-                      navigation.navigate('OproductDetails', {product: item})
-                    }>
-                    <View
-                      style={[
-                        styles.cardContainer,
-                        colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                      ]}>
-                      <Image
-                        source={{uri: item.imageUrl[0]}}
-                        style={styles.recentlyaddedimage}
-                      />
-                    </View>
-                    <View
-                      style={[
-                        styles.cardTextContainer,
-                        colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                      ]}>
-                      <View
-                        style={{
-                          width: '100%',
-                          justifyContent: 'space-between',
-                          flexDirection: 'row',
-                        }}>
-                        <Text
-                          style={[
-                            styles.cardText,
-                            colorScheme === 'dark'
-                              ? Styles.whitetext
-                              : Styles.blackText,
-                          ]}>
-                          {item.name}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                        <Text style={styles.cardTextPrice}>₹ {item.price}</Text>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                )}
-              />
-            </View>
-          )}
+          {renderRecentlyAdded()}
           <View>
             <Text
               style={[
@@ -259,104 +283,11 @@ const OwnerHome = ({navigation}: Props) => {
               Rental History
             </Text>
           </View>
-          {products && products.length === 0 ? (
-            <View style={{height: 200, width: 400}}>
-              <Lottie
-                source={require('../../../assets/ownerHome.json')}
-                autoPlay
-              />
-            </View>
-          ) : (
-            <View
-              style={[
-                {flex: 1, backgroundColor: Colors.main, flexWrap: 'wrap'},
-                colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-              ]}>
-              <View
-                style={{
-                  marginTop: 20,
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  marginBottom: 100,
-                  flexWrap: 'wrap',
-                  justifyContent: 'space-between',
-                }}>
-                {products &&
-                  products.map(
-                    (
-                      item: {
-                        id: {toString: () => any};
-                        imageUrl: any[];
-                        name:
-                          | string
-                          | number
-                          | boolean
-                          | React.ReactElement<
-                              any,
-                              string | React.JSXElementConstructor<any>
-                            >
-                          | React.ReactFragment
-                          | React.ReactPortal
-                          | null
-                          | undefined;
-                        price:
-                          | string
-                          | number
-                          | boolean
-                          | React.ReactElement<
-                              any,
-                              string | React.JSXElementConstructor<any>
-                            >
-                          | React.ReactFragment
-                          | React.ReactPortal
-                          | null
-                          | undefined;
-                      },
-                      index: any,
-                    ) => (
-                      <TouchableOpacity
-                        key={`${item.id.toString()}-${index}`}
-                        style={styles.recentlyaddedcard}
-                        onPress={() =>
-                          navigation.navigate('OproductDetails', {
-                            product: item,
-                          })
-                        }>
-                        <View style={styles.cardContainer}>
-                          <Image
-                            source={{uri: item.imageUrl[0]}}
-                            style={styles.recentlyaddedimage}
-                          />
-                        </View>
-                        <View
-                          style={[
-                            styles.cardTextContainer,
-                            colorScheme === 'dark'
-                              ? Styles.cardColor
-                              : Styles.main,
-                          ]}>
-                          <Text
-                            style={[
-                              styles.cardText,
-                              colorScheme === 'dark'
-                                ? Styles.whitetext
-                                : Styles.blackText,
-                            ]}>
-                            {item.name}
-                          </Text>
-                          <Text style={styles.cardTextPrice}>
-                            ₹ {item.price}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                    ),
-                  )}
-              </View>
-            </View>
-          )}
+          {renderRentalHistory()}
         </>
       )}
     </ScrollView>
   );
 };
+
 export default OwnerHome;

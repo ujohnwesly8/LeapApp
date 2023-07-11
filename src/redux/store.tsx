@@ -19,7 +19,7 @@ import orderSlice from './slice/orderSlice';
 import editItemSlice from './slice/editItemSlice';
 import thunk from 'redux-thunk';
 
-const RootReducers = combineReducers({
+export const RootReducers = combineReducers({
   Reducers,
   products: ProductSlice,
   AddressReducers,
@@ -37,3 +37,4 @@ const RootReducers = combineReducers({
 });
 
 export const store = createStore(RootReducers, applyMiddleware(thunk));
+export {createStore};

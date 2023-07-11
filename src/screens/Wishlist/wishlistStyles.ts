@@ -27,7 +27,8 @@ const style = StyleSheet.create({
     marginBottom: 20,
     color: Colors.iconscolor,
     fontSize: 15,
-    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
+    // fontWeight: '600',
   },
   whishlistView: {
     alignItems: 'center',

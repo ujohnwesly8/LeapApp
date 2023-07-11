@@ -62,6 +62,7 @@ const Wishlist = ({navigation}: Props) => {
   if (!WishlistProducts) {
     return (
       <View
+        testID="loading-screen"
         style={{
           flex: 1,
           backgroundColor: colorScheme === 'dark' ? Colors.black : Colors.main,
@@ -130,9 +131,9 @@ const Wishlist = ({navigation}: Props) => {
             <View style={style.wishlistViewContaner}>
               <View style={style.whishlistView}>
                 {allWishlistProducts &&
-                  allWishlistProducts.map((item, index) => {
+                  allWishlistProducts.map(item => {
                     return (
-                      <View style={style.wishlistConatinerwrap} key={index}>
+                      <View style={style.wishlistConatinerwrap} key={item.id}>
                         <View
                           style={[
                             style.container,

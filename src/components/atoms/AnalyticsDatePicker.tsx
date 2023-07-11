@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, Modal} from 'react-native';
+import {View, Text, TouchableOpacity, Modal, StyleSheet} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import Colors from '../../constants/colors';
 import moment from 'moment';
@@ -10,6 +10,11 @@ const AnalyticsDatePicker = ({
   endDate,
   onStartDateChange,
   onEndDateChange,
+}: {
+  startDate: Date;
+  endDate: any;
+  onStartDateChange: (date: Date) => void;
+  onEndDateChange: (date: any) => void;
 }) => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
@@ -20,9 +25,9 @@ const AnalyticsDatePicker = ({
   const [selectedEndDate, setSelectedEndDate] = useState(endDate);
   const [showPicker, setShowPicker] = useState(false);
   const [showPickerClone, setShowPickerClone] = useState(false);
-  const [pickerType, setPickerType] = useState('');
+  const [, setPickerType] = useState('');
 
-  const onDateChange = (date, type) => {
+  const onDateChange = (date: any, type: string) => {
     if (type === 'END_DATE') {
       setSelectedEndDate(date);
       onEndDateChange(date);
@@ -36,9 +41,12 @@ const AnalyticsDatePicker = ({
   const onClearDates = () => {
     setSelectedStartDate(null);
     setSelectedEndDate(null);
+    //newcode
+    onStartDateChange(null); // Call the onStartDateChange callback with null
+    onEndDateChange(null); // Call the onEndDateChange callback with null
   };
 
-  const onTogglePicker = type => {
+  const onTogglePicker = (type: string) => {
     setPickerType(type);
     if (type === 'END_DATE') {
       setShowPickerClone(true);
@@ -48,72 +56,32 @@ const AnalyticsDatePicker = ({
     }
   };
 
-  const renderRentalDates = () => {
-    if (selectedStartDate && selectedEndDate) {
-      const startDateString = selectedStartDate.toString();
-      const endDateString = selectedEndDate.toString();
-      return (
-        <Text>
-          Rental Dates: {startDateString} - {endDateString}
-        </Text>
-      );
-    } else {
-      return null;
-    }
-  };
-
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        width: '60%',
-        marginLeft: 10,
-        justifyContent: 'space-between',
-      }}>
+    <View style={styles.outerVieww}>
       <TouchableOpacity
-        style={{
-          backgroundColor: Colors.buttonColor,
-          width: '50%',
-          height: 40,
-          borderRadius: 60,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+        style={styles.touchStyle}
         onPress={() => onTogglePicker('START_DATE')}>
         <Text
           style={{
             color: Colors.white,
-          }}>
+          }}
+          //newly added
+          testID="start-date-text">
           {selectedStartDate
             ? moment(selectedStartDate).format('MMM D, YYYY')
             : 'Select Start Date'}
         </Text>
       </TouchableOpacity>
-      <Text
-        style={{
-          fontFamily: 'Poppins-Regular',
-          fontSize: 16,
-          marginLeft: 5,
-          marginRight: 5,
-          color: Colors.black,
-          marginTop: 10,
-        }}>
-        To
-      </Text>
+      <Text style={styles.textToStyle}>To</Text>
       <TouchableOpacity
-        style={{
-          backgroundColor: Colors.buttonColor,
-          width: '50%',
-          height: 40,
-          borderRadius: 60,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+        style={styles.newStyle}
         onPress={() => onTogglePicker('END_DATE')}>
         <Text
           style={{
             color: Colors.white,
-          }}>
+          }}
+          testID="end-date-button" // Add testID here
+        >
           {selectedEndDate
             ? moment(selectedEndDate).format('MMM D, YYYY')
             : 'Select End Date'}
@@ -130,49 +98,19 @@ const AnalyticsDatePicker = ({
             onDateChange={onDateChange}
             selectedDayColor={Colors.buttonColor}
           />
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: '90%',
-              marginLeft: 20,
-              marginTop: 200,
-            }}>
+          <View style={styles.outerView}>
             <TouchableOpacity
-              style={{
-                backgroundColor: Colors.buttonColor,
-                width: 140,
-                height: 40,
-                borderRadius: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={onClearDates}>
-              <Text
-                style={{
-                  color: Colors.white,
-                  fontFamily: 'Poppins-Medium',
-                }}>
-                Clear Dates
-              </Text>
+              style={styles.btnStyle}
+              onPress={onClearDates}
+              accessibilityLabel="Clear Dates"
+              testID="clear-dates-button">
+              <Text style={styles.textStyle}>Clear Dates</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{
-                backgroundColor: Colors.buttonColor,
-                width: 140,
-                height: 40,
-                borderRadius: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={() => setShowPicker(false)}>
-              <Text
-                style={{
-                  color: Colors.white,
-                  fontFamily: 'Poppins-Medium',
-                }}>
-                Done
-              </Text>
+              style={styles.btnStyle}
+              onPress={() => setShowPicker(false)}
+              testID="done-button">
+              <Text style={styles.textStyle}>Done</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -189,49 +127,16 @@ const AnalyticsDatePicker = ({
             selectedDayColor={Colors.buttonColor}
             minDate={initialDate}
           />
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: '90%',
-              marginLeft: 20,
-              marginTop: 200,
-            }}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: Colors.buttonColor,
-                width: 140,
-                height: 40,
-                borderRadius: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={onClearDates}>
-              <Text
-                style={{
-                  color: Colors.white,
-                  fontFamily: 'Poppins-Medium',
-                }}>
-                Clear Dates
-              </Text>
+          <View style={styles.outerView}>
+            <TouchableOpacity style={styles.btnStyle} onPress={onClearDates}>
+              <Text style={styles.textStyle}>Clear Dates</Text>
             </TouchableOpacity>
+
             <TouchableOpacity
-              style={{
-                backgroundColor: Colors.buttonColor,
-                width: 140,
-                height: 40,
-                borderRadius: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={() => setShowPickerClone(false)}>
-              <Text
-                style={{
-                  color: Colors.white,
-                  fontFamily: 'Poppins-Medium',
-                }}>
-                Done
-              </Text>
+              style={styles.btnStyle}
+              onPress={() => setShowPickerClone(false)}
+              testID="done-button">
+              <Text style={styles.textStyle}>Done</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -240,3 +145,55 @@ const AnalyticsDatePicker = ({
   );
 };
 export default AnalyticsDatePicker;
+
+const styles = StyleSheet.create({
+  outerView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '90%',
+    marginLeft: 20,
+    marginTop: 200,
+  },
+  btnStyle: {
+    backgroundColor: Colors.buttonColor,
+    width: 140,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textStyle: {
+    color: Colors.white,
+    fontFamily: 'Poppins-Medium',
+  },
+  textToStyle: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 16,
+    marginLeft: 5,
+    marginRight: 5,
+    color: Colors.black,
+    marginTop: 10,
+  },
+  newStyle: {
+    backgroundColor: Colors.buttonColor,
+    width: '50%',
+    height: 40,
+    borderRadius: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  outerVieww: {
+    flexDirection: 'row',
+    width: '60%',
+    marginLeft: 10,
+    justifyContent: 'space-between',
+  },
+  touchStyle: {
+    backgroundColor: Colors.buttonColor,
+    width: '50%',
+    height: 40,
+    borderRadius: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

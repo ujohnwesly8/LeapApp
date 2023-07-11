@@ -4,27 +4,26 @@ import {Dropdown} from 'react-native-element-dropdown';
 import useSearchresults from '../../../screens/SearchResultScreen/useSearchResults';
 import Colors from '../../../constants/colors';
 import {ColorSchemeContext} from '../../../../ColorSchemeContext';
-import Styles from '../../../constants/themeColors';
-const SubCategoryDropdown = ({value, onChange}) => {
+
+const SubCategoryDropdown = ({
+  value,
+  onChange,
+}: {
+  value: any;
+  onChange: (value: any) => void;
+}) => {
   const {subcategoriesData} = useSearchresults();
   const [isFocus, setIsFocus] = useState(false);
-  const {colorScheme} = useContext(ColorSchemeContext);
+
+  const {getContainerStyle, getTextColor} = useContext(ColorSchemeContext);
+
   return (
-    <View
-      style={[
-        styles.container,
-        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-      ]}>
+    <View style={[styles.container, getContainerStyle()]}>
       <Dropdown
-        style={[
-          styles.dropdown,
-          colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-        ]}
+        testID="sub-category-dropdown"
+        style={[styles.dropdown, getContainerStyle()]}
         placeholderStyle={styles.placeholder}
-        selectedTextStyle={[
-          styles.selectedText,
-          colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-        ]}
+        selectedTextStyle={[styles.selectedText, getTextColor()]}
         inputSearchStyle={styles.inputSearch}
         itemTextStyle={styles.itemText}
         selectedItemTextStyle={[styles.selectedItemText]}
@@ -50,13 +49,13 @@ const SubCategoryDropdown = ({value, onChange}) => {
     </View>
   );
 };
+
 export default SubCategoryDropdown;
+
 const styles = StyleSheet.create({
   container: {
     width: '95%',
     height: 50,
-    // marginBottom: 20,
-    // marginTop: 10,
     backgroundColor: Colors.buttonColor,
     borderRadius: 30,
   },
@@ -84,7 +83,6 @@ const styles = StyleSheet.create({
     width: 20,
     height: 28,
     marginRight: 17,
-    // backgroundColor: Colors.white,
   },
   inputSearch: {
     fontSize: 16,

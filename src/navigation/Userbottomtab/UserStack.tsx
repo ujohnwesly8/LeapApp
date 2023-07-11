@@ -1,7 +1,5 @@
-/* eslint-disable eslint-comments/no-unused-disable */
 /* eslint-disable curly */
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/no-unstable-nested-components */
 import React, {useContext} from 'react';
 import Profile from '../../screens/Profile/Profile';
 import Homescreen from '../../screens/Home/Homescreen';
@@ -100,12 +98,18 @@ const ProfileStack = () => {
     </Stack.Navigator>
   );
 };
-
 const MyStack = () => {
   const data = useSelector(state => state);
   const {colorScheme} = useContext(ColorSchemeContext);
   const isFocused = useIsFocused();
   console.log(data);
+  let tabBarBackgroundColor: string;
+  if (colorScheme === 'dark') {
+    tabBarBackgroundColor = Colors.black;
+  } else {
+    tabBarBackgroundColor = Colors.white;
+  }
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -116,7 +120,7 @@ const MyStack = () => {
           display: isFocused ? 'flex' : 'none',
           width: '100%',
           height: '8%',
-          backgroundColor: Colors.black,
+          backgroundColor: tabBarBackgroundColor,
         },
         tabBarInactiveTintColor: Colors.black,
         tabBarActiveTintColor: Colors.white,
@@ -129,73 +133,85 @@ const MyStack = () => {
             display: getRouteName(route),
             width: '100%',
             height: '8%',
-            backgroundColor:
-              colorScheme === 'dark' ? Colors.black : Colors.white,
+            backgroundColor: tabBarBackgroundColor,
           },
           tabBarLabel: 'Home',
           tabBarIcon: ({focused, color}) => {
             if (!isFocused) return null;
-
             let iconComponent;
+            switch (String(route.name)) {
+              case 'UserHomescreen':
+                const backgroundColor = focused
+                  ? Colors.buttonColor
+                  : Colors.white;
+                const iconBackgroundColor = focused
+                  ? Colors.buttonColor
+                  : tabBarBackgroundColor;
+                iconComponent = (
+                  <View
+                    style={[
+                      {
+                        backgroundColor,
+                        borderRadius: 20,
+                        height: 40,
+                        width: 40,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      },
+                      {
+                        backgroundColor: iconBackgroundColor,
+                      },
+                    ]}>
+                    <MaterialCommunityIcons
+                      style={{
+                        color:
+                          colorScheme === 'dark' ? Colors.white : Colors.black,
+                      }}
+                      name="home"
+                      size={30}
+                    />
+                  </View>
+                );
+                break;
 
-            if (route.name === 'UserHomescreen') {
-              iconComponent = (
-                <View
-                  style={[
-                    {
-                      backgroundColor: focused
-                        ? Colors.buttonColor
-                        : Colors.white,
-                      borderRadius: 20,
-                      height: 40,
-                      width: 40,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    },
-                    {
-                      backgroundColor: focused
-                        ? Colors.buttonColor
-                        : colorScheme === 'dark'
-                        ? Colors.black
-                        : Colors.white,
-                    },
-                  ]}>
+              case 'CategoryScreen':
+                iconComponent = (
+                  <CategoryIcon name="appstore1" color={color} size={25} />
+                );
+                break;
+
+              case 'Wishlist':
+                iconComponent = (
+                  <HeartIcon name="heart" color={color} size={25} />
+                );
+                break;
+
+              case 'CartScreen':
+                iconComponent = (
+                  <MaterialIcon name="shopping-cart" color={color} size={25} />
+                );
+                break;
+
+              case 'ProfileScreen':
+                iconComponent = (
                   <MaterialCommunityIcons
-                    style={{
-                      color:
-                        colorScheme === 'dark' ? Colors.white : Colors.black,
-                    }}
-                    name="home"
-                    size={30}
+                    name="account"
+                    color={color}
+                    size={25}
                   />
-                </View>
-              );
-            } else if (route.name === 'CategoryScreen') {
-              iconComponent = (
-                <CategoryIcon name="appstore1" color={color} size={25} />
-              );
-            } else if (route.name === 'Wishlist') {
-              iconComponent = (
-                <HeartIcon name="heart" color={color} size={25} />
-              );
-            } else if (route.name === 'CartScreen') {
-              iconComponent = (
-                <MaterialIcon name="shopping-cart" color={color} size={25} />
-              );
-            } else if (route.name === 'ProfileScreen') {
-              iconComponent = (
-                <MaterialCommunityIcons
-                  name="account"
-                  color={color}
-                  size={25}
-                />
-              );
+                );
+                break;
+
+              default:
+                iconComponent = null;
+                break;
             }
 
             return iconComponent;
           },
         })}
       />
+
       <Tab.Screen
         name="CategoryScreen"
         component={CategoryStack}
@@ -213,59 +229,73 @@ const MyStack = () => {
 
             let iconComponent;
 
-            if (route.name === 'CategoryScreen') {
-              iconComponent = (
-                <View
-                  style={[
-                    {
-                      backgroundColor: focused
-                        ? Colors.buttonColor
-                        : Colors.white,
-                      borderRadius: 20,
-                      height: 40,
-                      width: 40,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    },
-                    {
-                      backgroundColor: focused
-                        ? Colors.buttonColor
-                        : colorScheme === 'dark'
-                        ? Colors.black
-                        : Colors.white,
-                    },
-                  ]}>
-                  <CategoryIcon
-                    style={{
-                      color:
-                        colorScheme === 'dark' ? Colors.white : Colors.black,
-                    }}
-                    name="appstore1"
+            switch (String(route.name)) {
+              case 'CategoryScreen':
+                const backgroundColor = focused
+                  ? Colors.buttonColor
+                  : Colors.white;
+                const iconBackgroundColor = focused
+                  ? Colors.buttonColor
+                  : tabBarBackgroundColor;
+                iconComponent = (
+                  <View
+                    style={[
+                      {
+                        backgroundColor,
+                        borderRadius: 20,
+                        height: 40,
+                        width: 40,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      },
+                      {
+                        backgroundColor: iconBackgroundColor,
+                      },
+                    ]}>
+                    <CategoryIcon
+                      style={{
+                        color:
+                          colorScheme === 'dark' ? Colors.white : Colors.black,
+                      }}
+                      name="appstore1"
+                      color={color}
+                      size={30}
+                    />
+                  </View>
+                );
+                break;
+
+              case 'UserHomescreen':
+                iconComponent = (
+                  <MaterialCommunityIcons name="home" color={color} size={25} />
+                );
+                break;
+
+              case 'Wishlist':
+                iconComponent = (
+                  <HeartIcon name="heart" color={color} size={25} />
+                );
+                break;
+
+              case 'CartScreen':
+                iconComponent = (
+                  <MaterialIcon name="shopping-cart" color={color} size={25} />
+                );
+                break;
+
+              case 'ProfileScreen':
+                iconComponent = (
+                  <MaterialCommunityIcons
+                    name="account"
                     color={color}
-                    size={30}
+                    size={25}
                   />
-                </View>
-              );
-            } else if (route.name === 'UserHomescreen') {
-              iconComponent = (
-                <MaterialCommunityIcons name="home" color={color} size={25} />
-              );
-            } else if (route.name === 'Wishlist') {
-              iconComponent = (
-                <HeartIcon name="heart" color={color} size={25} />
-              );
-            } else if (route.name === 'CartScreen') {
-              iconComponent = (
-                <MaterialIcon name="shopping-cart" color={color} size={25} />
-              );
-            } else if (route.name === 'ProfileScreen') {
-              iconComponent = (
-                <MaterialCommunityIcons
-                  name="account"
-                  color={color}
-                  size={25}
-                />
-              );
+                );
+                break;
+
+              default:
+                iconComponent = null;
+                break;
             }
 
             return iconComponent;
@@ -290,65 +320,80 @@ const MyStack = () => {
 
             let iconComponent;
 
-            if (route.name === 'Wishlist') {
-              iconComponent = (
-                <View
-                  style={[
-                    {
-                      backgroundColor: focused
-                        ? Colors.buttonColor
-                        : Colors.white,
-                      borderRadius: 20,
-                      height: 40,
-                      width: 40,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    },
-                    {
-                      backgroundColor: focused
-                        ? Colors.buttonColor
-                        : colorScheme === 'dark'
-                        ? Colors.black
-                        : Colors.white,
-                    },
-                  ]}>
-                  <HeartIcon
-                    style={{
-                      color:
-                        colorScheme === 'dark' ? Colors.white : Colors.black,
-                    }}
-                    name="heart"
+            switch (String(route.name)) {
+              case 'Wishlist':
+                const backgroundColor = focused
+                  ? Colors.buttonColor
+                  : Colors.white;
+                const iconBackgroundColor = focused
+                  ? Colors.buttonColor
+                  : tabBarBackgroundColor;
+                iconComponent = (
+                  <View
+                    style={[
+                      {
+                        backgroundColor,
+                        borderRadius: 20,
+                        height: 40,
+                        width: 40,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      },
+                      {
+                        backgroundColor: iconBackgroundColor,
+                      },
+                    ]}>
+                    <HeartIcon
+                      style={{
+                        color:
+                          colorScheme === 'dark' ? Colors.white : Colors.black,
+                      }}
+                      name="heart"
+                      color={color}
+                      size={25}
+                    />
+                  </View>
+                );
+                break;
+
+              case 'UserHomescreen':
+                iconComponent = (
+                  <MaterialCommunityIcons name="home" color={color} size={25} />
+                );
+                break;
+
+              case 'CartScreen':
+                iconComponent = (
+                  <MaterialIcon name="shopping-cart" color={color} size={25} />
+                );
+                break;
+
+              case 'CategoryScreen':
+                iconComponent = (
+                  <CategoryIcon name="appstore1" color={color} size={25} />
+                );
+                break;
+
+              case 'ProfileScreen':
+                iconComponent = (
+                  <MaterialCommunityIcons
+                    name="account"
                     color={color}
                     size={25}
                   />
-                </View>
-              );
-            } else if (route.name === 'UserHomescreen') {
-              iconComponent = (
-                <MaterialCommunityIcons name="home" color={color} size={25} />
-              );
-            } else if (route.name === 'CartScreen') {
-              iconComponent = (
-                <MaterialIcon name="shopping-cart" color={color} size={25} />
-              );
-            } else if (route.name === 'CategoryScreen') {
-              iconComponent = (
-                <CategoryIcon name="appstore1" color={color} size={25} />
-              );
-            } else if (route.name === 'ProfileScreen') {
-              iconComponent = (
-                <MaterialCommunityIcons
-                  name="account"
-                  color={color}
-                  size={25}
-                />
-              );
+                );
+                break;
+
+              default:
+                iconComponent = null;
+                break;
             }
 
             return iconComponent;
           },
         })}
       />
+
       <Tab.Screen
         name="CartScreen"
         component={CartStack}
@@ -366,65 +411,80 @@ const MyStack = () => {
 
             let iconComponent;
 
-            if (route.name === 'CartScreen') {
-              iconComponent = (
-                <View
-                  style={[
-                    {
-                      backgroundColor: focused
-                        ? Colors.buttonColor
-                        : Colors.white,
-                      borderRadius: 20,
-                      height: 40,
-                      width: 40,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    },
-                    {
-                      backgroundColor: focused
-                        ? Colors.buttonColor
-                        : colorScheme === 'dark'
-                        ? Colors.black
-                        : Colors.white,
-                    },
-                  ]}>
-                  <MaterialIcon
-                    style={{
-                      color:
-                        colorScheme === 'dark' ? Colors.white : Colors.black,
-                    }}
-                    name="shopping-cart"
+            switch (String(route.name)) {
+              case 'CartScreen':
+                const backgroundColor = focused
+                  ? Colors.buttonColor
+                  : Colors.white;
+                const iconBackgroundColor = focused
+                  ? Colors.buttonColor
+                  : tabBarBackgroundColor;
+                iconComponent = (
+                  <View
+                    style={[
+                      {
+                        backgroundColor,
+                        borderRadius: 20,
+                        height: 40,
+                        width: 40,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      },
+                      {
+                        backgroundColor: iconBackgroundColor,
+                      },
+                    ]}>
+                    <MaterialIcon
+                      style={{
+                        color:
+                          colorScheme === 'dark' ? Colors.white : Colors.black,
+                      }}
+                      name="shopping-cart"
+                      color={color}
+                      size={30}
+                    />
+                  </View>
+                );
+                break;
+
+              case 'UserHomescreen':
+                iconComponent = (
+                  <MaterialCommunityIcons name="home" color={color} size={25} />
+                );
+                break;
+
+              case 'Wishlist':
+                iconComponent = (
+                  <HeartIcon name="heart" color={color} size={25} />
+                );
+                break;
+
+              case 'CategoryScreen':
+                iconComponent = (
+                  <CategoryIcon name="appstore1" color={color} size={25} />
+                );
+                break;
+
+              case 'ProfileScreen':
+                iconComponent = (
+                  <MaterialCommunityIcons
+                    name="account"
                     color={color}
-                    size={30}
+                    size={25}
                   />
-                </View>
-              );
-            } else if (route.name === 'UserHomescreen') {
-              iconComponent = (
-                <MaterialCommunityIcons name="home" color={color} size={25} />
-              );
-            } else if (route.name === 'Wishlist') {
-              iconComponent = (
-                <HeartIcon name="heart" color={color} size={25} />
-              );
-            } else if (route.name === 'CategoryScreen') {
-              iconComponent = (
-                <CategoryIcon name="appstore1" color={color} size={25} />
-              );
-            } else if (route.name === 'ProfileScreen') {
-              iconComponent = (
-                <MaterialCommunityIcons
-                  name="account"
-                  color={color}
-                  size={25}
-                />
-              );
+                );
+                break;
+
+              default:
+                iconComponent = null;
+                break;
             }
 
             return iconComponent;
           },
         })}
       />
+
       <Tab.Screen
         name="ProfileScreen"
         component={ProfileStack}
@@ -442,55 +502,69 @@ const MyStack = () => {
 
             let iconComponent;
 
-            if (route.name === 'ProfileScreen') {
-              iconComponent = (
-                <View
-                  style={[
-                    {
-                      backgroundColor: focused
-                        ? Colors.buttonColor
-                        : Colors.white,
-                      borderRadius: 20,
-                      height: 40,
-                      width: 40,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    },
-                    {
-                      backgroundColor: focused
-                        ? Colors.buttonColor
-                        : colorScheme === 'dark'
-                        ? Colors.black
-                        : Colors.white,
-                    },
-                  ]}>
-                  <MaterialCommunityIcons
-                    name="account"
-                    color={color}
-                    size={30}
-                    style={{
-                      color:
-                        colorScheme === 'dark' ? Colors.white : Colors.black,
-                    }}
-                  />
-                </View>
-              );
-            } else if (route.name === 'UserHomescreen') {
-              iconComponent = (
-                <MaterialCommunityIcons name="home" color={color} size={25} />
-              );
-            } else if (route.name === 'Wishlist') {
-              iconComponent = (
-                <HeartIcon name="heart" color={color} size={25} />
-              );
-            } else if (route.name === 'CategoryScreen') {
-              iconComponent = (
-                <CategoryIcon name="appstore1" color={color} size={25} />
-              );
-            } else if (route.name === 'CartScreen') {
-              iconComponent = (
-                <MaterialIcon name="shopping-cart" color={color} size={25} />
-              );
+            switch (String(route.name)) {
+              case 'ProfileScreen':
+                const backgroundColor = focused
+                  ? Colors.buttonColor
+                  : Colors.white;
+                const iconBackgroundColor = focused
+                  ? Colors.buttonColor
+                  : tabBarBackgroundColor;
+                iconComponent = (
+                  <View
+                    style={[
+                      {
+                        backgroundColor,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 20,
+                        height: 40,
+                        width: 40,
+                      },
+                      {
+                        backgroundColor: iconBackgroundColor,
+                      },
+                    ]}>
+                    <MaterialCommunityIcons
+                      name="account"
+                      color={color}
+                      size={30}
+                      style={{
+                        color:
+                          colorScheme === 'dark' ? Colors.white : Colors.black,
+                      }}
+                    />
+                  </View>
+                );
+                break;
+
+              case 'UserHomescreen':
+                iconComponent = (
+                  <MaterialCommunityIcons name="home" color={color} size={25} />
+                );
+                break;
+
+              case 'Wishlist':
+                iconComponent = (
+                  <HeartIcon name="heart" color={color} size={25} />
+                );
+                break;
+
+              case 'CategoryScreen':
+                iconComponent = (
+                  <CategoryIcon name="appstore1" color={color} size={25} />
+                );
+                break;
+
+              case 'CartScreen':
+                iconComponent = (
+                  <MaterialIcon name="shopping-cart" color={color} size={25} />
+                );
+                break;
+
+              default:
+                iconComponent = null;
+                break;
             }
 
             return iconComponent;

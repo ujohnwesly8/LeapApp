@@ -3,16 +3,19 @@
 import {useState, useEffect} from 'react';
 import ApiService from '../../network/network';
 import {url} from './../../constants/Apis';
+import {useNavigation} from '@react-navigation/native';
 
-const useFilteredAnalytics = (startDate: any, endDate: any) => {
+const useFilteredAnalytics = () => {
   const [chartData, setChartData] = useState<
     {month: string; rentalCost: number}[]
   >([]);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   const [data, setData] = useState<{[key: string]: any[]}>({});
 
   const [isLoading, setIsLoading] = useState(false);
-
+  const navigation = useNavigation();
   useEffect(() => {
     fetchData();
   }, [startDate, endDate]);
@@ -50,7 +53,22 @@ const useFilteredAnalytics = (startDate: any, endDate: any) => {
   };
   console.log('data is :', data);
 
-  return {chartData, data, isLoading, fetchData};
+  const generateKey = () => {
+    return Math.random().toString(36);
+  };
+
+  return {
+    chartData,
+    data,
+    isLoading,
+    fetchData,
+    generateKey,
+    startDate,
+    endDate,
+    setStartDate,
+    setEndDate,
+    navigation,
+  };
 };
 
 export default useFilteredAnalytics;

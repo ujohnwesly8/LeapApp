@@ -30,7 +30,26 @@ const useOwnerHome = () => {
   const [isPlusDisabled, setIsPlusDisabled] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [outofStock, setOutofstock] = useState(false);
+
+  //chnages
+  const [refreshTrigger, setRefreshTrigger] = useState(false);
+  const [rentedItemsPercentage, setRentedItemsPercentage] =
+    useState(rentedItems);
+  const [totalEarningsPercentage, setTotalEarningsPercentage] =
+    useState(totalEarnings);
   const isFocused = useIsFocused();
+
+  useEffect(() => {
+    setRentedItemsPercentage(rentedItems);
+    setTotalEarningsPercentage(totalEarnings);
+  }, [rentedItems, totalEarnings]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setRefreshTrigger(prev => !prev);
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const handleDisableProduct = (item: any) => {
     setProductQuantity(item.availableQuantities);
@@ -99,6 +118,7 @@ const useOwnerHome = () => {
           const profileData = await response.json();
           setName(profileData.firstName);
         } else {
+          console.log('data not fetched');
         }
       } catch (error) {
         console.error(error);
@@ -164,6 +184,9 @@ const useOwnerHome = () => {
     selectedProductId,
     outofStock,
     setOutofstock,
+    refreshTrigger,
+    rentedItemsPercentage,
+    totalEarningsPercentage,
   };
 };
 export default useOwnerHome;

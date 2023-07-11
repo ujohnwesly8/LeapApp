@@ -21,6 +21,7 @@ const AnalyticsDropdown = ({onSelect}: AnalyticsDropdownProps) => {
   return (
     <View>
       <TouchableOpacity
+        testID="mainContainer"
         style={styles.mainContainer}
         onPress={() => setIsOpen(!isOpen)}>
         <Text style={styles.buttonText}>{selectedValue}</Text>
@@ -48,5 +49,6 @@ const AnalyticsDropdown = ({onSelect}: AnalyticsDropdownProps) => {
     </View>
   );
 };
+//new changes in quality//
 
 export default AnalyticsDropdown;
