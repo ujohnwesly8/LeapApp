@@ -5,6 +5,7 @@ import {url} from '../../constants/Apis';
 import {Alert} from 'react-native';
 import {ThunkDispatch} from 'redux-thunk';
 import {SetStateAction} from 'react';
+import {Orderreducer} from '../reducers/Orderreducer';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -124,13 +125,16 @@ export const Init = () => {
   };
 };
 
-export const getOTP = (phoneNo: string) => {
+export const getOTP = (phoneNumber: string) => {
   return async (dispatch: Dispatch) => {
     dispatch({type: VERIFY_OTP_REQUEST});
     try {
-      const response = await axios.post(`${url}/phoneNo`, {
-        phoneNo,
-      });
+      const response = await axios.post(
+        `${url}/phoneNo?phoneNumber=${phoneNumber}`,
+        {
+          phoneNumber,
+        },
+      );
       // Alert.alert('OTP'), console.log('otp send');
       dispatch({type: VERIFY_OTP_SUCCESS, payload: response.data});
     } catch (error) {
@@ -138,14 +142,14 @@ export const getOTP = (phoneNo: string) => {
     }
   };
 };
-export const submitOTP = (phoneNo: string, otp: number) => {
+export const submitOTP = (phoneNumber: string, otp: number) => {
   return async (dispatch: Dispatch) => {
     dispatch({type: LOGIN_REQUEST});
     try {
       const response = await axios.post(
-        `${url}/otp`,
+        `${url}/otp?phoneNumber=${phoneNumber}&otp=${otp}`,
         {
-          phoneNo: phoneNo,
+          phoneNumber: phoneNumber,
           otp: otp,
         },
         // console.log('Phone no', phoneNo, otp),
@@ -402,6 +406,30 @@ export const postProductToCartAPI = (item: any, action: string) => {
           Alert.alert('item Added Successfully');
         })
         .catch(error => console.log(error));
+    }
+  };
+};
+
+export const ADDORDER = (razorpayId: string) => {
+  return async (dispatch: (arg0: {type: string; payload: any}) => void) => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const data = razorpayId;
+      console.log('john razarpay', data); // create an object with razorpayId property
+      const response = await fetch(
+        `${url}/order/add/?razorpayId=${razorpayId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      dispatch(Orderreducer(razorpayId));
+      console.log('success', response);
+    } catch (error) {
+      console.log(error);
     }
   };
 };

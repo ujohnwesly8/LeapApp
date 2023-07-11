@@ -41,7 +41,8 @@ const AddImages = () => {
     isLoading,
   } = Useownerimage();
   const areImagesUploaded = imageUrls && imageUrls.length > 0;
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {colorScheme, getTextColor, getTextInputStyle, getContainerStyle} =
+    useContext(ColorSchemeContext);
   return (
     <ScrollView
       style={[
@@ -62,12 +63,10 @@ const AddImages = () => {
                   horizontal
                   style={[
                     OwnerImagestyles.imagehorizontal,
-                    colorScheme === 'dark'
-                      ? styles.blacktheme
-                      : styles.whiteTheme,
+                    getContainerStyle(),
                   ]}>
                   {imageUrls.map((image, index) => (
-                    <View key={index} style={[OwnerImagestyles.ImageContainer]}>
+                    <View key={image} style={[OwnerImagestyles.ImageContainer]}>
                       <Image
                         style={[
                           OwnerImagestyles.image,
@@ -107,10 +106,7 @@ const AddImages = () => {
                   </View>
                 ) : (
                   <TouchableOpacity
-                    style={[
-                      OwnerImagestyles.Addimage,
-                      colorScheme === 'dark' ? styles.cardColor : styles.main,
-                    ]}
+                    style={[OwnerImagestyles.Addimage, getTextInputStyle()]}
                     onPress={pickImages}>
                     <Lottie
                       source={require('../../../assets/addimageol.json')}
@@ -118,13 +114,7 @@ const AddImages = () => {
                       autoPlay
                     />
                     {!isLoading && (
-                      <Text
-                        style={[
-                          OwnerImagestyles.imagetxt,
-                          colorScheme === 'dark'
-                            ? styles.whitetext
-                            : styles.blackText,
-                        ]}>
+                      <Text style={[OwnerImagestyles.imagetxt, getTextColor()]}>
                         {addImages}
                       </Text>
                     )}

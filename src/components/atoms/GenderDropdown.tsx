@@ -45,7 +45,7 @@ const DropdownComponent: React.FC<GenderDropdownProps> = ({
           itemContainerStyle={[
             styles.itemContainerStyle,
             colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-          ]} // Add this line
+          ]}
           selectedItemContainerStyle={[
             styles.selectedItemContainerStyle,
             colorScheme === 'dark' ? Styles.cardColor : Styles.main,
@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     elevation: 4,
     marginTop: 3,
-    // marginLeft: -3,
     borderRadius: 8,
     padding: 10,
     flexDirection: 'row',
@@ -96,14 +95,12 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
-    // fontWeight: '400',
     fontFamily: 'Poppins-Medium',
     color: 'gray',
     marginLeft: 15,
   },
   selectedTextStyle: {
     fontSize: 18,
-    // fontWeight: '400',
     fontFamily: 'Poppins-Medium',
     color: '#000000',
     justifyContent: 'center',
@@ -115,12 +112,10 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     marginRight: 15,
-    // color: '#FFFFFF',
   },
   inputSearchStyle: {
     height: 40,
     fontSize: 18,
-    // backgroundColor: Colors.white,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     color: 'black',
   },
@@ -133,7 +128,7 @@ const styles = StyleSheet.create({
 
   itemContainerStyle: {
     backgroundColor: Colors.white,
-    borderRadius: 20, // Add this line
+    borderRadius: 20,
   },
   selectedItemContainerStyle: {
     backgroundColor: '#3E54AC',

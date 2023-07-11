@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {url} from '../../constants/Apis';
+
 import ApiService from '../../network/network';
+import colors from '../../constants/colors';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 const useEditAddress = () => {
   const navigation = useNavigation();
   const route = useRoute();
@@ -16,6 +18,7 @@ const useEditAddress = () => {
   const [selectedOption, setSelectedOption] = useState('Home');
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const {colorScheme} = useContext(ColorSchemeContext);
   const openModal = () => {
     setShowModal(true);
   };
@@ -47,7 +50,7 @@ const useEditAddress = () => {
         defaultType: isChecked,
       };
       const response = await ApiService.put(
-        `${url}/address/update/${addressid}`,
+        `/address/update/${addressid}`,
         updateaddress,
       );
       console.log(response);
@@ -57,10 +60,12 @@ const useEditAddress = () => {
       }
     } catch (error) {
       console.log('Failed to update address');
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
+  };
+  const PlaceholderColor = () => {
+    return colorScheme === 'dark' ? colors.Textinput : colors.black;
   };
   return {
     handleUpdateAddress,
@@ -84,6 +89,7 @@ const useEditAddress = () => {
     setAddressLine1,
     setAddressLine2,
     isLoading,
+    PlaceholderColor,
   };
 };
 export default useEditAddress;

@@ -78,7 +78,7 @@ const Address = () => {
         style.maincontainer,
         colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
       ]}>
-      <HeadingText message="Address" />
+      <HeadingText message="Address" navigation={undefined} />
       {isLoading ? (
         <View>
           <Lottie

@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Alert} from 'react-native';
+
 import {url} from '../../constants/Apis';
 function OwnerEditProfileCustomHook() {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,13 +46,7 @@ function OwnerEditProfileCustomHook() {
     };
     fetchProfileData();
   }, []);
-  const handleReset = () => {
-    setFirstName('');
-    setLastName('');
-    setEmail('');
-    setPhoneNumber('');
-  };
-  const handleUpdate = async (_navigation: any) => {
+  const handleUpdate = async () => {
     const token = await AsyncStorage.getItem('token');
     const data = JSON.stringify({
       firstName: firstName,
@@ -60,7 +54,6 @@ function OwnerEditProfileCustomHook() {
       email: email,
       phoneNumber: phoneNumber,
     });
-    console.log(data);
     try {
       const response = await fetch(`${url}/user/update`, {
         method: 'PUT',
@@ -78,7 +71,6 @@ function OwnerEditProfileCustomHook() {
       }
     } catch (error) {
       console.error(error);
-      Alert.alert('Failed to update profile');
     }
   };
   return {
@@ -90,7 +82,6 @@ function OwnerEditProfileCustomHook() {
     setEmail,
     phoneNumber,
     setPhoneNumber,
-    handleReset,
     handleUpdate,
     isLoading,
     openModal,

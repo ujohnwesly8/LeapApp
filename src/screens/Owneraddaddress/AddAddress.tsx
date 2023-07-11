@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   View,
   Text,
@@ -11,12 +11,13 @@ import {CheckBox} from 'react-native-elements';
 import {RadioButton} from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
 import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
-import useCart from '../Cart/useCart';
+
 import useAddAddress from './useAddAddress';
 
 import style from './AddressStyles';
 import colors from '../../constants/colors';
-import Styles from '../../constants/themeColors';
+
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 const AddAddress = () => {
   const {
     setStateName,
@@ -36,14 +37,14 @@ const AddAddress = () => {
     country,
     setCountry,
     isLoading,
-
     formik,
     handleAddressLine1,
     handleAddressLine2,
     handleBlur,
   } = useAddAddress();
 
-  const {colorScheme} = useCart();
+  const {colorScheme, getContainerStyle, getTextColor, getTextInputStyle} =
+    useContext(ColorSchemeContext);
 
   useEffect(() => {
     if (postalCode !== '') {
@@ -55,14 +56,16 @@ const AddAddress = () => {
 
   return (
     <ScrollView
-      style={{
-        backgroundColor: colorScheme === 'dark' ? colors.black : colors.main,
-        height: '100%',
-      }}>
+      style={[
+        {
+          height: '100%',
+        },
+        getContainerStyle(),
+      ]}>
       <View>
-        <HeadingText message="Add Address" />
+        <HeadingText message="Add Address" navigation={undefined} />
       </View>
-      {/* <View> */}
+
       <View style={style.outerContainer}>
         <View style={style.innerContainer}>
           <TextInput
@@ -75,8 +78,8 @@ const AddAddress = () => {
             onBlur={() => handleBlur('addressLine1')}
             style={[
               style.inputAddres,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
+              getTextInputStyle(),
+              getTextColor(),
               {fontWeight: '400'},
             ]}
           />
@@ -93,28 +96,19 @@ const AddAddress = () => {
             value={addressLine2}
             onChangeText={handleAddressLine2}
             onBlur={() => handleBlur('addressLine2')}
-            style={[
-              style.StreetInput,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}
+            style={[style.StreetInput, getTextInputStyle(), getTextColor()]}
           />
           {formik.touched.addressLine2 && formik.errors.addressLine2 && (
             <Text style={style.errorText}>{formik.errors.addressLine2}</Text>
           )}
         </View>
         <View style={style.cityContainer}>
-          {/* <View style={{width: 250}}> */}
           <TextInput
             placeholder="Pincode"
             placeholderTextColor={
               colorScheme === 'dark' ? colors.Textinput : colors.black
             }
-            style={[
-              style.smalltextInput,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}
+            style={[style.smalltextInput, getTextInputStyle(), getTextColor()]}
             value={postalCode}
             onChangeText={handlePostalCodeChange}
             onBlur={() => handleBlur('postalCode')}
@@ -128,11 +122,7 @@ const AddAddress = () => {
             value={city}
             editable={false}
             selectTextOnFocus={false}
-            style={[
-              style.smalltextInputs,
-              colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}
+            style={[style.smalltextInputs, getTextInputStyle(), getTextColor()]}
             onChangeText={text => {
               setCity(text);
             }}
@@ -145,11 +135,7 @@ const AddAddress = () => {
           placeholderTextColor={
             colorScheme === 'dark' ? colors.Textinput : colors.black
           }
-          style={[
-            style.inputAddress,
-            colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}
+          style={[style.inputAddress, getTextInputStyle(), getTextColor()]}
           onChangeText={text => setStateName(text)}
         />
         <TextInput
@@ -160,21 +146,11 @@ const AddAddress = () => {
           value={country}
           editable={false}
           selectTextOnFocus={false}
-          style={[
-            style.inputAddress,
-            colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}
+          style={[style.inputAddress, getTextInputStyle(), getTextColor()]}
           onChangeText={text => setCountry(text)}
         />
       </View>
-      <Text
-        style={[
-          style.textField,
-          colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-        ]}>
-        Type of address
-      </Text>
+      <Text style={[style.textField, getTextColor()]}>Type of address</Text>
       <View style={style.containerRadio}>
         <View style={style.optionRadio}>
           <RadioButton
@@ -183,13 +159,7 @@ const AddAddress = () => {
             onPress={() => handleOptionChange('HOME')}
             color={colorScheme === 'dark' ? colors.white : colors.black}
           />
-          <Text
-            style={[
-              style.textRadio,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
-            Home
-          </Text>
+          <Text style={[style.textRadio, getTextColor()]}>Home</Text>
         </View>
         <View style={style.optionRadio}>
           <RadioButton
@@ -198,22 +168,12 @@ const AddAddress = () => {
             onPress={() => handleOptionChange('OFFICE')}
             color={colorScheme === 'dark' ? colors.white : colors.black}
           />
-          <Text
-            style={[
-              style.textRadio,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
-            Office
-          </Text>
+          <Text style={[style.textRadio, getTextColor()]}>Office</Text>
         </View>
       </View>
       <Spinner visible={isLoading} />
       <View style={style.containerCheckbox}>
-        <Text
-          style={[
-            style.textCheckbox,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}>
+        <Text style={[style.textCheckbox, getTextColor()]}>
           Make as default address
         </Text>
         <CheckBox
@@ -224,10 +184,8 @@ const AddAddress = () => {
           size={24}
         />
       </View>
-      {/* </View> */}
       <TouchableOpacity
         style={style.btnfieldAddress}
-        // disabled={!formik.isValid}
         onPress={handleSaveAddress}>
         <Text style={style.btntextAddress}>Save</Text>
       </TouchableOpacity>

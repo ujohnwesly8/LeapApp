@@ -1,5 +1,5 @@
+/* eslint-disable curly */
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/no-unstable-nested-components */
 import React, {useContext} from 'react';
 import OwnerEditProfile from '../../screens/Ownereditprofile/OwnerEditProfile';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -64,6 +64,22 @@ const OwnerHomestack = () => {
     </Stack.Navigator>
   );
 };
+const getRouteName = (route: Partial<Route<string>>) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+  if (
+    routeName?.includes('OwnerEditProfile') ||
+    routeName?.includes('Owneraddresspage') ||
+    routeName?.includes('Owneraddaddress') ||
+    routeName?.includes('Owneredititems') ||
+    routeName?.includes('OwnerImage') ||
+    routeName?.includes('OproductDetails') ||
+    routeName?.includes('DashboardDetails') ||
+    routeName?.includes('FilteredAnalytics')
+  ) {
+    return 'none';
+  }
+  return 'flex';
+};
 
 const Owneradditemsstack = () => {
   return (
@@ -78,8 +94,14 @@ const Owneradditemsstack = () => {
   );
 };
 const Ownerstack = () => {
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {colorScheme, tabColor} = useContext(ColorSchemeContext);
   const isFocused = useIsFocused();
+  let tabBarBackgroundColor: string;
+  if (colorScheme === 'dark') {
+    tabBarBackgroundColor = Colors.black;
+  } else {
+    tabBarBackgroundColor = Colors.white;
+  }
   return (
     <Tab.Navigator
       screenOptions={{
@@ -103,8 +125,7 @@ const Ownerstack = () => {
         options={({route}) => ({
           tabBarStyle: {
             display: getRouteName(route),
-            backgroundColor:
-              colorScheme === 'dark' ? Colors.black : Colors.white,
+            backgroundColor: tabBarBackgroundColor,
             height: '7%',
           },
           tabBarIcon: ({focused, color}) => {
@@ -127,9 +148,7 @@ const Ownerstack = () => {
                     {
                       backgroundColor: focused
                         ? Colors.buttonColor
-                        : colorScheme === 'dark'
-                        ? Colors.black
-                        : Colors.white,
+                        : tabBarBackgroundColor,
                     },
                   ]}>
                   <MaterialIcon
@@ -171,16 +190,12 @@ const Ownerstack = () => {
         options={({route}) => ({
           tabBarStyle: {
             display: getRouteName(route),
-            backgroundColor:
-              colorScheme === 'dark' ? Colors.black : Colors.white,
-
+            backgroundColor: tabBarBackgroundColor,
             height: '7%',
           },
           tabBarIcon: ({focused, color}) => {
             if (!isFocused) return null;
-
             let iconComponent;
-
             if (route.name === 'Additem') {
               iconComponent = (
                 <View
@@ -196,18 +211,13 @@ const Ownerstack = () => {
                     {
                       backgroundColor: focused
                         ? Colors.buttonColor
-                        : colorScheme === 'dark'
-                        ? Colors.black
-                        : Colors.white,
+                        : tabBarBackgroundColor,
                     },
                   ]}>
                   <MaterialCommunityIcons
                     name="plus-box"
                     color={color}
-                    style={{
-                      color:
-                        colorScheme === 'dark' ? Colors.white : Colors.black,
-                    }}
+                    style={tabColor()}
                     size={35}
                   />
                 </View>
@@ -239,8 +249,7 @@ const Ownerstack = () => {
         options={({route}) => ({
           tabBarStyle: {
             display: getRouteName(route),
-            backgroundColor:
-              colorScheme === 'dark' ? Colors.black : Colors.white,
+            backgroundColor: tabBarBackgroundColor,
 
             height: '7%',
           },
@@ -264,9 +273,7 @@ const Ownerstack = () => {
                     {
                       backgroundColor: focused
                         ? Colors.buttonColor
-                        : colorScheme === 'dark'
-                        ? Colors.black
-                        : Colors.white,
+                        : tabBarBackgroundColor,
                     },
                   ]}>
                   <MaterialCommunityIcons
@@ -300,21 +307,5 @@ const Ownerstack = () => {
       />
     </Tab.Navigator>
   );
-};
-const getRouteName = (route: Partial<Route<string>>) => {
-  const routeName = getFocusedRouteNameFromRoute(route);
-  if (
-    routeName?.includes('OwnerEditProfile') ||
-    routeName?.includes('Owneraddresspage') ||
-    routeName?.includes('Owneraddaddress') ||
-    routeName?.includes('Owneredititems') ||
-    routeName?.includes('OwnerImage') ||
-    routeName?.includes('OproductDetails') ||
-    routeName?.includes('DashboardDetails') ||
-    routeName?.includes('FilteredAnalytics')
-  ) {
-    return 'none';
-  }
-  return 'flex';
 };
 export default Ownerstack;

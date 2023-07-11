@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
@@ -36,7 +37,7 @@ const RootNavigation = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const init = async () => {
-    await dispatch(Init());
+    await dispatch(Init() as any);
     setLoading(false);
   };
   useEffect(() => {

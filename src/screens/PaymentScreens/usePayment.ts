@@ -7,8 +7,9 @@ type RootStackParamList = {
   UserHomescreen: {screen: any};
   ProfileScreen: {screen: any};
 };
+
 const usePayment = () => {
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {getContainerStyle, getTextColor} = useContext(ColorSchemeContext);
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   useEffect(() => {
     const resetStack = setTimeout(() => {
@@ -19,7 +20,7 @@ const usePayment = () => {
     }, 7000);
     return () => clearTimeout(resetStack);
   }, [navigation]);
-  return {navigation, colorScheme};
+  return {navigation, getContainerStyle, getTextColor};
 };
 
 export default usePayment;

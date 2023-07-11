@@ -1,6 +1,5 @@
-
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect, SetStateAction} from 'react';
+import React, {useState, useEffect} from 'react';
 import {setRole} from '../../redux/actions/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {StyleSheet, Text, TouchableOpacity, View, Animated} from 'react-native';
@@ -9,18 +8,20 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {url} from '../../constants/Apis';
+
 const SwitchAccountButton = () => {
   const [showOptions, setShowOptions] = useState(false);
   const dispatch = useDispatch();
   const userType = useSelector((state: any) => state.Rolereducer.role);
-  const [accountType, setAccountType] = useState(
-    userType === 'BORROWER' ? 'Borrower' : 'Owner',
-  );
+  const [accountType, setAccountType] = useState('');
+
   const buttonAnimation = useState(new Animated.Value(0))[0];
   const optionsAnimation = useState(new Animated.Value(0))[0];
+
   useEffect(() => {
     setAccountType(userType === 'OWNER' ? 'Owner' : 'Borrower');
   }, [userType]);
+
   const handlePress = () => {
     setShowOptions(!showOptions);
     Animated.timing(buttonAnimation, {
@@ -34,7 +35,8 @@ const SwitchAccountButton = () => {
       useNativeDriver: false,
     }).start();
   };
-  const handleOptionPress = async (option: SetStateAction<string>) => {
+
+  const handleOptionPress = async (option: string) => {
     try {
       setShowOptions(false);
       console.log('option', option);
@@ -55,29 +57,28 @@ const SwitchAccountButton = () => {
         await AsyncStorage.setItem('token', newToken);
         console.log(newToken);
         dispatch(setRole(option));
-        setAccountType(option);
+        setAccountType(option === 'OWNER' ? 'Owner' : 'Borrower');
       } else {
-        console.log(response.data.error);
+        console.log('Request failed');
       }
     } catch (error) {
-      console.log(error);
+      console.log('Request failed');
     }
   };
+
   return (
     <View>
       <TouchableOpacity
         onPress={handlePress}
+        testID="switch-account-button"
         style={[styles.button, {opacity: 0.9}]}
         accessibilityLabel={`Switch account type to ${
           accountType === 'BORROWER' ? 'OWNER' : 'BORROWER'
         }`}>
         <Text style={styles.label}>{accountType}</Text>
-        <IonIcon
-          name="chevron-down"
-          color={'#fff'}
-          size={20}
-          marginRight={90}
-        />
+        <View style={{marginRight: 90}}>
+          <IonIcon name="chevron-down" color={'#fff'} size={20} />
+        </View>
       </TouchableOpacity>
       {showOptions && (
         <Animated.View
@@ -86,6 +87,7 @@ const SwitchAccountButton = () => {
             {opacity: optionsAnimation, transform: [{scale: optionsAnimation}]},
           ]}>
           <TouchableOpacity
+            testID="account-type-borrower"
             onPress={() => handleOptionPress('BORROWER')}
             accessibilityLabel="BORROWER">
             <View
@@ -105,6 +107,7 @@ const SwitchAccountButton = () => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+            testID="account-type-owner"
             onPress={() => handleOptionPress('OWNER')}
             accessibilityLabel="OWNER">
             <View
@@ -128,6 +131,7 @@ const SwitchAccountButton = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
@@ -189,7 +193,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     paddingVertical: 5,
-    color: '#FFFFFF',
+    backgroundColorcolor: '#FFFFFF',
   },
   buttonContainer: {
     backgroundColor: '#363062',

@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-
 /* eslint-disable react-native/no-inline-styles */
 import React, {useContext, useState, useEffect} from 'react';
 import {
@@ -17,9 +16,6 @@ import {
 import Useowneredititems from './Useowneredititems';
 import GenderDropdown from '../../components/atoms/GenderDropdown';
 import Ownerstyles from '../Additems/Additemsstyle';
-import TypeDropdown from '../../components/atoms/TypeDropdown';
-import EventsDropdown from '../../components/atoms/EventsDropdown';
-import OutfitDropdown from '../../components/atoms/OutfitDropdown';
 import Sizeselection from '../../components/atoms/Sizeselect';
 import OwnerEditItemstyles from './Owneredititemsstyles';
 
@@ -31,6 +27,8 @@ import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Styles from '../../constants/themeColors';
 
 import styles from '../OwnerHomepage/OwnerHomestyle';
+import DropdownComponent from '../../components/atoms/DropDownComponent/DropDown';
+import useAdditems from '../Additems/useAdditems';
 
 const App = () => {
   const {
@@ -68,7 +66,6 @@ const App = () => {
     isLoading,
     productQuantity,
     isModalVisible,
-
     selectedProductId,
     setSelectedProductId,
     handleEnablebutton,
@@ -84,6 +81,12 @@ const App = () => {
     setRefreshData,
     handleRefresh,
   } = Useowneredititems();
+  const {
+    subEventCategoriesData,
+    subOutfitCategoriesData,
+    subCategoriesData,
+    itemType,
+  } = useAdditems();
 
   const [_hideId, setHideId] = useState(null);
 
@@ -98,7 +101,8 @@ const App = () => {
   }, [isModalVisible]);
 
   console.log('Refreshhhhhh:', refreshData);
-  const {colorScheme} = useContext(ColorSchemeContext);
+  const {colorScheme, getContainerStyle, getTextColor, getTextInputStyle} =
+    useContext(ColorSchemeContext);
 
   return (
     <SafeAreaView>
@@ -108,24 +112,12 @@ const App = () => {
         onRequestClose={handleVisibleModal}>
         <SafeAreaView>
           <ScrollView
-            style={[
-              {width: '100%', height: '100%'},
-              colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-            ]}>
+            style={[{width: '100%', height: '100%'}, getContainerStyle()]}>
             <TouchableOpacity onPressIn={() => setViisble(!visible)}>
               <Text style={OwnerEditItemstyles.closetxt}>Close</Text>
             </TouchableOpacity>
-            <View
-              style={[
-                colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-              ]}>
-              <View
-                style={[
-                  Ownerstyles.Scrollcontainer,
-                  colorScheme === 'dark'
-                    ? Styles.blacktheme
-                    : Styles.whiteTheme,
-                ]}>
+            <View style={[getContainerStyle()]}>
+              <View style={[Ownerstyles.Scrollcontainer, getContainerStyle()]}>
                 <View style={Ownerstyles.scrolledit}>
                   <TextInput
                     placeholderTextColor={Colors.white}
@@ -133,10 +125,8 @@ const App = () => {
                     style={[
                       Ownerstyles.Namefield,
                       {paddingLeft: 22},
-                      colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                      colorScheme === 'dark'
-                        ? Styles.whitetext
-                        : Styles.blackText,
+                      getTextInputStyle(),
+                      getTextColor(),
                     ]}
                     onChangeText={setName}
                     value={name}
@@ -162,24 +152,30 @@ const App = () => {
                     value={undefined}
                   />
                   <View style={{marginTop: -18}}>
-                    <TypeDropdown
-                      onSelectType={setItemType}
+                    <DropdownComponent
+                      onSelect={setItemType}
                       onChange={handleItemTypeChange}
-                      value={undefined}
+                      value={itemType}
+                      placeholder="Select Type"
+                      data={subCategoriesData}
                     />
                   </View>
-                  <View style={{marginTop: -26}}>
-                    <EventsDropdown
-                      onSelectEvent={setEventType}
+                  <View style={{marginTop: -18}}>
+                    <DropdownComponent
+                      onSelect={setEventType}
                       onChange={handleEventTypeChange}
                       value={undefined}
+                      placeholder="Select Event"
+                      data={subEventCategoriesData}
                     />
                   </View>
-                  <View style={{marginTop: -12}}>
-                    <OutfitDropdown
-                      onSelectOutfit={setOutfitType}
+                  <View style={{marginTop: -18}}>
+                    <DropdownComponent
+                      onSelect={setOutfitType}
                       onChange={handleOutfitChange}
                       value={undefined}
+                      placeholder="Select Outfit"
+                      data={subOutfitCategoriesData}
                     />
                   </View>
                   <View style={OwnerEditItemstyles.Sizecontainer}>
@@ -197,11 +193,11 @@ const App = () => {
                           <ScrollView
                             horizontal
                             style={[OwnerEditItemstyles.imagehorizontal]}>
-                            {imageUrls.map((image, index) => (
+                            {imageUrls.map(image => (
                               <Image
                                 style={OwnerEditItemstyles.image}
                                 source={{uri: image}}
-                                key={`image_${index}`} // Update the key to include a prefix and index
+                                key={image} // Update the key to include a prefix and index
                               />
                             ))}
                           </ScrollView>
@@ -244,10 +240,8 @@ const App = () => {
                       style={[
                         OwnerEditItemstyles.Price,
                         {paddingLeft: 15},
-                        colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                        colorScheme === 'dark'
-                          ? Styles.whitetext
-                          : Styles.blackText,
+                        getTextInputStyle(),
+                        getTextColor(),
                       ]}
                       placeholder="Set price"
                       placeholderTextColor={Colors.black}
@@ -262,10 +256,8 @@ const App = () => {
                       style={[
                         OwnerEditItemstyles.Price,
                         {paddingLeft: 15},
-                        colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-                        colorScheme === 'dark'
-                          ? Styles.whitetext
-                          : Styles.blackText,
+                        getTextInputStyle(),
+                        getTextColor(),
                       ]}
                       value={quantity.toString()}
                       onChangeText={setQuantity}
@@ -316,7 +308,7 @@ const App = () => {
                 availableQuantities: number;
                 image: string;
               },
-              index: any,
+              // index: any,
             ) => (
               <>
                 <View
@@ -326,7 +318,8 @@ const App = () => {
                       ? Styles.blacktheme
                       : Styles.whiteTheme,
                   ]}
-                  key={`${`item_${item.id.toString()}-${index}`}`}>
+                  // key={`${item.id.toString()}-${index}`}>
+                  key={item.id.toString()}>
                   <View style={[Style.item_course]}>
                     <View style={[OwnerEditItemstyles.imagePriceContainer]}>
                       <View style={[OwnerEditItemstyles.cardImageContainer]}>

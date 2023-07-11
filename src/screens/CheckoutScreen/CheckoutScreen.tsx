@@ -69,45 +69,43 @@ const CheckoutScreen = ({navigation}: Props) => {
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
               }>
               {cartData?.cartItems?.map(
-                (
-                  item: {
-                    rentalEndDate: ReactNode;
-                    rentalStartDate: ReactNode;
-                    imageUrl: string;
-                    quantity: number;
-                    product: {
-                      name:
-                        | string
-                        | number
-                        | boolean
-                        | React.ReactElement<
-                            any,
-                            string | React.JSXElementConstructor<any>
-                          >
-                        | React.ReactFragment
-                        | React.ReactPortal
-                        | null
-                        | undefined;
-                      id: any;
-                      size:
-                        | string
-                        | number
-                        | boolean
-                        | React.ReactElement<
-                            any,
-                            string | React.JSXElementConstructor<any>
-                          >
-                        | React.ReactFragment
-                        | React.ReactPortal
-                        | null
-                        | undefined;
-                      price: string;
-                    };
-                  },
-                  index: React.Key | null | undefined,
-                ) => (
+                (item: {
+                  id: any;
+                  rentalEndDate: ReactNode;
+                  rentalStartDate: ReactNode;
+                  imageUrl: string;
+                  quantity: number;
+                  product: {
+                    name:
+                      | string
+                      | number
+                      | boolean
+                      | React.ReactElement<
+                          any,
+                          string | React.JSXElementConstructor<any>
+                        >
+                      | React.ReactFragment
+                      | React.ReactPortal
+                      | null
+                      | undefined;
+                    id: any;
+                    size:
+                      | string
+                      | number
+                      | boolean
+                      | React.ReactElement<
+                          any,
+                          string | React.JSXElementConstructor<any>
+                        >
+                      | React.ReactFragment
+                      | React.ReactPortal
+                      | null
+                      | undefined;
+                    price: string;
+                  };
+                }) => (
                   <View
-                    key={index}
+                    key={item.id}
                     style={[
                       style.cardContainer,
                       colorScheme === 'dark' ? Styles.cardColor : Styles.main,
@@ -221,6 +219,7 @@ const CheckoutScreen = ({navigation}: Props) => {
               addressList.map(
                 (
                   item: {
+                    id: any;
                     addressLine1: string;
                     addressLine2: string;
                     postalCode: string;
@@ -230,7 +229,7 @@ const CheckoutScreen = ({navigation}: Props) => {
                   index,
                 ) => (
                   <View
-                    key={index}
+                    key={item.id}
                     style={[
                       style.card,
                       colorScheme === 'dark' ? Styles.cardColor : Styles.main,
