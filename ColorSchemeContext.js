@@ -12,6 +12,7 @@ export const ColorSchemeContext = React.createContext({
   getPlaceholderTextColor: () => ({}),
   getplaceholdercolor: () => ({}),
   getloadingColor: () => ({}),
+  getButtonColor: () => ({}),
   tabColor: () => ({}),
   PlaceholderColor: () => {},
 });
@@ -61,6 +62,10 @@ export const ColorSchemeProvider = ({children}) => {
     return colorScheme === 'dark'
       ? {color: Colors.black}
       : {color: Colors.main};
+  const getButtonColor = () => {
+    return colorScheme === 'dark'
+      ? {color: Colors.buttonColor}
+      : {color: Colors.black};
   };
 
   const contextValue = useMemo(() => {
@@ -75,6 +80,7 @@ export const ColorSchemeProvider = ({children}) => {
       PlaceholderColor,
       getplaceholdercolor,
       getloadingColor,
+      getButtonColor,
     };
   }, [colorScheme]);
 
