@@ -14,13 +14,10 @@ import {useDispatch} from 'react-redux';
 import {Logout} from '../../redux/actions/actions';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {Avatar} from 'react-native-paper';
-
 import style from './ownerProfileStyle';
 import ProfileData from '../Profile/useProfile';
 import SwitchAccountButton from '../../components/atoms/SwtichAccountButton';
-
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-
 type Props = {
   navigation: any;
 };
@@ -31,9 +28,7 @@ export const SkeletonLoader = () => {
       <SkeletonPlaceholder
         highlightColor="#e0e0e0"
         backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
-        <View
-        //  testID="skeleton-loader"
-        >
+        <View>
           <TextInput style={style.card} placeholderTextColor="#999" />
         </View>
       </SkeletonPlaceholder>
