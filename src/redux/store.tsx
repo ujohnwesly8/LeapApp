@@ -18,6 +18,7 @@ import cartSlice from './slice/cartSlice';
 import orderSlice from './slice/orderSlice';
 import editItemSlice from './slice/editItemSlice';
 import thunk from 'redux-thunk';
+import loginSlice from './slice/loginSlice';
 
 export const RootReducers = combineReducers({
   Reducers,
@@ -34,6 +35,7 @@ export const RootReducers = combineReducers({
   CartProducts: cartSlice,
   OrderProducts: orderSlice,
   editItem: editItemSlice,
+  login: loginSlice,
 });
 
 export const store = createStore(RootReducers, applyMiddleware(thunk));

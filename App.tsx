@@ -32,7 +32,7 @@ const AuthStack = () => {
   );
 };
 const RootNavigation = () => {
-  const token = useSelector((state: any) => state.Reducers.authToken);
+  const token = useSelector((state: any) => state.login.data?.authToken);
   console.log(token);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();

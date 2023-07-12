@@ -36,6 +36,7 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 export const ADD_TO_WISHLIST = 'ADD_TO_WISHLIST';
 export const REMOVE_FROM_WISHLIST = 'REMOVE_FROM_WISHLIST';
+import {setLoginData} from '../slice/loginSlice';
 
 export const addname = (Name: any) => ({
   type: ADD_NAME,
@@ -117,10 +118,7 @@ export const Init = () => {
     let token = await AsyncStorage.getItem('token');
     if (token !== null) {
       console.log('token fetched');
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: token,
-      });
+      dispatch(setLoginData({authToken: token, isAuthenticated: true}));
     }
   };
 };
@@ -223,9 +221,7 @@ export const SignupAndLogin = (
 export const Logout = () => {
   return async (dispatch: Dispatch) => {
     await AsyncStorage.clear();
-    dispatch({
-      type: 'LOGOUT',
-    });
+    dispatch(setLoginData({authToken: null, isAuthenticated: false}));
   };
 };
 

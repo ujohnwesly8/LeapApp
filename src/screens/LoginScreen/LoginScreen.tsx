@@ -25,7 +25,7 @@ const LoginScreen = () => {
     formik,
     closeModal,
     showModal,
-    handleLogin,
+    handleLoginScreen,
     placeholadercolor,
     handleOtpScreen,
     handleSignUp,
@@ -80,7 +80,7 @@ const LoginScreen = () => {
               backgroundColor: formik.isValid ? Colors.buttonColor : '#A7D8DE',
             },
           ]}
-          onPress={handleLogin}>
+          onPress={handleLoginScreen}>
           <Text style={styles.touchableText}>{signin}</Text>
         </TouchableOpacity>
       </View>
