@@ -1,50 +1,80 @@
 import React from 'react';
-import {render} from '@testing-library/react-native';
-import {Provider, useSelector} from 'react-redux';
-import Wishlist from '../../../src/screens/Wishlist/Wishlist';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {NavigationContainer} from '@react-navigation/native';
+import {fireEvent, render} from '@testing-library/react-native';
 import {store} from '../../../src/redux/store';
-
-jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
-}));
+import {Provider} from 'react-redux';
+import {NavigationContainer} from '@react-navigation/native';
+import Wishlist from '../../../src/screens/Wishlist/Wishlist';
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
-  getItem: jest.fn(),
   setItem: jest.fn(),
+  getItem: jest.fn(),
   removeItem: jest.fn(),
-  clear: jest.fn(),
 }));
-
-describe('Wishlist', () => {
-  beforeEach(() => {
-    AsyncStorage.clear();
-  });
-
-  beforeEach(() => {
-    useSelector.mockReturnValue({
-      WishlistProducts: {
-        data: [
-          {id: 1, name: 'Product 1', imageUrl: ['image1.jpg'], price: 10},
-          {id: 2, name: 'Product 2', imageUrl: ['image2.jpg'], price: 20},
-        ],
-        isLoader: false,
-      },
-    });
-  });
-
-  it('should render the Wishlist page correctly', () => {
-    const {getByText} = render(
+const mockNavigate = jest.fn();
+jest.mock('@react-navigation/native', () => ({
+  useNavigation: () => ({
+    navigate: mockNavigate,
+  }),
+}));
+jest.mock('@react-navigation/native', () => ({
+  ...jest.requireActual('@react-navigation/native'),
+  useRoute: () => ({
+    params: {address: {}},
+  }),
+}));
+describe('EditAddress Screen', () => {
+  it('should render EditAddress Page', () => {
+    const result = render(
       <Provider store={store}>
         <NavigationContainer>
-          <Wishlist navigation={jest.fn()} route={{name: ''}} />
+          <Wishlist
+            route={{
+              name: '',
+            }}
+            navigation={undefined}
+          />
         </NavigationContainer>
       </Provider>,
     );
+    expect(result).toBeTruthy();
+  });
+  it('should navigate to ProductDetailsPage on button press', () => {
+    const items = [
+      {
+        id: 1,
+        name: 'Product 1',
+        imageUrl: 'https://example.com/product1.jpg',
+      },
+      {
+        id: 2,
+        name: 'Product 2',
+        imageUrl: 'https://example.com/product2.jpg',
+      },
+    ];
+    const {getByTestId} = render(
+      <Provider store={store}>
+        <NavigationContainer>
+          <Wishlist
+            route={{
+              name: '',
+            }}
+            navigation={undefined}
+          />
+        </NavigationContainer>
+      </Provider>,
+    );
+    jest
+      .spyOn(require('@react-navigation/native'), 'useNavigation')
+      .mockReturnValue({
+        navigate: mockNavigate,
+      });
 
-    // Add your assertions to check if the Wishlist page renders correctly
-    expect(getByText('Wishlist')).toBeTruthy();
-    // ... add more assertions based on your component's structure
+    // Simulate button press
+    fireEvent.press(getByTestId('product-item'));
+
+    // Check if navigate function is called with the correct arguments
+    expect(mockNavigate).toHaveBeenCalledWith('ProductDetailsPage', {
+      product: items[0],
+    });
   });
 });
