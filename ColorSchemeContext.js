@@ -11,6 +11,7 @@ export const ColorSchemeContext = React.createContext({
   getTextColor: () => ({}),
   getPlaceholderTextColor: () => ({}),
   getplaceholdercolor: () => ({}),
+  getloadingColor: () => ({}),
   getButtonColor: () => ({}),
   tabColor: () => ({}),
   PlaceholderColor: () => {},
@@ -57,6 +58,10 @@ export const ColorSchemeProvider = ({children}) => {
       ? {color: Colors.Inputtext}
       : {color: Colors.gray};
   };
+  const getloadingColor = () => {
+    return colorScheme === 'dark'
+      ? {color: Colors.black}
+      : {color: Colors.main};
   const getButtonColor = () => {
     return colorScheme === 'dark'
       ? {color: Colors.buttonColor}
@@ -74,6 +79,7 @@ export const ColorSchemeProvider = ({children}) => {
       tabColor,
       PlaceholderColor,
       getplaceholdercolor,
+      getloadingColor,
       getButtonColor,
     };
   }, [colorScheme]);
