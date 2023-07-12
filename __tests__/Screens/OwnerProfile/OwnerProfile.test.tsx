@@ -179,4 +179,49 @@ describe('OwnerProfile', () => {
     const activityIndicator = getByTestId('activity-indicator');
     expect(activityIndicator).toBeTruthy();
   });
+  //---------------------->
+  test('renders avatar image', () => {
+    const {getByTestId} = render(
+      <Avatar.Image size={100} source={{uri: 'profilePic'}} />,
+    );
+    expect(getByTestId('avatar-image')).toBeTruthy();
+  });
+
+  test('does not render avatar image when profilePic is null', () => {
+    const {queryByTestId} = render(
+      <Avatar.Image size={100} source={{uri: null}} />,
+    );
+    expect(queryByTestId('avatar-image')).toBeNull();
+  });
+  //--------->
+  test('calls handleRemoveProfilePic when remove button is pressed', () => {
+    const handleRemoveProfilePic = jest.fn();
+
+    const {getByText} = render(
+      <Provider store={store}>
+        <NavigationContainer>
+          <OwnerProfile handleRemoveProfilePic={handleRemoveProfilePic} />
+        </NavigationContainer>
+      </Provider>,
+    );
+
+    fireEvent.press(getByText('Remove'));
+
+    expect(handleRemoveProfilePic).toHaveBeenCalled();
+  });
+
+  test('does not call handleRemoveProfilePic when remove button is not pressed', () => {
+    const handleRemoveProfilePic = jest.fn();
+
+    const {getByText} = render(
+      <Provider store={store}>
+        <NavigationContainer>
+          <OwnerProfile handleRemoveProfilePic={handleRemoveProfilePic} />
+        </NavigationContainer>
+      </Provider>,
+    );
+
+    // Does not call function
+    expect(handleRemoveProfilePic).not.toHaveBeenCalled();
+  });
 });
