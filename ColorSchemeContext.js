@@ -62,6 +62,7 @@ export const ColorSchemeProvider = ({children}) => {
     return colorScheme === 'dark'
       ? {color: Colors.black}
       : {color: Colors.main};
+  };
   const getButtonColor = () => {
     return colorScheme === 'dark'
       ? {color: Colors.buttonColor}

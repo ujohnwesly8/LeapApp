@@ -33,8 +33,7 @@ const useWishlist = () => {
         openModal();
       })
       .catch(error => {
-        const errorMessage = `Error removing item from Wishlist: ${error.message}`;
-        Alert.alert(errorMessage);
+        Alert.alert('error in wishlist', error);
       });
   };
   const dispatch = useDispatch();

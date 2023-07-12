@@ -157,7 +157,7 @@ describe('Wishlist Screen', () => {
 
     const mockAddListener = jest.fn((event, callback) => {
       if (event === 'focus') {
-        callback(); // Simulate focus event immediately
+        callback();
       }
     });
 
@@ -199,5 +199,35 @@ describe('Wishlist Screen', () => {
       await result.current.onRefresh();
     });
     expect(result.current.refreshing).toBe(true);
+  });
+  it('renders loading view when wishlist is not available', async () => {
+    const products = [
+      {
+        id: 1,
+        name: 'Product 1',
+        imageUrl: 'https://example.com/product1.jpg',
+      },
+      {
+        id: 2,
+        name: 'Product 2',
+        imageUrl: 'https://example.com/product2.jpg',
+      },
+    ];
+    jest.spyOn(ApiService, 'get').mockResolvedValue(!products);
+
+    const {queryAllByTestId, queryByText} = render(
+      <Provider store={store}>
+        <Wishlist
+          route={{
+            name: '',
+          }}
+          navigation={undefined}
+        />
+      </Provider>,
+    );
+    const loadingView = queryAllByTestId('loading-view');
+    expect(loadingView).toBeDefined();
+    const loadingText = await queryByText('The Items are Loading...');
+    expect(loadingText).toBeDefined();
   });
 });
