@@ -92,7 +92,7 @@ const Wishlist = ({navigation}: Props) => {
         </View>
         {allWishlistProducts.length === 0 ? (
           <View
-            testID="wishlist-empty-screen"
+            testID="loading-view"
             style={[style.lottieStyle, getContainerStyle()]}>
             <Lottie
               source={require('../../../assets/wishlistanime.json')}
