@@ -32,13 +32,10 @@ const useAddAddress = () => {
       );
       const data = result[0]?.PostOffice || [];
       setIsLoading(false);
-      console.log(data[0]);
       setCountry(data[0]?.Country || '');
       setCity(data[0]?.District || '');
       setStateName(data[0]?.State || '');
-      console.log(city, country, state);
     } catch (error) {
-      console.error(error);
       Alert.alert('Enter valid Pincode');
     } finally {
       setIsLoading(false);
@@ -58,7 +55,6 @@ const useAddAddress = () => {
     } else if (text.length === 6) {
       setIsLoading(true);
       await FetchAddress();
-      setIsLoading(false);
     }
   };
 
@@ -85,7 +81,6 @@ const useAddAddress = () => {
       console.log(res); // log the returned data
       navigation.goBack();
     } catch (error) {
-      console.log(error);
     } finally {
       setIsLoading(false);
     }

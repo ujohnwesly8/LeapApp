@@ -58,7 +58,6 @@ const useAddress = () => {
         addressLine2,
       );
     } catch (error) {
-      console.log('Error is ', error);
       setIsLoading(true);
     }
   }, [id, city, state, country, postalCode, addressLine1, addressLine2]);
@@ -90,6 +89,7 @@ const useAddress = () => {
   };
   return {
     addressList,
+    fetchData,
     handleOwnerAddAddress,
     handleDeleteAddress,
     isFocused,
