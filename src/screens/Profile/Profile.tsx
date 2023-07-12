@@ -49,7 +49,7 @@ const Profile = ({navigation}: Props) => {
     colorScheme,
     getContainerStyle,
     getTextInputStyle,
-    getTextColor,
+
     getPlaceholderTextColor,
   } = useContext(ColorSchemeContext);
   const dispatch = useDispatch();
@@ -172,13 +172,15 @@ const Profile = ({navigation}: Props) => {
             <Icon
               name="location-pin"
               size={30}
-              style={[style.addressicon, getTextColor()]}
+              style={[style.addressicon, getPlaceholderTextColor()]}
             />
-            <Text style={[style.AddressbtnPText, getTextColor()]}>Address</Text>
+            <Text style={[style.AddressbtnPText, getPlaceholderTextColor()]}>
+              Address
+            </Text>
             <Icon
               name="arrow-forward-ios"
               size={20}
-              style={[style.addressforwardios, getTextColor()]}
+              style={[style.addressforwardios, getPlaceholderTextColor()]}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -187,7 +189,7 @@ const Profile = ({navigation}: Props) => {
             <Icons
               name="basket-check"
               size={30}
-              style={[style.producticon, getTextColor()]}
+              style={[style.producticon, getPlaceholderTextColor()]}
             />
             <Text style={[style.btnPText, getPlaceholderTextColor()]}>
               My orders
@@ -195,7 +197,7 @@ const Profile = ({navigation}: Props) => {
             <Icon
               name="arrow-forward-ios"
               size={20}
-              style={[style.productforwardios, getTextColor()]}
+              style={[style.productforwardios, getPlaceholderTextColor()]}
             />
           </TouchableOpacity>
         </View>
