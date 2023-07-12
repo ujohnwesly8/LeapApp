@@ -2,15 +2,14 @@ import React from 'react';
 import {Avatar} from 'react-native-paper';
 
 import {render, fireEvent} from '@testing-library/react-native';
-import OwnerProfile from '../../../src/screens/Ownerprofile/OwnerProfile';
+import OwnerProfile, {
+  SkeletonLoader,
+} from '../../../src/screens/Ownerprofile/OwnerProfile';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
 import {store} from '../../../src/redux/store';
 import {Provider, useDispatch} from 'react-redux';
 import {Logout} from '../../../src/redux/actions/actions';
-
-import * as useOwnerProfile from '../../../src/screens/Ownerprofile/useOwnerProfile';
-import {SkeletonLoader} from '../../../src/screens/Ownerprofile/OwnerProfile';
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(),
