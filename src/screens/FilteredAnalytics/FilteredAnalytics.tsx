@@ -122,6 +122,7 @@ const FilteredAnalytics = () => {
               endDate={endDate}
               onStartDateChange={setStartDate}
               onEndDateChange={handleEndDateChange}
+              testID="date-picker"
             />
           </View>
 
@@ -130,7 +131,7 @@ const FilteredAnalytics = () => {
           <View>
             {Object.keys(data).length > 0 ? (
               Object.entries(data).map(([month, items]) => (
-                <View key={month}>
+                <View testID="jan-view" key={month}>
                   {items.map((item: any) => (
                     <View key={generateKey()}>
                       <View style={style.dashcard}>
