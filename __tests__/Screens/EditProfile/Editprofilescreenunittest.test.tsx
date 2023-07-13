@@ -5,13 +5,13 @@ import {
   render,
   renderHook,
 } from '@testing-library/react-native';
-import OwnerEditProfile, { SkeletonLoader } from '../../../src/screens/Ownereditprofile/OwnerEditProfile';
+import OwnerEditProfile, {
+  SkeletonLoader,
+} from '../../../src/screens/Ownereditprofile/OwnerEditProfile';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Provider} from 'react-redux';
 import {store} from '../../../src/redux/store';
 import {NavigationContainer} from '@react-navigation/native';
-import useOwnerProfile from '../../../src/screens/Ownereditprofile/useOwnerProfile';
-import {url} from '../../../src/constants/Apis';
 jest.mock(
   '../../../src/screens/Ownereditprofile/useOwnerProfile',
   () => () => ({

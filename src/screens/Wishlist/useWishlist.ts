@@ -3,11 +3,10 @@ import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Alert} from 'react-native';
-
 import {fetchWishlistProducts} from '../../redux/slice/wishlistSlice';
 import {removeFromWishlist} from '../../redux/actions/actions';
 import {url} from '../../constants/Apis';
+import {Alert} from 'react-native';
 const useWishlist = () => {
   const navigation = useNavigation();
   const {colorScheme} = useContext(ColorSchemeContext);
@@ -34,9 +33,7 @@ const useWishlist = () => {
         openModal();
       })
       .catch(error => {
-        console.error(error);
-        const errorMessage = `Error removing item from Wishlist: ${error.message}`;
-        Alert.alert(errorMessage);
+        Alert.alert('error in wishlist', error);
       });
   };
   const dispatch = useDispatch();

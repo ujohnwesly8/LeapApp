@@ -49,7 +49,7 @@ const Profile = ({navigation}: Props) => {
     colorScheme,
     getContainerStyle,
     getTextInputStyle,
-    getTextColor,
+
     getPlaceholderTextColor,
   } = useContext(ColorSchemeContext);
   const dispatch = useDispatch();

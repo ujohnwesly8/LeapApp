@@ -1,8 +1,7 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react-native';
 import Category from '../../../src/screens/Category/Category';
-import {NavigationContainer} from '@react-navigation/native';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 
 jest.mock('@react-navigation/native', () => ({
   ...jest.requireActual('@react-navigation/native'),

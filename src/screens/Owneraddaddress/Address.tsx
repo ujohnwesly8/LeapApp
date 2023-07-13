@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Lottie from 'lottie-react-native';
@@ -8,11 +8,10 @@ import HeadingText from '../../components/atoms/HeadingText/HeadingTest';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
 
 import useAddress from './useAddress';
-import useCart from '../Cart/useCart';
 
 import Colors from '../../constants/colors';
-import Styles from '../../constants/themeColors';
 import style from './AddressStyles';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 const Address = () => {
   const {
@@ -24,42 +23,33 @@ const Address = () => {
     handleEditItems,
     isLoading,
   } = useAddress();
-  const {colorScheme} = useCart();
+  const {colorScheme, getTextInputStyle, getTextColor, getContainerStyle} =
+    useContext(ColorSchemeContext);
   const renderAddressItem = ({item}: {item: any; index: number}) => {
     return (
-      <View
-        style={[
-          style.card,
-          colorScheme === 'dark' ? Styles.cardColor : Styles.main,
-        ]}>
+      <View style={[style.card, getTextInputStyle()]}>
         <View>
-          <Text
-            style={[
-              style.city,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
-            Address:
-          </Text>
+          <Text style={[style.city, getTextColor()]}>Address:</Text>
           <View style={style.AdresstextContainer}>
-            <Text
-              style={[
-                style.input,
-                colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-              ]}>
+            <Text style={[style.input, getTextColor()]}>
               {item.addressLine1}, {item.addressLine2}, {item.postalCode},{' '}
               {item.city}, {item.state}, {item.country}
             </Text>
           </View>
         </View>
         <View>
-          <TouchableOpacity onPress={() => handleEditItems(item)}>
+          <TouchableOpacity
+            testID={`edit-button-${item.id}`}
+            onPress={() => handleEditItems(item)}>
             <MaterialIcons
               name="edit"
               size={25}
               color={colorScheme === 'dark' ? Colors.white : Colors.black}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleDeleteAddress(item.id)}>
+          <TouchableOpacity
+            onPress={() => handleDeleteAddress(item.id)}
+            testID={`delete-button-${item.id}`}>
             <MaterialIcons
               name="delete"
               size={25}
@@ -73,11 +63,7 @@ const Address = () => {
   };
 
   return (
-    <View
-      style={[
-        style.maincontainer,
-        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-      ]}>
+    <View style={[style.maincontainer, getContainerStyle()]}>
       <HeadingText message="Address" navigation={undefined} />
       {isLoading ? (
         <View>
@@ -88,7 +74,6 @@ const Address = () => {
               height: 250,
               width: 250,
               alignSelf: 'center',
-              // marginTop: '50%',
               justifyContent: 'center',
             }}
           />
@@ -116,6 +101,7 @@ const Address = () => {
           ) : (
             <View style={{marginBottom: 10}}>
               <FlatList
+                testID="address-list"
                 data={addressList}
                 renderItem={renderAddressItem}
                 keyExtractor={item => item.id.toString()}
@@ -132,4 +118,5 @@ const Address = () => {
     </View>
   );
 };
+
 export default Address;
