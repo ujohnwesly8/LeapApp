@@ -29,17 +29,17 @@ const Subcategory = ({
 
   const {subcategories, loading, handleSubcategoryPress} =
     useSubcategory<Subcategory>(categoryId);
-  const {colorScheme, getContainerStyle, getTextColor, getTextInputStyle} =
+  const {colorScheme, getTextColor, getTextInputStyle, getContainerStyle} =
     useContext(ColorSchemeContext);
 
   if (loading) {
     return (
       <View
+        testID="loading-animation"
         style={[
           styles.lottieView,
           colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-        ]}
-        testID="loading-animation">
+        ]}>
         <Lottie
           source={require('../../../assets/loading2.json')}
           autoPlay

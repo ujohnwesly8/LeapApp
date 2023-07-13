@@ -8,7 +8,6 @@ import {store} from '../../../src/redux/store';
 import useProfile from '../../../src/screens/Profile/useProfile';
 import style from '../../../src/screens/Profile/profileStyles';
 import {StyleSheet} from 'react-native';
-import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(),

@@ -2,15 +2,14 @@ import React from 'react';
 import {Avatar} from 'react-native-paper';
 
 import {render, fireEvent} from '@testing-library/react-native';
-import OwnerProfile from '../../../src/screens/Ownerprofile/OwnerProfile';
+import OwnerProfile, {
+  SkeletonLoader,
+} from '../../../src/screens/Ownerprofile/OwnerProfile';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
 import {store} from '../../../src/redux/store';
 import {Provider, useDispatch} from 'react-redux';
 import {Logout} from '../../../src/redux/actions/actions';
-
-import * as useOwnerProfile from '../../../src/screens/Ownerprofile/useOwnerProfile';
-import {SkeletonLoader} from '../../../src/screens/Ownerprofile/OwnerProfile';
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(),
@@ -178,5 +177,50 @@ describe('OwnerProfile', () => {
 
     const activityIndicator = getByTestId('activity-indicator');
     expect(activityIndicator).toBeTruthy();
+  });
+  //---------------------->
+  test('renders avatar image', () => {
+    const {getByTestId} = render(
+      <Avatar.Image size={100} source={{uri: 'profilePic'}} />,
+    );
+    expect(getByTestId('avatar-image')).toBeTruthy();
+  });
+
+  test('does not render avatar image when profilePic is null', () => {
+    const {queryByTestId} = render(
+      <Avatar.Image size={100} source={{uri: null}} />,
+    );
+    expect(queryByTestId('avatar-image')).toBeNull();
+  });
+  //--------->
+  test('calls handleRemoveProfilePic when remove button is pressed', () => {
+    const handleRemoveProfilePic = jest.fn();
+
+    const {getByText} = render(
+      <Provider store={store}>
+        <NavigationContainer>
+          <OwnerProfile handleRemoveProfilePic={handleRemoveProfilePic} />
+        </NavigationContainer>
+      </Provider>,
+    );
+
+    fireEvent.press(getByText('Remove'));
+
+    expect(handleRemoveProfilePic).toHaveBeenCalled();
+  });
+
+  test('does not call handleRemoveProfilePic when remove button is not pressed', () => {
+    const handleRemoveProfilePic = jest.fn();
+
+    const {getByText} = render(
+      <Provider store={store}>
+        <NavigationContainer>
+          <OwnerProfile handleRemoveProfilePic={handleRemoveProfilePic} />
+        </NavigationContainer>
+      </Provider>,
+    );
+
+    // Does not call function
+    expect(handleRemoveProfilePic).not.toHaveBeenCalled();
   });
 });

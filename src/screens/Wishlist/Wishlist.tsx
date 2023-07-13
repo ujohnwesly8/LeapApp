@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useContext} from 'react';
 import {useSelector} from 'react-redux';
 import {
   Image,
@@ -14,9 +14,9 @@ import Lottie from 'lottie-react-native';
 import useWishlist from './useWishlist';
 
 import Colors from '../../constants/colors';
-import Styles from '../../constants/themeColors';
 import style from './wishlistStyles';
 import CustomModal from '../../components/atoms/CustomModel/CustomModel';
+import {ColorSchemeContext} from '../../../ColorSchemeContext';
 
 type Props = {
   route: {name: string};
@@ -31,7 +31,8 @@ const Wishlist = ({navigation}: Props) => {
     openModal,
     colorScheme,
   } = useWishlist();
-
+  const {getTextColor, getContainerStyle, getTextInputStyle} =
+    useContext(ColorSchemeContext);
   const {refreshing, onRefresh} = useWishlist();
   const allWishlistProducts = useSelector(
     (state: {WishlistProducts: {data: any[]}}) => state.WishlistProducts.data,
@@ -78,70 +79,39 @@ const Wishlist = ({navigation}: Props) => {
   }
 
   return (
-    <View
-      style={[
-        style.maincontainer,
-        colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-      ]}>
+    <View style={[style.maincontainer, getContainerStyle()]}>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        <Text
-          style={[
-            style.textStylewishlist,
-            colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-          ]}>
-          Wishlist
-        </Text>
-        <View
-          style={[
-            style.textConatiner,
-            colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-          ]}>
-          <Text
-            style={[
-              style.textStyle,
-              colorScheme === 'dark' ? Styles.whitetext : Styles.blackText,
-            ]}>
+        <Text style={[style.textStylewishlist, getTextColor()]}>Wishlist</Text>
+        <View style={[style.textConatiner, getContainerStyle()]}>
+          <Text style={[style.textStyle, getTextColor()]}>
             My favorites ({allWishlistProducts.length})
           </Text>
         </View>
         {allWishlistProducts.length === 0 ? (
-          <>
-            <View
-              style={[
-                style.lottieStyle,
-                colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-              ]}>
-              <Lottie
-                source={require('../../../assets/wishlistanime.json')}
-                autoPlay
-                style={style.lottieImage}
-              />
-              <Text style={style.Emptytext}>Your wishlist is empty</Text>
-            </View>
-          </>
-        ) : (
           <View
-            style={[
-              style.maincontainer,
-              colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
-            ]}>
+            testID="loading-view"
+            style={[style.lottieStyle, getContainerStyle()]}>
+            <Lottie
+              source={require('../../../assets/wishlistanime.json')}
+              autoPlay
+              style={style.lottieImage}
+            />
+            <Text style={style.Emptytext}>Your wishlist is empty</Text>
+          </View>
+        ) : (
+          <View style={[style.maincontainer, getContainerStyle()]}>
             <View style={style.wishlistViewContaner}>
               <View style={style.whishlistView}>
                 {allWishlistProducts &&
                   allWishlistProducts.map((item, index) => {
                     return (
-                      <View style={style.wishlistConatinerwrap} key={index}>
-                        <View
-                          style={[
-                            style.container,
-                            colorScheme === 'dark'
-                              ? Styles.cardColor
-                              : Styles.main,
-                          ]}>
+                      <View style={style.wishlistConatinerwrap} key={item.id}>
+                        <View style={[style.container, getTextInputStyle()]}>
                           <TouchableOpacity
+                            testID={`productdetails-${item.id}`}
                             onPress={() =>
                               navigation.navigate('UProductDetails', {
                                 product: item,
@@ -156,29 +126,18 @@ const Wishlist = ({navigation}: Props) => {
                           </TouchableOpacity>
                           <View style={style.cardTextContainer}>
                             <View style={style.Cartcontents}>
-                              <Text
-                                style={[
-                                  style.name,
-                                  colorScheme === 'dark'
-                                    ? Styles.whitetext
-                                    : Styles.blackText,
-                                ]}>
+                              <Text style={[style.name, getTextColor()]}>
                                 {item.name}
                               </Text>
                             </View>
-                            <View
-                              style={[
-                                style.textContainer,
-                                colorScheme === 'dark'
-                                  ? Styles.whitetext
-                                  : Styles.blackText,
-                              ]}>
+                            <View style={[style.textContainer, getTextColor()]}>
                               <Text style={style.price}>
                                 {'₹' + item.price}
                               </Text>
                             </View>
                           </View>
                           <TouchableOpacity
+                            testID={`heart-${item.id}`}
                             style={style.wishlistButton}
                             onPress={() => removefromWishlist(item.id)}
                             onPressIn={() => openModal()}>
