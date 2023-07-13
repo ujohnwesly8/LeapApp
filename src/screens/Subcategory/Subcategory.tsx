@@ -81,7 +81,7 @@ const Subcategory = ({
                   <Icon
                     name="arrow-forward-ios"
                     size={20}
-                    style={styles.productforwardios}
+                    style={[styles.productforwardios, getTextColor()]}
                   />
                 </View>
               </View>

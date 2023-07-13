@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {StatusBar, View} from 'react-native';
 import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import LoginScreen from './src/screens/LoginScreen/LoginScreen';
@@ -15,12 +15,39 @@ import {ColorSchemeProvider} from './ColorSchemeContext';
 
 import Lottie from 'lottie-react-native';
 import SignupScreen from './src/screens/SignUp/SignupScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createSharedElementStackNavigator();
 const AuthStack = () => {
+  const navigation = useNavigation();
+  useEffect(() => {
+    checkFirstTimeUser();
+  }, []);
+
+  const checkFirstTimeUser = async () => {
+    try {
+      // Check if the user has already logged in
+      const hasLoggedIn = await AsyncStorage.getItem('hasLoggedIn');
+
+      // If the user has logged in before, navigate to the LoginScreen
+      if (hasLoggedIn) {
+        navigation.navigate('Login' as never);
+      } else {
+        // If it's the first time user, navigate to the SplashScreen
+        navigation.navigate('SplashScreen' as never);
+
+        // Store the flag indicating that the user has logged in
+        await AsyncStorage.setItem('hasLoggedIn', 'true');
+        console.log('user already logged in');
+      }
+    } catch (error) {
+      console.error('Error checking first time user:', error);
+    }
+  };
+
   return (
     <Stack.Navigator
-      initialRouteName="SplashScreen"
+      initialRouteName="Login"
       screenOptions={{
         headerShown: false,
       }}>
