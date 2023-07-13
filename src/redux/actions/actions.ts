@@ -222,7 +222,7 @@ export const SignupAndLogin = (
 
 export const Logout = () => {
   return async (dispatch: Dispatch) => {
-    await AsyncStorage.clear();
+    await AsyncStorage.removeItem('token');
     dispatch({
       type: 'LOGOUT',
     });

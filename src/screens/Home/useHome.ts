@@ -48,12 +48,7 @@ const useHome = () => {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
-  useEffect(() => {
-    setPlaceholderTextColor(
-      colorScheme === 'dark' ? Colors.white : Colors.black,
-    );
-  }, [colorScheme, placeholderText]);
+  }, [placeholderText]);
 
   const openModal = () => {
     setShowModal(true);
