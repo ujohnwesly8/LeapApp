@@ -25,7 +25,7 @@ type Props = {
 const Wishlist = ({navigation}: Props) => {
   const {
     WishlistProducts,
-    removefromWishlist,
+    wishlistremove,
     closeModal,
     showModal,
     openModal,
@@ -180,7 +180,7 @@ const Wishlist = ({navigation}: Props) => {
                           </View>
                           <TouchableOpacity
                             style={style.wishlistButton}
-                            onPress={() => removefromWishlist(item.id)}
+                            onPress={() => wishlistremove(item.id)}
                             onPressIn={() => openModal()}>
                             <Image
                               source={require('../../../assets/fillheart.png')}

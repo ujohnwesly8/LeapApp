@@ -31,8 +31,9 @@ const CheckoutScreen = ({navigation}: Props) => {
     handleCheckboxChange,
     refreshing,
     onRefresh,
-    addressList,
+
     isChecked,
+    data,
   } = useCheckout();
   const {colorScheme} = useCart();
   const cartData = useSelector(
@@ -40,7 +41,7 @@ const CheckoutScreen = ({navigation}: Props) => {
   ) || {
     cartItems: [],
   };
-  console.log('johnwesly', addressList);
+
   if (!cartData) {
     return (
       <View style={style.checkoutcontainer}>
@@ -59,7 +60,7 @@ const CheckoutScreen = ({navigation}: Props) => {
           style.Fullcontainer,
           colorScheme === 'dark' ? Styles.blacktheme : Styles.whiteTheme,
         ]}>
-        <HeadingText message="Checkout" />
+        <HeadingText message="Checkout" navigation={undefined} />
 
         <ScrollView>
           <View>
@@ -215,8 +216,8 @@ const CheckoutScreen = ({navigation}: Props) => {
                 </Text>
               </View>
             </View>
-            {addressList &&
-              addressList.map(
+            {data &&
+              data?.map(
                 (
                   item: {
                     id: any;

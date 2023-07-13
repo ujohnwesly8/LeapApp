@@ -25,7 +25,7 @@ const Category = () => {
 
   const {getContainerStyle, getTextColor, getTextInputStyle} =
     useContext(ColorSchemeContext);
-  const {categories, loading} = useCategory();
+  const {data, loading} = useCategory();
 
   const renderItem = ({item}: {item: CategoryItem}) => (
     <TouchableOpacity
@@ -71,7 +71,7 @@ const Category = () => {
         </View>
       ) : (
         <FlatList
-          data={categories}
+          data={data}
           renderItem={renderItem}
           keyExtractor={item => item.id.toString()}
           testID="category-flatlist"

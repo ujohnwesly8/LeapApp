@@ -30,20 +30,18 @@ type Props = {
 
 const Profile = ({navigation}: Props) => {
   const {
-    name,
-    email,
-    phonenumber,
-    isLoading,
+    isloading,
     pickImage,
-    profilePic,
+
     showModall,
     closeModal,
     showModal1,
     closeModal1,
-    isloading,
+    loading,
     handleRemoveProfilePic,
     refreshData,
     refreshState,
+    data,
   } = useProfile();
   const {
     colorScheme,
@@ -63,12 +61,12 @@ const Profile = ({navigation}: Props) => {
           <ActivityIndicator size="large" color="gray" />
         </View>
       );
-    } else if (profilePic) {
+    } else if (data.profileImageUrl) {
       return (
         <View testID="avatar-container">
           <Avatar.Image
             size={100}
-            source={{uri: profilePic}}
+            source={{uri: data.profileImageUrl}}
             testID="avatar-image"
           />
         </View>
@@ -125,7 +123,7 @@ const Profile = ({navigation}: Props) => {
             <Text style={style.uploadText}>Remove</Text>
           </TouchableOpacity>
         </View>
-        {isLoading ? (
+        {loading ? (
           <SkeletonPlaceholder
             highlightColor="#e0e0e0"
             backgroundColor={colorScheme === 'dark' ? '#373737' : '#f2f2f2'}>
@@ -136,13 +134,13 @@ const Profile = ({navigation}: Props) => {
         ) : (
           <View style={[style.card, getTextInputStyle()]}>
             <Text style={[style.profileText, getPlaceholderTextColor()]}>
-              {name}
+              {data.firstName}
             </Text>
             <Text style={[style.profileText1, getPlaceholderTextColor()]}>
-              {email}
+              {data.email}
             </Text>
             <Text style={[style.profileText1, getPlaceholderTextColor()]}>
-              {phonenumber}
+              {data.phoneNumber}
             </Text>
           </View>
         )}

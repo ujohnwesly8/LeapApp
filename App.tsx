@@ -32,17 +32,17 @@ const AuthStack = () => {
   );
 };
 const RootNavigation = () => {
-  const token = useSelector((state: any) => state.login.data?.authToken);
+  const token = useSelector((state: any) => state.login.data.authToken);
   console.log(token);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const init = async () => {
-    await dispatch(Init() as any);
+    dispatch(Init() as any);
     setLoading(false);
   };
   useEffect(() => {
     init();
-  }, []);
+  }, [token]);
   useEffect(() => {
     const delay = setTimeout(init, 3000); // Add a delay of 2 seconds before initializing
     return () => clearTimeout(delay); // Clear the timeout if the component unmounts before the delay is completed

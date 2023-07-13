@@ -10,8 +10,7 @@ import {
 } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useDispatch} from 'react-redux';
-import {Logout} from '../../redux/actions/actions';
+
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {Avatar} from 'react-native-paper';
 
@@ -20,6 +19,8 @@ import ProfileData from '../Profile/useProfile';
 import SwitchAccountButton from '../../components/atoms/SwtichAccountButton';
 
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
+
+import UseOwnerprofile from './useOwnerProfile';
 
 type Props = {
   navigation: any;
@@ -43,16 +44,8 @@ export const SkeletonLoader = () => {
 const OwnerProfile = ({navigation}: Props) => {
   const {getContainerStyle, getTextInputStyle, getPlaceholderTextColor} =
     useContext(ColorSchemeContext);
-  const {
-    name,
-    email,
-    phonenumber,
-    isLoading,
-    pickImage,
-    profilePic,
-    handleRemoveProfilePic,
-    isloading,
-  } = ProfileData();
+  const {isloading, pickImage, handleRemoveProfilePic} = ProfileData();
+  const {handleLogout, data, loading} = UseOwnerprofile();
   const renderProfileImage = () => {
     if (isloading) {
       return (
@@ -60,8 +53,8 @@ const OwnerProfile = ({navigation}: Props) => {
           <ActivityIndicator size="large" color="gray" />
         </View>
       );
-    } else if (profilePic) {
-      return <Avatar.Image size={100} source={{uri: profilePic}} />;
+    } else if (data.profileImageUrl) {
+      return <Avatar.Image size={100} source={{uri: data.profileImageUrl}} />;
     } else {
       return (
         <View testID="avatar-container">
@@ -73,10 +66,6 @@ const OwnerProfile = ({navigation}: Props) => {
         </View>
       );
     }
-  };
-  const dispatch = useDispatch();
-  const handleLogout = () => {
-    dispatch(Logout() as any);
   };
   return (
     <View style={[style.profileStyle, getContainerStyle()]}>
@@ -99,18 +88,18 @@ const OwnerProfile = ({navigation}: Props) => {
             <Text style={style.uploadText}>Remove</Text>
           </TouchableOpacity>
         </View>
-        {isLoading ? (
+        {loading ? (
           <SkeletonLoader />
         ) : (
           <View style={[style.card, getTextInputStyle()]}>
             <Text style={[style.profileText, getPlaceholderTextColor()]}>
-              {name}
+              {data.firstName}
             </Text>
             <Text style={[style.profileText1, getPlaceholderTextColor()]}>
-              {email}
+              {data.email}
             </Text>
             <Text style={[style.profileText1, getPlaceholderTextColor()]}>
-              {phonenumber}
+              {data.phoneNumber}
             </Text>
           </View>
         )}

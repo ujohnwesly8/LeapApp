@@ -1,19 +1,19 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {Logout} from '../../redux/actions/actions';
+import {useEffect} from 'react';
+import {getProfileData} from '../../redux/slice/profileDataSlice';
+
 const UseOwnerprofile = () => {
   const dispatch = useDispatch();
-  const Name = useSelector((state: any) => state.rootReducer.firstName);
-  const email = useSelector((state: any) => state.rootReducer.email);
-  const phoneNumber = useSelector(
-    (state: any) => state.rootReducer.phoneNumber,
-  );
-  const lastName = useSelector((state: any) => state.rootReducer.lastName);
-  const submit = () => {
+  useEffect(() => {
+    dispatch(getProfileData());
+  }, [dispatch]);
+  const data = useSelector(state => state.profileData.data);
+  const loading = useSelector(state => state.profileData.isLoader);
+  console.log('data', data);
+  const handleLogout = () => {
     dispatch(Logout() as any);
   };
-  console.log('firstName :', Name);
-  console.log(email, phoneNumber, lastName);
-
-  return {Name, email, phoneNumber, lastName, submit};
+  return {handleLogout, data, loading};
 };
 export default UseOwnerprofile;

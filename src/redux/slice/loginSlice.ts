@@ -1,16 +1,7 @@
-import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {url} from '../../constants/Apis';
-
-export interface LoginState {
-  data: {
-    authToken: string | null;
-    isAuthenticated: boolean;
-  } | null;
-  isLoader: boolean;
-  isError: boolean;
-}
 
 export const postLogin = createAsyncThunk(
   'postLogin',
@@ -29,19 +20,15 @@ export const postLogin = createAsyncThunk(
 const loginThunk = createSlice({
   name: 'loginData',
   initialState: {
-    data: null,
+    data: {
+      authToken: null,
+      isAuthenticated: false,
+    },
     isLoader: false,
     isError: false,
-    error: null,
-  } as LoginState,
+  },
   reducers: {
-    setLoginData: (
-      state,
-      action: PayloadAction<{
-        authToken: string | null;
-        isAuthenticated: boolean;
-      }>,
-    ) => {
+    setLoginData: (state, action) => {
       state.data = action.payload;
     },
   },
@@ -52,7 +39,12 @@ const loginThunk = createSlice({
       })
       .addCase(postLogin.fulfilled, (state, action) => {
         state.isLoader = false;
-        state.data = action.payload;
+        state.data = {
+          ...state,
+          authToken: action.payload,
+          isAuthenticated: true,
+        };
+        console.log('Response data:', action.payload);
       })
       .addCase(postLogin.rejected, state => {
         state.isLoader = false;

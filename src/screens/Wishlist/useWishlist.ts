@@ -2,12 +2,10 @@ import {useEffect, useState, useContext} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Alert} from 'react-native';
 
 import {fetchWishlistProducts} from '../../redux/slice/wishlistSlice';
-import {removeFromWishlist} from '../../redux/actions/actions';
-import {url} from '../../constants/Apis';
+
+import {wishListRemove} from '../../redux/slice/wishlistRemoveSlice';
 const useWishlist = () => {
   const navigation = useNavigation();
   const {colorScheme} = useContext(ColorSchemeContext);
@@ -19,25 +17,8 @@ const useWishlist = () => {
   const closeModal = () => {
     setShowModal(false);
   };
-  const removefromWishlist = async (productId: any) => {
-    const token = await AsyncStorage.getItem('token');
-    console.log('chiranjeevi', productId);
-    fetch(`${url}/wishlist/remove?productId=${productId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(_data => {
-        dispatch(removeFromWishlist(productId));
-        openModal();
-      })
-      .catch(error => {
-        console.error(error);
-        const errorMessage = `Error removing item from Wishlist: ${error.message}`;
-        Alert.alert(errorMessage);
-      });
+  const wishlistremove = async (productId: any) => {
+    dispatch(wishListRemove(productId) as any);
   };
   const dispatch = useDispatch();
   const WishlistProducts = useSelector(
@@ -66,7 +47,7 @@ const useWishlist = () => {
   }, [dispatch, showModal]);
   return {
     WishlistProducts,
-    removefromWishlist,
+    wishlistremove,
     refreshing,
     onRefresh,
     closeModal,

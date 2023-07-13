@@ -8,6 +8,10 @@ import {passwordValidation, phonenumberValidation} from '../../constants/Regex';
 import ApiService from '../../network/network';
 import colors from '../../constants/colors';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
+import {useDispatch, useSelector} from 'react-redux';
+import {ThunkDispatch} from 'redux-thunk';
+import {AnyAction} from 'redux';
+import {postSignup} from '../../redux/slice/signupSlice';
 
 type RootStackParamList = {
   Login: undefined;
@@ -17,6 +21,8 @@ const useSignup = () => {
   const [role, setRole] = useState<string>('');
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const {colorScheme} = useContext(ColorSchemeContext);
+  const dispatch = useDispatch<ThunkDispatch<{}, {}, AnyAction>>();
+  const isError = useSelector(state => state.signup.error);
   const SignUpSchema = Yup.object().shape({
     firstName: Yup.string().required('Enter First Name'),
     lastName: Yup.string().required('Enter LastName'),
@@ -34,10 +40,12 @@ const useSignup = () => {
   });
   const openModal = () => {
     setShowModal(true);
+    navigation.navigate('Login');
   };
   const closeModal = () => {
     setShowModal(false);
   };
+
   const handleSignupfun: () => Promise<void> = async () => {
     console.log('indrill');
     console.log(role);
@@ -52,8 +60,24 @@ const useSignup = () => {
         role: role,
       });
       console.log(response);
+    } catch (error) {
+      openModal();
+    }
+  };
+  const handdleSignup = () => {
+    try {
+      const credentials = {
+        firstName: formik.values.firstName,
+        lastName: formik.values.lastName,
+        email: formik.values.email,
+        phoneNumber: formik.values.phoneNumber,
+        password: formik.values.password,
+        role: role,
+      };
+      dispatch(postSignup(credentials));
       navigation.navigate('Login');
     } catch (error) {
+      console.log('hello', error);
       openModal();
     }
   };
@@ -105,6 +129,7 @@ const useSignup = () => {
     PlaceholderColor,
     BorrowerRole,
     OwnerRole,
+    handdleSignup,
   };
 };
 export default useSignup;

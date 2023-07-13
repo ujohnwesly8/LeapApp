@@ -1,15 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/native';
+
 import {useEffect, useState} from 'react';
 import {profileUpload, url} from '../../constants/Apis';
 import {launchImageLibrary} from 'react-native-image-picker';
 import ApiService from '../../network/network';
+import {useDispatch, useSelector} from 'react-redux';
+import {getProfileData} from '../../redux/slice/profileDataSlice';
 
 const useProfile = () => {
-  const navigation = useNavigation();
-  const [name, setFirstName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phonenumber, setPhone] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [imageUrls, _setImageUrls] = useState([]);
   const [profilePic, setProfileImage] = useState('');
@@ -18,34 +16,22 @@ const useProfile = () => {
   const [showModall, setShowModall] = useState(false);
   const [showModal1, setShowModall1] = useState(false);
   const [refreshState, setRefreshState] = useState(false);
+  const dispatch = useDispatch();
   const fetchProfileData = async () => {
-    const token = await AsyncStorage.getItem('token');
     try {
       setIsLoading(true);
-      const response = await fetch(`${url}/user/getUser`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      if (response.ok) {
-        const profileData = await response.json();
-        setFirstName(profileData.firstName);
-        setEmail(profileData.email);
-        setPhone(profileData.phoneNumber);
-        setProfileImage(profileData.profileImageUrl);
-        console.log('profilePic is ', profileData.profileImageUrl);
-        console.log('Profile Data', profileData);
-      } else {
-        throw new Error('Failed to fetch profile name');
-      }
+      dispatch(getProfileData());
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
     }
   };
+  useEffect(() => {
+    dispatch(getProfileData());
+  }, [dispatch]);
+  const data = useSelector(state => state.profileData.data);
+  const loading = useSelector(state => state.profileData.isLoader);
   const refreshData = () => {
     setRefreshState(true);
   };
@@ -65,13 +51,6 @@ const useProfile = () => {
   const closeModal1 = () => {
     setShowModall1(false);
   };
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      fetchProfileData();
-    });
-    return unsubscribe;
-  }, [navigation]);
 
   const pickImage = async () => {
     launchImageLibrary(
@@ -142,7 +121,7 @@ const useProfile = () => {
   const handleRemoveProfilePic = async () => {
     const response = await ApiService.post(`${profileUpload}=${null}`, {});
     console.log('Upload response', response);
-    setProfileImage('');
+
     openModal1();
   };
 
@@ -150,10 +129,7 @@ const useProfile = () => {
   console.log('profilePic', profilePic);
 
   return {
-    name,
-    email,
-    phonenumber,
-    isLoading,
+    isloading,
     pickImage,
     uploadImage,
     imageUrls,
@@ -162,13 +138,13 @@ const useProfile = () => {
     setProfileImage,
     selectedImage,
     setSelectedImage,
-    isloading,
+    loading,
     setIsloading,
     openModal,
     closeModal,
     showModall,
     closeModal1,
-
+    data,
     openModal1,
     showModal1,
     refreshData,

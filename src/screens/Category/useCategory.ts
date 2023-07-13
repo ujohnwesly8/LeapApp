@@ -1,28 +1,20 @@
-import {useState, useEffect} from 'react';
+import {useEffect} from 'react';
 
-import ApiService from '../../network/network';
+import {fetchCategoriesdata} from '../../redux/slice/categorySlice';
+import {useDispatch, useSelector} from 'react-redux';
 
 export const useCategory = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchCategoriesData = async () => {
-    try {
-      const response = await ApiService.get('/category/list');
-      setCategories(response);
-      setLoading(false);
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
+  const data = useSelector(state => state.category.data);
+  const loading = useSelector(state => state.category.loading);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchCategoriesData();
+    dispatch(fetchCategoriesdata() as any);
   }, []);
+  console.log('data here is', data);
 
   return {
-    categories,
     loading,
-    fetchCategoriesData,
+    data,
   };
 };

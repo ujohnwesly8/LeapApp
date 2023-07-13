@@ -36,7 +36,7 @@ const Homescreen = ({navigation}: Props) => {
   const {
     refreshing,
     onRefresh,
-    removefromWishlist,
+    wishlistremove,
     searchQuery,
     searchProducts,
     setSearchQuery,
@@ -288,7 +288,7 @@ const Homescreen = ({navigation}: Props) => {
                                 setWishlistList(
                                   wishlistList.filter(id => id !== item.id),
                                 );
-                                removefromWishlist(item.id);
+                                wishlistremove(item.id);
                               } else {
                                 setWishlistList([...wishlistList, item.id]);
                                 dispatch(postProductToAPI({...item}) as any);

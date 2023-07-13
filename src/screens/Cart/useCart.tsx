@@ -3,14 +3,15 @@ import {useContext, useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {fetchCartProducts} from '../../redux/slice/cartSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {removeFromCart} from '../../redux/actions/actions';
-import {QuantityApi, checkoutApi} from '../../constants/Apis';
+
+import {checkoutApi} from '../../constants/Apis';
 
 import {useNavigation} from '@react-navigation/native';
 
-import ApiService from '../../network/network';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {removefromCart} from '../../redux/slice/cartRemoveSlice';
+import {updateCart} from '../../redux/slice/cartUpdateSlice';
 
 type RootStackParamList = {
   CheckoutScreen: undefined;
@@ -79,10 +80,9 @@ const useCart = () => {
         productId: productId,
         quantity: newQuantity,
       };
-      console.log('Important data is:', newQuantity, productId);
-      const response = await ApiService.put(QuantityApi, data);
-      console.log('Update response:', response);
+      dispatch(updateCart(data));
       setRefreshing(true);
+      console.log('Update response:');
     } catch (error) {
       console.error('Update error:', error);
     }
@@ -112,18 +112,13 @@ const useCart = () => {
       console.log('Checkout Session created:', data);
     } catch (error) {}
   };
+
   const handleRemove = async (productId: number) => {
     try {
-      console.log('chiranjeevi', productId);
-      const response = await ApiService.delete(`/cart/delete/${productId}`);
-      dispatch(removeFromCart(productId));
+      dispatch(removefromCart(productId));
       dispatch(fetchCartProducts as any);
-      console.log(response);
       openModal();
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    } catch (error) {}
   };
 
   const handleIncrement = (item: any) => {

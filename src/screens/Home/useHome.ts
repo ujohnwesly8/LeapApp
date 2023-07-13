@@ -4,11 +4,12 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 import {fetchUserProducts} from '../../redux/slice/userProductSlice';
-import {removeFromWishlist} from '../../redux/actions/actions';
+
 import ApiService from '../../network/network';
 import {url} from '../../constants/Apis';
 import {ColorSchemeContext} from '../../../ColorSchemeContext';
 import Colors from '../../constants/colors';
+import {wishListRemove} from '../../redux/slice/wishlistRemoveSlice';
 type RootStackParamList = {
   SearchResultsScreen: {searchResults: null[]};
 };
@@ -38,22 +39,22 @@ const useHome = () => {
       console.error(error);
     }
   };
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPlaceholderText(prevText =>
-        prevText === 'Search by Brands'
-          ? 'Search Products'
-          : 'Search by Brands',
-      );
-    }, 4000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setPlaceholderText(prevText =>
+  //       prevText === 'Search by Brands'
+  //         ? 'Search Products'
+  //         : 'Search by Brands',
+  //     );
+  //   }, 4000);
 
-    return () => clearInterval(interval);
-  }, []);
-  useEffect(() => {
-    setPlaceholderTextColor(
-      colorScheme === 'dark' ? Colors.white : Colors.black,
-    );
-  }, [colorScheme, placeholderText]);
+  //   return () => clearInterval(interval);
+  // }, []);
+  // useEffect(() => {
+  //   setPlaceholderTextColor(
+  //     colorScheme === 'dark' ? Colors.white : Colors.black,
+  //   );
+  // }, [colorScheme, placeholderText]);
 
   const openModal = () => {
     setShowModal(true);
@@ -69,18 +70,9 @@ const useHome = () => {
     await dispatch(fetchUserProducts() as any);
     setRefreshing(false);
   };
-  const removefromWishlist = async (productId: any) => {
-    console.log('chiranjeevi', productId);
-    try {
-      const response = await ApiService.delete(
-        `${url}/wishlist/remove?productId=${productId}`,
-      );
-      dispatch(removeFromWishlist(productId));
-      openModal();
-      console.log(response);
-    } catch (error) {
-      console.log(' error is here ', error);
-    }
+
+  const wishlistremove = async (productId: any) => {
+    dispatch(wishListRemove(productId) as any);
   };
 
   const WishlistProducts = useSelector(
@@ -89,12 +81,11 @@ const useHome = () => {
   const loading = useSelector(
     (state: {UserProducts: {isLoader: null[]}}) => state.UserProducts.isLoader,
   );
-  console.log(JSON.stringify(WishlistProducts));
   return {
     WishlistProducts,
     onRefresh,
     refreshing,
-    removefromWishlist,
+
     searchQuery,
     searchResults,
     setSearchResults,
@@ -108,6 +99,7 @@ const useHome = () => {
     showModal,
     Data,
     oldData,
+    wishlistremove,
   };
 };
 export default useHome;

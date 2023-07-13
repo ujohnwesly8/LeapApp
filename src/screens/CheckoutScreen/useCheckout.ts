@@ -1,15 +1,15 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {fetchCartProducts} from '../../redux/slice/cartSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {ADDORDER} from '../../redux/actions/actions';
-import {url} from '../../constants/Apis';
+
 import {Alert} from 'react-native';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import RazorpayCheckout from 'react-native-razorpay';
-import axios from 'axios';
+
 import {StackNavigationProp} from '@react-navigation/stack';
+import {ListAddress} from '../../redux/slice/listAddressSlice';
 
 type RootStackParamList = {
   CheckoutScreen: undefined;
@@ -21,49 +21,21 @@ const useChectout = () => {
   const [rentalStartDate, setRentalStartDate] = useState(new Date());
   const [rentalEndDate, setRentalEndDate] = useState(new Date());
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const [addressList, setAddress] = useState([]);
-  const [_city, setCity] = useState('');
-  const [_addressLine1, setaddressLine1] = useState('');
-  const [_addressLine2, setaddressLine2] = useState('');
-  const [_postalCode, setpostalCode] = useState('');
-  const [_country] = useState('india');
-  const [_State, setStateName] = useState('');
+
   const [isChecked, setIschecked] = useState(true);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(-1);
   const [isCheckedArray, setIsCheckedArray] = useState<boolean[]>([]);
   const dispatch = useDispatch();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const fetchData = async () => {
-        try {
-          const token = await AsyncStorage.getItem('token');
-          console.log(token);
-          const headers = {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          };
-          const response = await axios.get(`${url}/address/listAddress`, {
-            headers,
-          });
-          const data = await response.data;
-          console.log(response.data);
-          setAddress(data);
-          setCity(data.city);
-          setStateName(data.state);
-          setaddressLine1(data.addressLine1);
-          setaddressLine2(data.addressLine2);
-          setpostalCode(data.postalCode);
+  const data = useSelector(state => state.listAddress.data);
 
-          console.log(addressList);
-        } catch (error) {
-          console.log(error);
-        }
-      };
+  console.log('heloo pranay ', data);
 
-      fetchData();
-    }, []),
-  );
+  useEffect(() => {
+    setRefreshing(true);
+    dispatch(ListAddress());
+    setRefreshing(false);
+  }, [dispatch]);
   const cartData = useSelector(
     (state: {CartProducts: {data: any}}) => state.CartProducts.data,
   ) || {
@@ -75,7 +47,7 @@ const useChectout = () => {
 
   const handleCheckboxChange = (index: any) => {
     setSelectedAddressIndex(index);
-    const newIsCheckedArray = addressList.map((_, i) => i === index);
+    const newIsCheckedArray = data.map((_: any, i: any) => i === index);
     setIsCheckedArray(newIsCheckedArray);
     setIschecked(false);
   };
@@ -146,13 +118,14 @@ const useChectout = () => {
     setRefreshing,
     onRefresh,
     handlePayment,
+    data,
 
     rentalStartDate,
     rentalEndDate,
     setRentalStartDate,
     setRentalEndDate,
     handleCheckboxChange,
-    addressList,
+
     selectedAddressIndex,
     isCheckedArray,
     isChecked,

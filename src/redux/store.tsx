@@ -19,6 +19,13 @@ import orderSlice from './slice/orderSlice';
 import editItemSlice from './slice/editItemSlice';
 import thunk from 'redux-thunk';
 import loginSlice from './slice/loginSlice';
+import signupSlice from './slice/signupSlice';
+import wishlistRemoveSlice from './slice/wishlistRemoveSlice';
+import categorySlice from './slice/categorySlice';
+import cartUpdateSlice from './slice/cartUpdateSlice';
+import cartRemoveSlice from './slice/cartRemoveSlice';
+import listAddressSlice from './slice/listAddressSlice';
+import profileDataSlice from './slice/profileDataSlice';
 
 export const RootReducers = combineReducers({
   Reducers,
@@ -36,6 +43,13 @@ export const RootReducers = combineReducers({
   OrderProducts: orderSlice,
   editItem: editItemSlice,
   login: loginSlice,
+  signup: signupSlice,
+  wishlist: wishlistRemoveSlice,
+  category: categorySlice,
+  cartRemove: cartRemoveSlice,
+  cartUpdate: cartUpdateSlice,
+  listAddress: listAddressSlice,
+  profileData: profileDataSlice,
 });
 
 export const store = createStore(RootReducers, applyMiddleware(thunk));

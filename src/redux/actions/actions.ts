@@ -115,10 +115,14 @@ export const deleteAddress = (index: any) => ({
 });
 export const Init = () => {
   return async (dispatch: Dispatch) => {
-    let token = await AsyncStorage.getItem('token');
-    if (token !== null) {
-      console.log('token fetched');
-      dispatch(setLoginData({authToken: token, isAuthenticated: true}));
+    try {
+      let token = await AsyncStorage.getItem('token');
+      if (token !== null) {
+        console.log('token fetched');
+        dispatch(setLoginData({authToken: token, isAuthenticated: true}));
+      }
+    } catch (error) {
+      console.log('error in Init:', error);
     }
   };
 };
@@ -157,6 +161,7 @@ export const submitOTP = (phoneNumber: string, otp: number) => {
       dispatch({type: LOGIN_SUCCESS, payload: token});
     } catch (error) {
       dispatch({type: LOGIN_FAILURE, payload: error});
+      console.log('error', error);
     }
   };
 };
