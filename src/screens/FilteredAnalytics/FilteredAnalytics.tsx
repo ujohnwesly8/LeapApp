@@ -41,7 +41,7 @@ const FilteredAnalytics = () => {
     content = (
       <>
         <View style={style.chartView}>
-          <View style={style.filterView}>
+          <View style={style.filterView} testID="chart-container">
             <LineChart
               data={{
                 labels: chartData.map(dataPoint => {
@@ -86,7 +86,7 @@ const FilteredAnalytics = () => {
     );
   } else {
     content = (
-      <View>
+      <View testID="no-data-message">
         <View style={style.animationS}>
           <Lottie
             source={require('../../../assets/business-analytics.json')}
@@ -130,9 +130,9 @@ const FilteredAnalytics = () => {
           <View>
             {Object.keys(data).length > 0 ? (
               Object.entries(data).map(([month, items]) => (
-                <View key={month}>
+                <View testID={`${month}-view`} key={month}>
                   {items.map((item: any) => (
-                    <View key={generateKey()}>
+                    <View testID="dashcard" key={generateKey()}>
                       <View style={style.dashcard}>
                         <View style={style.dashcardContainer}>
                           <Image
@@ -141,7 +141,10 @@ const FilteredAnalytics = () => {
                           />
 
                           <View style={style.textDirection}>
-                            <Text style={style.cardStyle}>
+                            <Text
+                              // testID="order-id"
+                              // testID="add-prefix-to-y-label"
+                              style={style.cardStyle}>
                               Order ID: {item.borrowerId}
                             </Text>
 
