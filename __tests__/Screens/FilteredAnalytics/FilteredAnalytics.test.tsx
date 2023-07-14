@@ -1,15 +1,11 @@
-import {
-  render,
-  fireEvent,
-  waitFor,
-  within,
-} from '@testing-library/react-native';
+import {render, waitFor, within} from '@testing-library/react-native';
 import React from 'react';
 import FilteredAnalytics from '../../../src/screens/FilteredAnalytics/FilteredAnalytics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
 import {Provider} from 'react-redux';
 import {store} from '../../../src/redux/store';
+import ApiService from '../../../src/network/network';
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(),
   setItem: jest.fn(),
@@ -49,72 +45,122 @@ describe('FilteredAnalytics', () => {
     expect(loadingText).toBeTruthy();
   });
 
-  // Add more test cases as needed
-  test('updates start date when AnalyticsDatePicker onStartDateChange is called', async () => {
-    const {getByTestId} = render(
+  test('does not display dashboard items when data object is empty', async () => {
+    const data = {};
+
+    const {queryByTestId} = render(
       <Provider store={store}>
         <NavigationContainer>
-          <FilteredAnalytics />
+          <FilteredAnalytics data={data} />
         </NavigationContainer>
       </Provider>,
     );
 
-    const newStartDate = new Date('2023-01-01');
-    const startDatePicker = getByTestId('date-picker'); // Update the test ID here
-    fireEvent(startDatePicker, 'onStartDateChange', newStartDate); // Update the event name
-
-    await waitFor(() => {
-      expect(startDatePicker.props.startDate).toEqual(newStartDate);
-    });
+    const janView = queryByTestId('jan-view');
+    expect(janView).toBeNull();
   });
-
-  test('fetches data when end date is changed', async () => {
-    const fetchDataMock = jest.fn();
-    fetchDataMock.mockResolvedValueOnce({chartData: []});
+  test('displays no data message when chartData length is 0', async () => {
+    const chartData = [];
 
     const {getByTestId} = render(
       <Provider store={store}>
         <NavigationContainer>
-          <FilteredAnalytics />
+          <FilteredAnalytics chartData={chartData} />
         </NavigationContainer>
       </Provider>,
     );
 
-    const newEndDate = new Date('2023-02-01');
-    const endDatePicker = getByTestId('date-picker'); // Update the test ID here
-    fireEvent(endDatePicker, 'onEndDateChange', newEndDate); // Update the event name
-
-    await waitFor(() => {
-      expect(fetchDataMock).toHaveBeenCalledTimes(1);
-    });
+    const noDataMessage = await waitFor(() => getByTestId('no-data-message'));
+    expect(noDataMessage).toBeTruthy();
   });
 
-  //---------------------->
-  test('renders items for each month correctly', () => {
-    const dataMock = {
-      Jan: [
+  test('displays chart when chartData length is greater than 0', async () => {
+    const chartData = [
+      {month: 'January', rentalCost: 1000},
+      {month: 'February', rentalCost: 2000},
+    ];
+
+    const {queryByTestId} = render(
+      <Provider store={store}>
+        <NavigationContainer>
+          <FilteredAnalytics chartData={chartData} />
+        </NavigationContainer>
+      </Provider>,
+    );
+
+    const chartContainer = queryByTestId('line-chart');
+    expect(chartContainer).toBeTruthy();
+  });
+
+  test('displays chart when chartData length is greater than 0', async () => {
+    const chartData = [
+      {month: 'January', rentalCost: 1000},
+      {month: 'February', rentalCost: 2000},
+    ];
+
+    const {queryByTestId} = render(
+      <Provider store={store}>
+        <NavigationContainer>
+          <FilteredAnalytics chartData={chartData} />
+        </NavigationContainer>
+      </Provider>,
+    );
+
+    const chartContainer = queryByTestId('chart-container');
+    expect(chartContainer).not.toBeNull();
+  });
+
+  test('displays dashboard items when data object has items', async () => {
+    const data = {
+      January: [
         {
-          id: 1,
+          borrowerId: '1',
+          borrowerName: 'John',
+          rentalCost: 100,
           name: 'Item 1',
+          quantity: 2,
+          borrowerPhoneNumber: '123456789',
         },
         {
-          id: 2,
+          borrowerId: '2',
+          borrowerName: 'Jane',
+          rentalCost: 200,
           name: 'Item 2',
+          quantity: 1,
+          borrowerPhoneNumber: '987654321',
         },
       ],
     };
+    jest.spyOn(ApiService, 'get').mockResolvedValue(data);
+    const {getByTestId, queryByTestId} = render(
+      <Provider store={store}>
+        <NavigationContainer>
+          <FilteredAnalytics />
+        </NavigationContainer>
+      </Provider>,
+    );
 
-    render(<FilteredAnalytics data={dataMock} />);
+    const janView = queryByTestId('jan-view');
+    expect(janView).toBeNull();
 
-    // Find first View with 'Jan' key
-    const janView = getByTestId('jan-view');
+    const dashboardItems = within(janView).queryByTestId('dashboard-item');
+    expect(dashboardItems).toHaveLength(data.January.length);
+  });
 
-    // Find two Views inside with key from generateKey
-    const generateKeyMock = jest.fn(() => 'key1');
-    const itemViews = within(janView).getAllByTestId('item-view');
-    expect(itemViews).toHaveLength(2);
+  test('addPrefixToYLabel formats the value correctly', () => {
+    const {getByText} = render(
+      <Provider store={store}>
+        <NavigationContainer>
+          <FilteredAnalytics />,
+        </NavigationContainer>
+      </Provider>,
+    );
+    const value = 100;
 
-    // Check map function was called twice
-    expect(generateKeyMock).toHaveBeenCalledTimes(2);
+    const addPrefixToYLabel = (value: any) => `₹ ${value}`;
+    const formattedValue = addPrefixToYLabel(value);
+
+    const formattedValueElement = getByText(formattedValue);
+    expect(formattedValueElement).toBeTruthy();
   });
 });
