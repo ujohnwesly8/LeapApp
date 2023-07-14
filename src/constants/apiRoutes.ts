@@ -6,3 +6,4 @@ export const cartupdateUrl = '/cart/updateQuantity';
 export const listAddressUrl = '/address/listAddress';
 export const profileDataUrl = '/user/getUser';
 export const cartaddUrl = '/cart/add';
+export const productaddUrl = '/product/add';
