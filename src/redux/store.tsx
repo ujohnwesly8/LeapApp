@@ -26,7 +26,7 @@ import cartUpdateSlice from './slice/cartUpdateSlice';
 import cartRemoveSlice from './slice/cartRemoveSlice';
 import listAddressSlice from './slice/listAddressSlice';
 import profileDataSlice from './slice/profileDataSlice';
-
+import CartAddSlice from './slice/CartAddSlice';
 export const RootReducers = combineReducers({
   Reducers,
   products: ProductSlice,
@@ -50,6 +50,7 @@ export const RootReducers = combineReducers({
   cartUpdate: cartUpdateSlice,
   listAddress: listAddressSlice,
   profileData: profileDataSlice,
+  cartAdd: CartAddSlice,
 });
 
 export const store = createStore(RootReducers, applyMiddleware(thunk));
